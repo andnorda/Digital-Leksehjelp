@@ -1,0 +1,17 @@
+<head>
+  <title>my-cool-app</title>
+</head>
+
+<body>
+  {{> hello}}
+</body>
+
+<template name="hello">
+  <h1>Hello World!</h1>
+  {{greeting}}
+  <input type="button" id="add" value="Click" />
+  Button is clicked {{ clickCounter.clicks }}
+
+  Remove clicks!
+  <input type="button" id="remove" value="Remove click!" />
+</template>
