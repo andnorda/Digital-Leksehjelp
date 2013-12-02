@@ -1,11 +1,19 @@
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Røde Kors - Digital leksehjelp</title>
 </head>
 
 <body>
     {{> header }}
-    {{> getHelp }}
-    {{> studentSessions }}
+    {{#if currentUser }}
+      {{> studentSessions }}
+    {{ else }}
+      {{> getHelp }}
+    {{/if }}
 </body>
 
 <template name="header">
@@ -19,19 +27,23 @@
 </template>
 
 <template name="getHelp">
-    {{! TODO(martin): rewrite to form }}
+    <p>Antall personer i kø: {{ queueSize }}</p>
 
-    <p>
-        Antall personer i kø: {{ queueSize }}
-    </p>
-
-    Fag:
-    {{> subjectSelector }}
-    Trinn:
-    <input id="grade" type="text" size="20" />
-    Emne:
-    <input id="topic" type="text" size="20" />
-    <input id="createSession" type="button" value="Få hjelp" />
+    <form role="form">
+      <div class="form-group">
+        <label for="subject">Fag:</label>
+        {{> subjectSelector }}
+      </div>
+      <div class="form-group">
+        <label for="grade">Trinn:</label>
+        <input id="grade" type="text" size="20" />
+      </div>
+      <div class="form-group">
+        <label for="topic">Emne:</label>
+        <input id="topic" type="text" size="20" />
+      </div>
+      <div class="spacer"><a id="createSession" class="button" href="#">F&aring; hjelp</a></div>
+    </form>
 
     {{#with studentSession }}
         <p>

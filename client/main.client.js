@@ -141,17 +141,18 @@ if (Meteor.isClient) {
             };
         },
 
-        'click input#createSession' : function () {
+        'click a#createSession' : function () {
             videoConferenceUrl = generateRandomAppearInLink();
             videoConferenceDep.changed();
             Session.set("videoConferenceUrl", videoConferenceUrl);
+            var queueNr = getHighestQueueNr() + 1;
             StudentSessions.insert({
                 subject: $('#subject').val(),
                 grade: $('#grade').val(),
                 topic: $('#topic').val(),
                 videoConferenceUrl: generateRandomAppearInLink(),
                 state: STUDENT_SESSION_STATE.WAITING,
-                queueNr: getHighestQueueNr() + 1
+                queueNr: queueNr
             }, function (error, id) {
                 if (error) { return null; };
                 Session.set("studentSessionId", id);
