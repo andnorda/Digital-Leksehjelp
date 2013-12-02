@@ -6,4 +6,8 @@
 standard-app-packages
 autopublish
 insecure
+backbone
+jquery
 preserve-inputs
+accounts-password
+accounts-ui

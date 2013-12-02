@@ -1,17 +1,115 @@
 <head>
-  <title>my-cool-app</title>
+    <title>Røde Kors - Digital leksehjelp</title>
 </head>
 
 <body>
-  {{> hello}}
+    {{> header }}
+    {{> getHelp }}
+    {{> studentSessions }}
 </body>
 
-<template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" id="add" value="Click" />
-  Button is clicked {{ clickCounter.clicks }}
+<template name="header">
+    <h1>{{ greeting }}</h1>
+    {{#if currentUser }}
+        <h3>I am logged in as {{ currentUserEmail }}! \o/</h3>
+    {{else}}
+        <h3>I am NOT logged in! /o\</h3>
+    {{/if}}
+    <div align="right">{{loginButtons align="right"}}</div>
+</template>
 
-  Remove clicks!
-  <input type="button" id="remove" value="Remove click!" />
+<template name="getHelp">
+    {{! TODO(martin): rewrite to form }}
+
+    <p>
+        Antall personer i kø: {{ queueSize }}
+    </p>
+
+    Fag:
+    <input id="subject" type="text" size="20" />
+    Trinn:
+    <input id="grade" type="text" size="20" />
+    Emne:
+    <input id="topic" type="text" size="20" />
+    <input id="createSession" type="button" value="Få hjelp" />
+
+    {{#with studentSession }}
+        <p>
+            {{{ state }}}
+            {{#if stateWaiting }}
+                Det er {{ studentsInFront }} foran deg i køen.
+            {{/if}}
+            {{#if stateReady }}
+                <p>
+                    <a id="getHelp" href="{{ videoConferenceUrl}} ">Klikk her for å starte leksehjelp</a>
+                </p>
+            {{/if}}
+        </p>
+    {{/with}}
+</template>
+
+<template name="studentSessions">
+    {{#if currentUser }}
+        <h1>Du er nå logget inn som lærer</h1>
+        <h1>Elever som venter i kø</h1>
+
+        {{> studentSessionsTable}}
+    {{/if}}
+</template>
+
+<template name="userAdmin">
+    <h1>User administration</h1>
+    {{#each Meteor.users}}
+        username
+    {{/each}}
+</template>
+
+<template name="studentSessionsTable">
+    <h2>Mine fag</h2>
+        <table border="1">
+            <tr>
+                <th>Kø id</th>
+                <th>Fag</th>
+                <th>Trinn</th>
+                <th>Emne</th>
+                <th></th>
+                <th>Status</th>
+                <th>Slett</th>
+            </tr>
+            {{#each studentSessions }}
+                {{> studentSessionItem }}
+            {{/each}}
+        </table>
+
+    <h2>Andre fag</h2>
+        <table border="1">
+            <tr>
+                <th>Kø id</th>
+                <th>Fag</th>
+                <th>Trinn</th>
+                <th>Emne</th>
+                <th></th>
+                <th>Status</th>
+                <th>Slett</th>
+            </tr>
+            {{#each studentSessions }}
+                {{> studentSessionItem }}
+            {{/each}}
+        </table>
+</template>
+
+<template name="studentSessionItem">
+    <tr>
+        <td>{{ queueNr }}</td>
+        <td>{{ subject }}</td>
+        <td>{{ grade }}</td>
+        <td>{{ topic }}</td>
+        <td>
+            <div id="videoUrl">
+                <div class="startTutoring"><button>Start leksehjelp</button></div>
+            </div>
+        </td>
+        <td>{{ state }}</td>
+        <td><div class="deleteSession"><button>Slett sesjon</button></div>
+    </tr>
 </template>
