@@ -164,6 +164,11 @@ if (Meteor.isClient) {
     });
     // END GETHELP
 
+
+    Template.subjectSelector.subjects = function () {
+        return COURSES;
+    }
+
     // START USERADMIN
     // END USERADMIN
 }

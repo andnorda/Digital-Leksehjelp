@@ -26,7 +26,7 @@
     </p>
 
     Fag:
-    <input id="subject" type="text" size="20" />
+    {{> subjectSelector }}
     Trinn:
     <input id="grade" type="text" size="20" />
     Emne:
@@ -46,6 +46,14 @@
             {{/if}}
         </p>
     {{/with}}
+</template>
+
+<template name="subjectSelector">
+    <select id="subject">
+        {{# each subjects }}
+            <option>{{this}}</option>
+        {{/each}}
+    </select>
 </template>
 
 <template name="studentSessions">
