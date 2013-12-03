@@ -4,7 +4,7 @@ if(Meteor.isServer) {
         if(!user) { return null; }
         var fields;
 
-        if (user.role === 'admin') {
+        if (user.role === ROLES.admin) {
             console.log("This user is an administrator!");
             //Return everythin'
             return Meteor.users.find({});
