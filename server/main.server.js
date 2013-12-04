@@ -7,7 +7,9 @@ Meteor.startup(function () {
         var options = {
             username: 'admin',
             password: 'admin',
-            role: ROLES.admin,
+            profile: {
+                role: ROLES.ADMIN
+            },
             email: 'martin@iterate.no'
         };
         Accounts.createUser(options);
@@ -16,6 +18,6 @@ Meteor.startup(function () {
 
 Accounts.validateNewUser(function (user) {
     //TODO(martin): Should be able to create users on server, not on client.
-    //throw new Meteor.Error(403, "You are not allowed to create new users");
-    return true;
+    throw new Meteor.Error(403, "You are not allowed to create new users");
+    // return true;
 });

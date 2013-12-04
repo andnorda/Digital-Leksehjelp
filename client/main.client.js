@@ -1,4 +1,55 @@
 if (Meteor.isClient) {
+    Router.configure({
+        layoutTemplate: 'currentPage'
+    });
+
+    Router.map(function () {
+        /**
+        * The route's name is "home"
+        * The route's template is also "home"
+        * The default action will render the home template
+        */
+        this.route('getHelp', {
+            path: '/'
+        });
+
+        this.route('tutor', {
+            path: '/tutor',
+            before: function () {
+                if (!Meteor.user()) {
+                    // render the login template but keep the url in the browser the same
+                    Router.go('getHelp');
+
+                    // stop the rest of the before hooks and the action function
+                    this.stop();
+                }
+            }
+        });
+
+        /**
+        * The route's name is "posts"
+        * The route's path is "/posts"
+        * The route's template is inferred to be "posts"
+        */
+        this.route('admin', {
+            path: '/admin',
+            before: function () {
+                if (!Meteor.user()) {
+                    // render the login template but keep the url in the browser the same
+                    Router.go('getHelp');
+
+                    // stop the rest of the before hooks and the action function
+                    this.stop();
+                }
+            },
+            action: function () {
+                this.render('userAdmin');
+            }
+        });
+    });
+
+    // END ROUTER
+
     // Dependencies
 
     // Start subscriptions first
@@ -17,21 +68,11 @@ if (Meteor.isClient) {
     };
 
     // START ROUTER
-    var HomeworkRouter = Backbone.Router.extend({
-        routes: {
-            "": "main"
-        },
-        main: function (list_id) {
-            // do nothing
-        }
-    });
 
-    Router = new HomeworkRouter;
 
-    Meteor.startup(function () {
-        Backbone.history.start({pushState: true});
-    });
-    // END ROUTER
+    Template.currentPage.currentPage = function () {
+        return Session.get('currentPage');
+    };
 
     var videoConferenceDep = new Deps.Dependency();
     var videoConferenceUrl;
@@ -42,7 +83,11 @@ if (Meteor.isClient) {
     };
 
     Template.header.currentUserEmail = function () {
-        return Meteor.user().emails[0].address;
+        return Meteor.user().username;
+    };
+
+    Template.header.isAdmin = function () {
+        return Meteor.user().profile.role === ROLES.ADMIN;
     };
 
     Template.header.events({
@@ -168,7 +213,7 @@ if (Meteor.isClient) {
 
     Template.subjectSelector.subjects = function () {
         return COURSES;
-    }
+    };
 
     // START USERADMIN
     // END USERADMIN

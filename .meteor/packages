@@ -11,3 +11,4 @@ jquery
 preserve-inputs
 accounts-password
 accounts-ui
+iron-router

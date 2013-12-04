@@ -9,19 +9,26 @@
 
 <body>
     {{> header }}
-    {{#if currentUser }}
-      {{> studentSessions }}
-    {{ else }}
-      {{> getHelp }}
-    {{/if }}
+    {{> currentPage}}
 </body>
+
+<template name="currentPage">
+    {{ yield }}
+</template>
+
+<template name="tutor">
+    {{> studentSessions }}
+</template>
 
 <template name="header">
     <h1>{{ greeting }}</h1>
     {{#if currentUser }}
         <h3>I am logged in as {{ currentUserEmail }}! \o/</h3>
-    {{else}}
-        <h3>I am NOT logged in! /o\</h3>
+        {{#if isAdmin }}
+            <a href="/admin">Administrer brukere</a>
+            <a href="/tutor">Hjelp elever</a>
+            <a href="/">Få hjelp</a>
+        {{/if}}
     {{/if}}
     <div align="right">{{loginButtons align="right"}}</div>
 </template>
