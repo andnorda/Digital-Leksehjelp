@@ -13,6 +13,7 @@
 </body>
 
 <template name="currentPage">
+    {{ yield 'header'}}
     {{ yield }}
 </template>
 
@@ -25,12 +26,16 @@
     {{#if currentUser }}
         <h3>I am logged in as {{ currentUserEmail }}! \o/</h3>
         {{#if isAdmin }}
-            <a href="/admin">Administrer brukere</a>
-            <a href="/tutor">Hjelp elever</a>
-            <a href="/">Få hjelp</a>
+            <a href="/admin/brukere">Administrer brukere</a>
+            <a href="/admin/veileder">Hjelp elever</a>
+            <a href="/admin/hjelp">Få hjelp</a>
+            {{loginButtons}}
         {{/if}}
     {{/if}}
-    <div align="right">{{loginButtons align="right"}}</div>
+</template>
+
+<template name="login">
+    {{loginButtons}}
 </template>
 
 <template name="getHelp">

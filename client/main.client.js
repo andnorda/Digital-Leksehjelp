@@ -13,16 +13,34 @@ if (Meteor.isClient) {
             path: '/'
         });
 
-        this.route('tutor', {
-            path: '/tutor',
+        this.route('adminTutor', {
+            path: '/admin/veileder',
+            action: function () {
+                this.render('studentSessions');
+            }
+        });
+
+        this.route('adminHelp', {
+            path: '/admin/hjelp',
+            action: function () {
+                this.render('getHelp');
+            }
+        })
+
+        this.route('veileder', {
+            path: '/veileder',
             before: function () {
                 if (!Meteor.user()) {
+
                     // render the login template but keep the url in the browser the same
-                    Router.go('getHelp');
+                    this.render('login');
 
                     // stop the rest of the before hooks and the action function
                     this.stop();
                 }
+            },
+            action: function () {
+                this.render('login');
             }
         });
 
@@ -36,7 +54,23 @@ if (Meteor.isClient) {
             before: function () {
                 if (!Meteor.user()) {
                     // render the login template but keep the url in the browser the same
-                    Router.go('getHelp');
+                    this.render('login');
+
+                    // stop the rest of the before hooks and the action function
+                    this.stop();
+                }
+            },
+            action: function () {
+                this.render('userAdmin');
+            }
+        });
+
+        this.route('userAdmin', {
+            path: '/admin/brukere',
+            before: function () {
+                if (!Meteor.user()) {
+                    // render the login template but keep the url in the browser the same
+                    this.render('login');
 
                     // stop the rest of the before hooks and the action function
                     this.stop();
