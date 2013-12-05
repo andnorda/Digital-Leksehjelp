@@ -69,26 +69,27 @@
 
 <template name="subjectSelector">
     <select id="subject">
-        {{# each subjects }}
+        {{#each subjects }}
             <option>{{this}}</option>
         {{/each}}
+    </select>
+</template>
+
+<template name="roleSelector">
+    <select id="role">
+        {{#eachProperty roles }}
+            <option>{{value}}</option>
+        {{/eachProperty}}
     </select>
 </template>
 
 <template name="studentSessions">
     {{#if currentUser }}
         <h1>Du er nå logget inn som lærer</h1>
-        <h1>Elever som venter i kø</h1>
+        <h2>Elever som venter i kø</h2>
 
         {{> studentSessionsTable}}
     {{/if}}
-</template>
-
-<template name="userAdmin">
-    <h1>User administration</h1>
-    {{#each Meteor.users}}
-        username
-    {{/each}}
 </template>
 
 <template name="studentSessionsTable">
@@ -139,4 +140,26 @@
         <td>{{ state }}</td>
         <td><div class="deleteSession"><button>Slett sesjon</button></div>
     </tr>
+</template>
+
+<template name="userAdmin">
+    <h3>Administrér brukere</h3>
+    {{> addUser}}
+</template>
+
+<template name="addUser">
+    Ny bruker:
+    <form role="form">
+        <div class="form-group">
+            <input id="firstName" placeholder="Fornavn" type="text" size="20" />
+        </div>
+        <div class="form-group">
+            <input id="email" placeholder="E-post" type="text" size="20" />
+        </div>
+        <div class="form-group">
+            {{> roleSelector}}
+        </div>
+        <button class="addUser">Legg til bruker</button>
+    </form>
+    <p>{{ userAdded }}</p>
 </template>
