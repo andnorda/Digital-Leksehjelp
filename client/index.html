@@ -1,0 +1,42 @@
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Røde Kors - Digital leksehjelp</title>
+</head>
+
+<body>
+    {{> layout}}
+</body>
+
+<template name="layout">
+    {{yield 'header'}}
+    {{yield }}
+    {{yield 'footer'}}
+</template>
+
+<template name="header">
+    <h4>Header no login</h4>
+</template>
+
+<template name="footer">
+    <h4>This be footer</h4>
+</template>
+
+<template name="loggedInHeader">
+    {{#if currentUser }}
+        <h3>I am logged in as {{ currentUserEmail }}! \o/</h3>
+        {{#if isAdmin }}
+            <a href="/frivillig/admin">Administrer brukere</a>
+        {{/if}}
+        <a href="/frivillig">Hjelp elever</a>
+        <a href="/frivillig/profil">Min profil</a>
+        {{loginButtons}}
+    {{/if}}
+</template>
+
+<template name="login">
+    {{loginButtons}}
+</template>

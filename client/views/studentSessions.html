@@ -1,0 +1,61 @@
+<template name="studentSessions">
+    {{#if currentUser }}
+        <h1>Du er nå logget inn som lærer</h1>
+        <h2>Elever som venter i kø</h2>
+
+        {{> studentSessionsTable}}
+    {{/if}}
+</template>
+
+<template name="studentSessionsTable">
+    <h2>Mine fag</h2>
+        <table border="1">
+            <tr>
+                <th>Kø id</th>
+                <th>Fag</th>
+                <th>Trinn</th>
+                <th>Emne</th>
+                <th></th>
+                <th>Status</th>
+                <th>Aktiv frivillig</th>
+                <th>Slett</th>
+            </tr>
+            {{#each studentSessions }}
+                {{> studentSessionItem }}
+            {{/each}}
+        </table>
+
+    <h2>Andre fag</h2>
+        <table border="1">
+            <tr>
+                <th>Kø id</th>
+                <th>Fag</th>
+                <th>Trinn</th>
+                <th>Emne</th>
+                <th></th>
+                <th>Status</th>
+                <th>Aktiv frivillig</th>
+                <th>Slett</th>
+            </tr>
+            {{#each studentSessions }}
+                {{> studentSessionItem }}
+            {{/each}}
+        </table>
+</template>
+
+<template name="studentSessionItem">
+    <tr>
+        <td>{{ queueNr }}</td>
+        <td>{{ subject }}</td>
+        <td>{{ grade }}</td>
+        <td>{{ topic }}</td>
+        <td>
+            <div id="videoUrl">
+                <div class="startTutoring"><button>Start leksehjelp</button></div>
+            </div>
+        </td>
+        <td>{{ state }}</td>
+        <td>{{ tutor }}</td>
+        <td><div class="deleteSession"><button>Slett sesjon</button></div>
+    </tr>
+</template>

@@ -1,0 +1,8 @@
+/* CSS declarations go here */
+li {
+    cursor: pointer;
+}
+
+li:hover {
+    background-color: #ededed;
+}

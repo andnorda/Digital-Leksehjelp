@@ -1,0 +1,68 @@
+<template name="getHelp">
+    <div class="panel panel-default" style="width:50%; margin-left:auto; margin-right:auto;">
+        <div class="panel-heading" style="text-align:center;">
+            <h3>Få leksehjelp</h3>
+        </div>
+        <div class="panel-body" style="text-align:center;">
+                <!-- <p>Antall personer i kø: {{ queueSize }}</p> -->
+
+                <form role="form">
+                  <div class="form-group" style="width:100%;">
+                    {{> subjectSelector }}
+                  </div>
+                  <div class="form-group">
+                    {{> gradeSelector }}
+                  </div>
+                  <!-- <div class="form-group">
+                    <label for="topic">Emne:</label>
+                    <input id="topic" type="text" size="20" />
+                  </div> -->
+                <button type="button" class="btn btn-success" id="createSession">
+                    Få leksehjelp
+                </button>
+                </form>
+
+                {{#with studentSession }}
+                    <p>
+                        Status: {{{ state }}}
+                        <p>
+                            {{#if stateWaiting }}
+                                Det er {{ studentsInFront }} foran deg i køen.
+                            {{/if}}
+                            {{#if stateReady }}
+                                <button type="button" class="btn btn-success" id="getHelp">
+                                Gå til rom
+                                </button>
+                            {{/if}}
+                        </p>
+                    </p>
+                {{/with}}
+        </div>
+    </div>
+</template>
+
+<template name="subjectSelector">
+    <div class="btn-group" style="width:100%;">
+        <button type="button" class="btn btn-lg dropdown-toggle" data-toggle="dropdown" style="width:100%;">
+            <div id="chosenSubject" style="float:center;">Velg ønsket fag</div><span class="caret" style="float:right; margin-top:-15px;"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" style="width:100%;">
+            {{#each subjects }}
+                <li class="subjects" role="presentation">{{this}}</li>
+            {{/each}}
+        </ul>
+        </div>
+</template>
+
+<template name="gradeSelector">
+    <div class="btn-group" style="width:100%;">
+        <button type="button" class="btn btn-lg dropdown-toggle" data-toggle="dropdown" style="width:100%;">
+            <div id="chosenGrade" style="float:center;">Velg ønsket trinn</div><span class="caret" style="float:right; margin-top:-15px;"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" style="width:100%;">
+            {{#each grades }}
+                <li class="grades" role="presentation">{{this}}</li>
+            {{/each}}
+        </ul>
+        </div>
+</template>
