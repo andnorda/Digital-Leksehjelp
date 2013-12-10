@@ -26,6 +26,7 @@ Template.addUser.events({
                 if (error) {
                     userAdded = "Feil, brukeren med epost: " + email +
                         ", ble IKKE lagt til. Vennligst prøv igjen.";
+                    FlashMessages.sendError(error.message);
                 } else {
                     userAdded = "Brukeren med epost: " + email +
                         " er nå lagt til, og har fått tilsendt en bekreftelses-epost.";
@@ -42,3 +43,27 @@ Template.addUser.events({
 Template.roleSelector.roles = function () {
     return ROLES;
 };
+
+// === USERSTABLE ===
+Template.usersTable.users = function () {
+    return Meteor.users.find({}).fetch();
+};
+
+// === USERROW ===
+var newUserRole;
+
+Template.userRow.events({
+    'change .newRole' : function (event) {
+        newUserRole = event.target.value;
+        Meteor.call('updateUser',
+            {
+                userId: this._id,
+                role: newUserRole
+            },
+            function (error, result) {
+                if (error) {
+                    FlashMessages.sendError(error.message);
+                };
+            });
+    }
+});

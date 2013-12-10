@@ -6,11 +6,12 @@ if(Meteor.isServer) {
 
         if (user.role === ROLES.admin) {
             console.log("This user is an administrator!");
-            //Return everythin'
-            return Meteor.users.find({});
+
+            return Meteor.users.find({}, {fields: {username: 1, emails: 1, profile: 1}});
         }
 
         console.log("This user is NOT admin, does not get any data...");
+        return null;
     });
 
     Meteor.publish("user-data", function () {

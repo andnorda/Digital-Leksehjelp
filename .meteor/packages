@@ -13,3 +13,4 @@ accounts-password
 accounts-ui
 iron-router
 bootstrap-3
+flash-messages

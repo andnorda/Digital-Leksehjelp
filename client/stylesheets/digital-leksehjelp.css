@@ -6,3 +6,7 @@ li {
 li:hover {
     background-color: #ededed;
 }
+
+tr:nth-of-type(odd) {
+  background-color:#ccc;
+}

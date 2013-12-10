@@ -1,6 +1,7 @@
 <template name="userAdmin">
     <h3>Administrér brukere</h3>
     {{> addUser}}
+    {{> usersTable}}
 </template>
 
 <template name="addUser">
@@ -27,4 +28,38 @@
             <option>{{value}}</option>
         {{/eachProperty}}
     </select>
+</template>
+
+<template name="usersTable">
+    <h3>Alle brukere</h3>
+    <table border="0">
+        <tr>
+            <th>Brukernavn</th>
+            <th>E-post</th>
+            <th>Verifisert?</th>
+            <th>Fornavn</th>
+            <th>Rolle</th>
+        </tr>
+        {{#each users }}
+            {{> userRow }}
+        {{/each}}
+    </table>
+</template>
+
+<template name="userRow">
+    <tr>
+        <td>{{ username }}</td>
+        {{#each emails}}
+            <td>{{this.address}}</td>
+            <td>{{this.verified}}</td>
+        {{/each}}
+        <td>{{ profile.firstName }}</td>
+        <td>
+            <select class="newRole">
+                {{{optionsSelected globalRoles profile.role }}}
+            </select>
+        </td>
+        <td><button type="button" class="btn btn-xs btn-danger deleteUser">Slett</button></td>
+        <td><button type="button" class="btn btn-xs btn-danger logoutUser">Logg ut</button></td>
+    </tr>
 </template>
