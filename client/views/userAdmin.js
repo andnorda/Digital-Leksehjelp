@@ -65,5 +65,20 @@ Template.userRow.events({
                     FlashMessages.sendError(error.message);
                 };
             });
+    },
+
+    'click .deleteUser' : function (event) {
+        Meteor.call('removeUser',
+            {
+                userId: this._id
+            },
+            function (error, result) {
+                if (error) {
+                    FlashMessages.sendError(error.message);
+                } else {
+                    FlashMessages.sendSuccess("User was deleted!");
+                }
+                ;
+            });
     }
 });
