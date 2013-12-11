@@ -52,6 +52,16 @@ Template.usersTable.users = function () {
 // === USERROW ===
 var newUserRole;
 
+Template.userRow.remoteUserLoggedIn = function () {
+    var userLoggedInArray = Meteor.users.find({
+            $and: [
+                { '_id': this._id },
+                { 'services.resume.loginTokens': { $exists:true } },
+                { 'services.resume.loginTokens': { $not: { $size: 0 } }}
+            ]}).fetch();
+    return (userLoggedInArray.length > 0) ? true : false;
+};
+
 Template.userRow.events({
     'change .newRole' : function (event) {
         newUserRole = event.target.value;
@@ -75,10 +85,19 @@ Template.userRow.events({
             function (error, result) {
                 if (error) {
                     FlashMessages.sendError(error.message);
-                } else {
-                    FlashMessages.sendSuccess("User was deleted!");
-                }
-                ;
+                };
             });
+    },
+
+    'click .logoutUser' : function (event) {
+        Meteor.call('logoutUser',
+        {
+            userId: this._id
+        },
+        function (error, result) {
+            if (error) {
+                FlashMessages.sendError(error.message);
+            }
+        });
     }
 });

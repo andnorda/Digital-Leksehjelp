@@ -1,3 +1,11 @@
+Meteor.subscribe("all-users");
+Meteor.subscribe("loggedInUsers");
+
+FlashMessages.configure({
+    autoHide: false
+});
+
+
 Handlebars.registerHelper('eachProperty', function(context, options) {
     var ret = "";
     for(var prop in context)
@@ -27,12 +35,4 @@ Handlebars.registerHelper('optionsSelected', function(values, defaultValue, opti
         }
     }
     return new Handlebars.SafeString(buffer);
-});
-
-Deps.autorun(function () {
-    Meteor.subscribe("all-users");
-});
-
-FlashMessages.configure({
-    autoHide: false
 });

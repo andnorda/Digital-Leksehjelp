@@ -55,11 +55,15 @@
         {{/each}}
         <td>{{ profile.firstName }}</td>
         <td>
-            <select class="newRole">
-                {{{optionsSelected globalRoles profile.role }}}
-            </select>
+            {{#isolate}}
+                <select class="newRole">
+                    {{{optionsSelected globalRoles profile.role }}}
+                </select>
+            {{/isolate}}
         </td>
         <td><button type="button" class="btn btn-xs btn-danger deleteUser">Slett</button></td>
-        <td><button type="button" class="btn btn-xs btn-danger logoutUser">Logg ut</button></td>
+        {{#if remoteUserLoggedIn}}
+            <td><button type="button" class="btn btn-xs btn-danger logoutUser">Logg ut</button></td>
+        {{/if}}
     </tr>
 </template>
