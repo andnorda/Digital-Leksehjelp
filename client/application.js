@@ -34,6 +34,5 @@ Deps.autorun(function () {
 });
 
 FlashMessages.configure({
-    autoHide: true,
-    hideDelay: 10000
+    autoHide: false
 });
