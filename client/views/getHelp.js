@@ -49,25 +49,11 @@ Template.getHelp.studentsInFront = function () {
 };
 
 Template.getHelp.events({
-    'click input#add' : function () {
-        Clicks.update(Clicks.findOne()._id, { $inc: { clicks: 1}});
-        if (typeof console !== 'undefined') {
-            console.log("You pressed the button");
-        };
-    },
-
     'click button#getHelp' : function () {
         window.open(this.videoConferenceUrl);
         StudentSessions.update(
             { _id: Session.get("studentSessionId") },
             { $set: { state: STUDENT_SESSION_STATE.GETTING_HELP } });
-    },
-
-    'click input#remove' : function () {
-        Clicks.update(Clicks.findOne()._id, { $inc: { clicks: -1 }});
-        if (typeof console !== 'undefined') {
-            console.log("You pressed the removal button");
-        };
     },
 
     'click button#createSession' : function () {
