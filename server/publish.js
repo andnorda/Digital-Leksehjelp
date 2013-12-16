@@ -46,3 +46,10 @@ Meteor.publish("student-queue", function () {
         handle.stop();
     });
 });
+
+Meteor.publish("subjects", function () {
+    var user = Meteor.users.findOne(this.userId);
+    if (!user) { return null; }
+
+    return Subjects.find({});
+});

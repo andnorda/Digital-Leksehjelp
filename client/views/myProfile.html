@@ -1,0 +1,43 @@
+<template name="myProfile">
+    <h1>Dine valgte fag</h1>
+    {{> mySubjectsTable}}
+
+    <h1>Velg dine fag</h1>
+    {{> mySubjectsSelector}}
+
+    <h1>Legg til fag</h1>
+    {{> addSubject}}
+</template>
+
+<template name="mySubjectsTable">
+    <table>
+        <tr>
+            <th>Valgte fag</th>
+        </tr>
+        {{#each mySubjects}}
+            <tr>
+                <td>{{this}}</td>
+            </tr>
+        {{/each}}
+    </table>
+</template>
+
+<template name="mySubjectsSelector">
+    <div>
+        <input type="hidden" id="mySubjects" data-placeholder="Velg dine fag">
+            <!-- {{#each subjects}}
+                <option>{{this.name}}</option>
+            {{/each}} -->
+        </input>
+    </div>
+    <p>
+        <button type="button" class="btn btn-s btn-primary" id="saveMySubjects">Lagre</button>
+    </p>
+</template>
+
+<template name="addSubject">
+    <input type="text" size="30" id="newSubject" placeholder="Skriv inn nytt fag"/>
+    <p>
+        <button type="button" class="btn btn-s btn-primary" id="saveNewSubject">Legg til</button>
+    </p>
+</template>

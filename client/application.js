@@ -1,10 +1,11 @@
 Meteor.subscribe("all-users");
 Meteor.subscribe("loggedInUsers");
+Meteor.subscribe("subjects");
+Meteor.subscribe("student-queue");
 
 FlashMessages.configure({
     autoHide: false
 });
-
 
 Handlebars.registerHelper('eachProperty', function(context, options) {
     var ret = "";

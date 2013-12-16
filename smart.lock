@@ -4,7 +4,8 @@
     "basePackages": {
       "iron-router": {},
       "bootstrap-3": {},
-      "flash-messages": {}
+      "flash-messages": {},
+      "select2": {}
     },
     "packages": {
       "iron-router": {
@@ -21,6 +22,11 @@
         "git": "https://github.com/camilosw/flash-messages.git",
         "tag": "v0.2.1",
         "commit": "62cf1ee531684808b91dbe3ff15e63f6d5af1c66"
+      },
+      "select2": {
+        "git": "https://github.com/nate-strauser/meteor-select2.git",
+        "tag": "v3.4.5",
+        "commit": "4a8d05582b949a14f0ee217c185166abbf112822"
       }
     }
   }

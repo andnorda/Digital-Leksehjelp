@@ -38,6 +38,7 @@
             <th>E-post</th>
             <th>Verifisert?</th>
             <th>Fornavn</th>
+            <th>Valgte fag</th>
             <th>Rolle</th>
         </tr>
         {{#each users }}
@@ -54,6 +55,11 @@
             <td>{{this.verified}}</td>
         {{/each}}
         <td>{{ profile.firstName }}</td>
+        <td>
+            {{#each profile.subjects}}
+                {{this}}
+            {{/each}}
+        </td>
         <td>
             {{#isolate}}
                 <select class="newRole">
