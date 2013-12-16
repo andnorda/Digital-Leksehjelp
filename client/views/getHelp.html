@@ -1,42 +1,59 @@
 <template name="getHelp">
-    <div class="panel panel-default" style="width:50%; margin-left:auto; margin-right:auto;">
-        <div class="panel-heading" style="text-align:center;">
-            <h3>Få leksehjelp</h3>
-        </div>
-        <div class="panel-body" style="text-align:center;">
-                <!-- <p>Antall personer i kø: {{ queueSize }}</p> -->
+    <div id="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
 
-                <form role="form">
-                  <div class="form-group" style="width:100%;">
-                    {{> subjectSelector }}
-                  </div>
-                  <div class="form-group">
-                    {{> gradeSelector }}
-                  </div>
-                  <!-- <div class="form-group">
-                    <label for="topic">Emne:</label>
-                    <input id="topic" type="text" size="20" />
-                  </div> -->
-                <button type="button" class="btn btn-success" id="createSession">
-                    Få leksehjelp
-                </button>
-                </form>
+                    <div id="getHelpPanel" class="panel panel-default" style="width: 120%;">
+                        <div class="panel-heading" style="text-align:center;">
+                            <h1>Få leksehjelp</h1>
+                        </div>
+                        <div class="panel-body" style="text-align:center; padding: 3% 7%;">
+                                <p style="padding: 3%;">
+                                    Velg fra nedtrekksmenyen:
+                                </p>
+                                <form role="form">
+                                  <div class="form-group fullwidth">
+                                    {{> subjectSelector }}
+                                  </div>
+                                  <div class="form-group">
+                                    {{> gradeSelector }}
+                                  </div>
 
-                {{#with studentSession }}
-                    <p>
-                        Status: {{{ state }}}
-                        <p>
-                            {{#if stateWaiting }}
-                                Det er {{ studentsInFront }} foran deg i køen.
-                            {{/if}}
-                            {{#if stateReady }}
-                                <button type="button" class="btn btn-success" id="getHelp">
-                                Gå til rom
-                                </button>
-                            {{/if}}
-                        </p>
-                    </p>
-                {{/with}}
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-success fullwidth" id="createSession">
+                                            <div style="font-size:20px;">
+                                                Få leksehjelp nå
+                                            </div>
+                                        </button>
+                                    </div>
+                                </form>
+
+                                {{#with studentSession }}
+                                    <p>
+                                        Status: {{{ state }}}
+                                        <p>
+                                            {{#if stateWaiting }}
+                                                Det er {{ studentsInFront }} foran deg i køen.
+                                            {{/if}}
+                                            {{#if stateReady }}
+                                                <button type="button" class="btn btn-success" id="getHelp">
+                                                Gå til rom
+                                                </button>
+                                            {{/if}}
+                                        </p>
+                                    </p>
+                                {{/with}}
+                        </div>
+                        <div class="panel-footer" style="text-align:center; padding: 5% 10%;">
+                            Åpningstider: Mandag til torsdag: kl. 17:00 - 21:00
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -57,7 +74,7 @@
 <template name="gradeSelector">
     <div class="btn-group" style="width:100%;">
         <button type="button" class="btn btn-lg dropdown-toggle" data-toggle="dropdown" style="width:100%;">
-            <div id="chosenGrade" style="float:center;">Velg ønsket trinn</div><span class="caret" style="float:right; margin-top:-15px;"></span>
+            <div id="chosenGrade" style="float:center;">Velg ditt trinn</div><span class="caret" style="float:right; margin-top:-15px;"></span>
         </button>
         <ul class="dropdown-menu" role="menu" style="width:100%;">
             {{#each grades }}

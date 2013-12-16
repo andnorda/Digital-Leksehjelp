@@ -1,11 +1,11 @@
 <head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Røde Kors - Digital leksehjelp</title>
-
 </head>
 
 <body>
@@ -15,16 +15,77 @@
 
 <template name="layout">
     {{yield 'header'}}
-    {{yield }}
+    {{yield}}
     {{yield 'footer'}}
 </template>
 
 <template name="header">
-    <h4>Header no login</h4>
+    <div id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4"><img class="img-responsive" src="NRX_pos_HVIT bakgrunn_PNG_resized.png" /></div>
+                <div class="col-md-4" style="border-left: thin solid #ccc;">
+                    <div class="header-content">
+                        <h1>Digitalleksehjelp.no</h1>
+                    </div>
+                </div>
+                <div class="col-md-4" style="margin-top: 3%;">
+                    <a href="http://www.rodekors.no">
+                        <button type="button" class="btn btn-primary fullwidth">
+                            Klikk her for Røde Kors.no
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <template name="footer">
-    <h4>This be footer</h4>
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h1>Om leksehjelpen</h1>
+                    <hr>
+                    <p>
+                        Røde Kors leksehjelp skal være en møteplass
+                        der frivillige leksehjelpere legger til rette
+                        for mestring, motivasjon, og et godt læringsmiljø.
+                        På leksehjelpen møter elevene voksne med fagkunnskap
+                        og erfaring.
+                    </p>
+                    <button type="button" class="btn btn-small btn-primary">Mer om tjenesten</button>
+                </div>
+                <div class="col-md-4">
+                    <h1>Tekniske krav</h1>
+                    <hr>
+                    <p>
+                        Løsningen trenger ingen tredjeparts-programmer,
+                        men baserer seg på moderne webteknologi. Foreløpig
+                        støtter vi bare nettleserne <a href="http://www.mozilla.org/nb-NO/firefox/new/">Firefox</a> og <a href="https://www.google.com/intl/no/chrome/browser/">Chrome</a>.
+                    </p>
+                    <p>
+                        For at tjenesten skal gi noe verdi, trenger du
+                        et webkamera og mikrofon.
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h1>Kort innføring</h1>
+                    <hr>
+                    <p>
+                        Fra boksen i toppfeltet kan du velge faget du
+                        trenger hjelp til, samt ditt trinn. Dette gir
+                        våre frivillige den nødvendige informasjonen
+                        de trenger for å hjelpe deg. Når du har trykket
+                        på «Få leksehjelp nå»-knappen, vil du bli satt
+                        i kø for hjelp. Jo færre det er foran deg i køen,
+                        jo raskere vil du få hjelp.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <template name="loggedInHeader">
