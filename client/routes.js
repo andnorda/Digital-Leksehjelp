@@ -1,8 +1,19 @@
 var checkIfSignedIn = function () {
+    Deps.autorun(function () {
+        if (Meteor.user()) {
+            if (Meteor.user().profile.forceLogOut) {
+                Meteor.call('resetForceLogOut',
+                    {
+                        userId: Meteor.user()._id
+                    });
+                window.location.reload();
+            }
+        }
+    });
     if (!Meteor.user()) {
         this.render('login');
         this.stop();
-    };
+    }
 }
 
 BaseController = RouteController.extend({
