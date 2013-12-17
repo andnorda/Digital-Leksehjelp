@@ -29,23 +29,12 @@
                                             </div>
                                         </button>
                                     </div>
+                                    {{#isolate}}
+                                        {{#if validationError }}
+                                            <div class="alert alert-danger">{{ validationError }}</div>
+                                        {{/if}}
+                                    {{/isolate}}
                                 </form>
-
-                                {{#with studentSession }}
-                                    <p>
-                                        Status: {{{ state }}}
-                                        <p>
-                                            {{#if stateWaiting }}
-                                                Det er {{ studentsInFront }} foran deg i køen.
-                                            {{/if}}
-                                            {{#if stateReady }}
-                                                <button type="button" class="btn btn-success" id="getHelp">
-                                                Gå til rom
-                                                </button>
-                                            {{/if}}
-                                        </p>
-                                    </p>
-                                {{/with}}
                         </div>
                         <div class="panel-footer" style="text-align:center; padding: 5% 10%;">
                             Åpningstider: Mandag til torsdag: kl. 17:00 - 21:00

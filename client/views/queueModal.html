@@ -1,0 +1,36 @@
+<template name="queueModal">
+    <div class="modal fade" id="queueModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Kø for Digital Leksehjelp</h4>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    {{> queueModalBody}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="leaveQueue" class="btn btn-danger" data-dismiss="modal">Forlat kø</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="queueModalBody">
+    {{#with studentSession }}
+        <p>
+            Status: {{{ state }}}
+            <p>
+                {{#if stateWaiting }}
+                    Det er {{ studentsInFront }} foran deg i køen.
+                {{/if}}
+                {{#if stateReady }}
+                    <button type="button" class="btn btn-success" id="getHelp">
+                    Gå til rom
+                    </button>
+                {{/if}}
+            </p>
+        </p>
+    {{/with}}
+</template>
