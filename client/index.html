@@ -5,12 +5,22 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Røde Kors - Digital leksehjelp</title>
+    <script src="http://iswebrtcready.appear.in/apiv2.js"></script>
+    <script>
+        API.isAppearinCompatible(function (data) {
+            if (!data.isSupported) {
+                $('#notSupportedModal').modal();
+            }
+        });
+    </script>
 </head>
 
 <body>
     {{> layout}}
     {{> flashMessages}}
     {{> queueModal}}
+    {{> notSupportedModal}}
+
 </body>
 
 <template name="layout">

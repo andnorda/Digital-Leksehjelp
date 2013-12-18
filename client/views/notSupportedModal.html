@@ -1,0 +1,23 @@
+<template name="notSupportedModal">
+    <div class="modal fade" id="notSupportedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Røde Kors - Digital leksehjelp  </h4>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    {{> notSupportedModalBody}}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="notSupportedModalBody">
+    <h1>Beklager, nettleseren din er ikke støttet!</h1>
+
+    <p>
+        Foreløpig støtter vi bare nettleserne <a href="https://www.google.com/intl/no/chrome/browser/">Chrome</a>, <a href="http://www.mozilla.org/nb-NO/firefox/new/">Firefox</a> og <a href="http://www.opera.com/computer">Opera</a>. Vennligst last ned en av disse, for å benytte tjenesten vår.
+    </p>
+</template>
