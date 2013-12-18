@@ -52,7 +52,13 @@
         <td>{{ username }}</td>
         {{#each emails}}
             <td>{{this.address}}</td>
-            <td>{{this.verified}}</td>
+            <td>
+                {{#if this.verified}}
+                    Ja
+                {{else}}
+                    Nei
+                {{/if}}
+            </td>
         {{/each}}
         <td>{{ profile.firstName }}</td>
         <td>
