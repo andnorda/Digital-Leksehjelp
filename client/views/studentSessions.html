@@ -1,6 +1,5 @@
 <template name="studentSessions">
     {{#if currentUser }}
-        <h1>Du er nå logget inn som lærer</h1>
         <h2>Elever som venter i kø</h2>
 
         {{> studentSessionsTable}}
@@ -14,14 +13,13 @@
                 <th>Kø id</th>
                 <th>Fag</th>
                 <th>Trinn</th>
-                <th>Emne</th>
                 <th></th>
                 <th>Status</th>
                 <th>Aktiv frivillig</th>
-                <th>Slett</th>
+                <th></th>
             </tr>
-            {{#each studentSessions }}
-                {{> studentSessionItem }}
+            {{#each myStudentSessions }}
+                {{> studentSessionRow }}
             {{/each}}
         </table>
 
@@ -31,24 +29,22 @@
                 <th>Kø id</th>
                 <th>Fag</th>
                 <th>Trinn</th>
-                <th>Emne</th>
                 <th></th>
                 <th>Status</th>
                 <th>Aktiv frivillig</th>
-                <th>Slett</th>
+                <th></th>
             </tr>
-            {{#each studentSessions }}
-                {{> studentSessionItem }}
+            {{#each otherStudentSessions }}
+                {{> studentSessionRow }}
             {{/each}}
         </table>
 </template>
 
-<template name="studentSessionItem">
+<template name="studentSessionRow">
     <tr>
         <td>{{ queueNr }}</td>
         <td>{{ subject }}</td>
         <td>{{ grade }}</td>
-        <td>{{ topic }}</td>
         <td>
             <div id="videoUrl">
                 <div class="startTutoring"><button>Start leksehjelp</button></div>
