@@ -38,19 +38,3 @@ Template.mySubjectsSelector.events({
 Template.mySubjectsTable.mySubjects = function () {
     return Meteor.user().profile.subjects;
 };
-
-Template.addSubject.events({
-    'click #saveNewSubject' : function () {
-        Meteor.call('insertNewSubject',
-            {
-                subject: $('#newSubject').val().trim()
-            },
-            function (error, result) {
-                if (error) {
-                    FlashMessages.sendError(error.message);
-                } else {
-                    $('#newSubject').val("");
-                }
-            });
-    }
-});

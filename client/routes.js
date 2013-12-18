@@ -42,10 +42,16 @@ Router.map(function () {
         template: 'studentSessions'
     });
 
-    this.route('admin', {
+    this.route('userAdmin', {
         controller: LoginController,
-        path: '/frivillig/admin',
+        path: '/frivillig/admin/brukere',
         template: 'userAdmin'
+    });
+
+    this.route('subjectAdmin', {
+        controller: LoginController,
+        path: '/frivillig/admin/fag',
+        template: 'subjectAdmin'
     });
 
     this.route('myProfile', {

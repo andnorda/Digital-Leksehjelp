@@ -1,0 +1,28 @@
+<template name="subjectAdmin">
+    <h3>Administrér fag</h3>
+    {{> addSubject}}
+    {{> subjectsTable}}
+</template>
+
+<template name="addSubject">
+    <h1>Legg til fag</h1>
+    <input type="text" size="30" id="newSubject" placeholder="Skriv inn nytt fag"/>
+    <p>
+        <button type="button" class="btn btn-s btn-primary" id="saveNewSubject">Legg til</button>
+    </p>
+</template>
+
+<template name="subjectsTable">
+    <h3>Alle fag</h3>
+    <table border="0">
+        <tr>
+            <th>Fag</th>
+        </tr>
+        {{#each subjects }}
+            <tr>
+                <td>{{this.name}}</td>
+                <td><button type="button" class="btn btn-xs btn-danger deleteSubject">Slett</button>
+            </tr>
+        {{/each}}
+    </table>
+</template>

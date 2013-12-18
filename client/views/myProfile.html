@@ -5,8 +5,6 @@
     <h1>Velg dine fag</h1>
     {{> mySubjectsSelector}}
 
-    <h1>Legg til fag</h1>
-    {{> addSubject}}
 </template>
 
 <template name="mySubjectsTable">
@@ -32,12 +30,5 @@
     </div>
     <p>
         <button type="button" class="btn btn-s btn-primary" id="saveMySubjects">Lagre</button>
-    </p>
-</template>
-
-<template name="addSubject">
-    <input type="text" size="30" id="newSubject" placeholder="Skriv inn nytt fag"/>
-    <p>
-        <button type="button" class="btn btn-s btn-primary" id="saveNewSubject">Legg til</button>
     </p>
 </template>
