@@ -13,6 +13,8 @@ Template.studentSessionItem.events({
             { _id: this._id },
             { $set: { state: STUDENT_SESSION_STATE.READY, tutor: Meteor.user().profile.firstName }
         });
+        Session.set("studentSessionId", this._id);
+        $('#endSessionModal').modal();
     },
 
     'click .deleteSession' : function () {
