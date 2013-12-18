@@ -1,6 +1,6 @@
 // Use DL for namespacing Digital Leksehjelp
 Meteor.methods({
-    DLcreateUser: function (options) {
+    createUserOnServer: function (options) {
         var user = Meteor.users.findOne(this.userId);
         if (!user) { throw new Meteor.Error(401, "You are not logged in.") };
 

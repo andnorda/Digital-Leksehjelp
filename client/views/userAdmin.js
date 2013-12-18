@@ -13,7 +13,7 @@ Template.addUser.events({
         var firstName = $('#firstName').val();
         var role = $('#role').val();
         Meteor.call(
-            'DLcreateUser',
+            'createUserOnServer',
             {
                 username: email,
                 email: email,
