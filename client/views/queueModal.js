@@ -1,7 +1,6 @@
 Template.queueModal.events({
     'click button#leaveQueue' : function () {
         StudentSessions.remove({ _id: Session.get("studentSessionId") });
-        return false;
     }
 });
 

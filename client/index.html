@@ -100,9 +100,11 @@
 
 <template name="loggedInHeader">
     {{#if currentUser }}
-        <h3>I am logged in as {{ currentUserEmail }}! \o/</h3>
         {{#if isAdmin }}
+            <h3>Digital Leksehjelp - Administrator</h3>
             <a href="/frivillig/admin">Administrer brukere</a>
+        {{else}}
+            <h3>Digital Leksehjelp - Frivillig</h3>
         {{/if}}
         <a href="/frivillig">Hjelp elever</a>
         <a href="/frivillig/profil">Min profil</a>
