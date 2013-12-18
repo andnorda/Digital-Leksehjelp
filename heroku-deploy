@@ -34,7 +34,7 @@ cd bundle/;
 git init;
 
 echo "Creating app on Heroku ...";
-heroku create $APPNAME;
+heroku create $APPNAME --region eu;
 
 echo "Creating package.json ...";
 cat << EOF > package.json
@@ -57,10 +57,9 @@ echo "web: node main.js" > Procfile;
 echo "Adding Heroku as git remote ...";
 git remote add heroku git@heroku.com:$APPNAME.git;
 
-echo "Adding mongohq-addon and setting MONGO_URL ...";
-heroku addons:add mongohq:sandbox;
-MONGOHQ_URL=$(heroku config:get MONGOHQ_URL);
-heroku config:set MONGO_URL=$MONGOHQ_URL;
+echo "Adding mongolab-addon and setting MONGO_URL ...";
+heroku addons:add mongolab:sandbox;
+heroku config:set MONGO_URL=$(heroku config:get MONGOLAB_URI);
 
 echo "Deploying app to Heroku ...";
 git add .;
