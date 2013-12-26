@@ -4,9 +4,14 @@ Template.studentSessionsTable.myStudentSessions = function () {
     };
     var subjects = Meteor.user().profile.subjects;
     for (var i = 0; i < subjects.length; i++) {
-        query.$or.push({ "subject": subjects[i] });
+        query.$or.push({ "subject": subjects[i].subjectName });
     };
-    return StudentSessions.find(query);
+
+    if (query.$or.length === 0) {
+        return null;
+    } else {
+        return StudentSessions.find(query);
+    }
 };
 
 Template.studentSessionsTable.otherStudentSessions = function () {
@@ -15,9 +20,14 @@ Template.studentSessionsTable.otherStudentSessions = function () {
     };
     var subjects = Meteor.user().profile.subjects;
     for (var i = 0; i < subjects.length; i++) {
-        query.$and.push({ "subject": { $ne: subjects[i] } });
+        query.$and.push({ "subject": { $ne: subjects[i].subjectName } });
     };
-    return StudentSessions.find(query);
+
+    if (query.$and.length === 0) {
+        return null;
+    } else {
+        return StudentSessions.find(query);
+    }
 };
 
 Template.studentSessionRow.events({

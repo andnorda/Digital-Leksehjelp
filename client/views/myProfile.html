@@ -14,7 +14,7 @@
         </tr>
         {{#each mySubjects}}
             <tr>
-                <td>{{this}}</td>
+                <td>{{this.subjectName}}</td>
             </tr>
         {{/each}}
     </table>
@@ -23,9 +23,6 @@
 <template name="mySubjectsSelector">
     <div>
         <input type="hidden" id="mySubjects" data-placeholder="Velg dine fag">
-            <!-- {{#each subjects}}
-                <option>{{this.name}}</option>
-            {{/each}} -->
         </input>
     </div>
     <p>

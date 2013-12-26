@@ -31,14 +31,15 @@ Meteor.publish("user-data", function () {
 Meteor.publish("student-queue", function () {
     var self = this;
     var id = Random.id();
-    var handle = StudentSessions.find({ state: STUDENT_SESSION_STATE.WAITING }).observeChanges({
-        added: function (id, fields) {
-            self.added("student-queue", id, { queueNr: fields.queueNr });
-        },
-        removed: function (id) {
-            self.removed("student-queue", id);
-        }
-    });
+    var handle = StudentSessions.find({ state: STUDENT_SESSION_STATE.WAITING })
+        .observeChanges({
+            added: function (id, fields) {
+                self.added("student-queue", id, { queueNr: fields.queueNr });
+            },
+            removed: function (id) {
+                self.removed("student-queue", id);
+            }
+        });
 
     self.ready();
 

@@ -65,6 +65,13 @@ hr {
     border-top: 1px solid #ccc;
 }
 
+.disabled-li,
+.disabled-li:visited ,
+.disabled-li:active,
+.disabled-li:hover {
+    color:#aaa !important;
+}
+
 #main {
     width: 100%;
     position: relative;

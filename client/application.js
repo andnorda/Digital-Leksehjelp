@@ -1,10 +1,48 @@
 Meteor.subscribe("all-users");
 Meteor.subscribe("loggedInUsers");
 Meteor.subscribe("subjects");
+Meteor.subscribe("availableSubjects")
 Meteor.subscribe("student-queue");
+
+var lastUserId;
+Deps.autorun(function () {
+    if(Meteor.user()) {
+        if (Meteor.user().profile && Meteor.user().profile.firstName) {
+            lastUserId = Meteor.user()._id;
+            if (Meteor.user().profile.setSubjectsAvailable) {
+                Meteor.call('setSubjectsAvailable',
+                {
+                    subjects: Meteor.user().profile.subjects
+                });
+            }
+            if (Meteor.user().profile.forceLogOut) {
+                Meteor.call('resetForceLogOut',
+                    {
+                        userId: Meteor.user()._id
+                    });
+                window.location.reload();
+            }
+        }
+    } else {
+        if (lastUserId) {
+            Meteor.call('userLoggedOut',
+            {
+                userId: lastUserId
+            });
+            lastUserId = null;
+        }
+    }
+});
 
 FlashMessages.configure({
     autoHide: false
+});
+
+Handlebars.registerHelper('ifGreaterThanZero', function(v1, options) {
+  if(v1 > 0) {
+    return options.fn(this);
+  }
+  return options.inverse(this);
 });
 
 Handlebars.registerHelper('eachProperty', function(context, options) {

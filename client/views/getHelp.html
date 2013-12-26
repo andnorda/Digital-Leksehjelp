@@ -54,7 +54,11 @@
         </button>
         <ul class="dropdown-menu" role="menu" style="width:100%;">
             {{#each subjects }}
-                <li class="subjects" role="presentation">{{this}}</li>
+                {{#ifGreaterThanZero this.availableVolunteers}}
+                    <li class="subjects" role="presentation">{{this.name}}</li>
+                {{else}}
+                    <li class="subjects disabled-li" role="presentation">{{this.name}}</li>
+                {{/ifGreaterThanZero}}
             {{/each}}
         </ul>
         </div>

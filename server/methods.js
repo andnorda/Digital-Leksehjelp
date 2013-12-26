@@ -9,6 +9,10 @@ Meteor.methods({
         check(options.profile.firstName, String);
         check(options.profile.role, String);
 
+        options.profile.setSubjectsAvailable = true;
+        options.profile.forceLogOut = false;
+        options.profile.subjects = [];
+
         if (user.profile.role === ROLES.ADMIN) {
             var userId = Accounts.createUser(options);
             Accounts.sendEnrollmentEmail(userId);

@@ -48,17 +48,24 @@ Template.getHelp.events({
                 $('#queueModal').modal();
             });
         }
+    },
+
+    'click .disabled-li' : function (event) {
+        event.preventDefault();
+        return false;
     }
 });
 
 // === SUBJECTSELECTOR ===
 Template.subjectSelector.subjects = function () {
-    return COURSES;
+    return Subjects.find({});
 };
 
 Template.subjectSelector.events({
-    'click .subjects' : function () {
-        $('#chosenSubject').text(this);
+    'click .subjects' : function (event) {
+        if(!$(event.target).hasClass("disabled-li")) {
+            $('#chosenSubject').text(this.name);
+        }
     }
 });
 
