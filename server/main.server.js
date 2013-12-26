@@ -1,16 +1,19 @@
 // Server only logic, this will NOT be sent to the clients.
 
 Meteor.startup(function () {
-    //TODO(martin): This needs to be set to a username and password agreed with Red Cross
     if(Meteor.users.find().count() === 0) {
         console.log("WARNING: NO USERS, DEFAULT ADMIN ACCOUNT ADDED");
         var options = {
-            username: 'admin',
-            password: 'admin',
+            username: 'orkis@redcross.no',
+            password: 'orkisadmin',
             profile: {
-                role: ROLES.ADMIN
+                role: ROLES.ADMIN,
+                setSubjectsAvailable: true,
+                forceLogOut: false,
+                subjects: [],
+                firstName: 'Orkis'
             },
-            email: 'martin@iterate.no'
+            email: 'orkis@redcross.no'
         };
         Accounts.createUser(options);
     };
