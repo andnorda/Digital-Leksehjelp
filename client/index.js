@@ -5,3 +5,9 @@ Template.loggedInHeader.currentUserEmail = function () {
 Template.loggedInHeader.isAdmin = function () {
     return Meteor.user().profile.role === ROLES.ADMIN;
 };
+
+Template.footer.events({
+    'click button#moreInfo' : function () {
+        $('#moreInfoModal').modal();
+    }
+});
