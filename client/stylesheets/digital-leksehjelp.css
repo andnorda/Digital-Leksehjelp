@@ -72,14 +72,21 @@ hr {
     color:#aaa !important;
 }
 
+/* Width based on Twitter Bootstrap media queries */
+@media (min-width: 992px) {
+    #main {
+        background: url('../../omsorg_resized_50_quality_cropped.jpg') no-repeat;
+    }
+}
+
 #main {
     width: 100%;
     position: relative;
     padding: 20px 0;
-    background: url('../../omsorg_resized_50_quality_cropped.jpg') no-repeat;
     background-color: #f0f0f0;
-    -webkit-background-size: contain;
-    -moz-background-size: contain;
-    -o-background-size: contain;
-    background-size: contain;
+    background-position: -150px;
+    -webkit-background-size: auto 100%;
+    -moz-background-size: auto 100%;
+    -o-background-size: auto 100%;
+    background-size: auto 100%;
 }
