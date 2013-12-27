@@ -1,8 +1,10 @@
 Meteor.subscribe("all-users");
 Meteor.subscribe("loggedInUsers");
 Meteor.subscribe("subjects");
-Meteor.subscribe("availableSubjects")
+Meteor.subscribe("availableSubjects");
 Meteor.subscribe("student-queue");
+Meteor.subscribe("config");
+Meteor.subscribe("openingHours");
 
 var lastUserId;
 Deps.autorun(function () {

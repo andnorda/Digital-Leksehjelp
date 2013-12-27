@@ -19,6 +19,15 @@ Template.getHelp.validationError = function () {
     return validationError;
 };
 
+Template.getHelp.openingHours = function () {
+    var openingHoursArray = Config.find({ name: "openingHours" }).fetch();
+
+    if (openingHoursArray.length > 0) {
+        return Config.find({ name: "openingHours" }).fetch()[0].text;
+    }
+    return "";
+};
+
 Template.getHelp.events({
     'click button#createSession' : function () {
         Session.set("videoConferenceUrl", generateRandomAppearInLink());

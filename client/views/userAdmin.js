@@ -101,3 +101,27 @@ Template.userRow.events({
         });
     }
 });
+
+// === OPENINGHOURS ===
+Template.openingHours.openingHours = function () {
+    var openingHoursArray = Config.find({ name: "openingHours" }).fetch();
+
+    if (openingHoursArray.length > 0) {
+        return Config.find({ name: "openingHours" }).fetch()[0].text;
+    }
+    return "";
+};
+
+Template.openingHours.events({
+    'click button#updateOpeningHours' : function () {
+        Meteor.call('upsertOpeningHours',
+            {
+                newOpeningHours: $('#openingHours').val().trim()
+            },
+            function (error, data) {
+                if (error) {
+                    FlashMessages.sendError(error.message);
+                }
+            });
+    }
+})

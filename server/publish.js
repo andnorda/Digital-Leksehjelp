@@ -54,3 +54,16 @@ Meteor.publish("subjects", function () {
 
     return Subjects.find({});
 });
+
+Meteor.publish("openingHours", function () {
+    return Config.find({ name: "openingHours" });
+});
+
+Meteor.publish("config", function () {
+    var user = Meteor.users.findOne(this.userId);
+    if (!user) { return null; }
+
+    if (user.profile.role === ROLES.ADMIN) {
+        return Config.find({});
+    }
+});
