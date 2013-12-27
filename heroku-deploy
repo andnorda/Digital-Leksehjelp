@@ -63,8 +63,11 @@ heroku config:set MONGO_URL=$(heroku config:get MONGOLAB_URI);
 
 echo "Deploying app to Heroku ...";
 git add .;
+echo "Changes added ...";
 git commit -q -m "New version of the app. See Meteor repo for commit history.";
-git push -f -q heroku master;
+echo "Commit created ...";
+echo "Start pushing ...";
+git push -f heroku master;
 cd ..;
 echo "Deleting bundle-folder ...";
 rm -rf bundle/;
