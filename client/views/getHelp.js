@@ -45,8 +45,8 @@ Template.getHelp.events({
             validationError = null;
             validationErrorDep.changed();
             StudentSessions.insert({
-                subject: $('#chosenSubject').text(),
-                grade: $('#chosenGrade').text(),
+                subject: chosenSubject,
+                grade: chosenGrade,
                 videoConferenceUrl: Session.get("videoConferenceUrl"),
                 state: STUDENT_SESSION_STATE.WAITING,
                 queueNr: queueNr
@@ -54,6 +54,7 @@ Template.getHelp.events({
                 if (error) { return null; };
                 Session.set("studentSessionId", id);
                 Session.set("queueNr", queueNr);
+                Session.set("subject", chosenSubject);
                 $('#queueModal').modal();
             });
         }

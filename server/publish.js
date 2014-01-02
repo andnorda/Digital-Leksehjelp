@@ -34,7 +34,7 @@ Meteor.publish("student-queue", function () {
     var handle = StudentSessions.find({ state: STUDENT_SESSION_STATE.WAITING })
         .observeChanges({
             added: function (id, fields) {
-                self.added("student-queue", id, { queueNr: fields.queueNr });
+                self.added("student-queue", id, { queueNr: fields.queueNr, subject: fields.subject });
             },
             removed: function (id) {
                 self.removed("student-queue", id);

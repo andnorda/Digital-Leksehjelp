@@ -18,9 +18,15 @@ Template.queueModalBody.stateWaiting = function () {
     return Template.queueModalBody.studentSession().state == STUDENT_SESSION_STATE.WAITING;
 };
 
+Template.queueModalBody.subject = function () {
+    return Session.get("subject");
+};
+
 Template.queueModalBody.studentsInFront = function () {
-    var studentsInFront = StudentQueue.find({ queueNr: { $lt: Session.get("queueNr") }}).count();
-    return studentsInFront;
+    return StudentQueue.find({ $and: [
+            { queueNr: { $lt: Session.get("queueNr") } },
+            { subject: Session.get("subject") }
+        ]}).count();
 };
 
 Template.queueModalBody.stateReady = function () {
