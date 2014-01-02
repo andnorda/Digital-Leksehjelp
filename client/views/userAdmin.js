@@ -65,7 +65,7 @@ Template.userRow.remoteUserLoggedIn = function () {
 Template.userRow.events({
     'change .newRole' : function (event) {
         newUserRole = event.target.value;
-        Meteor.call('updateUser',
+        Meteor.call('updateUserRole',
             {
                 userId: this._id,
                 role: newUserRole
