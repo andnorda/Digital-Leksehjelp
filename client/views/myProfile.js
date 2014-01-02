@@ -48,3 +48,17 @@ Template.mySubjectsTable.mySubjects = function () {
     }
     return null;
 };
+
+Template.mySubjectsTable.events({
+    'click button.removeSubjectFromMyProfile' : function () {
+        Meteor.call('removeSubjectFromMyProfile',
+            {
+                subject: this
+            },
+            function (error, result) {
+                if (error) {
+                    FlashMessages.sendError(error.message);
+                }
+            });
+    }
+});

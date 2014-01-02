@@ -4,17 +4,22 @@
 
     <h1>Velg dine fag</h1>
     {{> mySubjectsSelector}}
-
 </template>
 
 <template name="mySubjectsTable">
     <table>
         <tr>
             <th>Valgte fag</th>
+            <th></th>
         </tr>
         {{#each mySubjects}}
             <tr>
                 <td>{{this.subjectName}}</td>
+                <td>
+                <button
+                    type="button"
+                    class="btn btn-xs btn-danger removeSubjectFromMyProfile">Slett</button>
+                </td>
             </tr>
         {{/each}}
     </table>
