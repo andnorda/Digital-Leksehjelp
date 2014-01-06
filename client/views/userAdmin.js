@@ -107,7 +107,7 @@ Template.openingHours.openingHours = function () {
     var openingHoursArray = Config.find({ name: "openingHours" }).fetch();
 
     if (openingHoursArray.length > 0) {
-        return Config.find({ name: "openingHours" }).fetch()[0].text;
+        return openingHoursArray[0].text;
     }
     return "";
 };
