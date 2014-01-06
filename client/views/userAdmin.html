@@ -3,6 +3,7 @@
     {{> addUser}}
     {{> usersTable}}
     {{> openingHours}}
+    {{> serviceClosedAdmin}}
 </template>
 
 <template name="addUser">
@@ -24,11 +25,13 @@
 </template>
 
 <template name="roleSelector">
-    <select id="role">
-        {{#eachProperty roles }}
-            <option>{{value}}</option>
-        {{/eachProperty}}
-    </select>
+    {{#isolate}}
+        <select id="role">
+            {{#eachProperty roles }}
+                <option>{{value}}</option>
+            {{/eachProperty}}
+        </select>
+    {{/isolate}}
 </template>
 
 <template name="usersTable">
@@ -42,13 +45,16 @@
             <th>Valgte fag</th>
             <th>Rolle</th>
         </tr>
-        {{#each users }}
-            {{> userRow }}
-        {{/each}}
+        {{#isolate}}
+            {{#each users }}
+                {{> userRow }}
+            {{/each}}
+        {{/isolate}}
     </table>
 </template>
 
 <template name="userRow">
+    {{#isolate}}
     <tr>
         <td>{{ username }}</td>
         {{#each emails}}
@@ -79,6 +85,7 @@
             <td><button type="button" class="btn btn-xs btn-danger logoutUser">Logg ut</button></td>
         {{/if}}
     </tr>
+    {{/isolate}}
 </template>
 
 <template name="openingHours">
@@ -89,5 +96,36 @@
         </p>
         <textarea style="width: 75%; height: 60px" id="openingHours">{{ openingHours }}</textarea>
         <button id="updateOpeningHours" type="button" class="btn btn-small btn-primary">Endre åpningstid</button>
+    {{/isolate}}
+</template>
+
+<template name="serviceStatus">
+    <p>
+        Status for tjenesten:
+        {{#if open}}
+            <font color="#458B00">ÅPEN</font>
+        {{else}}
+            <font color="#FF0000">STENGT</font>
+        {{/if}}
+    </p>
+</template>
+
+<template name="serviceClosedAdmin">
+    {{#isolate}}
+    <h3>Overstyr stenging av Digital Leksehjelp</h3>
+    <p>
+        Hvis alle brukere er utlogget, vil tjenesten vises som stengt uansett. Hvis det er
+        nødvendig at tjenesten stenger uten at alle er utlogget, kan det gjøres her.
+    </p>
+    <p>
+        Selv om tjenesten stenges her før alle er utlogget, vil den  kunne åpnes igjen av
+        alle frivillige som er pålogget, på siden "Hjelp elever".
+    </p>
+        {{> serviceStatus}}
+        <button
+            id="updateClosedStatus"
+            type="button"
+            class="btn btn-small btn-danger"
+            {{#unless open}}disabled{{/unless}}>Steng tjenesten</button>
     {{/isolate}}
 </template>

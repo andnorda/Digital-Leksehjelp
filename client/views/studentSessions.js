@@ -45,3 +45,22 @@ Template.studentSessionRow.events({
         StudentSessions.remove(this._id);
     }
 });
+
+// === OPENSERVICE ===
+Template.openService.events({
+    'click button#openService' : function () {
+        Meteor.call('upsertServiceStatus',
+            {
+                newServiceStatus: true
+            },
+            function (error, data) {
+                if (error) {
+                    FlashMessages.sendError(error.message);
+                }
+            });
+    }
+});
+
+Template.openService.open = function () {
+    return Template.serviceStatus.open();
+}

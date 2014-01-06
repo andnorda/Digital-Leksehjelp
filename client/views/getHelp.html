@@ -11,30 +11,34 @@
                             <h1>Få leksehjelp</h1>
                         </div>
                         <div class="panel-body" style="text-align:center; padding: 3% 7%;">
-                                <p style="padding: 3%;">
-                                    Velg fra nedtrekksmenyen:
-                                </p>
-                                <form role="form">
-                                  <div class="form-group fullwidth">
-                                    {{> subjectSelector }}
-                                  </div>
-                                  <div class="form-group">
-                                    {{> gradeSelector }}
-                                  </div>
+                                {{#unless open}}
+                                    {{> serviceClosed}}
+                                {{else}}
+                                    <p style="padding: 3%;">
+                                        Velg fra nedtrekksmenyen:
+                                    </p>
+                                    <form role="form">
+                                      <div class="form-group fullwidth">
+                                        {{> subjectSelector }}
+                                      </div>
+                                      <div class="form-group">
+                                        {{> gradeSelector }}
+                                      </div>
 
-                                    <div class="form-group">
-                                        <button type="button" class="btn btn-success fullwidth" id="createSession">
-                                            <div style="font-size:20px;">
-                                                Få leksehjelp nå
-                                            </div>
-                                        </button>
-                                    </div>
-                                    {{#isolate}}
-                                        {{#if validationError }}
-                                            <div class="alert alert-danger">{{ validationError }}</div>
-                                        {{/if}}
-                                    {{/isolate}}
-                                </form>
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-success fullwidth" id="createSession">
+                                                <div style="font-size:20px;">
+                                                    Få leksehjelp nå
+                                                </div>
+                                            </button>
+                                        </div>
+                                        {{#isolate}}
+                                            {{#if validationError }}
+                                                <div class="alert alert-danger">{{ validationError }}</div>
+                                            {{/if}}
+                                        {{/isolate}}
+                                    </form>
+                                {{/unless}}
                         </div>
                         <div class="panel-footer" style="text-align:center; padding: 5% 10%;">
                             {{ openingHours }}
@@ -45,6 +49,16 @@
             </div>
         </div>
     </div>
+</template>
+
+<template name="serviceClosed">
+    <img
+        class="img-responsive center-block"
+        src="leksehjelpen_stengt_ikon.png"
+        width="90px"
+        height="90px"/>
+    <p style="text-align:center;"><font color="#FF0000">Leksehjelpen er nå stengt</font></p>
+    <p style="text-align:center;">Velkommen tilbake i åpningstiden for hjelp til lekser</p>
 </template>
 
 <template name="subjectSelector">

@@ -28,6 +28,15 @@ Template.getHelp.openingHours = function () {
     return "";
 };
 
+Template.getHelp.open = function () {
+    var serviceStatusArray = Config.find({ name: "serviceStatus" }).fetch();
+
+    if (serviceStatusArray.length > 0) {
+        return serviceStatusArray[0].open;
+    }
+    return false;
+};
+
 Template.getHelp.events({
     'click button#createSession' : function () {
         Session.set("videoConferenceUrl", generateRandomAppearInLink());

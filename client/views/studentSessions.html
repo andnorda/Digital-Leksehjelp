@@ -1,9 +1,19 @@
 <template name="studentSessions">
     {{#if currentUser }}
+        {{> openService}}
         <h2>Elever som venter i kø</h2>
 
         {{> studentSessionsTable}}
     {{/if}}
+</template>
+
+<template name="openService">
+    {{> serviceStatus}}
+    <button
+        type="button"
+        class="btn btn-s btn-success"
+        id="openService"
+        {{#if open}}disabled{{/if}}>Åpne leksehjelpen</button>
 </template>
 
 <template name="studentSessionsTable">

@@ -124,4 +124,31 @@ Template.openingHours.events({
                 }
             });
     }
-})
+});
+
+// === SERVICESTATUS ===
+Template.serviceStatus.open = function () {
+    var serviceStatusArray = Config.find({ name: "serviceStatus" }).fetch();
+    if (serviceStatusArray.length > 0) {
+        return serviceStatusArray[0].open;
+    }
+    return false;
+};
+
+Template.serviceClosedAdmin.open = function () {
+    return Template.serviceStatus.open();
+};
+
+Template.serviceClosedAdmin.events({
+    'click button#updateClosedStatus' : function () {
+        Meteor.call('upsertServiceStatus',
+            {
+                newServiceStatus: false
+            },
+            function (error, data) {
+                if (error) {
+                    FlashMessages.sendError(error.message);
+                }
+            });
+    }
+});

@@ -5,6 +5,7 @@ Meteor.subscribe("availableSubjects");
 Meteor.subscribe("student-queue");
 Meteor.subscribe("config");
 Meteor.subscribe("openingHours");
+Meteor.subscribe("serviceStatus");
 
 var lastUserId;
 Deps.autorun(function () {
