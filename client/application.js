@@ -23,7 +23,7 @@ Deps.autorun(function () {
                     {
                         userId: Meteor.user()._id
                     });
-                window.location.reload();
+                Meteor.logout();
             }
         }
     } else {

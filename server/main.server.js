@@ -17,6 +17,28 @@ Meteor.startup(function () {
         };
         Accounts.createUser(options);
     };
+
+    var count = 0;
+    var query = Meteor.users.find({
+            $and: [
+                { 'services.resume.loginTokens': { $exists:true } },
+                { 'services.resume.loginTokens': { $not: { $size: 0 } }}
+            ]});
+    var initializing = true;
+    var handle = query.observeChanges({
+      added: function (id, user) {
+        count++;
+      },
+      removed: function () {
+        count--;
+        if (count === 0) {
+            Meteor.call('upsertServiceStatus',
+                {
+                    newServiceStatus: false
+                });
+        }
+      }
+    });
 });
 
 Accounts.validateNewUser(function (user) {
