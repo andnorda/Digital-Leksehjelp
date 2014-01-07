@@ -1,6 +1,9 @@
 Template.queueModal.events({
     'click button#leaveQueue' : function () {
-        StudentSessions.remove({ _id: Session.get("studentSessionId") });
+        Meteor.call('removeSession',
+            {
+                sessionId: Session.get("studentSessionId")
+            });
     }
 });
 
@@ -18,14 +21,10 @@ Template.queueModalBody.stateWaiting = function () {
     return Template.queueModalBody.studentSession().state == STUDENT_SESSION_STATE.WAITING;
 };
 
-Template.queueModalBody.subject = function () {
-    return Session.get("subject");
-};
-
 Template.queueModalBody.studentsInFront = function () {
     return StudentQueue.find({ $and: [
-            { queueNr: { $lt: Session.get("queueNr") } },
-            { subject: Session.get("subject") }
+            { queueNr: { $lt: Template.queueModalBody.studentSession().queueNr } },
+            { subject: Template.queueModalBody.studentSession().subject }
         ]}).count();
 };
 
@@ -36,8 +35,11 @@ Template.queueModalBody.stateReady = function () {
 Template.queueModalBody.events({
     'click button#getHelp' : function () {
         window.open(this.videoConferenceUrl);
-        StudentSessions.update(
-            { _id: Session.get("studentSessionId") },
-            { $set: { state: STUDENT_SESSION_STATE.GETTING_HELP } });
+
+        Meteor.call('setSessionState',
+        {
+            sessionId: Session.get("studentSessionId"),
+            state: STUDENT_SESSION_STATE.GETTING_HELP
+        });
     }
 });

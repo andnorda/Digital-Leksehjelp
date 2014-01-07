@@ -9,6 +9,7 @@ Meteor.subscribe("serviceStatus");
 
 var lastUserId;
 Deps.autorun(function () {
+    Meteor.subscribe("sessions", Session.get("studentSessionId"));
     if(Meteor.user()) {
         if (Meteor.user().profile && Meteor.user().profile.firstName) {
             lastUserId = Meteor.user()._id;

@@ -1,4 +1,9 @@
-// Use DL for namespacing Digital Leksehjelp
+// Helper methods
+var generateRandomAppearInLink = function () {
+    var randomId = Math.floor(Math.random() * 1000000000);
+    return "http://appear.in/" + randomId;
+};
+
 Meteor.methods({
     createUserOnServer: function (options) {
         var user = Meteor.users.findOne(this.userId);
@@ -19,6 +24,52 @@ Meteor.methods({
             return userId;
         } else {
             throw new Meteor.Error(403, "You are not allowed to access this.");
+        }
+    },
+
+    createSessionOnServer: function (options) {
+        check(options.subject, String);
+        check(options.grade, String);
+        check(options.queueNr, Number);
+
+        var queueNr = options.queueNr + 1;
+        var videoConferenceUrl = generateRandomAppearInLink();
+
+        return StudentSessions.insert({
+                subject: options.subject,
+                grade: options.grade,
+                videoConferenceUrl: videoConferenceUrl,
+                state: STUDENT_SESSION_STATE.WAITING,
+                queueNr: queueNr
+            });
+    },
+
+    userLoggedOut: function (options) {
+        check(options.userId, String);
+        var user = Meteor.users.findOne(options.userId);
+        var setSubjectsAvailable = user.profile.setSubjectsAvailable;
+        if(!setSubjectsAvailable) {
+            // TODO(martin): Could probably call setSubjectsAvailable here, but
+            // setSubjectsAvailable must be set to true afterwards.
+            for (var i = 0; i < user.profile.subjects.length; i++) {
+                Subjects.update(
+                    { _id: user.profile.subjects[i].subjectId },
+                    {
+                        $pull: { availableVolunteers: options.userId }
+                    },
+                    function (error, id) {
+                        if (error) {
+                            throw new Meteor.Error(500, "Server error, please try again.");
+                        }
+                    });
+            };
+
+            Meteor.users.update(user,
+                {
+                    $set: {
+                            'profile.setSubjectsAvailable' : true
+                        }
+                });
         }
     }
 });

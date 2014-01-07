@@ -48,10 +48,17 @@ Meteor.publish("student-queue", function () {
     });
 });
 
-Meteor.publish("subjects", function () {
+Meteor.publish("sessions", function (sessionId) {
     var user = Meteor.users.findOne(this.userId);
-    if (!user) { return null; }
+    if (!user) {
+        check(sessionId, String);
+        return StudentSessions.find({ _id: sessionId });
+    }
 
+    return StudentSessions.find({});
+});
+
+Meteor.publish("subjects", function () {
     return Subjects.find({});
 });
 
