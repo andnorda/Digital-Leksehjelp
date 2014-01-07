@@ -12,7 +12,6 @@ Deps.autorun(function () {
     Meteor.subscribe("sessions", Session.get("studentSessionId"));
     if(Meteor.user()) {
         if (Meteor.user().profile && Meteor.user().profile.firstName) {
-            lastUserId = Meteor.user()._id;
             if (Meteor.user().profile.setSubjectsAvailable) {
                 Meteor.call('setSubjectsAvailable',
                 {
@@ -20,20 +19,8 @@ Deps.autorun(function () {
                 });
             }
             if (Meteor.user().profile.forceLogOut) {
-                Meteor.call('resetForceLogOut',
-                    {
-                        userId: Meteor.user()._id
-                    });
                 Meteor.logout();
             }
-        }
-    } else {
-        if (lastUserId) {
-            Meteor.call('userLoggedOut',
-            {
-                userId: lastUserId
-            });
-            lastUserId = null;
         }
     }
 });

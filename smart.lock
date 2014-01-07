@@ -5,7 +5,8 @@
       "iron-router": {},
       "bootstrap-3": {},
       "flash-messages": {},
-      "select2": {}
+      "select2": {},
+      "user-status": {}
     },
     "packages": {
       "iron-router": {
@@ -27,6 +28,11 @@
         "git": "https://github.com/nate-strauser/meteor-select2.git",
         "tag": "v3.4.5",
         "commit": "4a8d05582b949a14f0ee217c185166abbf112822"
+      },
+      "user-status": {
+        "git": "https://github.com/mizzao/meteor-user-status.git",
+        "tag": "v0.2.0",
+        "commit": "e18cc48440710d0ac23bd1a578974f9142226bf4"
       }
     }
   }

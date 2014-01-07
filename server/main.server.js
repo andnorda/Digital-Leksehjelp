@@ -39,6 +39,27 @@ Meteor.startup(function () {
         }
       }
     });
+
+    Meteor.users.find({ "status.online" : true }).observe({
+        removed: function (user) {
+            Meteor.users.update({ _id: user._id }, { $set: { 'profile.forceLogOut': false }});
+            for (var i = 0; i < user.profile.subjects.length; i++) {
+                Subjects.update(
+                    { _id: user.profile.subjects[i].subjectId },
+                    { $pull: { availableVolunteers: user._id } },
+                    function (error, nrOfDocsAffected) {
+                        if (error) {
+                            throw new Meteor.Error(500, "Server error, please try again.");
+                        }
+                    });
+            };
+            Meteor.users.update({ _id: user._id },
+                    { $set: {
+                                'profile.setSubjectsAvailable' : true
+                            }
+                    });
+        }
+    });
 });
 
 Accounts.validateNewUser(function (user) {

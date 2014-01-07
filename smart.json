@@ -3,6 +3,7 @@
     "iron-router": {},
     "bootstrap-3": {},
     "flash-messages": {},
-    "select2": {}
+    "select2": {},
+    "user-status": {}
   }
 }

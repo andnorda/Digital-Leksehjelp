@@ -44,32 +44,32 @@ Meteor.methods({
             });
     },
 
-    userLoggedOut: function (options) {
+    remoteLogOutUser: function (options) {
+        var user = Meteor.users.findOne(this.userId);
+        if (!user) { throw new Meteor.Error(401, "You are not logged in.") };
+
         check(options.userId, String);
-        var user = Meteor.users.findOne(options.userId);
-        var setSubjectsAvailable = user.profile.setSubjectsAvailable;
-        if(!setSubjectsAvailable) {
-            // TODO(martin): Could probably call setSubjectsAvailable here, but
-            // setSubjectsAvailable must be set to true afterwards.
-            for (var i = 0; i < user.profile.subjects.length; i++) {
-                Subjects.update(
-                    { _id: user.profile.subjects[i].subjectId },
-                    {
-                        $pull: { availableVolunteers: options.userId }
-                    },
-                    function (error, id) {
-                        if (error) {
-                            throw new Meteor.Error(500, "Server error, please try again.");
+
+        if (user.profile.role === ROLES.ADMIN) {
+            var remoteUser = Meteor.users.find(options.userId).fetch()[0];
+
+            if(remoteUser.status.online) {
+                Meteor.users.update(
+                    { _id: options.userId },
+                    { $set: {
+                        'profile.forceLogOut': true
                         }
                     });
-            };
-
-            Meteor.users.update(user,
-                {
-                    $set: {
-                            'profile.setSubjectsAvailable' : true
+            } else {
+                Meteor.users.update(
+                    { _id: options.userId },
+                    { $set: {
+                        'services.resume.loginTokens' : [],
                         }
-                });
+                    });
+            }
+        } else {
+            throw new Meteor.Error(403, "You are not allowed to access this.");
         }
     }
 });

@@ -90,7 +90,7 @@ Template.userRow.events({
     },
 
     'click .logoutUser' : function (event) {
-        Meteor.call('logoutUser',
+        Meteor.call('remoteLogOutUser',
         {
             userId: this._id
         },
