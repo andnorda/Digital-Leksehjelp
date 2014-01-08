@@ -32,6 +32,7 @@ Template.studentSessionsTable.otherStudentSessions = function () {
 
 Template.studentSessionRow.events({
     'click .startTutoring' : function () {
+        Session.set("startTutoringTime", new Date().getTime());
         window.open(this.videoConferenceUrl, '_blank');
         var sessionId = this._id;
         Meteor.call('setSessionState',

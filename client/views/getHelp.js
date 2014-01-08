@@ -34,7 +34,6 @@ Template.getHelp.open = function () {
 
 Template.getHelp.events({
     'click button#createSession' : function () {
-
         var chosenSubject = $('#chosenSubject').text().trim();
         var chosenGrade = $('#chosenGrade').text().trim();
 
@@ -47,7 +46,7 @@ Template.getHelp.events({
         } else {
             validationError = null;
             validationErrorDep.changed();
-
+            mixpanel.track("Bedt om leksehjelp", { "fag": chosenSubject, "trinn": chosenGrade });
             Meteor.call('createSessionOnServer',
                 {
                     subject: chosenSubject,
@@ -60,6 +59,7 @@ Template.getHelp.events({
                         validationErrorDep.changed();
                     } else {
                         Session.set("studentSessionId", sessionId);
+                        Session.set("queueStartTime", new Date().getTime());
                         $('#queueModal').modal();
                     }
                 });
