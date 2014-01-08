@@ -17,11 +17,23 @@
 </head>
 
 <body>
-    {{> layout}}
+    {{#isolate}}
+        {{> layout}}
+    {{/isolate}}
+
     {{> flashMessages}}
-    {{> queueModal}}
-    {{> notSupportedModal}}
-    {{> moreInfoModal}}
+
+    {{#isolate}}
+        {{> queueModal}}
+    {{/isolate}}
+
+    {{#isolate}}
+        {{> notSupportedModal}}
+    {{/isolate}}
+
+    {{#isolate}}
+        {{> moreInfoModal}}
+    {{/isolate}}
 </body>
 
 <template name="layout">

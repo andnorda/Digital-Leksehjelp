@@ -8,10 +8,17 @@ Template.queueModal.events({
 });
 
 Template.queueModal.rendered = function () {
-    $('#queueModal').on('hide.bs.modal', function () {
-        $('#queueModal').off('hide.bs.modal');
-    })
-}
+    var elem = $('#queueModal')[0];
+    var data = $.hasData( elem ) && $._data( elem );
+
+    if (data) {
+        if (!data.events.hidden) {
+            $('#queueModal').on('hidden.bs.modal', function () {
+                $(this).off('hidden.bs.modal');
+            });
+        }
+    }
+};
 
 Template.queueModalBody.studentSession = function () {
     return StudentSessions.find({ _id: Session.get("studentSessionId") }).fetch()[0];
