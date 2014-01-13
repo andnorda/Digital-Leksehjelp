@@ -6,10 +6,6 @@ Template.loggedInHeader.isAdmin = function () {
     return Meteor.user().profile.role === ROLES.ADMIN;
 };
 
-Template.header.rendered = function () {
-    mixpanel.track("Antall besøkende", { "url": window.location.pathname });
-};
-
 Template.footer.events({
     'click button#moreInfo' : function () {
         $('#moreInfoModal').modal();

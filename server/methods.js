@@ -5,6 +5,12 @@ var generateRandomAppearInLink = function () {
 };
 
 Meteor.methods({
+    getEnvironment: function () {
+        if (process.env.ROOT_URL === "http://digitalleksehjelp.no") {
+            return "production";
+        } else return "development";
+    },
+
     createUserOnServer: function (options) {
         var user = Meteor.users.findOne(this.userId);
         if (!user) { throw new Meteor.Error(401, "You are not logged in.") };
