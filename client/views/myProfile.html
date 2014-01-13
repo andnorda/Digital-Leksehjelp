@@ -1,9 +1,11 @@
 <template name="myProfile">
-    <h1>Dine valgte fag</h1>
-    {{> mySubjectsTable}}
+    <div class="loggedInContainer">
+        <h1>Dine valgte fag</h1>
+        {{> mySubjectsTable}}
 
-    <h1>Velg dine fag</h1>
-    {{> mySubjectsSelector}}
+        <h1>Velg dine fag</h1>
+        {{> mySubjectsSelector}}
+    </div>
 </template>
 
 <template name="mySubjectsTable">

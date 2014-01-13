@@ -1,9 +1,11 @@
 <template name="userAdmin">
-    <h3>Administrér brukere</h3>
-    {{> addUser}}
-    {{> usersTable}}
-    {{> openingHours}}
-    {{> serviceClosedAdmin}}
+    <div class="loggedInContainer">
+        <h3>Administrér brukere</h3>
+        {{> addUser}}
+        {{> usersTable}}
+        {{> openingHours}}
+        {{> serviceClosedAdmin}}
+    </div>
 </template>
 
 <template name="addUser">

@@ -1,10 +1,12 @@
 <template name="studentSessions">
-    {{#if currentUser }}
-        {{> openService}}
-        <h2>Elever som venter i kø</h2>
+    <div class="loggedInContainer">
+        {{#if currentUser }}
+            {{> openService}}
+            <h2>Elever som venter i kø</h2>
 
-        {{> studentSessionsTable}}
-    {{/if}}
+            {{> studentSessionsTable}}
+        {{/if}}
+    </div>
 </template>
 
 <template name="openService">

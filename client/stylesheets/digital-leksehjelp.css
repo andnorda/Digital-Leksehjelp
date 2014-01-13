@@ -28,6 +28,10 @@ tr:nth-of-type(odd) {
     width: 100%;
 }
 
+.loggedInContainer {
+    padding-left: 20px;
+}
+
 #getHelpPanel .form-group {
     margin-bottom: 6%;
 }

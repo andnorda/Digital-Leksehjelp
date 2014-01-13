@@ -215,21 +215,25 @@
 </template>
 
 <template name="loggedInHeader">
-    {{#if currentUser }}
-        {{#if isAdmin }}
-            <h3>Digital Leksehjelp - Administrator</h3>
-            <a href="/frivillig/admin/brukere">Administrer brukere</a>
-            <a href="/frivillig/admin/fag">Administrer fag</a>
-        {{else}}
-            <h3>Digital Leksehjelp - Frivillig</h3>
+    <div class="loggedInContainer">
+        {{#if currentUser }}
+            {{#if isAdmin }}
+                <h3>Digital Leksehjelp - Administrator</h3>
+                <a href="/frivillig/admin/brukere">Administrer brukere</a>
+                <a href="/frivillig/admin/fag">Administrer fag</a>
+            {{else}}
+                <h3>Digital Leksehjelp - Frivillig</h3>
+            {{/if}}
+            <a href="/frivillig">Hjelp elever</a>
+            <a href="/frivillig/profil">Min profil</a>
+            {{loginButtons}}
+            {{> endSessionModal}}
         {{/if}}
-        <a href="/frivillig">Hjelp elever</a>
-        <a href="/frivillig/profil">Min profil</a>
-        {{loginButtons}}
-        {{> endSessionModal}}
-    {{/if}}
+    </div>
 </template>
 
 <template name="login">
-    {{loginButtons}}
+    <div class="loggedInContainer">
+        {{loginButtons}}
+    </div>
 </template>
