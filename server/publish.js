@@ -12,16 +12,37 @@ Meteor.publish("all-users", function () {
 
 Meteor.publish("loggedInUsers", function () {
     var user = Meteor.users.findOne(this.userId);
-    if (!user) { return null; }
-    if (user.profile.role  === ROLES.ADMIN) {
+    var publicLoggedInCursor = Meteor.users.find({
+            $and: [
+                { 'services.resume.loginTokens': { $exists:true } },
+                { 'services.resume.loginTokens': { $not: { $size: 0 } }}
+            ]
+        },
+        {
+            fields: {
+                'profile.pictureUrl': 1,
+                'profile.firstName': 1,
+                'profile.subjects': 1,
+                'services.resume.loginTokens': 1
+            }
+        });
+
+    if (!user) {
+        return publicLoggedInCursor;
+    }
+
+    var userRole = user.profile.role;
+
+    if (userRole  === ROLES.ADMIN) {
         return Meteor.users.find({
             $and: [
                 { 'services.resume.loginTokens': { $exists:true } },
                 { 'services.resume.loginTokens': { $not: { $size: 0 } }}
-            ]});
+            ]
+        });
+    } else {
+        return publicLoggedInCursor;
     }
-
-    throw new Meteor.Error(403, "You are not allowed to access this.");
 });
 
 Meteor.publish("user-data", function () {

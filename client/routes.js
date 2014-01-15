@@ -18,6 +18,8 @@ LoginController = BaseController.extend({
 GetHelpController = BaseController.extend({
     yieldTemplates: {
         'header': { to : 'header'},
+        'practicalInfo': { to : 'practicalInfo'},
+        'loggedInVolunteers': { to : 'loggedInVolunteers' },
         'footer': { to : 'footer'}
     }
 });
