@@ -18,6 +18,19 @@ Template.mySubjectsSelector.rendered = function () {
         });
 };
 
+Template.profilePicture.uploading = function () {
+    return Session.get("uploading");
+};
+
+Template.profilePicture.profilePictureUrl = function () {
+    var profilePictureUrl = Meteor.user().profile.pictureUrl;
+    if (profilePictureUrl) {
+        return profilePictureUrl;
+    } else {
+        return "";
+    }
+};
+
 Template.mySubjectsSelector.events({
     'click #saveMySubjects' : function () {
         var subjectIdAndNameArray = $('#mySubjects').val().split(',');

@@ -5,6 +5,26 @@
 
         <h1>Velg dine fag</h1>
         {{> mySubjectsSelector}}
+
+        <h1>Last opp profilbilde</h1>
+        {{> profilePicture}}
+    </div>
+</template>
+
+<template name="profilePicture">
+    {{#S3 callback="uploadToS3" height=200 width=245}}
+        <input type="file" />
+        <h4>Status: </h4>
+        {{#if uploading}}
+            Laster opp bilde ...
+        {{else}}
+            Velg bilde
+        {{/if}}
+    {{/S3}}
+
+    <div>
+        <h6>Ditt profilbilde:</h6>
+        <img src="{{ profilePictureUrl }}" />
     </div>
 </template>
 
