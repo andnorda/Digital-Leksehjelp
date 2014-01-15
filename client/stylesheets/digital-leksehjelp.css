@@ -1,4 +1,3 @@
-/* CSS declarations go here */
 body {
     font-family: 'Open Sans', sans-serif !important;
 }
@@ -65,9 +64,6 @@ td {
 h1, h2 {
     font-family: 'Open Sans', sans-serif !important;
     font-weight: 300 !important;
-    /*font-size: 40px;
-    letter-spacing: 0.04em;
-    font-weight: 100;*/
 }
 
 hr {
