@@ -12,7 +12,8 @@ Meteor.methods({
 
         check(url, String);
 
-        Meteor.users.update(user,
+        Meteor.users.update(
+            { _id: this.userId },
             {
                 $set: {
                     'profile.pictureUrl' : url
