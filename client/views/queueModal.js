@@ -41,7 +41,11 @@ Template.queueModalBody.studentsInFront = function () {
 };
 
 Template.queueModalBody.stateReady = function () {
-    return Template.queueModalBody.studentSession().state == STUDENT_SESSION_STATE.READY;
+    var stateReady = Template.queueModalBody.studentSession().state == STUDENT_SESSION_STATE.READY;
+    if (stateReady) {
+        flashTitle("Leksehjelpen er klar!", 20);
+    }
+    return stateReady;
 };
 
 Template.queueModalBody.events({
@@ -58,5 +62,7 @@ Template.queueModalBody.events({
             sessionId: Session.get("studentSessionId"),
             state: STUDENT_SESSION_STATE.GETTING_HELP
         });
+
+        cancelFlashTitle();
     }
 });
