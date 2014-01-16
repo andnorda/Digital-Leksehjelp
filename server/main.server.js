@@ -70,7 +70,15 @@ Meteor.startup(function () {
 });
 
 Accounts.validateNewUser(function (user) {
-    //TODO(martin): Should be able to create users on server, not on client.
-    // throw new Meteor.Error(403, "You are not allowed to create new users");
+    // A simple check to avoid people from signing up from outside the
+    // admin panel.
+    if (!user.profile) {
+        throw new Meteor.Error(403, "You are not allowed to create new users");
+    }
+
+    if (!user.profile.firstName) {
+        throw new Meteor.Error(400, "The user needs a first name");
+    }
+
     return true;
 });

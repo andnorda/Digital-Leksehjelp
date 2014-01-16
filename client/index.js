@@ -2,6 +2,14 @@ Template.loggedInHeader.currentUserEmail = function () {
     return Meteor.user().username;
 };
 
+Template.login.events({
+    'click' : function (event) {
+        if (event.currentTarget.id === "signup-link") {
+            alert("Vennligst snakk med Røde Kors for å få en bruker her.");
+        }
+    }
+});
+
 Template.loggedInHeader.isAdmin = function () {
     return Meteor.user().profile.role === ROLES.ADMIN;
 };
