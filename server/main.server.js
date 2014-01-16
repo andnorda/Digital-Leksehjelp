@@ -2,8 +2,8 @@
 
 Meteor.startup(function () {
     Meteor.call("S3config",{
-        key: 'THE ACCESS KEY',
-        secret: 'THE SECRET FOR THE ACCESS KEY',
+        key: process.env.S3_KEY,
+        secret: process.env.S3_SECRET,
         bucket: 'digitalleksehjelp',
         directory: '/profilbilder/'
     });
