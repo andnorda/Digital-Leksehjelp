@@ -5,6 +5,35 @@
 
         <h1>Velg dine fag</h1>
         {{> mySubjectsSelector}}
+
+        <h1>Last opp profilbilde</h1>
+        {{> profilePicture}}
+    </div>
+</template>
+
+<template name="profilePicture">
+    <p>
+        Her kan du laste opp bilde av deg selv, som vil bli vist under
+        dagens frivillige når tjenesten er åpen, og du er innlogget.
+    </p>
+    <p>
+        For at det skal se bra ut, bør bildet være på 200 x 245 piksler i
+        høyde x bredde. Bildet blir uansett endret til denne størrelsen ved
+        opplasting.
+    </p>
+    {{#S3 callback="uploadToS3" height=200 width=245}}
+        <input type="file" />
+        <h4>Status: </h4>
+        {{#if uploading}}
+            Laster opp bilde ...
+        {{else}}
+            Velg bilde
+        {{/if}}
+    {{/S3}}
+
+    <div>
+        <h6>Ditt profilbilde:</h6>
+        <img src="{{ profilePictureUrl }}" />
     </div>
 </template>
 

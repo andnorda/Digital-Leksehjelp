@@ -75,6 +75,8 @@
     <div class="bodyContainer">
         {{yield 'header'}}
         {{yield}}
+        {{yield 'practicalInfo' }}
+        {{yield 'loggedInVolunteers'}}
         {{yield 'footer'}}
     </div>
 </template>
@@ -101,8 +103,8 @@
     </div>
 </template>
 
-<template name="footer">
-        <div class="container" style="margin-top: 2%;">
+<template name="practicalInfo">
+    <div class="container" style="margin-top: 2%;">
             <div class="row">
                 <div class="col-md-4">
                     <h1>Om leksehjelpen</h1>
@@ -145,6 +147,56 @@
                 </div>
             </div>
         </div>
+</template>
+
+<template name="loggedInVolunteer">
+    <div class="col-md-3">
+        <div class="loggedInVolunteer">
+            <img
+                class="img-responsive profile-picture"
+                src="{{profile.pictureUrl}}"/>
+            <div class="volunteerInfo">
+                <h3>{{profile.firstName}}</h3>
+                <img
+                    class="img-responsive"
+                    src="teacher_hat.png"
+                    style="margin: 10px auto;"/>
+                    <span class="subjectList">
+                        {{#foreach profile.subjects}}
+                            {{#if $last}}
+                                {{ subjectName }}
+                            {{else}}
+                                {{ subjectName }},
+                            {{/if}}
+                        {{/foreach}}
+                    </span>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="loggedInVolunteers">
+    {{#if open}}
+        {{#ifGreaterThanZero loggedInVolunteers.length}}
+            <div class="loggedInVolunteers">
+                <div class="container" style="margin-top: 2%;">
+                    <div class="row">
+                        <div class="col-md-12" style="text-align:center;">
+                            <h1>Dagens frivillige</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {{#each loggedInVolunteers}}
+                            {{> loggedInVolunteer}}
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        {{/ifGreaterThanZero}}
+    {{/if}}
+</template>
+
+<template name="footer">
     <div>
         <div class="container" style="margin-top: 2%;">
             <div class="row">

@@ -7,7 +7,11 @@
       "flash-messages": {},
       "select2": {},
       "user-status": {},
-      "spin": {}
+      "spin": {},
+      "s3-ImagesFork": {
+        "git": "https://github.com/makrem025/Meteor-S3-Images.git",
+        "branch": "master"
+      }
     },
     "packages": {
       "iron-router": {
@@ -39,6 +43,11 @@
         "git": "https://github.com/SachaG/meteor-spin.git",
         "tag": "v0.2.2",
         "commit": "3f655f0016228e4195acc784c45d3e3a247dc39f"
+      },
+      "s3-ImagesFork": {
+        "git": "https://github.com/makrem025/Meteor-S3-Images.git",
+        "branch": "master",
+        "commit": "1980bb039cb65eeb2ed3765453b91bb24efdfc53"
       }
     }
   }

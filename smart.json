@@ -5,6 +5,9 @@
     "flash-messages": {},
     "select2": {},
     "user-status": {},
-    "spin": {}
+    "spin": {},
+    "s3-ImagesFork": {
+        "git": "https://github.com/makrem025/Meteor-S3-Images.git"
+    }
   }
 }

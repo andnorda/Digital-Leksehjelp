@@ -1,6 +1,13 @@
 // Server only logic, this will NOT be sent to the clients.
 
 Meteor.startup(function () {
+    Meteor.call("S3config",{
+        key: 'THE ACCESS KEY',
+        secret: 'THE SECRET FOR THE ACCESS KEY',
+        bucket: 'digitalleksehjelp',
+        directory: '/profilbilder/'
+    });
+
     if(Meteor.users.find().count() === 0) {
         console.log("WARNING: NO USERS, DEFAULT ADMIN ACCOUNT ADDED");
         var options = {
