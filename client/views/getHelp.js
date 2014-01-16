@@ -23,6 +23,14 @@ Template.getHelp.openingHours = function () {
     return "";
 };
 
+Template.getHelp.openingHoursLoaded = function () {
+    return Session.get("openingHoursLoaded");
+};
+
+Template.getHelp.serviceStatusLoaded = function () {
+    return Session.get("serviceStatusLoaded");
+};
+
 Template.getHelp.open = function () {
     var serviceStatusArray = Config.find({ name: "serviceStatus" }).fetch();
 

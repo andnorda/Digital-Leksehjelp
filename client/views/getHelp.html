@@ -11,6 +11,7 @@
                             <h1>Få leksehjelp</h1>
                         </div>
                         <div class="panel-body" style="text-align:center; padding: 3% 7%;">
+                            {{#if serviceStatusLoaded}}
                                 {{#unless open}}
                                     {{> serviceClosed}}
                                 {{else}}
@@ -39,9 +40,20 @@
                                         {{/isolate}}
                                     </form>
                                 {{/unless}}
+                            {{else}}
+                                <div style="height: 200px">
+                                    {{> spinner }}
+                                </div>
+                            {{/if}}
                         </div>
                         <div class="panel-footer" style="text-align:center; padding: 5% 10%;">
-                            {{{ openingHours }}}
+                            {{#if openingHoursLoaded}}
+                                {{{ openingHours }}}
+                            {{else}}
+                                <div style="height: 50px">
+                                    {{> spinner }}
+                                </div>
+                            {{/if}}
                         </div>
                     </div>
 
