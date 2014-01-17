@@ -72,6 +72,28 @@ To deploy a new version to digital-leksehjelp.herokuapp.com, and effectively htt
 
 1. Run the script `./heroku-deploy` and wait for it to finish.
 
+Browser compatibility
+---------------------
+
+Updated: 17.01.2014
+
+Works:
+
+- **FF26**
+
+- **Chrome Version 32.0.1700.77** *Small timing issue with offline status, see [this](https://github.com/mizzao/meteor-user-status/issues/11) issue.*
+
+- **Opera 18**
+
+Does not work, and gets warning modal:
+
+- **IE10-11**
+- **Safari 5-7**
+
+Does not work, and gets plain text warning:
+
+- **IE6-9**
+
 Issues
 ------
 
