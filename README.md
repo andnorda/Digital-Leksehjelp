@@ -48,17 +48,15 @@ Environment variables
 
 These need to be set:
 
-In production `heroku config:set VARIABLE=BLABLA --app digital-leksehjelp`
+In production `heroku config:set VARIABLE=BLABLA --app digital-leksehjelp` *Note: All of the production variables should be set, so you can run `heroku config --app digital-leksehjelp` to see them.*
 
-1. MAIL_URL
+1. MAIL_URL *Note: In development you can skip the MAIL_URL, the emails sent will then be output to standard out(your console).*
 
-2. MONGO_URL
+2. MONGO_URL *Note: For development read the [database](#database) section.*
 
-3. S3_KEY
+3. S3_KEY *Note: For development use the same value as in production.*
 
-4. S3_SECRET
-
-In development you can skip the MAIL_URL, the emails sent will then be output to standard out(your console).
+4. S3_SECRET *Note: For development use the same value as in production.*
 
 Styleguide
 ----------
