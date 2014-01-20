@@ -1,6 +1,8 @@
 // Server only logic, this will NOT be sent to the clients.
 
 Meteor.startup(function () {
+    Accounts.emailTemplates.from = "Digital Leksehjelp <digitalleksehjelp@oslo.redcross.no>";
+
     Meteor.call("S3config",{
         key: process.env.S3_KEY,
         secret: process.env.S3_SECRET,
