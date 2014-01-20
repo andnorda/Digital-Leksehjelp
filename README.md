@@ -12,7 +12,7 @@ How to run locally
 
 1. Check if your platform is [supported](https://github.com/meteor/meteor/wiki/Supported-Platforms "Supported platforms").
 
-2. Install [Meteor.js](http://docs.meteor.com/#quickstart), or for the lazy, run this command: `curl https://install.meteor.com | /bin/sh`
+2. Install [Meteor.js](http://docs.meteor.com/#quickstart), or for the lazy, run this command: `curl https://install.meteor.com | /bin/sh`. Verify by running `meteor --version`.
 
 3. You need the package manager npm to install Meteorite. Install [Node.js](http://nodejs.org/) to get it, but if you already have it installed, great! Move on.
 
@@ -22,11 +22,13 @@ How to run locally
 
 6. `cd digital-leksehjelp`
 
-7. `mrt install` *Note: This will install all the packages listed in smart.json*
+7. Make sure you have the correct environment variables set. See the section [Environment variables](#environment-variables) below.
 
-8. `meteor run`
+8. `mrt install` *Note: This will install all the packages listed in smart.json*
 
-9. Browse to localhost:3000.
+9. This project is pinned to Meteor version 0.6.6.3 for the time being(check it with `meteor --version`, or `cat .meteor/release`). If you have the time, please update to a newer version with `meteor update`, and check that everything runs fine. If not, run version 0.6.6.3 by running `meteor run`
+
+10. Browse to localhost:3000.
 
 Database
 --------
