@@ -72,7 +72,9 @@ Deployment to Heroku
 
 To deploy a new version to digital-leksehjelp.herokuapp.com, and effectively http://digitalleksehjelp.no.
 
-1. Run the script `./heroku-deploy` and wait for it to finish.
+1. You need to install the [Heroku Toolbelt](https://toolbelt.herokuapp.com/), and login with your own Heroku user, which have been granted access to the app by [ops@iterate.no](mailto:ops@iterate.no). If your user has not, please give them a shout.
+
+2. Run the script `./heroku-deploy` and wait for it to finish.
 
 Browser compatibility
 ---------------------
@@ -83,7 +85,7 @@ Works:
 
 - **FF26**
 
-- **Chrome Version 32.0.1700.77** *Small timing issue with offline status, see [this](https://github.com/mizzao/meteor-user-status/issues/11) issue.*
+- **Chrome Version 32.0.1700.77** *Small timing issue with offline status, see [this](https://github.com/mizzao/meteor-user-status/issues/11) GitHub-issue.*
 
 - **Opera 18**
 
