@@ -14,11 +14,13 @@ Template.loggedInHeader.isAdmin = function () {
     return Meteor.user().profile.role === ROLES.ADMIN;
 };
 
-Template.footer.events({
+Template.practicalInfo.events({
     'click button#moreInfo' : function () {
         $('#moreInfoModal').modal();
-    },
+    }
+});
 
+Template.footer.events({
     'click a.textLink' : function (event) {
         mixpanel.track("Andre aktiviteter", { "url": event.currentTarget.href });
     }
