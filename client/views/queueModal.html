@@ -25,14 +25,16 @@
 <template name="queueModalBody">
     {{#with studentSession }}
         <p>
-            Status: {{{ state }}}
+            {{#unless stateReady}}
+                Status: {{{ state }}}
+            {{/unless}}
             <p>
                 {{#if stateWaiting }}
                     Det er {{ studentsInFront }} foran deg i køen for leksehjelp i {{ subject }}.
                 {{/if}}
                 {{#if stateReady }}
-                    <button type="button" class="btn btn-success" id="getHelp">
-                    Gå til rom
+                    <button type="button" class="btn btn-success btn-lg" id="getHelp">
+                    Den frivillige er klar - Få leksehjelp nå
                     </button>
                 {{/if}}
             </p>
