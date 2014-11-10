@@ -30,6 +30,15 @@ How to run locally
 
 10. Browse to localhost:3000.
 
+How to run integration tests
+----------------------------
+
+1. Make sure you have a running instance of the application (see [How to run locally](#how-to-run-locally))
+
+2. `cd tests`
+
+3. `node test.js`
+
 Database
 --------
 
