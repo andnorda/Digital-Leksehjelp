@@ -1,13 +1,27 @@
 {
   "packages": {
-    "iron-router": {},
-    "bootstrap-3": {},
-    "flash-messages": {},
-    "select2": {},
-    "user-status": {},
-    "spin": {},
-    "s3-ImagesFork": {
-        "git": "https://github.com/makrem025/Meteor-S3-Images.git"
+    "iron-router": {
+      "version": "0.6.2"
+    },
+    "bootstrap-3": {
+      "version": "0.3.7"
+    },
+    "flash-messages": {
+      "version": "0.2.1"    
+    },
+    "select2": {
+      "version": "3.4.5"
+    },
+    "user-status": {
+      "version": "0.2.0"
+    },
+    "spin": {
+      "version": "0.2.2"
+    },
+    "s3-imagesfork": {
+      "git": "https://github.com/henrikgs/Meteor-S3-Images.git",
+      "version": "0.0.1"
     }
   }
 }
+
