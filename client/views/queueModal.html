@@ -7,12 +7,7 @@
                     <h4 class="modal-title">Kø for Digital Leksehjelp</h4>
                 </div>
                 <div class="modal-body" style="text-align: center;">
-                    {{!-- Isolate does not work as expected here.
-                        We are counting event listeners in queueModal.js
-                        to avoid the problem of queueModal rerendering --}}
-                    {{#isolate}}
-                        {{> queueModalBody}}
-                    {{/isolate}}
+                    {{> queueModalBody}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Forlat kø</button>

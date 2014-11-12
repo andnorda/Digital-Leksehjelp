@@ -39,7 +39,6 @@ casper.test.begin('Student', function(test) {
            this.click("button#getHelp");
        },
        function fail() {
-            casper.capture('gethelp.png');
            test.assertExists("button#getHelp");
    });
    casper.waitForSelector(".btn.btn-danger",

@@ -43,3 +43,9 @@ Template.loggedInVolunteers.open = function () {
     }
     return false;
 };
+
+Template.loggedInVolunteer.subjectList = function (subjects) {
+    return subjects.map(function(subject) {
+        return subject.subjectName;
+    }).join(", ");
+};

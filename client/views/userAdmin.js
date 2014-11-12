@@ -41,7 +41,14 @@ Template.addUser.events({
 
 // === ROLESELECTOR ===
 Template.roleSelector.roles = function () {
-    return ROLES;
+  var rolesArray = [];
+  for (var key in ROLES) {
+    if (ROLES.hasOwnProperty(key)) {
+      var val = ROLES[key];
+      rolesArray.push(val);
+    }
+  }
+  return rolesArray;
 };
 
 // === USERSTABLE ===

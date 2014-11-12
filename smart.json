@@ -1,7 +1,7 @@
 {
   "packages": {
     "iron-router": {
-      "version": "0.6.2"
+      "version": "0.8.1"
     },
     "bootstrap-3": {
       "version": "0.3.7"
