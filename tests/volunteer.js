@@ -76,6 +76,5 @@ casper.test.begin('Volunteer', function(test) {
            test.assertExists("#login-buttons-logout");
    });
 
-
    casper.run(function() {test.done();});
 });
