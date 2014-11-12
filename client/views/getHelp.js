@@ -85,6 +85,14 @@ Template.subjectSelector.subjects = function () {
     return Subjects.find({});
 };
 
+Template.subjectSelector.subjectDisabled = function (availableVolunteers) {
+    if(availableVolunteers > 0) {
+        return '';
+    } else {
+        return 'disabled-li';
+    }
+};
+
 Template.subjectSelector.events({
     'click .subjects' : function (event) {
         if(!$(event.target).hasClass("disabled-li")) {

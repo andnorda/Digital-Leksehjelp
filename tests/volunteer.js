@@ -59,13 +59,13 @@ casper.test.begin('Volunteer', function(test) {
        function fail() {
            test.assertExists("button#deleteSessionFromModal");
    });
-   casper.waitForSelector(x("//a[normalize-space(text())='orkis@redcross.no ▾']"),
+   casper.waitForSelector('a[id="login-name-link"]',
        function success() {
-           test.assertExists(x("//a[normalize-space(text())='orkis@redcross.no ▾']"));
-           this.click(x("//a[normalize-space(text())='orkis@redcross.no ▾']"));
+           test.assertExists('a[id="login-name-link"]');
+           this.click('a[id="login-name-link"]');
        },
        function fail() {
-           test.assertExists(x("//a[normalize-space(text())='orkis@redcross.no ▾']"));
+           test.assertExists('a[id="login-name-link"]');
    });
    casper.waitForSelector("#login-buttons-logout",
        function success() {
