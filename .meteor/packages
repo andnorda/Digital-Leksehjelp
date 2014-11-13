@@ -9,9 +9,9 @@ jquery
 accounts-password
 accounts-ui
 iron:router
-mrt:bootstrap-3@=0.3.7
-mrt:flash-messages@=0.2.1
-natestrauser:select2@=3.4.5
-mizzao:user-status@=0.6.2
-sacha:spin@=0.2.2
+mrt:bootstrap-3
+mrt:flash-messages
+natestrauser:select2
+mizzao:user-status
+sacha:spin
 s3-imagesfork

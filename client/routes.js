@@ -1,7 +1,8 @@
 var checkIfSignedIn = function (pause) {
-    if (!Meteor.user()) {
+    if (!Meteor.userId()) {
         this.render('login');
-        pause();
+    } else {
+        this.next();
     }
 }
 
