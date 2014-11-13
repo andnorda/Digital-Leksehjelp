@@ -32,16 +32,19 @@ Template.queueModalBody.helpers({
         return studentSession();
     },
     stateWaiting: function () {
-        return studentSession().state == STUDENT_SESSION_STATE.WAITING;
+        var studentSession = studentSession();
+        return studentSession && studentSession.state == STUDENT_SESSION_STATE.WAITING;
     },
     studentsInFront: function () {
+        var studentSession = studentSession();
         return StudentQueue.find({ $and: [
-                { queueNr: { $lt: studentSession().queueNr } },
-                { subject: studentSession().subject }
+                { queueNr: { $lt: studentSession.queueNr } },
+                { subject: studentSession.subject }
             ]}).count();
     },
     stateReady: function () {
-        var stateReady = studentSession().state == STUDENT_SESSION_STATE.READY;
+        var studentSession = studentSession();
+        var stateReady = studentSession && studentSession.state == STUDENT_SESSION_STATE.READY;
         if (stateReady) {
             flashTitle("Leksehjelpen er klar!", 20);
         }
