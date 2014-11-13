@@ -5,9 +5,7 @@ Template.queueModal.rendered = function () {
     if (data && data.events) {
         if (!data.events.hidden) {
             $('#queueModal').on('hidden.bs.modal', function () {
-                var session = Template
-                    .queueModalBody
-                    .studentSession();
+                var session = studentSession();
                 if (session && (session.state !== STUDENT_SESSION_STATE.GETTING_HELP)) {
                     mixpanel.track("Forlot leksehjelp-kø",
                         {
@@ -25,28 +23,31 @@ Template.queueModal.rendered = function () {
     }
 };
 
-Template.queueModalBody.studentSession = function () {
-    return StudentSessions.find({ _id: Session.get("studentSessionId") }).fetch()[0];
-};
+var studentSession = function () {
+    return StudentSessions.findOne({ _id: Session.get("studentSessionId") });
+}
 
-Template.queueModalBody.stateWaiting = function () {
-    return Template.queueModalBody.studentSession().state == STUDENT_SESSION_STATE.WAITING;
-};
-
-Template.queueModalBody.studentsInFront = function () {
-    return StudentQueue.find({ $and: [
-            { queueNr: { $lt: Template.queueModalBody.studentSession().queueNr } },
-            { subject: Template.queueModalBody.studentSession().subject }
-        ]}).count();
-};
-
-Template.queueModalBody.stateReady = function () {
-    var stateReady = Template.queueModalBody.studentSession().state == STUDENT_SESSION_STATE.READY;
-    if (stateReady) {
-        flashTitle("Leksehjelpen er klar!", 20);
+Template.queueModalBody.helpers({
+    studentSession: function () {
+        return studentSession();
+    },
+    stateWaiting: function () {
+        return studentSession().state == STUDENT_SESSION_STATE.WAITING;
+    },
+    studentsInFront: function () {
+        return StudentQueue.find({ $and: [
+                { queueNr: { $lt: studentSession().queueNr } },
+                { subject: studentSession().subject }
+            ]}).count();
+    },
+    stateReady: function () {
+        var stateReady = studentSession().state == STUDENT_SESSION_STATE.READY;
+        if (stateReady) {
+            flashTitle("Leksehjelpen er klar!", 20);
+        }
+        return stateReady;
     }
-    return stateReady;
-};
+});
 
 Template.queueModalBody.events({
     'click button#getHelp' : function () {

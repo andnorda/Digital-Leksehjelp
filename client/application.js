@@ -73,6 +73,15 @@ UI.registerHelper('optionsSelected', function(values, defaultValue) {
     return new Spacebars.SafeString(buffer);
 });
 
+Template.registerHelper('serviceIsOpen', function () {
+    var serviceStatusArray = Config.find({ name: "serviceStatus" }).fetch();
+        if (serviceStatusArray.length > 0) {
+            return serviceStatusArray[0].open;
+        }
+        return false;
+    }
+);
+
 (function () {
     var original = document.title;
     var timeout;

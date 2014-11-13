@@ -94,7 +94,7 @@
 <template name="serviceStatus">
     <p>
         Status for tjenesten:
-        {{#if open}}
+        {{#if serviceIsOpen}}
             <font color="#458B00">ÅPEN</font>
         {{else}}
             <font color="#FF0000">STENGT</font>
@@ -117,5 +117,5 @@
         id="updateClosedStatus"
         type="button"
         class="btn btn-small btn-danger"
-        disabled={{not open}}>Steng tjenesten</button>
+        disabled={{not serviceIsOpen}}>Steng tjenesten</button>
 </template>

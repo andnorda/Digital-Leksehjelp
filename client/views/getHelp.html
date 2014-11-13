@@ -12,7 +12,7 @@
                         </div>
                         <div class="panel-body" style="text-align:center; padding: 3% 7%;">
                             {{#if serviceStatusLoaded}}
-                                {{#unless open}}
+                                {{#unless serviceIsOpen}}
                                     {{> serviceClosed}}
                                 {{else}}
                                     <p style="padding: 3%;">
