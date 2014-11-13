@@ -74,7 +74,7 @@ Meteor.publish("student-queue", function () {
 Meteor.publish("sessions", function (sessionId) {
     var user = Meteor.users.findOne(this.userId);
     if (!user) {
-        check(sessionId, String);
+        check(sessionId, Match.OneOf(String, null));
         return StudentSessions.find({ _id: sessionId });
     }
 
