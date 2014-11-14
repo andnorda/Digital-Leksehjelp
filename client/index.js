@@ -38,7 +38,10 @@ Template.loggedInVolunteers.helpers({
                 { 'services.resume.loginTokens': { $not: { $size: 0 } }},
                 { 'profile.firstName': { $not: "Orkis" }}
             ]}).fetch();
-    },
+    }
+});
+
+Template.loggedInVolunteer.helpers({
     subjectList: function (subjects) {
         return subjects.map(function(subject) {
             return subject.subjectName;
