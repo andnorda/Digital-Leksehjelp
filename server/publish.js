@@ -23,9 +23,9 @@ Meteor.publish("loggedInUsers", function () {
                 'profile.pictureUrl': 1,
                 'profile.firstName': 1,
                 'profile.subjects': 1,
-                //TODO(martin): These last two fields could be more restricted
+                //TODO(martin): The next field could be more restricted
                 'profile.role': 1,
-                'services.resume.loginTokens': 1
+                'status.online': 1
             }
         });
 
