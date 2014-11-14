@@ -2,84 +2,16 @@
   "meteor": {},
   "dependencies": {
     "basePackages": {
-      "iron-router": {
-        "version": "0.8.1"
-      },
-      "bootstrap-3": {
-        "version": "0.3.7"
-      },
-      "flash-messages": {
-        "version": "0.2.1"
-      },
-      "select2": {
-        "version": "3.4.5"
-      },
-      "user-status": {
-        "version": "0.2.0"
-      },
-      "spin": {
-        "version": "0.2.2"
-      },
       "s3-imagesfork": {
         "git": "https://github.com/henrikgs/Meteor-S3-Images.git",
         "branch": "master"
       }
     },
     "packages": {
-      "iron-router": {
-        "git": "https://github.com/EventedMind/iron-router.git",
-        "tag": "v0.8.1",
-        "commit": "74e867557fd9cb81173e048e5f81cf4a0a1160a8"
-      },
-      "bootstrap-3": {
-        "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
-        "tag": "v0.3.7",
-        "commit": "5dd0d142c870647b910be80bc777b96f0dd45e5e"
-      },
-      "flash-messages": {
-        "git": "https://github.com/camilosw/flash-messages.git",
-        "tag": "v0.2.1",
-        "commit": "62cf1ee531684808b91dbe3ff15e63f6d5af1c66"
-      },
-      "select2": {
-        "git": "https://github.com/nate-strauser/meteor-select2.git",
-        "tag": "v3.4.5",
-        "commit": "4a8d05582b949a14f0ee217c185166abbf112822"
-      },
-      "user-status": {
-        "git": "https://github.com/mizzao/meteor-user-status.git",
-        "tag": "v0.2.0",
-        "commit": "e18cc48440710d0ac23bd1a578974f9142226bf4"
-      },
-      "spin": {
-        "git": "https://github.com/SachaG/meteor-spin.git",
-        "tag": "v0.2.2",
-        "commit": "3f655f0016228e4195acc784c45d3e3a247dc39f"
-      },
       "s3-imagesfork": {
         "git": "https://github.com/henrikgs/Meteor-S3-Images.git",
         "branch": "master",
         "commit": "fa1fc98e3d4c97770ec18e50a000ee36c898a3e8"
-      },
-      "iron-layout": {
-        "git": "https://github.com/EventedMind/iron-layout.git",
-        "tag": "v0.2.0",
-        "commit": "4a2d53e35ba036b0c189c7ceca34be494d4c6c97"
-      },
-      "blaze-layout": {
-        "git": "https://github.com/EventedMind/blaze-layout.git",
-        "tag": "v0.2.5",
-        "commit": "273e3ab7d005d91a1a59c71bd224533b4dae2fbd"
-      },
-      "iron-core": {
-        "git": "https://github.com/EventedMind/iron-core.git",
-        "tag": "v0.2.0",
-        "commit": "0e48b5dc50d03f01025b7b900fb5ce2f13d52cad"
-      },
-      "iron-dynamic-template": {
-        "git": "https://github.com/EventedMind/iron-dynamic-template.git",
-        "tag": "v0.2.1",
-        "commit": "4dd1185c4d9d616c9abdb3f33e4a7d5a88db7e18"
       }
     }
   }

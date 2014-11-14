@@ -8,10 +8,10 @@ backbone
 jquery
 accounts-password
 accounts-ui
-iron-router
-bootstrap-3
-flash-messages
-select2
-user-status
-spin
+iron:router
+mrt:bootstrap-3
+mrt:flash-messages
+natestrauser:select2
+mizzao:user-status
+sacha:spin
 s3-imagesfork
