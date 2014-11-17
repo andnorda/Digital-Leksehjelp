@@ -32,13 +32,15 @@ Template.footer.events({
 
 Template.loggedInVolunteers.helpers({
     loggedInVolunteers: function () {
-        return Meteor.users.find({
+         return Meteor.users.find({
             $and: [
-                { 'services.resume.loginTokens': { $exists:true } },
-                { 'services.resume.loginTokens': { $not: { $size: 0 } }},
+                { 'status.online': true },
                 { 'profile.firstName': { $not: "Orkis" }}
             ]}).fetch();
-    },
+    }
+});
+
+Template.loggedInVolunteer.helpers({
     subjectList: function (subjects) {
         return subjects.map(function(subject) {
             return subject.subjectName;
