@@ -1,8 +1,0 @@
-{
-  "packages": {
-    "s3-imagesfork": {
-      "git": "https://github.com/henrikgs/Meteor-S3-Images.git",
-      "version": "0.0.1"
-    }
-  }
-}

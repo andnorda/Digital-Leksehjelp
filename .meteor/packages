@@ -14,4 +14,5 @@ mrt:flash-messages
 natestrauser:select2
 mizzao:user-status
 sacha:spin
-s3-imagesfork
+altapp:s3-images-blaze
+
