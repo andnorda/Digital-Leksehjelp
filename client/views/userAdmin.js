@@ -1,10 +1,12 @@
 var userAddedDep = new Deps.Dependency;
 var userAdded;
 
-Template.addUser.userAdded = function () {
-    userAddedDep.depend();
-    return userAdded;
-};
+Template.addUser.helpers({
+    userAdded: function () {
+        userAddedDep.depend();
+        return userAdded;
+    }
+});
 
 Template.addUser.events({
     'click .addUser': function(event) {
@@ -40,27 +42,40 @@ Template.addUser.events({
 });
 
 // === ROLESELECTOR ===
-Template.roleSelector.roles = function () {
-    return ROLES;
-};
+Template.roleSelector.helpers({
+    roles: function () {
+        var rolesArray = [];
+        for (var key in ROLES) {
+            if (ROLES.hasOwnProperty(key)) {
+                var val = ROLES[key];
+                rolesArray.push(val);
+            }
+        }
+        return rolesArray;
+    }
+});
 
 // === USERSTABLE ===
-Template.usersTable.users = function () {
-    return Meteor.users.find({}).fetch();
-};
+Template.usersTable.helpers({
+    users: function () {
+        return Meteor.users.find({}).fetch();
+    }
+});
 
 // === USERROW ===
 var newUserRole;
 
-Template.userRow.remoteUserLoggedIn = function () {
-    var userLoggedInArray = Meteor.users.find({
-            $and: [
-                { '_id': this._id },
-                { 'services.resume.loginTokens': { $exists:true } },
-                { 'services.resume.loginTokens': { $not: { $size: 0 } }}
-            ]}).fetch();
-    return (userLoggedInArray.length > 0) ? true : false;
-};
+Template.userRow.helpers({
+    remoteUserLoggedIn: function () {
+        var userLoggedInArray = Meteor.users.find({
+                $and: [
+                    { '_id': this._id },
+                    { 'services.resume.loginTokens': { $exists:true } },
+                    { 'services.resume.loginTokens': { $not: { $size: 0 } }}
+                ]}).fetch();
+        return (userLoggedInArray.length > 0) ? true : false;
+    }
+});
 
 Template.userRow.events({
     'change .newRole' : function (event) {
@@ -103,14 +118,16 @@ Template.userRow.events({
 });
 
 // === OPENINGHOURS ===
-Template.openingHours.openingHours = function () {
-    var openingHoursArray = Config.find({ name: "openingHours" }).fetch();
+Template.openingHours.helpers({
+    openingHours: function () {
+        var openingHoursArray = Config.find({ name: "openingHours" }).fetch();
 
-    if (openingHoursArray.length > 0) {
-        return openingHoursArray[0].text;
+        if (openingHoursArray.length > 0) {
+            return openingHoursArray[0].text;
+        }
+        return "";
     }
-    return "";
-};
+});
 
 Template.openingHours.events({
     'click button#updateOpeningHours' : function () {
@@ -127,18 +144,6 @@ Template.openingHours.events({
 });
 
 // === SERVICESTATUS ===
-Template.serviceStatus.open = function () {
-    var serviceStatusArray = Config.find({ name: "serviceStatus" }).fetch();
-    if (serviceStatusArray.length > 0) {
-        return serviceStatusArray[0].open;
-    }
-    return false;
-};
-
-Template.serviceClosedAdmin.open = function () {
-    return Template.serviceStatus.open();
-};
-
 Template.serviceClosedAdmin.events({
     'click button#updateClosedStatus' : function () {
         Meteor.call('upsertServiceStatus',

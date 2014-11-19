@@ -14,9 +14,11 @@ Template.addSubject.events({
     }
 });
 
-Template.subjectsTable.subjects = function () {
-    return Subjects.find({});
-};
+Template.subjectsTable.helpers({
+    subjects: function () {
+        return Subjects.find({});
+    }
+});
 
 Template.subjectsTable.events({
     'click button.deleteSubject' : function () {

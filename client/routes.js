@@ -1,7 +1,8 @@
-var checkIfSignedIn = function () {
-    if (!Meteor.user()) {
+var checkIfSignedIn = function (pause) {
+    if (!Meteor.userId()) {
         this.render('login');
-        this.stop();
+    } else {
+        this.next();
     }
 }
 
@@ -24,7 +25,7 @@ GetHelpController = BaseController.extend({
     }
 });
 
-Router.before(checkIfSignedIn, {except: ['getHelp', 'notFound']});
+Router.onBeforeAction(checkIfSignedIn, {except: ['getHelp', 'notFound']});
 
 Router.map(function () {
     this.route('volunteer', {

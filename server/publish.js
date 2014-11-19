@@ -23,9 +23,9 @@ Meteor.publish("loggedInUsers", function () {
                 'profile.pictureUrl': 1,
                 'profile.firstName': 1,
                 'profile.subjects': 1,
-                //TODO(martin): These last two fields could be more restricted
+                //TODO(martin): The next field could be more restricted
                 'profile.role': 1,
-                'services.resume.loginTokens': 1
+                'status.online': 1
             }
         });
 
@@ -74,7 +74,7 @@ Meteor.publish("student-queue", function () {
 Meteor.publish("sessions", function (sessionId) {
     var user = Meteor.users.findOne(this.userId);
     if (!user) {
-        check(sessionId, String);
+        check(sessionId, Match.OneOf(String, null));
         return StudentSessions.find({ _id: sessionId });
     }
 

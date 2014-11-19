@@ -30,6 +30,15 @@ How to run locally
 
 10. Browse to localhost:3000.
 
+How to run integration tests
+----------------------------
+
+1. Make sure you have a running instance of the application (see [How to run locally](#how-to-run-locally))
+
+2. `cd tests`
+
+3. `node test.js`
+
 Database
 --------
 
@@ -68,11 +77,37 @@ Styleguide
 Deployment to Heroku
 --------------------
 
-To deploy a new version to digital-leksehjelp.herokuapp.com, and effectively http://digitalleksehjelp.no.
+1. Your Heroku account need to be granted access to the app on Heroku by [ops@iterate.no](mailto:ops@iterate.no). Please give them a shout to get access.
 
-1. You need to install the [Heroku Toolbelt](https://toolbelt.herokuapp.com/), and login with your own Heroku user, which have been granted access to the app by [ops@iterate.no](mailto:ops@iterate.no). If your user has not, please give them a shout.
+2. `git remote add <HEROKU_REMOTE> git@heroku.com:<APPNAME>.git`
 
-2. Run the script `./heroku-deploy` and wait for it to finish.
+3. `git push <HEROKU_REMOTE> [<FROM_BRANCH>:]master` and wait for deployed app on `<APPNAME>.herokuapp.com`
+
+Example:
+
+    git remote add staging git@heroku.com:digital-leksehjelp-test.git
+    git push staging test:master
+
+Initial deployment to Heroku
+----------------------------
+
+To deploy a new instance of Digital Leksehjelp on Heroku.
+
+1. You need to install the [Heroku Toolbelt](https://toolbelt.herokuapp.com/), and log in with your Heroku user. *Note: To use add-ons on Heroku (even the free ones), you need to register a valid credit card on your account.*
+
+2. Configure the following variables:
+
+   `APPNAME=digital-leksehjelp;` (or whatever you want the app to be called)
+
+   `HEROKU_REMOTE=production;` (or whatever you want the remote to be called)
+
+   `S3_KEY=<KEY>;`
+   
+   `S3_SECRET=<SECRET>;`
+
+3. `heroku apps:create $APPNAME --remote $HEROKU_REMOTE --region eu --stack cedar --buildpack https://github.com/AdmitHub/meteor-buildpack-horse.git; heroku addons:add papertrail:choklad --app $APPNAME; heroku addons:add mongolab:sandbox --app $APPNAME; heroku config:set MONGO_URL=$(heroku config:get MONGOLAB_URI --app $APPNAME) --app $APPNAME; heroku config:set ROOT_URL=http://$APPNAME.herokuapp.com --app $APPNAME; heroku config:set S3_KEY=$S3_KEY --app $APPNAME; heroku config:set S3_SECRET=$S3_SECRET --app $APPNAME;`
+
+4. `git push $HEROKU_REMOTE <FROM_BRANCH>:master;` and wait for deployed app on `$APPNAME.herokuapp.com`
 
 Browser compatibility
 ---------------------

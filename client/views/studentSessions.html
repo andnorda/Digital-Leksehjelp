@@ -15,7 +15,7 @@
         type="button"
         class="btn btn-s btn-success"
         id="openService"
-        {{#if open}}disabled{{/if}}>Åpne leksehjelpen</button>
+        disabled={{serviceIsOpen}}>Åpne leksehjelpen</button>
 </template>
 
 <template name="studentSessionsTable">
@@ -64,6 +64,6 @@
         </td>
         <td>{{ state }}</td>
         <td>{{ tutor }}</td>
-        <td><div class="deleteSession"><button>Slett sesjon</button></div>
+        <td><div class="deleteSession"><button>Slett sesjon</button></div></td>
     </tr>
 </template>

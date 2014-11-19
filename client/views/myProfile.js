@@ -1,35 +1,35 @@
 Template.mySubjectsSelector.rendered = function () {
-    $('#mySubjects')
-        .select2({
-            width: "300px",
-            multiple: true,
-            minimumInputLength: 3,
-            query: function(query) {
-                var data = { results: []};
-                data.results = (Subjects.find({ name: new RegExp(query.term, "i")})
-                    .fetch()).map(function(subject) {
-                        return {
-                            id: subject._id + "-" + subject.name,
-                            text: subject.name
-                        };
-                });
-                return query.callback(data);
-              }
-        });
+    $('#mySubjects').select2({
+        width: "300px",
+        multiple: true,
+        minimumInputLength: 3,
+        query: function(query) {
+            var data = { results: []};
+            data.results = (Subjects.find({ name: new RegExp(query.term, "i")})
+                .fetch()).map(function(subject) {
+                    return {
+                        id: subject._id + "-" + subject.name,
+                        text: subject.name
+                    };
+            });
+            return query.callback(data);
+          }
+    });
 };
 
-Template.profilePicture.uploading = function () {
-    return Session.get("uploading");
-};
-
-Template.profilePicture.profilePictureUrl = function () {
-    var profilePictureUrl = Meteor.user().profile.pictureUrl;
-    if (profilePictureUrl) {
-        return profilePictureUrl;
-    } else {
-        return "";
+Template.profilePicture.helpers({
+    uploading: function () {
+        return Session.get("uploading");
+    },
+    profilePictureUrl: function () {
+        var profilePictureUrl = Meteor.user().profile.pictureUrl;
+        if (profilePictureUrl) {
+            return profilePictureUrl;
+        } else {
+            return "";
+        }
     }
-};
+});
 
 Template.mySubjectsSelector.events({
     'click #saveMySubjects' : function () {
@@ -55,12 +55,14 @@ Template.mySubjectsSelector.events({
     }
 });
 
-Template.mySubjectsTable.mySubjects = function () {
-    if(Meteor.user()) {
-        return Meteor.user().profile.subjects;
+Template.mySubjectsTable.helpers({
+    mySubjects: function () {
+        if(Meteor.user()) {
+            return Meteor.user().profile.subjects;
+        }
+        return null;
     }
-    return null;
-};
+});
 
 Template.mySubjectsTable.events({
     'click button.removeSubjectFromMyProfile' : function () {

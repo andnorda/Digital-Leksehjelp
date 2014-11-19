@@ -1,6 +1,8 @@
-Template.loggedInHeader.currentUserEmail = function () {
-    return Meteor.user().username;
-};
+Template.loggedInHeader.helpers({
+    currentUserEmail: function () {
+        return Meteor.user().username;
+    }
+});
 
 Template.login.events({
     'click' : function (event) {
@@ -10,9 +12,11 @@ Template.login.events({
     }
 });
 
-Template.loggedInHeader.isAdmin = function () {
-    return Meteor.user().profile.role === ROLES.ADMIN;
-};
+Template.loggedInHeader.helpers({
+    isAdmin: function () {
+        return Meteor.user().profile.role === ROLES.ADMIN;
+    }
+});
 
 Template.practicalInfo.events({
     'click button#moreInfo' : function () {
@@ -26,20 +30,20 @@ Template.footer.events({
     }
 });
 
-Template.loggedInVolunteers.loggedInVolunteers = function () {
-    return Meteor.users.find({
-        $and: [
-            { 'services.resume.loginTokens': { $exists:true } },
-            { 'services.resume.loginTokens': { $not: { $size: 0 } }},
-            { 'profile.firstName': { $not: "Orkis" }}
-        ]}).fetch();
-};
-
-Template.loggedInVolunteers.open = function () {
-    var serviceStatusArray = Config.find({ name: "serviceStatus" }).fetch();
-
-    if (serviceStatusArray.length > 0) {
-        return serviceStatusArray[0].open;
+Template.loggedInVolunteers.helpers({
+    loggedInVolunteers: function () {
+         return Meteor.users.find({
+            $and: [
+                { 'status.online': true },
+                { 'profile.firstName': { $not: "Orkis" }}
+            ]}).fetch();
     }
-    return false;
-};
+});
+
+Template.loggedInVolunteer.helpers({
+    subjectList: function (subjects) {
+        return subjects.map(function(subject) {
+            return subject.subjectName;
+        }).join(", ");
+    }
+});

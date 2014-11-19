@@ -9,36 +9,26 @@ var getHighestQueueNr = function () {
     return StudentQueue.find({}, { sort: { queueNr: -1 }, limit: 1 }).fetch()[0].queueNr;
 };
 
-Template.getHelp.validationError = function () {
-    validationErrorDep.depend();
-    return validationError;
-};
+Template.getHelp.helpers({
+    validationError: function () {
+        validationErrorDep.depend();
+        return validationError;
+    },
+    openingHours: function () {
+        var openingHoursArray = Config.find({ name: "openingHours" }).fetch();
 
-Template.getHelp.openingHours = function () {
-    var openingHoursArray = Config.find({ name: "openingHours" }).fetch();
-
-    if (openingHoursArray.length > 0) {
-        return Config.find({ name: "openingHours" }).fetch()[0].text;
+        if (openingHoursArray.length > 0) {
+            return Config.find({ name: "openingHours" }).fetch()[0].text;
+        }
+        return "";
+    },
+    openingHoursLoaded: function () {
+        return Session.get("openingHoursLoaded");
+    },
+    serviceStatusLoaded: function () {
+        return Session.get("serviceStatusLoaded");
     }
-    return "";
-};
-
-Template.getHelp.openingHoursLoaded = function () {
-    return Session.get("openingHoursLoaded");
-};
-
-Template.getHelp.serviceStatusLoaded = function () {
-    return Session.get("serviceStatusLoaded");
-};
-
-Template.getHelp.open = function () {
-    var serviceStatusArray = Config.find({ name: "serviceStatus" }).fetch();
-
-    if (serviceStatusArray.length > 0) {
-        return serviceStatusArray[0].open;
-    }
-    return false;
-};
+});
 
 Template.getHelp.events({
     'click button#createSession' : function () {
@@ -81,9 +71,18 @@ Template.getHelp.events({
 });
 
 // === SUBJECTSELECTOR ===
-Template.subjectSelector.subjects = function () {
-    return Subjects.find({});
-};
+Template.subjectSelector.helpers({
+    subjects: function () {
+        return Subjects.find({});
+    },
+    subjectDisabled: function (availableVolunteers) {
+        if(availableVolunteers > 0) {
+            return '';
+        } else {
+            return 'disabled-li';
+        }
+    }
+});
 
 Template.subjectSelector.events({
     'click .subjects' : function (event) {
@@ -94,9 +93,11 @@ Template.subjectSelector.events({
 });
 
 // === GRADESELECTOR ===
-Template.gradeSelector.grades = function () {
-    return GRADES;
-};
+Template.gradeSelector.helpers({
+    grades: function () {
+        return GRADES;
+    }
+});
 
 Template.gradeSelector.events({
     'click .grades' : function () {

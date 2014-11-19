@@ -27,13 +27,11 @@
 </template>
 
 <template name="roleSelector">
-    {{#isolate}}
-        <select id="role">
-            {{#eachProperty roles }}
-                <option>{{value}}</option>
-            {{/eachProperty}}
-        </select>
-    {{/isolate}}
+    <select id="role">
+        {{#each roles }}
+            <option>{{this}}</option>
+        {{/each}}
+    </select>
 </template>
 
 <template name="usersTable">
@@ -47,16 +45,13 @@
             <th>Valgte fag</th>
             <th>Rolle</th>
         </tr>
-        {{#isolate}}
-            {{#each users }}
-                {{> userRow }}
-            {{/each}}
-        {{/isolate}}
+        {{#each users }}
+            {{> userRow }}
+        {{/each}}
     </table>
 </template>
 
 <template name="userRow">
-    {{#isolate}}
     <tr>
         <td>{{ username }}</td>
         {{#each emails}}
@@ -76,35 +71,30 @@
             {{/each}}
         </td>
         <td>
-            {{#isolate}}
-                <select class="newRole">
-                    {{{optionsSelected globalRoles profile.role }}}
-                </select>
-            {{/isolate}}
+            <select class="newRole">
+                {{{optionsSelected globalRoles profile.role }}}
+            </select>
         </td>
         <td><button type="button" class="btn btn-xs btn-danger deleteUser">Slett</button></td>
         {{#if remoteUserLoggedIn}}
             <td><button type="button" class="btn btn-xs btn-danger logoutUser">Logg ut</button></td>
         {{/if}}
     </tr>
-    {{/isolate}}
 </template>
 
 <template name="openingHours">
-    {{#isolate}}
-        <h3>Endre åpningstider</h3>
-        <p>
-            Her kan du endre åpningstidene som blir vist på fremsiden for Digital leksehjelp.
-        </p>
-        <textarea style="width: 75%; height: 60px" id="openingHours">{{ openingHours }}</textarea>
-        <button id="updateOpeningHours" type="button" class="btn btn-small btn-primary">Endre åpningstid</button>
-    {{/isolate}}
+    <h3>Endre åpningstider</h3>
+    <p>
+        Her kan du endre åpningstidene som blir vist på fremsiden for Digital leksehjelp.
+    </p>
+    <textarea style="width: 75%; height: 60px" id="openingHours">{{ openingHours }}</textarea>
+    <button id="updateOpeningHours" type="button" class="btn btn-small btn-primary">Endre åpningstid</button>
 </template>
 
 <template name="serviceStatus">
     <p>
         Status for tjenesten:
-        {{#if open}}
+        {{#if serviceIsOpen}}
             <font color="#458B00">ÅPEN</font>
         {{else}}
             <font color="#FF0000">STENGT</font>
@@ -113,7 +103,6 @@
 </template>
 
 <template name="serviceClosedAdmin">
-    {{#isolate}}
     <h3>Overstyr stenging av Digital Leksehjelp</h3>
     <p>
         Hvis alle brukere er utlogget, vil tjenesten vises som stengt uansett. Hvis det er
@@ -123,11 +112,10 @@
         Selv om tjenesten stenges her før alle er utlogget, vil den  kunne åpnes igjen av
         alle frivillige som er pålogget, på siden "Hjelp elever".
     </p>
-        {{> serviceStatus}}
-        <button
-            id="updateClosedStatus"
-            type="button"
-            class="btn btn-small btn-danger"
-            {{#unless open}}disabled{{/unless}}>Steng tjenesten</button>
-    {{/isolate}}
+    {{> serviceStatus}}
+    <button
+        id="updateClosedStatus"
+        type="button"
+        class="btn btn-small btn-danger"
+        disabled={{not serviceIsOpen}}>Steng tjenesten</button>
 </template>

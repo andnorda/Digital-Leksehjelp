@@ -12,7 +12,7 @@
                         </div>
                         <div class="panel-body" style="text-align:center; padding: 3% 7%;">
                             {{#if serviceStatusLoaded}}
-                                {{#unless open}}
+                                {{#unless serviceIsOpen}}
                                     {{> serviceClosed}}
                                 {{else}}
                                     <p style="padding: 3%;">
@@ -33,11 +33,9 @@
                                                 </div>
                                             </button>
                                         </div>
-                                        {{#isolate}}
-                                            {{#if validationError }}
-                                                <div class="alert alert-danger">{{ validationError }}</div>
-                                            {{/if}}
-                                        {{/isolate}}
+                                        {{#if validationError }}
+                                            <div class="alert alert-danger">{{ validationError }}</div>
+                                        {{/if}}
                                     </form>
                                 {{/unless}}
                             {{else}}
@@ -80,11 +78,7 @@
         </button>
         <ul class="dropdown-menu" role="menu" style="width:100%;">
             {{#each subjects }}
-                {{#ifGreaterThanZero this.availableVolunteers.length}}
-                    <li class="subjects" role="presentation">{{this.name}}</li>
-                {{else}}
-                    <li class="subjects disabled-li" role="presentation">{{this.name}}</li>
-                {{/ifGreaterThanZero}}
+                <li class="subjects {{subjectDisabled this.availableVolunteers.length}}" role="presentation">{{this.name}}</li>
             {{/each}}
         </ul>
         </div>
