@@ -41,10 +41,7 @@ Meteor.startup(function () {
       removed: function () {
         count--;
         if (count === 0) {
-            Meteor.call('upsertServiceStatus',
-                {
-                    newServiceStatus: false
-                });
+            Config.upsert({ name: "serviceStatus" }, { $set: { "open": false }});
         }
       }
     });
