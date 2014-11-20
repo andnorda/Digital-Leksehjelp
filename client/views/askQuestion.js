@@ -35,9 +35,10 @@ Template.questionForm.events({
         },
         function (error) {
             if (error) {
-                FlashMessages.sendError("Noe gikk galt ved innsending av spørsmål. Vennligst prøv igjen.");
+                FlashMessages.sendError("Noe gikk galt ved innsending av spørsmål. Vennligst prøv igjen.", { autoHide: true, hideDelay: 6000 });
             } else {
                 resetQuestionForm();
+                FlashMessages.sendSuccess("Spørsmål sendt inn. Du vil få beskjed på e-post når spørsmålet er besvart.", { autoHide: true, hideDelay: 6000 });
             }
         });
     }
