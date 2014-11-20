@@ -9,7 +9,7 @@ Meteor.subscribe("openingHours", function onComplete() {
 });
 Meteor.subscribe("subjects");
 Meteor.subscribe("loggedInUsers");
-
+Meteor.subscribe("questions");
 
 var lastUserId;
 Deps.autorun(function () {

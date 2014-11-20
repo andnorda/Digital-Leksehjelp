@@ -1,0 +1,67 @@
+<template name="askQuestion">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Still et spørsmål</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                {{> questionForm}}
+            </div>
+
+            <div class="col-md-4">
+                {{> relatedQuestions}}
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="questionForm">
+    <form role="form">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label>Fag</label>
+                <select class="form-control" name="subject">
+                    <option value='default' selected='selected'>Velg fag</option>
+                    {{#each subjects}}
+                    <option value="{{this._id}}">{{this.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Årstrinn</label>
+                <select class="form-control" name="grade">
+                    <option value='default' selected='selected'>Velg årstrinn</option>
+                    {{#each grades}}
+                    <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Spørsmål</label>
+            <textarea class="form-control" name="question" placeholder="Still spørsmålet ditt her..." rows="6"></textarea>
+        </div>
+        <!-- Ignoring file/image upload for now
+        <div class="form-group">
+            <label>Last opp fil</label>
+            <input class="form-control" type="file" name="file">
+        </div>
+        -->
+        <div class="form-group">
+            <label>E-post</label>
+            <div class="input-group">
+                <span class="input-group-addon">@</span>
+                <input type="text" class="form-control" name="email" placeholder="E-post">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">Send inn spørsmål</button>
+    </form>
+</template>
+
+
+<template name="relatedQuestions">
+    <h3>Relaterte spørsmål</h3>
+</template>
