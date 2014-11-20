@@ -1,5 +1,5 @@
 Template.questionForm.helpers({
-	subjects: function () {
+    subjects: function () {
         return Subjects.find({});
     },
     grades: function () {
@@ -15,19 +15,19 @@ var resetQuestionForm = function() {
 }
 
 Template.questionForm.events({
-	'submit form' : function (e, template) {
-		e.preventDefault();
-		var subjectId = template.find("select[name=subject]").value;
-		var grade = template.find("select[name=grade]").value;
-		var question = template.find("textarea[name=question]").value;
-		var email = template.find("input[name=email]").value;
-		// Ignoring file/image upload for now
-		//var files = $(template.find("input[name=file]"))[0].files;
+    'submit form' : function (e, template) {
+        e.preventDefault();
+        var subjectId = template.find("select[name=subject]").value;
+        var grade = template.find("select[name=grade]").value;
+        var question = template.find("textarea[name=question]").value;
+        var email = template.find("input[name=email]").value;
+        // Ignoring file/image upload for now
+        //var files = $(template.find("input[name=file]"))[0].files;
 
-		// do validation
+        // do validation
 
-		Meteor.call('askQuestion',
-		{
+        Meteor.call('askQuestion',
+        {
             subjectId: subjectId,
             grade: grade,
             question: question,
@@ -40,5 +40,5 @@ Template.questionForm.events({
                 resetQuestionForm();
             }
         });
-	}
+    }
 });
