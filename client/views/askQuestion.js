@@ -7,6 +7,13 @@ Template.questionForm.helpers({
     }
 });
 
+var resetQuestionForm = function() {
+    var subjectId = $("select[name=subject]").val("default");
+    var grade = $("select[name=grade]").val("default");
+    var question = $("textarea[name=question]").val("");
+    var email = $("input[name=email]").val("");
+}
+
 Template.questionForm.events({
 	'submit form' : function (e, template) {
 		e.preventDefault();
@@ -30,7 +37,7 @@ Template.questionForm.events({
             if (error) {
                 FlashMessages.sendError("Noe gikk galt ved innsending av spørsmål. Vennligst prøv igjen.");
             } else {
-
+                resetQuestionForm();
             }
         });
 	}

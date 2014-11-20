@@ -109,7 +109,7 @@ Meteor.publish("questions", function () {
     } else {
         return Questions.find({
             published: true,
-            answer: { $ne: null }
+            answer: { $exists: true }
         });
     }
 });
