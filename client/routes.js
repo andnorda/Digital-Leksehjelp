@@ -66,7 +66,7 @@ Router.map(function () {
 
     this.route('askQuestion', {
         controller: QuestionController,
-        path: '/spm'
+        path: '/sporsmal'
     });
 
     this.route('notFound', {

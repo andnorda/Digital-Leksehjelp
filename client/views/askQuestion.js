@@ -21,10 +21,8 @@ Template.questionForm.events({
         var grade = template.find("select[name=grade]").value;
         var question = template.find("textarea[name=question]").value;
         var email = template.find("input[name=email]").value;
-        // Ignoring file/image upload for now
-        //var files = $(template.find("input[name=file]"))[0].files;
 
-        // do validation
+        // TODO: do validation
 
         Meteor.call('askQuestion',
         {
