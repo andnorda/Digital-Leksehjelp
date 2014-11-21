@@ -9,13 +9,13 @@ casper.on('page.error', function(msg, trace) {
 });
 casper.test.begin('Student', function(test) {
    casper.start('http://localhost:3000/');
-   casper.waitForSelector(".form-group.fullwidth .subjects:nth-child(1)",
+   casper.waitForSelector(".form-group.full-width .subjects:nth-child(1)",
        function success() {
-           test.assertExists(".form-group.fullwidth .subjects:nth-child(1)");
-           this.click(".form-group.fullwidth .subjects:nth-child(1)");
+           test.assertExists(".form-group.full-width .subjects:nth-child(1)");
+           this.click(".form-group.full-width .subjects:nth-child(1)");
        },
        function fail() {
-           test.assertExists(".form-group.fullwidth .subjects:nth-child(1)");
+           test.assertExists(".form-group.full-width .subjects:nth-child(1)");
    });
    casper.waitForSelector(".form-group:nth-child(2) .grades:nth-child(1)",
        function success() {

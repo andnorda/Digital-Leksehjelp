@@ -27,6 +27,9 @@ Template.getHelp.helpers({
     },
     serviceStatusLoaded: function () {
         return Session.get("serviceStatusLoaded");
+    },
+    subjectsWithAnswers: function () {
+        return Subjects.find({});
     }
 });
 
@@ -67,6 +70,11 @@ Template.getHelp.events({
     'click .disabled-li' : function (event) {
         event.preventDefault();
         return false;
+    },
+
+    'click #ask-question' : function (event) {
+        event.preventDefault();
+        Router.go('askQuestion');
     }
 });
 

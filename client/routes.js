@@ -25,7 +25,14 @@ GetHelpController = BaseController.extend({
     }
 });
 
-Router.onBeforeAction(checkIfSignedIn, {except: ['getHelp', 'notFound']});
+QuestionAnswerController = BaseController.extend({
+    yieldTemplates: {
+        'header': { to : 'header'},
+        'footer': { to : 'footer'}
+    }
+});
+
+Router.onBeforeAction(checkIfSignedIn, {except: ['getHelp', 'askQuestion', 'notFound', 'subjectOverview']});
 
 Router.map(function () {
     this.route('volunteer', {
@@ -55,6 +62,16 @@ Router.map(function () {
     this.route('getHelp', {
         controller: GetHelpController,
         path: '/'
+    });
+
+    this.route('askQuestion', {
+        controller: QuestionAnswerController,
+        path: '/sporsmal'
+    });
+
+    this.route('subjectOverview', {
+        controller: QuestionAnswerController,
+        path: '/fag'
     });
 
     this.route('notFound', {

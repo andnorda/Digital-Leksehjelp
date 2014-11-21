@@ -101,3 +101,15 @@ Meteor.publish("config", function () {
         return Config.find({});
     }
 });
+
+Meteor.publish("questions", function () {
+    var user = Meteor.users.findOne(this.userId);
+    if (user) {
+        return Questions.find({});
+    } else {
+        return Questions.find({
+            published: true,
+            answer: { $exists: true }
+        });
+    }
+});
