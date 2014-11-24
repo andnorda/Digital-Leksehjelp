@@ -1,7 +1,7 @@
 // Server only logic, this will NOT be sent to the clients.
 
 Meteor.startup(function () {
-    migrateSubjects();
+    addHumanReadableIdToSubjectsCollection();
 
     Accounts.emailTemplates.from = "Digital Leksehjelp <digitalleksehjelp@oslo.redcross.no>";
 
@@ -84,7 +84,7 @@ Accounts.validateNewUser(function (user) {
     return true;
 });
 
-var migrateSubjects = function() {
+var addHumanReadableIdToSubjectsCollection = function() {
     Subjects.find({humanReadableId: { $exists: false }}).forEach(function(subject) {
         Subjects.update(
             { _id: subject._id },
