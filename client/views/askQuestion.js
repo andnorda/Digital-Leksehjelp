@@ -8,10 +8,10 @@ Template.questionForm.helpers({
 });
 
 var resetQuestionForm = function() {
-    var subjectId = $("select[name=subject]").val("default");
-    var grade = $("select[name=grade]").val("default");
-    var question = $("textarea[name=question]").val("");
-    var email = $("input[name=email]").val("");
+    $("select[name=subject]").val("default");
+    $("select[name=grade]").val("default");
+    $("textarea[name=question]").val("");
+    $("input[name=email]").val("");
 }
 
 Template.questionForm.events({
