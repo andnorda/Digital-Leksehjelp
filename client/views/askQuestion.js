@@ -20,16 +20,14 @@ Template.questionForm.events({
         var subjectId = template.find("select[name=subject]").value;
         var grade = template.find("select[name=grade]").value;
         var question = template.find("textarea[name=question]").value;
-        var email = template.find("input[name=email]").value;
-
-        // TODO: do validation
+        var studentEmail = template.find("input[name=email]").value;
 
         Meteor.call('askQuestion',
         {
             subjectId: subjectId,
             grade: grade,
             question: question,
-            email: email
+            studentEmail: studentEmail
         },
         function (error) {
             if (error) {
