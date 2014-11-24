@@ -8,10 +8,10 @@ Template.questionForm.helpers({
 });
 
 var resetQuestionForm = function() {
-    var subjectId = $("select[name=subject]").val("default");
-    var grade = $("select[name=grade]").val("default");
-    var question = $("textarea[name=question]").val("");
-    var email = $("input[name=email]").val("");
+    $("select[name=subject]").val("default");
+    $("select[name=grade]").val("default");
+    $("textarea[name=question]").val("");
+    $("input[name=email]").val("");
 }
 
 Template.questionForm.events({
@@ -20,16 +20,14 @@ Template.questionForm.events({
         var subjectId = template.find("select[name=subject]").value;
         var grade = template.find("select[name=grade]").value;
         var question = template.find("textarea[name=question]").value;
-        var email = template.find("input[name=email]").value;
-
-        // TODO: do validation
+        var studentEmail = template.find("input[name=email]").value;
 
         Meteor.call('askQuestion',
         {
             subjectId: subjectId,
             grade: grade,
             question: question,
-            email: email
+            studentEmail: studentEmail
         },
         function (error) {
             if (error) {
