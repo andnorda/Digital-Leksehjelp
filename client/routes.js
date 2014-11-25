@@ -69,6 +69,14 @@ Router.map(function () {
         path: '/sporsmal'
     });
 
+    this.route('showAnswer', {
+        controller: QuestionAnswerController,
+        path: '/sporsmal/:questionId',
+        data: function() {
+            return Questions.findOne({_id: this.params.questionId});
+        }
+    });
+
     this.route('search', {
         controller: QuestionAnswerController,
         path: '/sok'

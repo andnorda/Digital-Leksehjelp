@@ -86,6 +86,12 @@ Template.registerHelper('serviceIsOpen', function () {
     }
 );
 
+Template.registerHelper('fromNow', function(date) {
+    if (date) {
+        return moment(date).fromNow();
+    }
+});
+
 (function () {
     var original = document.title;
     var timeout;

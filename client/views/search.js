@@ -3,9 +3,3 @@ Template.search.helpers({
         return Questions.find({});
     }
 });
-
-Template.question.helpers({
-    dateFormatter: function(date) {
-        return moment(date).fromNow();
-    }
-});
