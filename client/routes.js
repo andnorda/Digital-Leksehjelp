@@ -32,7 +32,7 @@ QuestionAnswerController = BaseController.extend({
     }
 });
 
-Router.onBeforeAction(checkIfSignedIn, {except: ['getHelp', 'askQuestion', 'notFound', 'subjectOverview']});
+Router.onBeforeAction(checkIfSignedIn, {except: ['getHelp', 'askQuestion', 'notFound', 'search']});
 
 Router.map(function () {
     this.route('volunteer', {

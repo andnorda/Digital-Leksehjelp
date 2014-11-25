@@ -40,22 +40,22 @@ Meteor.Spinner.options = {
     top: '3'
 };
 
-UI.registerHelper('isGreaterThanZero', function(value) {
+Template.registerHelper('isGreaterThanZero', function(value) {
   if(value > 0) {
     return true;
   }
   return false
 });
 
-UI.registerHelper('not', function(value) {
+Template.registerHelper('not', function(value) {
     return !value;
 });
 
-UI.registerHelper('globalRoles', function(block) {
+Template.registerHelper('globalRoles', function(block) {
     return ROLES;
 });
 
-UI.registerHelper('optionsSelected', function(values, defaultValue) {
+Template.registerHelper('optionsSelected', function(values, defaultValue) {
     var buffer = "";
     if (Array.isArray(values)) {
         // TODO(martin): If needed, treat as array.
