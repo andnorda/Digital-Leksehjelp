@@ -274,14 +274,26 @@
         {{#if currentUser }}
             {{#if isAdmin }}
                 <h3>Digital Leksehjelp - Administrator</h3>
-                <a href="/frivillig/admin/brukere">Administrer brukere</a>
-                <a href="/frivillig/admin/fag">Administrer fag</a>
             {{else}}
                 <h3>Digital Leksehjelp - Frivillig</h3>
             {{/if}}
-            <a href="/frivillig">Hjelp elever</a>
-            <a href="/frivillig/profil">Min profil</a>
             {{> loginButtons}}
+
+            <div class="navbar">
+                <!--<a class="navbar-brand" href="#">Title</a>-->
+                <ul class="nav navbar-nav">
+                    <li><a href="/frivillig/profil">Min profil</a></li>
+                    {{#if isAdmin }}
+                        <li><a href="/frivillig/admin/brukere">Administrer brukere</a></li>
+                        <li><a href="/frivillig/admin/fag">Administrer fag</a></li>
+                    {{/if}}
+                    <li><a href="/frivillig">Hjelp elever</a></li>
+                    <li><a href="/frivillig">Ubesvarte spørsmål</a></li>
+                    <li><a href="/frivillig">Kontrollér svar</a></li>
+                    <li><a href="/frivillig">Publisér</a></li>
+                </ul>
+            </div>
+
             {{> endSessionModal}}
         {{/if}}
     </div>
