@@ -69,9 +69,9 @@ Router.map(function () {
         path: '/sporsmal'
     });
 
-    this.route('subjectOverview', {
+    this.route('search', {
         controller: QuestionAnswerController,
-        path: '/fag'
+        path: '/sok'
     });
 
     this.route('notFound', {

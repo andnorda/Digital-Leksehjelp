@@ -73,6 +73,10 @@ UI.registerHelper('optionsSelected', function(values, defaultValue) {
     return new Spacebars.SafeString(buffer);
 });
 
+Template.registerHelper('transformNewline', function(text) {
+    return new Spacebars.SafeString(text.replace(/\n/g, "<br>"));
+});
+
 Template.registerHelper('serviceIsOpen', function () {
     var serviceStatusArray = Config.find({ name: "serviceStatus" }).fetch();
         if (serviceStatusArray.length > 0) {

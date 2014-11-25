@@ -1,0 +1,16 @@
+<template name="search">
+    <div class="container">
+        <div class="list-group">
+        {{#each questions}}
+        {{> question}}
+        {{/each}}
+        </div>
+    </div>
+</template>
+
+<template name="question">
+    <a href="#" class="list-group-item search-list-group-item">
+        <p>{{{transformNewline this.question}}}</p>
+        <p><small>{{dateFormatter this.questionDate}}</small></p>
+    </a>
+</template>
