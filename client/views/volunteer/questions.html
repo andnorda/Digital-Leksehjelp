@@ -50,7 +50,9 @@
         <td>Ubesvart</td>
     </tr>
     <tr class="table-row-content">
-        <td colspan="4"><a href="/frivillig/sporsmal/svar/{{_id}}" target="_blank">{{trim question 80}}</a></td>
+        <td colspan="4">
+            <a href="/frivillig/sporsmal/svar/{{_id}}" target="_blank">{{trim question 80}}</a>
+        </td>
     </tr>
 </template>
 
@@ -83,7 +85,7 @@
         <th>Dato stilt</th>
         <th>Dato svart</th>
         <th>Svart av</th>
-        <th>Skal publiséres</th>
+        <th>Skal publiseres</th>
     </tr>
 </template>
 
@@ -95,21 +97,23 @@
         <td>{{prettifyDate answerDate}}</td>
         <td>{{username answeredBy}}</td>
         <td>
-        {{#if publishedBy}}
-            Ja
-        {{else}}
-            Nei
-        {{/if}}
+            {{#if publishedBy}}
+                Ja
+            {{else}}
+                Nei
+            {{/if}}
         </td>
     </tr>
     <tr class="table-row-content">
-        <td colspan="6"><a href="/frivillig/sporsmal/vis/{{_id}}">{{trim question 70}}</a></td>
+        <td colspan="6">
+            <a href="/frivillig/sporsmal/vis/{{_id}}">{{trim question 70}}</a>
+        </td>
     </tr>
     <tr class="table-row-content">
         <td colspan="5">{{trim answer 150}}</td>
         <td>
             {{#if isNotMe answeredBy}}
-            <button class="verify-answer">Godkjenn svar</button>
+                <button class="verify-answer">Godkjenn svar</button>
             {{/if}}
         </td>
     </tr>

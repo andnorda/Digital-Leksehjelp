@@ -50,11 +50,6 @@ Router.map(function () {
         path: '/frivillig/sporsmal'
     });
 
-    this.route('viewQuestion', {
-        controller: LoginController,
-        path: '/frivillig/sporsmal/vis/:questionId'
-    });
-
     this.route('answerQuestion', {
         controller: LoginController,
         path: '/frivillig/sporsmal/svar/:questionId',
