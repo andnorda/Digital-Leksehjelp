@@ -35,10 +35,29 @@ QuestionAnswerController = BaseController.extend({
 Router.onBeforeAction(checkIfSignedIn, {except: ['getHelp', 'askQuestion', 'notFound', 'search']});
 
 Router.map(function () {
+    this.route('/frivillig', function() {
+        this.redirect('/frivillig/profil');
+    });
+
     this.route('volunteer', {
         controller: LoginController,
-        path: '/frivillig',
+        path: '/frivillig/videohjelp',
         template: 'studentSessions'
+    });
+
+    this.route('questions', {
+        controller: LoginController,
+        path: '/frivillig/sporsmal'
+    });
+
+    this.route('viewQuestion', {
+        controller: LoginController,
+        path: '/frivillig/sporsmal/vis/:questionId'
+    });
+
+    this.route('answerQuestion', {
+        controller: LoginController,
+        path: '/frivillig/sporsmal/svar/:questionId'
     });
 
     this.route('userAdmin', {
