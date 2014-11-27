@@ -57,7 +57,10 @@ Router.map(function () {
 
     this.route('answerQuestion', {
         controller: LoginController,
-        path: '/frivillig/sporsmal/svar/:questionId'
+        path: '/frivillig/sporsmal/svar/:questionId',
+        data: function() {
+            return Questions.findOne({_id: this.params.questionId});
+        }
     });
 
     this.route('userAdmin', {

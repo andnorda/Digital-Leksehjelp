@@ -108,8 +108,9 @@ Meteor.publish("questions", function () {
         return Questions.find({});
     } else {
         return Questions.find({
-            published: true,
-            answer: { $exists: true }
+            answer: { $exists: true },
+            verifiedBy: { $exists: true },
+            publishedBy: { $exists: true },
         });
     }
 });

@@ -75,3 +75,7 @@ Template.registerHelper('prettifyDate', function(date) {
         return moment(date).format("D.M.YYYY HH:mm");
     }
 });
+
+Template.registerHelper('isNotMe', function(userId) {
+    return Meteor.userId() && Meteor.userId() != userId;
+});

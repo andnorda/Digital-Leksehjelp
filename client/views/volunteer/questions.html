@@ -50,7 +50,7 @@
         <td>Ubesvart</td>
     </tr>
     <tr class="table-row-content">
-        <td colspan="4"><a href="/frivillig/sporsmal/svar/{{_id}}">{{trim question 80}}</a></td>
+        <td colspan="4"><a href="/frivillig/sporsmal/svar/{{_id}}" target="_blank">{{trim question 80}}</a></td>
     </tr>
 </template>
 
@@ -107,6 +107,10 @@
     </tr>
     <tr class="table-row-content">
         <td colspan="5">{{trim answer 150}}</td>
-        <td><button>Godkjenn svar</button></td>
+        <td>
+            {{#if isNotMe answeredBy}}
+            <button class="verify-answer">Godkjenn svar</button>
+            {{/if}}
+        </td>
     </tr>
 </template>

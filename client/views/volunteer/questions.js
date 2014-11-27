@@ -55,3 +55,17 @@ Template.unverifiedQuestions.helpers({
         });
     }
 });
+
+Template.answeredQuestionRow.events({
+    'click .verify-answer': function(event, template) {
+        Meteor.call('verifyAnswer',
+        {
+            questionId: this._id
+        },
+        function (error) {
+            if (error) {
+                FlashMessages.sendError(error.message);
+            }
+        });
+    }
+});
