@@ -1,12 +1,11 @@
 <template name="showAnswer">
     <div class="container">
-        <h1>{{this.title}}</h1>
         <p class="question-subtitle">{{subjectName this.subjectId}} &ndash; {{this.grade}}</p>
         <h2>Spørsmål</h2>
         <p>{{this.question}}</p>
         <p><small>{{fromNow this.questionDate}}</small></p>
         <h2>Svar</h2>
-        <p>{{{this.answer}}}</p>
+        <p>{{{transformNewline this.answer}}}</p>
         <p><small>{{fromNow this.answerDate}}</small></p>
     </div>
 </template>

@@ -1,3 +1,9 @@
+Template.answerQuestionForm.helpers({
+    publishIsChecked: function(question) {
+        return !question.answer || question.publishedBy;
+    }
+});
+
 Template.answerQuestionForm.events({
     'submit form' : function(event, template)  {
         event.preventDefault();

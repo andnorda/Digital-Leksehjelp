@@ -11,7 +11,7 @@
             <p class="question-subtitle">{{subjectName this.subjectId}} &ndash; {{this.grade}}</p>
             <div class="form-group">
                 <h4>Spørsmål</h4>
-                <p>{{question}}</p>
+                <p>{{{transformNewline question}}}</p>
             </div>
             <div class="form-group">
                 <h4>Tittel</h4>
@@ -23,7 +23,7 @@
             </div>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="publishAnswer" checked="true"> Publisér svaret når det blir godkjent
+                    <input type="checkbox" name="publishAnswer" checked="{{publishIsChecked this}}"> Publisér svaret når det blir godkjent
                 </label>
               </div>
             <button type="submit" class="btn btn-primary btn-lg">Lagre svar</button>
