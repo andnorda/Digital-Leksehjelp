@@ -6,6 +6,14 @@ var checkIfSignedIn = function (pause) {
     }
 }
 
+var setDocumentTitle = function(title) {
+    if (title) {
+        document.title = "Røde Kors - Digital Leksehjelp - " + title;
+    } else {
+        document.title = "Røde Kors - Digital Leksehjelp";
+    }
+}
+
 BaseController = RouteController.extend({
     layoutTemplate: 'layout'
 });
@@ -32,7 +40,9 @@ QuestionAnswerController = BaseController.extend({
     }
 });
 
-Router.onBeforeAction(checkIfSignedIn, {except: ['getHelp', 'askQuestion', 'notFound', 'search']});
+Router.onBeforeAction(checkIfSignedIn, {except: ['getHelp', 'askQuestion', 'notFound', 'search', 'showAnswer']});
+
+Router.onAfterAction(setDocumentTitle);
 
 Router.map(function () {
     this.route('/frivillig', function() {
@@ -91,7 +101,11 @@ Router.map(function () {
         path: '/sporsmal/:questionId',
         data: function() {
             return Questions.findOne({_id: this.params.questionId});
-        }
+        },
+        onAfterAction: function() {
+            var question  = Questions.findOne({_id: this.params.questionId});
+            setDocumentTitle(question.title);
+        },
     });
 
     this.route('search', {
