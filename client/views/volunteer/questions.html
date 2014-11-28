@@ -4,7 +4,7 @@
             <div class="col-md-4">
                 {{> unansweredQuestions}}
             </div>
-            <div class="col-md-7">
+            <div class="col-md-6 col-md-offset-1">
                 {{> unverifiedQuestions}}
             </div>
         </div>
@@ -105,15 +105,17 @@
         </td>
     </tr>
     <tr class="table-row-content">
-        <td colspan="6">
-            <a href="/frivillig/sporsmal/vis/{{_id}}">{{trim question 70}}</a>
-        </td>
+        <td colspan="6">{{trim question 70}}</td>
     </tr>
     <tr class="table-row-content">
-        <td colspan="5">{{trim answer 150}}</td>
-        <td>
+        <td colspan="6">{{trim answer 180}}</td>
+    </tr>
+    <tr class="table-row-content">
+        <td colspan="6">
+            <button class="btn btn-primary"><a href="/frivillig/sporsmal/svar/{{_id}}" target="_blank" class="preview-edit-buttons">Redigér</a></button>
+            <button class="btn btn-warning"><a href="/sporsmal/{{_id}}" target="_blank" class="preview-edit-buttons">Forhåndsvis</a></button>
             {{#if isNotMe answeredBy}}
-                <button class="verify-answer">Godkjenn svar</button>
+                <button class="btn btn-success verify-answer pull-right">Godkjenn svar</button>
             {{/if}}
         </td>
     </tr>
