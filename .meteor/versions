@@ -65,6 +65,8 @@ reactive-var@1.0.3
 reload@1.1.1
 retry@1.0.1
 routepolicy@1.0.2
+rzymek:moment-locale-nb@2.8.3_10
+rzymek:moment@2.8.3_10
 sacha:spin@2.0.4
 service-configuration@1.0.2
 session@1.0.4

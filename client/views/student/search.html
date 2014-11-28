@@ -1,0 +1,16 @@
+<template name="search">
+    <div class="container">
+        <div class="list-group">
+            {{#each questions}}
+                {{> questionItem}}
+            {{/each}}
+        </div>
+    </div>
+</template>
+
+<template name="questionItem">
+    <a href="/sporsmal/{{this._id}}" class="list-group-item search-list-group-item">
+        <p>{{{transformNewline this.question}}}</p>
+        <p><small>{{fromNow this.questionDate}}</small></p>
+    </a>
+</template>

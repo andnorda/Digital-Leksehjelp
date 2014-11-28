@@ -1,0 +1,120 @@
+<template name="questions">
+    <div class="loggedInContainer">
+        <div class="row">
+            <div class="col-md-4">
+                {{> unansweredQuestions}}
+            </div>
+            <div class="col-md-7">
+                {{> unverifiedQuestions}}
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="unansweredQuestions">
+    <h3>Ubesvarte spørsmål</h3>
+
+    <h4>Mine fag</h4>
+    <table class="table" border="1">
+        {{> unansweredQuestionsTableHeader}}
+
+        {{#each myUnansweredQuestions}}
+            {{> unansweredQuestionRow}}
+        {{/each}}
+    </table>
+
+    <h4>Andre fag</h4>
+    <table class="table" border="1">
+        {{> unansweredQuestionsTableHeader}}
+
+        {{#each otherUnansweredQuestions}}
+            {{> unansweredQuestionRow}}
+        {{/each}}
+    </table>
+</template>
+
+<template name="unansweredQuestionsTableHeader">
+    <tr>
+        <th>Fag</th>
+        <th>Trinn</th>
+        <th>Dato stilt</th>
+        <th>Status</th>
+    </tr>
+</template>
+
+<template name="unansweredQuestionRow">
+    <tr class="table-row-header">
+        <td>{{subjectName subjectId}}</td>
+        <td>{{grade}}</td>
+        <td>{{prettifyDate questionDate}}</td>
+        <td>Ubesvart</td>
+    </tr>
+    <tr class="table-row-content">
+        <td colspan="4">
+            <a href="/frivillig/sporsmal/svar/{{_id}}" target="_blank">{{trim question 80}}</a>
+        </td>
+    </tr>
+</template>
+
+<template name="unverifiedQuestions">
+    <h3>Til godkjenning</h3>
+
+    <h4>Kan godkjennes av meg</h4>
+    <table class="table" border="1">
+        {{> unverifiedQuestionsTableHeader}}
+
+        {{#each myApprovableQuestions}}
+            {{> answeredQuestionRow}}
+        {{/each}}
+    </table>
+
+    <h4>Svart av meg / Må godkjennes av andre</h4>
+    <table class="table" border="1">
+        {{> unverifiedQuestionsTableHeader}}
+
+        {{#each otherApprovableQuestions}}
+            {{> answeredQuestionRow}}
+        {{/each}}
+    </table>
+</template>
+
+<template name="unverifiedQuestionsTableHeader">
+    <tr>
+        <th>Fag</th>
+        <th>Trinn</th>
+        <th>Dato stilt</th>
+        <th>Dato svart</th>
+        <th>Svart av</th>
+        <th>Skal publiseres</th>
+    </tr>
+</template>
+
+<template name="answeredQuestionRow">
+    <tr class="table-row-header">
+        <td>{{subjectName subjectId}}</td>
+        <td>{{grade}}</td>
+        <td>{{prettifyDate questionDate}}</td>
+        <td>{{prettifyDate answerDate}}</td>
+        <td>{{username answeredBy}}</td>
+        <td>
+            {{#if publishedBy}}
+                Ja
+            {{else}}
+                Nei
+            {{/if}}
+        </td>
+    </tr>
+    <tr class="table-row-content">
+        <td colspan="6">
+            <a href="/frivillig/sporsmal/vis/{{_id}}">{{trim question 70}}</a>
+        </td>
+    </tr>
+    <tr class="table-row-content">
+        <td colspan="5">{{trim answer 150}}</td>
+        <td>
+            {{#if isNotMe answeredBy}}
+                <button class="verify-answer">Godkjenn svar</button>
+            {{/if}}
+        </td>
+    </tr>
+</template>

@@ -32,13 +32,30 @@ QuestionAnswerController = BaseController.extend({
     }
 });
 
-Router.onBeforeAction(checkIfSignedIn, {except: ['getHelp', 'askQuestion', 'notFound', 'subjectOverview']});
+Router.onBeforeAction(checkIfSignedIn, {except: ['getHelp', 'askQuestion', 'notFound', 'search']});
 
 Router.map(function () {
+    this.route('/frivillig', function() {
+        this.redirect('/frivillig/profil');
+    });
+
     this.route('volunteer', {
         controller: LoginController,
-        path: '/frivillig',
+        path: '/frivillig/videohjelp',
         template: 'studentSessions'
+    });
+
+    this.route('questions', {
+        controller: LoginController,
+        path: '/frivillig/sporsmal'
+    });
+
+    this.route('answerQuestion', {
+        controller: LoginController,
+        path: '/frivillig/sporsmal/svar/:questionId',
+        data: function() {
+            return Questions.findOne({_id: this.params.questionId});
+        }
     });
 
     this.route('userAdmin', {
@@ -69,9 +86,17 @@ Router.map(function () {
         path: '/sporsmal'
     });
 
-    this.route('subjectOverview', {
+    this.route('showAnswer', {
         controller: QuestionAnswerController,
-        path: '/fag'
+        path: '/sporsmal/:questionId',
+        data: function() {
+            return Questions.findOne({_id: this.params.questionId});
+        }
+    });
+
+    this.route('search', {
+        controller: QuestionAnswerController,
+        path: '/sok'
     });
 
     this.route('notFound', {
