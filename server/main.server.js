@@ -68,6 +68,13 @@ Meteor.startup(function () {
                     });
         }
     });
+
+    SSR.compileTemplate('answerEmailTemplate', Assets.getText('answerEmailTemplate.html'));
+    Template.answerEmailTemplate.helpers({
+        transformNewline: function(text) {
+            return new Spacebars.SafeString(text.replace(/(\r\n|\n|\r)/g, "<br>"));
+        }
+    });
 });
 
 Accounts.validateNewUser(function (user) {
