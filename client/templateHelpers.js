@@ -32,7 +32,7 @@ Template.registerHelper('optionsSelected', function(values, defaultValue) {
 });
 
 Template.registerHelper('transformNewline', function(text) {
-    return new Spacebars.SafeString(text.replace(/\n/g, "<br>"));
+    return new Spacebars.SafeString(text.replace(/(\r\n|\n|\r)/g, "<br>"));
 });
 
 Template.registerHelper('serviceIsOpen', function () {
