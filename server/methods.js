@@ -93,5 +93,26 @@ Meteor.methods({
         } else {
             throw new Meteor.Error(403, "You are not allowed to access this.");
         }
+    },
+
+    sendAnswerEmail: function (question) {
+        var user = Meteor.users.findOne(this.userId);
+        if (!user) { throw new Meteor.Error(401, "You are not logged in."); };
+
+        this.unblock();
+
+        var html = SSR.render('answerEmailTemplate', question);
+
+        Email.send({
+            to: question.studentEmail,
+            from: "Digital Leksehjelp <digitalleksehjelp@oslo.redcross.no>",
+            subject: "Røde Kors - Digital Leksehjelp",
+            html: html
+        });
+
+        Questions.update(
+            { _id: question._id },
+            { $unset: { studentEmail: "" } }
+            );
     }
 });
