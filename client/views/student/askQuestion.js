@@ -1,12 +1,3 @@
-Template.questionForm.helpers({
-    subjects: function () {
-        return Subjects.find({});
-    },
-    grades: function () {
-        return GRADES;
-    }
-});
-
 var resetQuestionForm = function() {
     $("select[name=subject]").val("default");
     $("select[name=grade]").val("default");

@@ -51,6 +51,14 @@ Template.registerHelper('trim', function(str, stopIndex) {
     return str.substring(0, stopIndex) + "...";
 });
 
+Template.registerHelper('grades', function(subjectId) {
+    return GRADES;
+});
+
+Template.registerHelper('subjects', function(subjectId) {
+    return Subjects.find({});
+});
+
 Template.registerHelper('subjectName', function(subjectId) {
     var subject = Subjects.findOne({ _id: subjectId });
     return (subject) ? subject.name : "Ukjent fag";

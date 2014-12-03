@@ -13,8 +13,8 @@
                         </div>
                         <div class="panel-footer text-align-center">
                             <p>Se gjennom eksisterende spørsmål og svar:</p>
-                            {{#each subjectsWithAnswers}}
-                                <a href="/sok">{{this.name}}</a>&nbsp;&nbsp;&nbsp;
+                            {{#each subjects}}
+                                <a href="/sok?subject={{this.humanReadableId}}">{{this.name}}</a>&nbsp;&nbsp;&nbsp;
                             {{/each}}
                         </div>
                     </div>
