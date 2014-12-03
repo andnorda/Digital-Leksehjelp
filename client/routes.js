@@ -37,7 +37,8 @@ QuestionAnswerController = BaseController.extend({
     yieldTemplates: {
         'header': { to : 'header'},
         'footer': { to : 'footer'}
-    }
+    },
+    loadingTemplate: "loading"
 });
 
 Router.onBeforeAction(checkIfSignedIn, {except: ['getHelp', 'askQuestion', 'notFound', 'search', 'showAnswer']});
@@ -112,7 +113,11 @@ Router.map(function () {
             return Meteor.subscribe("question", this.params.questionId);
         },
         data: function() {
-            return Questions.findOne({_id: this.params.questionId});
+            var question = Questions.findOne({_id: this.params.questionId});
+            if (!question) {
+                this.render('notFound');
+            }
+            return question;
         },
         onAfterAction: function() {
             var question  = Questions.findOne({_id: this.params.questionId});
