@@ -20,7 +20,8 @@ BaseController = RouteController.extend({
 
 LoginController = BaseController.extend({
     yieldTemplates: {
-        'loggedInHeader': { to : 'header'}
+        'loggedInHeader': { to : 'header'},
+        'loggedInFooter': { to : 'footer'}
     }
 });
 
