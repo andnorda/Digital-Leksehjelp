@@ -75,6 +75,18 @@ Meteor.startup(function () {
             return new Spacebars.SafeString(text.replace(/(\r\n|\n|\r)/g, "<br>"));
         }
     });
+
+    Questions._ensureIndex({
+        question: "text",
+        answer: "text"
+    }, {
+        name: "questionIndex",
+        default_language: "norwegian",
+        weights : {
+            "question": 2,
+            "answer": 1
+        }
+    });
 });
 
 Accounts.validateNewUser(function (user) {
