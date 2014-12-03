@@ -9,6 +9,10 @@ Template.registerHelper('not', function(value) {
     return !value;
 });
 
+Template.registerHelper('eq', function(value1, value2) {
+    return value1 === value2;
+});
+
 Template.registerHelper('globalRoles', function(block) {
     return ROLES;
 });
