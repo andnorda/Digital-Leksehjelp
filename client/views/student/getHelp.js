@@ -27,9 +27,6 @@ Template.getHelp.helpers({
     },
     serviceStatusLoaded: function () {
         return Session.get("serviceStatusLoaded");
-    },
-    subjectsWithAnswers: function () {
-        return Subjects.find({});
     }
 });
 
@@ -80,9 +77,6 @@ Template.getHelp.events({
 
 // === SUBJECTSELECTOR ===
 Template.subjectSelector.helpers({
-    subjects: function () {
-        return Subjects.find({});
-    },
     subjectDisabled: function (availableVolunteers) {
         if(availableVolunteers > 0) {
             return '';
@@ -101,12 +95,6 @@ Template.subjectSelector.events({
 });
 
 // === GRADESELECTOR ===
-Template.gradeSelector.helpers({
-    grades: function () {
-        return GRADES;
-    }
-});
-
 Template.gradeSelector.events({
     'click .grades' : function () {
         $('#chosenGrade').text(this);

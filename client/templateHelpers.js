@@ -9,6 +9,10 @@ Template.registerHelper('not', function(value) {
     return !value;
 });
 
+Template.registerHelper('eq', function(value1, value2) {
+    return value1 === value2;
+});
+
 Template.registerHelper('globalRoles', function(block) {
     return ROLES;
 });
@@ -49,6 +53,14 @@ Template.registerHelper('trim', function(str, stopIndex) {
         return str;
     }
     return str.substring(0, stopIndex) + "...";
+});
+
+Template.registerHelper('grades', function(subjectId) {
+    return GRADES;
+});
+
+Template.registerHelper('subjects', function(subjectId) {
+    return Subjects.find({});
 });
 
 Template.registerHelper('subjectName', function(subjectId) {

@@ -76,7 +76,11 @@
     <div id="header">
         <div class="container">
             <div class="row">
-                <div class="col-md-4"><img class="img-responsive" src="/NRX_pos_HVIT bakgrunn_PNG_resized.png" /></div>
+                <div class="col-md-4">
+                    <a href="/">
+                        <img class="img-responsive" src="/NRX_pos_HVIT bakgrunn_PNG_resized.png" />
+                    </a>
+                </div>
                 <div class="col-md-4">
                     <div class="header-content">
                         <h1>Digitalleksehjelp.no</h1>
@@ -270,34 +274,41 @@
 </template>
 
 <template name="loggedInHeader">
-    <div class="loggedInContainer">
+    <div class="container">
         {{#if currentUser }}
             {{#if isAdmin }}
                 <h3>Digital Leksehjelp - Administrator</h3>
             {{else}}
                 <h3>Digital Leksehjelp - Frivillig</h3>
             {{/if}}
-            {{> loginButtons}}
+            <p>
+                {{> loginButtons}}
+            </p>
 
-            <div class="navbar">
-                <ul class="nav navbar-nav">
-                    <li><a href="/frivillig/profil">Min profil</a></li>
-                    {{#if isAdmin }}
-                        <li><a href="/frivillig/admin/brukere">Administrer brukere</a></li>
-                        <li><a href="/frivillig/admin/fag">Administrer fag</a></li>
-                    {{/if}}
-                    <li><a href="/frivillig/videohjelp">Hjelp elever</a></li>
-                    <li><a href="/frivillig/sporsmal">Spørsmål</a></li>
-                </ul>
-            </div>
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="{{isActiveTab 'myProfile'}}"><a href="/frivillig/profil">Min profil</a></li>
+                {{#if isAdmin }}
+
+                    <li role="presentation" class="{{isActiveTab 'userAdmin'}}"><a href="/frivillig/admin/brukere">Administrer brukere</a></li>
+                    <li role="presentation" class="{{isActiveTab 'subjectAdmin'}}"><a href="/frivillig/admin/fag">Administrer fag</a></li>
+                {{/if}}
+                <li role="presentation" class="{{isActiveTab 'volunteer'}}"><a href="/frivillig/videohjelp">Videohjelp</a></li>
+                <li role="presentation" class="{{isActiveTab 'questions'}}"><a href="/frivillig/sporsmal">Spørsmål</a></li>
+            </ul>
 
             {{> endSessionModal}}
         {{/if}}
     </div>
 </template>
 
+<template name="loggedInFooter">
+    <footer>
+        <br><br><br><br><br>
+    </footer>
+</template>
+
 <template name="login">
-    <div class="loggedInContainer">
+    <div class="container">
         {{> loginButtons}}
     </div>
 </template>

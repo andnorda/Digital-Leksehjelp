@@ -1,9 +1,13 @@
 Template.search.helpers({
-    questions: function() {
-        return Questions.find({
-            answer: { $exists: true },
-            verifiedBy: { $exists: true },
-            publishedBy: { $exists: true },
-        });
+    numberOfResults: function() {
+        var count = Session.get("questionSearchCount");
+
+        if (!count || count === 0) {
+            return "Fant ingen resultater";
+        } else if (count === 1) {
+            return "Fant ett resultat";
+        } else {
+            return "Fant " + count + " resultater";
+        }
     }
 });

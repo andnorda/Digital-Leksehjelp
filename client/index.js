@@ -1,6 +1,11 @@
 Template.loggedInHeader.helpers({
     currentUserEmail: function () {
         return Meteor.user().username;
+    },
+    isActiveTab: function (route) {
+        if (Router.current().route.getName() === route) {
+            return "active";
+        }
     }
 });
 
