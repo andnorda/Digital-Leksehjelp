@@ -62,7 +62,7 @@
 
 <template name="questionItem">
     <a href="/sporsmal/{{this._id}}" class="list-group-item search-list-group-item">
-        <p>{{{transformNewline question}}}</p>
+        <p>{{{trim question 200}}}</p>
         <p><small>{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</small></p>
     </a>
 </template>
