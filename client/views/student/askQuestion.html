@@ -54,17 +54,3 @@
         <button type="submit" class="btn btn-primary btn-lg">Send inn spørsmål</button>
     </form>
 </template>
-
-
-<template name="relatedQuestions">
-    <h3>Relaterte spørsmål</h3>
-    {{#if isGreaterThanZero relatedQuestions.length}}
-        {{#each relatedQuestions}}
-            <ul class="list-unstyled">
-                <li><a href="/sporsmal/{{_id}}" target="_blank">{{trim question 100}}</a></li>
-            </ul>
-        {{/each}}
-    {{else}}
-        <p>Ingen relaterte spørsmål funnet</p>
-    {{/if}}
-</template>
