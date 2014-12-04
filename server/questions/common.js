@@ -1,3 +1,7 @@
+var isNumber = function (obj) {
+  return ! isNaN (obj-0) && obj !== null && obj !== "" && obj !== false;
+}
+
 this.QuestionHelpers = {
     parseSearchParams: function (params) {
         var selector = { $and: [] };
@@ -23,6 +27,13 @@ this.QuestionHelpers = {
             if (params['sort'] === 'date') {
                 options['sort'] = { questionDate: -1 };
             }
+        }
+
+        // default limit
+        options['limit'] = 100;
+
+        if (params.hasOwnProperty('limit') && isNumber(params.limit)) {
+            options['limit'] = params.limit;
         }
 
         return {selector: selector, options: options};
