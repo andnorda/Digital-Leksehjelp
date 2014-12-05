@@ -6,6 +6,14 @@ var subjectIds = function(user) {
     });
 }
 
+var status = function (editing) {
+    if (!editing || editing.length === 0) {
+        return "Ubesvart";
+    } else {
+        return "Redigeres";
+    }
+}
+
 Template.unansweredQuestions.helpers({
     myUnansweredQuestions: function() {
         var mySubjectIds = subjectIds(Meteor.user());
@@ -26,6 +34,12 @@ Template.unansweredQuestions.helpers({
                 { subjectId: { $nin: mySubjectIds } }
             ]
         });
+    }
+});
+
+Template.unansweredQuestionRow.helpers({
+    status: function() {
+        return status(this.editing);
     }
 });
 
@@ -67,5 +81,11 @@ Template.answeredQuestionRow.events({
                 FlashMessages.sendError(error.message);
             }
         });
+    }
+});
+
+Template.answeredQuestionRow.helpers({
+    status: function() {
+        return status(this.editing);
     }
 });
