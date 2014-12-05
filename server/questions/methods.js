@@ -3,7 +3,7 @@ Meteor.methods({
         return QuestionHelpers.search(params).count();
     },
     relatedQuestions: function (params) {
-        params['limit'] = 10;
+        params['limit'] = CONSTANTS.RELATED_QUESTION_SEARCH_LIMIT;
         return QuestionHelpers.search(params).fetch();
     }
 });

@@ -30,7 +30,7 @@ this.QuestionHelpers = {
         }
 
         // default limit
-        options['limit'] = 100;
+        options['limit'] = CONSTANTS.SEARCH_DEFAULT_LIMIT;
 
         if (params.hasOwnProperty('limit') && isNumber(params.limit)) {
             options['limit'] = params.limit;
