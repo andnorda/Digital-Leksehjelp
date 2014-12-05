@@ -29,6 +29,16 @@ Template.unansweredQuestions.helpers({
     }
 });
 
+Template.unansweredQuestionRow.helpers({
+    status: function() {
+        if (!this.editing || this.editing.length === 0) {
+            return "Ubesvart";
+        } else {
+            return "Redigeres";
+        }
+    }
+});
+
 Template.unverifiedQuestions.helpers({
     myApprovableQuestions: function() {
         var mySubjectIds = subjectIds(Meteor.user());
@@ -67,5 +77,15 @@ Template.answeredQuestionRow.events({
                 FlashMessages.sendError(error.message);
             }
         });
+    }
+});
+
+Template.answeredQuestionRow.helpers({
+    status: function() {
+        if (!this.editing || this.editing.length === 0) {
+            return "Ubesvart";
+        } else {
+            return "Redigeres";
+        }
     }
 });

@@ -1,6 +1,18 @@
+
 Template.answerQuestionForm.rendered = function() {
     var subject = Subjects.findOne({ _id: this.data.subjectId });
     searchForRelatedQuestions(subject, this.data.question);
+}
+
+Template.answerQuestionForm.created = function () {
+    Meteor.call('setEditing', {questionId: this.data._id, editing: true});
+    window.onbeforeunload = function() {
+        Meteor.call('setEditing', {questionId: this.data._id, editing: false});
+    }.bind(this);
+}
+
+Template.answerQuestionForm.destroyed = function () {
+    Meteor.call('setEditing', {questionId: this.data._id, editing: false});
 }
 
 Template.answerQuestionForm.helpers({

@@ -47,7 +47,7 @@
         <td>{{subjectName subjectId}}</td>
         <td>{{grade}}</td>
         <td>{{prettifyDate questionDate}}</td>
-        <td>Ubesvart</td>
+        <td>{{status}}</td>
     </tr>
     <tr class="table-row-content">
         <td colspan="4">
@@ -85,6 +85,7 @@
         <th>Dato stilt</th>
         <th>Dato svart</th>
         <th>Svart av</th>
+        <th>Status</th>
         <th>Skal publiseres</th>
     </tr>
 </template>
@@ -96,6 +97,7 @@
         <td>{{prettifyDate questionDate}}</td>
         <td>{{prettifyDate answerDate}}</td>
         <td>{{username answeredBy}}</td>
+        <td>{{status}}</td>
         <td>
             {{#if publishedBy}}
                 Ja
@@ -105,17 +107,17 @@
         </td>
     </tr>
     <tr class="table-row-content">
-        <td colspan="6">{{trim question 70}}</td>
+        <td colspan="7">{{trim question 70}}</td>
     </tr>
     <tr class="table-row-content">
-        <td colspan="6">{{trim answer 180}}</td>
+        <td colspan="7">{{trim answer 180}}</td>
     </tr>
     <tr class="table-row-content">
-        <td colspan="6">
-            <button class="btn btn-primary"><a href="/frivillig/sporsmal/svar/{{_id}}" target="_blank" class="preview-edit-buttons">Redigér</a></button>
-            <button class="btn btn-warning"><a href="/sporsmal/{{_id}}" target="_blank" class="preview-edit-buttons">Forhåndsvis</a></button>
+        <td colspan="7">
+            <button class="btn btn-xs btn-primary"><a href="/frivillig/sporsmal/svar/{{_id}}" target="_blank" class="preview-edit-buttons">Redigér</a></button>
+            <button class="btn btn-xs btn-warning"><a href="/sporsmal/{{_id}}" target="_blank" class="preview-edit-buttons">Forhåndsvis</a></button>
             {{#if isNotMe answeredBy}}
-                <button class="btn btn-success verify-answer pull-right">Godkjenn svar</button>
+                <button class="btn btn-xs btn-success verify-answer pull-right">Godkjenn svar</button>
             {{/if}}
         </td>
     </tr>
