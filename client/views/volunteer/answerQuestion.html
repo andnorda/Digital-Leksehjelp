@@ -1,12 +1,18 @@
 <template name="answerQuestion">
     <div class="container">
         <h3>Svar på spørsmål</h3>
-        {{> answerQuestionForm}}
+        <div class="row">
+            <div class="col-md-8">
+                {{> answerQuestionForm}}
+            </div>
+            <div class="col-md-4">
+                {{> relatedQuestions}}
+            </div>
+        </div>
     </div>
 </template>
 
 <template name="answerQuestionForm">
-    <div class="answer-question-container">
         <form role="form">
             <p class="question-subtitle">{{subjectName this.subjectId}} &ndash; {{this.grade}}</p>
             <div class="form-group">
@@ -28,5 +34,4 @@
               </div>
             <button type="submit" class="btn btn-primary btn-lg">Lagre svar</button>
         </form>
-    </div>
 </template>

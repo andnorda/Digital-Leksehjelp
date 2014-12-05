@@ -28,5 +28,19 @@ Template.questionForm.events({
                 FlashMessages.sendSuccess("Spørsmål sendt inn. Du vil få beskjed på e-post når spørsmålet er besvart.", { autoHide: true, hideDelay: 6000 });
             }
         });
+    },
+    'keydown, blur, focus textarea[name=question]' : function (event, template) {
+        var subjectId = template.find("select[name=subject]").value;
+        var subject = Subjects.findOne({ _id: subjectId });
+        var question = template.find("textarea[name=question]").value;
+
+        searchForRelatedQuestions(subject, question);
+    },
+    'blur select[name=subject]' : function (event, template) {
+        var subjectId = template.find("select[name=subject]").value;
+        var subject = Subjects.findOne({ _id: subjectId });
+        var question = template.find("textarea[name=question]").value;
+
+        searchForRelatedQuestions(subject, question);
     }
 });

@@ -26,7 +26,7 @@
                 <select class="form-control" name="subject">
                     <option value="default" selected="selected">Velg fag</option>
                     {{#each subjects}}
-                    <option value="{{this._id}}">{{this.name}}</option>
+                        <option value="{{this._id}}">{{this.name}}</option>
                     {{/each}}
                 </select>
             </div>
@@ -53,9 +53,4 @@
         </div>
         <button type="submit" class="btn btn-primary btn-lg">Send inn spørsmål</button>
     </form>
-</template>
-
-
-<template name="relatedQuestions">
-    <h3>Relaterte spørsmål</h3>
 </template>
