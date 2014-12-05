@@ -1,4 +1,3 @@
-
 Template.answerQuestionForm.rendered = function() {
     var subject = Subjects.findOne({ _id: this.data.subjectId });
     searchForRelatedQuestions(subject, this.data.question);
