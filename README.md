@@ -67,6 +67,8 @@ In production `heroku config:set VARIABLE=BLABLA --app digital-leksehjelp` *Note
 
 4. S3_SECRET *Note: For development use the same value as in production.*
 
+5. METEOR_SETTINGS *Note: Set Google Analytics key according to https://github.com/reywood/meteor-iron-router-ga#meteor-settings *
+
 Styleguide
 ----------
 
@@ -102,7 +104,7 @@ To deploy a new instance of Digital Leksehjelp on Heroku.
    `HEROKU_REMOTE=production;` (or whatever you want the remote to be called)
 
    `S3_KEY=<KEY>;`
-   
+
    `S3_SECRET=<SECRET>;`
 
 3. `heroku apps:create $APPNAME --remote $HEROKU_REMOTE --region eu --stack cedar --buildpack https://github.com/AdmitHub/meteor-buildpack-horse.git; heroku addons:add papertrail:choklad --app $APPNAME; heroku addons:add mongolab:sandbox --app $APPNAME; heroku config:set MONGO_URL=$(heroku config:get MONGOLAB_URI --app $APPNAME) --app $APPNAME; heroku config:set ROOT_URL=http://$APPNAME.herokuapp.com --app $APPNAME; heroku config:set S3_KEY=$S3_KEY --app $APPNAME; heroku config:set S3_SECRET=$S3_SECRET --app $APPNAME;`

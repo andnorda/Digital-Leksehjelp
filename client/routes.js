@@ -46,6 +46,10 @@ Router.onBeforeAction(checkIfSignedIn, {except: ['getHelp', 'askQuestion', 'notF
 
 Router.onAfterAction(setDocumentTitle);
 
+Router.configure({
+    trackPageView: true
+});
+
 Router.map(function () {
     this.route('/frivillig', function() {
         this.redirect('/frivillig/profil');
