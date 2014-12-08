@@ -21,6 +21,11 @@
         <div class="form-group">
             {{> roleSelector}}
         </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" id="allowVideohelp" checked="true"> Videohjelp
+            </label>
+      </div>
         <button class="addUser">Legg til bruker</button>
     </form>
     <p>{{ userAdded }}</p>
@@ -44,6 +49,7 @@
             <th>Fornavn</th>
             <th>Valgte fag</th>
             <th>Rolle</th>
+            <th>Videohjelp</th>
         </tr>
         {{#each users }}
             {{> userRow }}
@@ -53,7 +59,7 @@
 
 <template name="userRow">
     <tr>
-        <td>{{ username }}</td>
+        <td>{{this.username}}</td>
         {{#each emails}}
             <td>{{this.address}}</td>
             <td>
@@ -74,6 +80,9 @@
             <select class="newRole">
                 {{{optionsSelected globalRoles profile.role }}}
             </select>
+        </td>
+        <td>
+            <input type="checkbox" class="allowVideohelp" checked="{{profile.allowVideohelp}}">
         </td>
         <td><button type="button" class="btn btn-xs btn-danger deleteUser">Slett</button></td>
         {{#if remoteUserLoggedIn}}

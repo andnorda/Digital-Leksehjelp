@@ -35,6 +35,7 @@ Meteor.methods({
         check(options.email, String);
         check(options.profile.firstName, String);
         check(options.profile.role, String);
+        check(options.profile.allowVideohelp, Boolean);
 
         options.profile.setSubjectsAvailable = true;
         options.profile.forceLogOut = false;

@@ -20,6 +20,10 @@ Template.login.events({
 Template.loggedInHeader.helpers({
     isAdmin: function () {
         return Meteor.user().profile.role === ROLES.ADMIN;
+    },
+    isVideohelper: function () {
+        var user = Meteor.user();
+        return user.profile.role === ROLES.ADMIN || user.profile.allowVideohelp;
     }
 });
 

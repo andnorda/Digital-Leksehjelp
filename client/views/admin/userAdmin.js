@@ -14,6 +14,8 @@ Template.addUser.events({
         var email = $('#email').val();
         var firstName = $('#firstName').val();
         var role = $('#role').val();
+        var allowVideohelp = $('#allowVideohelp:checked').val() ? true : false;
+
         Meteor.call(
             'createUserOnServer',
             {
@@ -21,7 +23,8 @@ Template.addUser.events({
                 email: email,
                 profile: {
                     firstName: firstName,
-                    role: role
+                    role: role,
+                    allowVideohelp: allowVideohelp
                 }
             },
             function (error, result) {
@@ -106,6 +109,18 @@ Template.userRow.events({
 
     'click .logoutUser' : function (event) {
         Meteor.call('remoteLogOutUser',
+        {
+            userId: this._id
+        },
+        function (error, result) {
+            if (error) {
+                FlashMessages.sendError(error.message);
+            }
+        });
+    },
+
+    'click .allowVideohelp' : function (event) {
+        Meteor.call('toggleAllowVideohelp',
         {
             userId: this._id
         },

@@ -58,7 +58,14 @@ Router.map(function () {
     this.route('volunteer', {
         controller: LoginController,
         path: '/frivillig/videohjelp',
-        template: 'studentSessions'
+        template: 'studentSessions',
+        onAfterAction: function() {
+            var user = Meteor.user();
+            if (!(user.profile.role === ROLES.ADMIN || user.profile.allowVideohelp)) {
+                this.redirect('/frivillig/profil');
+            }
+        }
+
     });
 
     this.route('questions', {
