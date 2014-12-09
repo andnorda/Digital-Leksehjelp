@@ -5,22 +5,6 @@ var generateRandomAppearInLink = function () {
 };
 
 Meteor.methods({
-    uploadToS3: function(url){
-        var user = Meteor.users.findOne(this.userId);
-        if (!user) { throw new Meteor.Error(401, "You are not logged in.") };
-        console.log('Add '+url);
-
-        check(url, String);
-
-        Meteor.users.update(
-            { _id: this.userId },
-            {
-                $set: {
-                    'profile.pictureUrl' : url
-                }
-            });
-    },
-
     getEnvironment: function () {
         if (process.env.ROOT_URL === "http://digitalleksehjelp.no") {
             return "production";

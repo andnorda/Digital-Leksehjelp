@@ -1,16 +1,15 @@
 // Server only logic, this will NOT be sent to the clients.
 
+S3.config = {
+    key: process.env.S3_KEY,
+    secret: process.env.S3_SECRET,
+    bucket: 'digitalleksehjelp'
+};
+
 Meteor.startup(function () {
     addHumanReadableIdToSubjectsCollection();
 
     Accounts.emailTemplates.from = "Digital Leksehjelp <digitalleksehjelp@oslo.redcross.no>";
-
-    Meteor.call("S3config",{
-        key: process.env.S3_KEY,
-        secret: process.env.S3_SECRET,
-        bucket: 'digitalleksehjelp',
-        directory: '/profilbilder/'
-    });
 
     if(Meteor.users.find().count() === 0) {
         console.log("WARNING: NO USERS, DEFAULT ADMIN ACCOUNT ADDED");

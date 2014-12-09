@@ -21,15 +21,12 @@
         høyde x bredde. Bildet blir uansett endret til denne størrelsen ved
         opplasting.
     </p>
-    {{#S3 callback="uploadToS3" height=200 width=245}}
-        <input type="file" />
-        <h4>Status: </h4>
-        {{#if uploading}}
-            Laster opp bilde ...
-        {{else}}
-            Velg bilde
-        {{/if}}
-    {{/S3}}
+    <div class="input-group">
+        <div class="input-group-btn">
+            <button class="btn btn-primary">Last opp</button>
+        </div>
+        <input type="file" class="form-control" name="profilePicture">
+    </div>
 
     <div>
         <h6>Ditt profilbilde:</h6>
