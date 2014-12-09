@@ -19,7 +19,7 @@
 </template>
 
 <template name="questionForm">
-    <form role="form">
+    <form role="form" name="questionForm">
         <div class="row">
             <div class="form-group col-md-6">
                 <label>Fag</label>
@@ -35,7 +35,7 @@
                 <select class="form-control" name="grade">
                     <option value="default" selected="selected">Velg årstrinn</option>
                     {{#each grades}}
-                    <option value="{{this}}">{{this}}</option>
+                        <option value="{{this}}">{{this}}</option>
                     {{/each}}
                 </select>
             </div>
@@ -43,6 +43,17 @@
         <div class="form-group">
             <label>Spørsmål</label>
             <textarea class="form-control" name="question" placeholder="Still spørsmålet ditt her..." rows="6"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Last opp vedlegg</label>
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <span class="btn btn-default btn-file">
+                        Velg fil&hellip; <input type="file" name="attachment" accept="image/*|.pdf|.doc|.docx">
+                    </span>
+                </span>
+                <input type="text" class="form-control" id="inputFileslabel" readonly>
+            </div>
         </div>
         <div class="form-group">
             <label>E-post</label>
