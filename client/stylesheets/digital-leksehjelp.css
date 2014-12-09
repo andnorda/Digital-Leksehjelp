@@ -175,3 +175,7 @@ hr {
 .preview-edit-buttons:visited {
     color: white;
 }
+
+.hidden {
+    display: none;
+}
