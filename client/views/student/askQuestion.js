@@ -11,6 +11,18 @@ var askQuestion = function (questionFields) {
         });
 }
 
+Template.questionForm.helpers({
+    percentUploaded: function () {
+        var file = S3.collection.findOne({ uploading: true });
+        if (file) {
+            return file.percent_uploaded;
+        }
+    },
+    inputFileLabel: function () {
+        return Session.get("inputFileLabel");
+    }
+});
+
 Template.questionForm.events({
     'submit form' : function (e, template) {
         e.preventDefault();
@@ -26,7 +38,13 @@ Template.questionForm.events({
         var files = $("input[name=attachment]")[0].files;
 
         if (files.length === 1) {
-            S3.upload(files, "/vedlegg", function(error, result){
+            if (files[0].size > CONSTANTS.S3_MAX_UPLOAD_FILE_SIZE) {
+                FlashMessages.sendError("For stort vedlegg (maks 5 MB).", { autoHide: true, hideDelay: 6000 });
+                $("button[type=submit]").removeClass("disabled");
+                return;
+            }
+
+            S3.upload(files, "/vedlegg", function(error, result) {
                 if (!result.uploading) {
                     questionFields['attachmentUrl'] = result.url;
                     askQuestion(questionFields);
@@ -53,9 +71,11 @@ Template.questionForm.events({
     'change .btn-file :file' : function (event, template) {
         var input = $("input[name=attachment]");
         var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-        $("#inputFileslabel").val(label);
+        Session.set("inputFileLabel", label);
     },
-    'click #inputFileslabel' : function () {
-        $("input[name=attachment]").trigger('click');
+    'click .input-files-label span' : function () {
+        var fileInput = $("input[name=attachment]");
+        fileInput.replaceWith(fileInput = fileInput.clone(true));
+        Session.set('inputFileLabel', undefined);
     }
 });
