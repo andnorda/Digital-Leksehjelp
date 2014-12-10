@@ -33,6 +33,9 @@ Template.pagination.helpers({
     pages: function () {
         var numberOfResults = Session.get("questionSearchCount") || 0;
         var limit = this.queryParams.limit || CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE;
+        if (limit < 1) {
+            limit = 1;
+        }
         var numberOfPages = numberOfResults / limit;
 
         var pages = [];
