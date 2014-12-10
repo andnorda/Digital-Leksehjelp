@@ -5,6 +5,7 @@ var askQuestion = function (questionFields) {
                 FlashMessages.sendError("Noe gikk galt ved innsending av spørsmål. Vennligst prøv igjen.", { autoHide: true, hideDelay: 6000 });
             } else {
                 $("form[name=questionForm]")[0].reset();
+                Session.set('attachmentLabel', undefined);
                 FlashMessages.sendSuccess("Spørsmål sendt inn. Du vil få beskjed på e-post når spørsmålet er besvart.", { autoHide: true, hideDelay: 6000 });
             }
             $("button[type=submit]").removeClass("disabled");
@@ -18,8 +19,8 @@ Template.questionForm.helpers({
             return file.percent_uploaded;
         }
     },
-    inputFileLabel: function () {
-        return Session.get("inputFileLabel");
+    attachmentLabel: function () {
+        return Session.get("attachmentLabel");
     }
 });
 
@@ -71,11 +72,11 @@ Template.questionForm.events({
     'change .btn-file :file' : function (event, template) {
         var input = $("input[name=attachment]");
         var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-        Session.set("inputFileLabel", label);
+        Session.set("attachmentLabel", label);
     },
     'click .input-files-label span' : function () {
         var fileInput = $("input[name=attachment]");
         fileInput.replaceWith(fileInput = fileInput.clone(true));
-        Session.set('inputFileLabel', undefined);
+        Session.set('attachmentLabel', undefined);
     }
 });
