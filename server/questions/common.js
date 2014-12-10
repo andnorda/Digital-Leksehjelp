@@ -33,7 +33,15 @@ this.QuestionHelpers = {
         options['limit'] = CONSTANTS.SEARCH_DEFAULT_LIMIT;
 
         if (params.hasOwnProperty('limit') && isNumber(params.limit)) {
-            options['limit'] = params.limit;
+            options['limit'] = parseInt(params.limit);
+        }
+
+        if (options['limit'] > CONSTANTS.SEARCH_MAX_LIMIT) {
+            options['limit'] = CONSTANTS.SEARCH_MAX_LIMIT;
+        }
+
+        if (params.hasOwnProperty('offset') && isNumber(params.offset)) {
+            options['skip'] = parseInt(params.offset);
         }
 
         return {selector: selector, options: options};
