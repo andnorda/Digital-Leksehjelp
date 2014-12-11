@@ -6,6 +6,11 @@
                 {{> answerQuestionForm}}
             </div>
             <div class="col-md-4">
+                {{#if attachmentUrl}}
+                    <h3>Vedlegg</h3>
+                    <a href="{{attachmentUrl}}" target="_blank" class="attachment-link">{{attachmentUrl}}</a>
+                {{/if}}
+
                 {{> relatedQuestions}}
             </div>
         </div>
@@ -14,7 +19,7 @@
 
 <template name="answerQuestionForm">
         <form role="form">
-            <p class="question-subtitle">{{subjectName this.subjectId}} &ndash; {{this.grade}}</p>
+            <p class="question-subtitle">{{subjectName subjectId}} &ndash; {{grade}}</p>
             <div class="form-group">
                 <h4>Spørsmål</h4>
                 <textarea class="form-control" name="question" value="{{question}}" rows="2"></textarea>

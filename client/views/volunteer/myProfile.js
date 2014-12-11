@@ -18,15 +18,24 @@ Template.mySubjectsSelector.rendered = function () {
 };
 
 Template.profilePicture.helpers({
-    uploading: function () {
-        return Session.get("uploading");
-    },
     profilePictureUrl: function () {
-        var profilePictureUrl = Meteor.user().profile.pictureUrl;
-        if (profilePictureUrl) {
-            return profilePictureUrl;
-        } else {
-            return "";
+        var user = Meteor.user();
+        if (user) {
+            return user.profile.pictureUrl;
+        }
+    }
+});
+
+Template.profilePicture.events({
+    'click button' : function () {
+        var files = $("input[name=profilePicture]")[0].files;
+
+        if (files.length === 1) {
+            S3.upload(files, "/profilbilder", function(error, result){
+                if (!result.uploading) {
+                    Meteor.call('setProfilePictureUrl', result.url);
+                }
+            });
         }
     }
 });
