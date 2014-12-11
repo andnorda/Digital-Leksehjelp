@@ -5,7 +5,8 @@ Digital tutoring solution for the Red Cross Organization in Oslo. It is a digita
 
 &copy; Røde Kors
 
-This is a [Meteor.js](https://www.meteor.com/) application, and it uses [Meteorite](https://github.com/oortcloud/meteorite#installing-meteorite) as package manager. You can find handy packages on [Atmosphere](https://atmosphere.meteor.com/). We use Heroku as a hosting solution, [dnsimple](https://dnsimple.com/) for DNS(shocker!) and [Amazon S3](http://aws.amazon.com/s3/) for asset storage.
+This is a [Meteor.js](https://www.meteor.com/) application, and it uses [Atmosphere](https://atmospherejs.com/) as package manager. We use Heroku as a hosting solution, [dnsimple](https://dnsimple.com/) for DNS (shocker!) and [Amazon S3](http://aws.amazon.com/s3/) for asset storage.
+
 
 How to run locally
 ------------------
@@ -14,21 +15,18 @@ How to run locally
 
 2. Install [Meteor.js](http://docs.meteor.com/#quickstart), or for the lazy, run this command: `curl https://install.meteor.com | /bin/sh`. Verify by running `meteor --version`.
 
-3. You need the package manager npm to install Meteorite. Install [Node.js](http://nodejs.org/) to get it, but if you already have it installed, great! Move on.
+3. `git clone https://github.com/iterate/digital-leksehjelp.git`
 
-4. Install [Meteorite](https://github.com/oortcloud/meteorite#installing-meteorite).
+4. `cd digital-leksehjelp`
 
-5. `git clone https://github.com/iterate/digital-leksehjelp.git`
+5. Make sure you have the correct environment variables set. See section [Environment variables](#environment-variables).
 
-6. `cd digital-leksehjelp`
+6. Make sure you have MongoDB installed. See section [Database](#database).
 
-7. Make sure you have the correct environment variables set. See the section [Environment variables](#environment-variables) below.
+7. Run `meteor` and browse to localhost:3000.
 
-8. `mrt install` *Note: This will install all the packages listed in smart.json*
+*This project is dependant on Meteor version 1.0 (check it with `meteor --version`, or `cat .meteor/release`).*
 
-9. This project is pinned to Meteor version 0.6.6.3 for the time being(check it with `meteor --version`, or `cat .meteor/release`). If you have the time, please update to a newer version with `meteor update`, and check that everything runs fine. If not, run version 0.6.6.3 by running `meteor run`
-
-10. Browse to localhost:3000.
 
 How to run integration tests
 ----------------------------
@@ -38,6 +36,7 @@ How to run integration tests
 2. `cd tests`
 
 3. `node test.js`
+
 
 Database
 --------
@@ -52,6 +51,9 @@ If you want access to the database all the time:
 
 3. Fire up the app!
 
+*Make sure your MongoDB version is at least 2.6 as we are currently relying on text search (or version 2.4 if you explicitly enable the text search feature). See the [docs](http://docs.mongodb.org/manual/core/index-text/) for additional information.*
+
+
 Environment variables
 ---------------------
 
@@ -59,7 +61,7 @@ These need to be set:
 
 In production `heroku config:set VARIABLE=BLABLA --app digital-leksehjelp` *Note: All of the production variables should be set, so you can run `heroku config --app digital-leksehjelp` to see them.*
 
-1. MAIL_URL *Note: In development you can skip the MAIL_URL, the emails sent will then be output to standard out(your console).*
+1. MAIL_URL *Note: In development you can skip the MAIL_URL, the emails sent will then be output to standard out (your console).*
 
 2. MONGO_URL *Note: For development read the [database](#database) section.*
 
@@ -68,6 +70,7 @@ In production `heroku config:set VARIABLE=BLABLA --app digital-leksehjelp` *Note
 4. S3_SECRET *Note: For development use the same value as in production.*
 
 5. METEOR_SETTINGS *Note: Set Google Analytics key according to https://github.com/reywood/meteor-iron-router-ga#meteor-settings *
+
 
 Styleguide
 ----------
@@ -90,6 +93,7 @@ Example:
     git remote add staging git@heroku.com:digital-leksehjelp-test.git
     git push staging test:master
 
+
 Initial deployment to Heroku
 ----------------------------
 
@@ -110,6 +114,7 @@ To deploy a new instance of Digital Leksehjelp on Heroku.
 3. `heroku apps:create $APPNAME --remote $HEROKU_REMOTE --region eu --stack cedar --buildpack https://github.com/AdmitHub/meteor-buildpack-horse.git; heroku addons:add papertrail:choklad --app $APPNAME; heroku addons:add mongolab:sandbox --app $APPNAME; heroku config:set MONGO_URL=$(heroku config:get MONGOLAB_URI --app $APPNAME) --app $APPNAME; heroku config:set ROOT_URL=http://$APPNAME.herokuapp.com --app $APPNAME; heroku config:set S3_KEY=$S3_KEY --app $APPNAME; heroku config:set S3_SECRET=$S3_SECRET --app $APPNAME;`
 
 4. `git push $HEROKU_REMOTE <FROM_BRANCH>:master;` and wait for deployed app on `$APPNAME.herokuapp.com`
+
 
 Browser compatibility
 ---------------------
@@ -132,6 +137,7 @@ Does not work, and gets warning modal:
 Does not work, and gets plain text warning:
 
 - **IE6-9**
+
 
 Issues
 ------
