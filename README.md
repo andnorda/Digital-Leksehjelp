@@ -59,9 +59,10 @@ Environment variables
 
 These need to be set:
 
-In production `heroku config:set VARIABLE=BLABLA --app digital-leksehjelp` *Note: All of the production variables should be set, so you can run `heroku config --app digital-leksehjelp` to see them.*
+In production `heroku config:set VARIABLE=BLABLA --app digital-leksehjelp` *Note: All of the production variables should be set, so you can run `heroku config --app digital-leksehjelp` to see them.* 
+For S3_KEY and S3_SECRET, send email to ops@iterate.no. 
 
-1. MAIL_URL *Note: In development you can skip the MAIL_URL, the emails sent will then be output to standard out (your console).*
+1. MAIL_URL *Note: In development you can **skip** the MAIL_URL, the emails sent will then be output to standard out (your console).*
 
 2. MONGO_URL *Note: For development read the [database](#database) section.*
 
@@ -69,7 +70,14 @@ In production `heroku config:set VARIABLE=BLABLA --app digital-leksehjelp` *Note
 
 4. S3_SECRET *Note: For development use the same value as in production.*
 
-5. METEOR_SETTINGS *Note: Set Google Analytics key according to https://github.com/reywood/meteor-iron-router-ga#meteor-settings *
+5. METEOR_SETTINGS *Note: In development you can **skip** this. Set Google Analytics key according to [this article](https://github.com/reywood/meteor-iron-router-ga#meteor-settings).*
+
+**Example:**
+
+```
+export S3_KEY=<the_key_that_ops_gives_you>
+
+```
 
 
 Styleguide
@@ -88,11 +96,12 @@ Deployment to Heroku
 
 3. `git push <HEROKU_REMOTE> [<FROM_BRANCH>:]master` and wait for deployed app on `<APPNAME>.herokuapp.com`
 
-Example:
+**Example:**
 
-    git remote add staging git@heroku.com:digital-leksehjelp-test.git
-    git push staging test:master
-
+```
+git remote add staging git@heroku.com:digital-leksehjelp-test.git
+git push staging test:master
+```
 
 Initial deployment to Heroku
 ----------------------------
