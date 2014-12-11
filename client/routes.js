@@ -36,8 +36,7 @@ GetHelpController = BaseController.extend({
 
 QuestionAnswerController = BaseController.extend({
     yieldTemplates: {
-        'header': { to : 'header'},
-        'footer': { to : 'footer'}
+        'header': { to : 'header'}
     },
     loadingTemplate: "loading"
 });
