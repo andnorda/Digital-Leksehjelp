@@ -1,0 +1,340 @@
+@red-cross-color: #f10029;
+@title-line-color: #d5d3d1;
+@info-text-color: #8d8070;
+@question-item-bg-color: rgb(245, 241, 235);
+@question-item-footer-color: rgb(165, 157, 149);
+@todays-volunteers-bg-color: rgb(248, 246, 242);
+@todays-volunteers-image-border-color: rgb(229, 223, 213);
+@todays-volunteers-subjects-color: rgb(132, 125, 116);
+@dropdown-text-color: #666666;
+@dropdown-caret-color: #231f20;
+@dropdown-border-color: #dfdad5;
+
+@media (min-width: 1240px) {
+    .container {
+        width: 1210px;
+    }
+
+    div[class^="col"] {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    .row {
+        margin-right: -25px;
+        margin-left: -25px;
+    }
+}
+
+@media (max-width: 1000px) {
+    #video-help-container {
+        background: @todays-volunteers-bg-color !important;
+    }
+
+    .home-header {
+        height: auto !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .title {
+        font-size: 60px !important;
+    }
+}
+
+@media (max-width: 550px) {
+    .title {
+        font-size: 40px !important;
+    }
+}
+
+.header {
+    background: url('/header_bg.png');
+    height: 240px;
+    margin-top: -20px;
+}
+
+.home-header {
+    background: url('/header_bg.png');
+    height: 620px;
+}
+
+#video-help-container {
+    background: url('/studying_man.png') no-repeat center;
+    height: 100%;
+}
+
+.videohelp-spinner {
+    display: inline-block;
+    margin-top: 40px;
+}
+
+#red-cross-logo {
+    margin-top: 50px;
+    width: 135px;
+}
+
+.title {
+    font-size: 70px;
+    margin-left: -7px;
+    color: black;
+
+    a {
+        color: black !important;
+        text-decoration: none !important;
+    }
+}
+
+.info-text {
+    color: @info-text-color;
+    font-size: 16px;
+    margin-top: 30px;
+    line-height: 34px;
+}
+
+.home {
+    margin-top: -20px;
+
+    .container {
+        padding-left: 35px;
+        padding-right: 35px;
+    }
+
+    .footer {
+        height: 30px;
+        width: 100%;
+        margin-top: 100px;
+        background-color: @red-cross-color;
+    }
+}
+
+.get-help-box-item {
+    margin-top: 20px;
+}
+
+.get-help-box-title {
+    margin-top: 60px;
+    font-size: 28px;
+    font-weight: bold;
+    color: black;
+}
+
+.my-dropdown {
+    position: relative;
+    text-align: left !important;
+    color: @dropdown-text-color;
+    font-size: 18px;
+    line-height: 1.8em;
+    padding-left: 20px;
+
+    border: 3px solid @dropdown-border-color;
+    border-radius: 0px;
+    background-color: white !important;
+
+    .dropdown-caret {
+        position: absolute;
+        right: 20px;
+        top: 13px;
+        color: @dropdown-caret-color;
+        font-size: 1.1em;
+    }
+}
+
+.default-button {
+    height: 52px;
+    border: none;
+    border-radius: 0px;
+    background-color: @red-cross-color;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+
+    &.disabled {
+        background-color: @dropdown-border-color;
+    }
+}
+
+.question-button {
+    background: url('/header_bg.png');
+    color: @red-cross-color;
+    border: 3px solid @red-cross-color;
+
+    &.active {
+        background: @red-cross-color;
+        color: white;
+    }
+}
+
+.schedule {
+    text-align: center;
+    line-height: 1.6em;
+
+    a {
+        color: @red-cross-color;
+        font-weight: bold;
+        border-bottom: 1px dashed @red-cross-color;
+        text-decoration: none;
+
+        &:hover {
+            border-bottom: 1px solid @red-cross-color;
+            text-decoration: none;
+        }
+    }
+}
+
+a.red-cross-link {
+    color: @red-cross-color;
+    font-weight: bolder;
+    border-bottom: 1px dashed @red-cross-color;
+    text-decoration: none;
+
+    &:hover {
+        border-bottom: 1px solid @red-cross-color;
+        text-decoration: none;
+    }
+}
+
+.category-title {
+    height: 140px;
+
+    h2 {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+
+        height: 2px;
+        background-color: @title-line-color;
+
+        text-align: center;
+        font-size: 40px;
+        color: black;
+
+        span {
+            background-color: white;
+            position: relative;
+            top: -0.6em;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+    }
+}
+
+@media (max-width: 550px) {
+    .category-title {
+        height: 100px;
+
+        h2 {
+            font-size: 30px !important;
+
+            span {
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+            }
+        }
+    }
+}
+
+.todays-volunteers-bg-color {
+    background-color: @todays-volunteers-bg-color !important;
+}
+
+.white-bg-adjustment {
+    margin-top: -20px;
+}
+
+.question-info-box {
+    font-size: 16px;
+    line-height: 26px;
+}
+
+.small-title {
+    font-size: 22px;
+    line-height: 32px;
+    font-weight: bold;
+}
+
+.question-item {
+    position: relative;
+    padding: 15px 20px 5px 20px;
+    margin-top: 0px;
+    margin-bottom: 40px;
+    background-color: @question-item-bg-color;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 26px;
+    color: black;
+
+    .questions-item-footer {
+        color: @question-item-footer-color;
+        font-weight: 100;
+        font-size: 14px;
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+        bottom: -20px;
+        left: 0px;
+        border-width: 30px 30px 0px 0px;
+        border-style: solid;
+        border-color: @question-item-bg-color transparent;
+        display: block;
+        width: 0;
+    }
+
+    a {
+        color: black;
+    }
+}
+
+.todays-volunteers {
+    background-color: @todays-volunteers-bg-color;
+
+}
+
+.todays-volunteer-item {
+    .round {
+        border-radius: 50%;
+        border: 20px solid @todays-volunteers-image-border-color;
+        overflow: hidden;
+        width: 230px;
+        height: 230px;
+        margin-left: auto;
+        margin-right: auto;
+        background: url('/smiley.png') center center no-repeat;
+        img {
+            margin: 0 auto;
+            display: table;
+            height: 100%;
+        }
+    }
+
+    .todays-volunteer-item-name {
+        text-align: center;
+        color: black;
+        margin-top: 35px;
+    }
+
+    .todays-volunteer-item-subjects {
+        text-align: center;
+        color: @todays-volunteers-subjects-color;
+        margin-top: 15px;
+        margin-bottom: 40px;
+    }
+}
+
+.validation-error {
+    border-color: @red-cross-color;
+    color: @red-cross-color;
+}
+
+.row-centered {
+    text-align:center;
+}
+
+.col-centered {
+    display:inline-block;
+    float:none;
+    text-align:left;
+    margin-right:-4px;
+}

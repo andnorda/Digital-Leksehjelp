@@ -1,0 +1,213 @@
+<template name="home">
+    <div class="home">
+        {{> videoHelp}}
+
+        {{> previousQuestions}}
+
+        {{> todaysVolunteers}}
+
+        {{> otherActivities}}
+
+        <div class="footer"></div>
+    </div>
+</template>
+
+<template name="videoHelp">
+    <div class="home-header">
+        <div id="video-help-container">
+            <div class="container">
+                <a href="https://www.rodekors.no/">
+                    <img id="red-cross-logo" src="/NRX_pos_FARGET bakgrunn.png">
+                </a>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1 class="title"><a href="/">Digitalleksehjelp.no</a></h1>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="info-text">
+                                    Røde Kors leksehjelp skal være en møteplass der frivillige leksehjelpere legger til rette for mestring, motivasjon, og et godt læringsmiljø. På leksehjelpen møter elevene voksne med fagkunnskap og erfaring.
+                                </p>
+                                <a href="#" class="red-cross-link">Les mer om tjenesten</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        {{> getHelpBox}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="getHelpBox">
+    <h3 class="get-help-box-title"><b>Få leksehjelp</b></h3>
+
+    {{> getVideoHelp}}
+
+    <button class="default-button question-button full-width get-help-box-item {{activeQuestionButton}}">Still et spørsmål</button>
+
+    <p class="schedule get-help-box-item">
+        Vi svarer deg i løpet av 2-3 dager
+    </p>
+</template>
+
+<template name="getVideoHelp">
+    {{#if serviceStatusLoaded}}
+        <div class="btn-group full-width get-help-box-item">
+            <button type="button" class="btn btn-default dropdown-toggle my-dropdown full-width {{validationError 'subjectError'}} {{videoHelpDisabled}}" data-toggle="dropdown">
+
+                <span id="chosen-subject">Velg fag</span>
+                <span class="glyphicon glyphicon-chevron-down dropdown-caret"></span>
+            </button>
+            <ul class="dropdown-menu full-width" role="menu">
+                {{#each subjects}}
+                    <li class="subjects {{subjectDisabled availableVolunteers.length}}" role="presentation">{{name}}</li>
+                {{/each}}
+            </ul>
+        </div>
+
+        <div class="btn-group full-width get-help-box-item">
+           <button type="button" class="btn btn-default dropdown-toggle my-dropdown full-width {{validationError 'gradeError'}} {{videoHelpDisabled}}" data-toggle="dropdown">
+              <span id="chosen-grade">Velg trinn</span>
+              <span class="glyphicon glyphicon-chevron-down dropdown-caret"></span>
+           </button>
+           <ul class="dropdown-menu full-width" role="menu">
+                {{#each grades}}
+                    <li class="grades" role="presentation">{{this}}</li>
+                {{/each}}
+           </ul>
+        </div>
+
+        <button id="start-video-session" class="default-button full-width get-help-box-item {{videoHelpDisabled}}">Start videohjelp</button>
+    {{else}}
+        <div class="videohelp-spinner">
+            {{> spinner}}
+        </div>
+    {{/if}}
+
+    <p class="schedule get-help-box-item">
+        {{{openingHours}}}
+    </p>
+</template>
+
+<template name="previousQuestions">
+
+    <div class="category-title white-bg-adjustment">
+        <h2>
+            <span>Tidligere spørsmål</span>
+        </h2>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                {{#each previousQuestions 0 2}}
+                    <div class="question-item">
+                        <p><a href="/sporsmal/{{this._id}}">{{trim question 200}}</a></p>
+                        <p class="questions-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
+                    </div>
+                {{/each}}
+            </div>
+            <div class="col-md-4 hidden-sm hidden-xs">
+                {{#each previousQuestions 2 2}}
+                    <div class="question-item">
+                        <p><a href="/sporsmal/{{this._id}}">{{trim question 200}}</a></p>
+                        <p class="questions-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
+                    </div>
+                {{/each}}
+            </div>
+            <div class="col-md-4 col-sm-6">
+                {{#each previousQuestions 4 2}}
+                    <div class="question-item">
+                        <p><a href="/sporsmal/{{this._id}}">{{trim question 200}}</a></p>
+                        <p class="questions-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
+                    </div>
+                {{/each}}
+                <a href="/sok?grade=_all&subject=_all&sort=date" class="red-cross-link">Les alle innsendte spørsmål{{numberOfQuestions}}</a>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="todaysVolunteers">
+    {{#if serviceIsOpen}}
+        {{#if isGreaterThanZero todaysVolunteers.length}}
+            <div class="todays-volunteers">
+                <div class="category-title">
+                    <h2>
+                        <span class="todays-volunteers-bg-color">Dagens frivillige</span>
+                    </h2>
+                </div>
+                <div class="container">
+                    <div class="row row-centered">
+                        {{#each todaysVolunteers}}
+                            <div class="col-md-4 col-centered">
+                                <div class="todays-volunteer-item">
+                                    <div class="round">
+                                        <img src="{{profile.pictureUrl}}">
+                                    </div>
+                                    <h4 class="todays-volunteer-item-name">{{profile.firstName}}</h4>
+                                    <p class="todays-volunteer-item-subjects">{{subjectList profile.subjects}}</p>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        {{/if}}
+    {{/if}}
+</template>
+
+<template name="otherActivities">
+    <div class="category-title white-bg-adjustment">
+        <h2>
+            <span>Andre aktiviteter Røde Kors tilbyr</span>
+        </h2>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <a href="http://www.rodekors.no/distriktsider/oslo/aktiviteter/oppvekst1/ressurssentrene-for-ungdom/orkis-rode-kors-ressurssenter/" class="textLink">
+                    <img class="img-responsive" src="/110601_Leksehjelp_mortensrud_Width_466_therese_borge.jpeg">
+                </a>
+                <h2 class="small-title"><b>Leksehjelp i Oslo</b></h2>
+                <p>
+                    Røde Kors leksehjelp skal være en møteplass der frivillige leksehjelpere legger til rette for mestring, motivasjon, og et godt læringsmiljø. På leksehjelpen møter elevene voksne med fagkunnskap og erfaring.
+                </p>
+                <a href="http://www.rodekors.no/distriktsider/oslo/aktiviteter/oppvekst1/ressurssentrene-for-ungdom/orkis-rode-kors-ressurssenter/" class="red-cross-link textLink">Mer om leksehjelp i Oslo</a>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <a href="http://www.rodekors.no/tvangsekteskap" class="textLink">
+                    <img class="img-responsive" src="/110525_tvangsekteskap_illustrasjonsbilde_Width_466.jpeg">
+                </a>
+                <h2 class="small-title"><b>Røde Kors - telefonen om tvangsekteskap og kjønnslemlestelse</b></h2>
+                <p>
+                    Her kan du få informasjon og veiledning om hvordan du kan forholde deg til situasjoner der tvangsekteskap, kjønnslemlestelse og æresrelatert vold forekommer.
+                </p>
+                <a href="http://www.rodekors.no/tvangsekteskap" class="red-cross-link textLink">Mer om tvangsekteskap og kjønnsemlestelse</a>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <a href="http://www.korspahalsen.no/">
+                    <img class="img-responsive" src="/large_tema_religion_2_350x229_MG_4753.jpg">
+                </a>
+                <h2 class="small-title"><b>Kors på halsen</b></h2>
+                <p>
+                    Hos Kors på halsen kan du som er under 18 år snakke om hva som helst - trygt, gratis og anonymt!
+                </p>
+                <a href="http://www.korspahalsen.no/" class="red-cross-link textLink">Mer om Kors på halsen</a>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <a href="http://www.rodekors.no/ungdom/" class="textLink">
+                    <img class="img-responsive" src="/mina_og_charlott_jeg_er_ensom_bryr_meg636x420_Width_636_oyvind_stedal.jpeg">
+                </a>
+                <h2 class="small-title"><b>Røde Kors ungdom</b></h2>
+                <p>
+                    Røde Kors ungdom er et frivillig tilbud for deg som er engasjert og gjerne vil hjelpe til, være en støtte, eller spre kunnskap og informasjon om Røde Kors til unge som i dag ikke vet det eksisterer et hjelpeapparat for de som opplever en vanskelig tid.
+                </p>
+                <a href="http://www.rodekors.no/ungdom/" class="red-cross-link textLink">Mer om Røde Kors ungdom</a>
+            </div>
+        </div>
+    </div>
+</template>

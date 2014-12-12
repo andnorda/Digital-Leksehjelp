@@ -55,11 +55,11 @@ Template.registerHelper('trim', function(str, stopIndex) {
     return str.substring(0, stopIndex) + "...";
 });
 
-Template.registerHelper('grades', function(subjectId) {
+Template.registerHelper('grades', function() {
     return GRADES;
 });
 
-Template.registerHelper('subjects', function(subjectId) {
+Template.registerHelper('subjects', function() {
     return Subjects.find({});
 });
 
