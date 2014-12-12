@@ -1,7 +1,7 @@
 <template name="queueModal">
     <div class="modal fade" id="queueModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content helper-modal">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title">Kø for Digital Leksehjelp</h4>
@@ -23,16 +23,33 @@
             {{#unless stateReady}}
                 Status: {{{ state }}}
             {{/unless}}
-            <p>
+        <div class="row">
+            <div class="col-md-12 full-width">
                 {{#if stateWaiting }}
-                    Det er {{ studentsInFront }} foran deg i køen for leksehjelp i {{ subject }}.
+                    <h2>Du venter i kø</h2>
+                    <img style="position:relative;" src="ticket.png">
+                    <span class="ticket-number">{{studentsInFront}}</span>
                 {{/if}}
                 {{#if stateReady }}
                     <button type="button" class="btn btn-success btn-lg" id="getHelp">
-                    Den frivillige er klar - Få leksehjelp nå
+                        Den frivillige er klar - Få leksehjelp nå
                     </button>
                 {{/if}}
-            </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-left">
+                <p>
+                    Når en frivillig er ledig så kan du starte videochatten
+                    fra dette vinduet. Chatten åpnes da i et nytt vindu.
+                </p>
+                <img class="appear-in-gif" src="appear.in.gif">
+                <p>
+                    Slik slår du av kameraet. Chat og lyd vil fortsatt fungere,
+                    også etter at du har deaktivert kameraet.
+                </p>
+            </div>
+        </div>
         </p>
     {{else}}
         <p>
