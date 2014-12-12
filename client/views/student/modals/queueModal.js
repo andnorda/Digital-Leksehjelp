@@ -37,10 +37,17 @@ Template.queueModalBody.helpers({
     },
     studentsInFront: function () {
         var studentSession = findStudentSession();
-        return StudentQueue.find({ $and: [
+        var nrOfStudents = StudentQueue.find({ $and: [
                 { queueNr: { $lt: studentSession.queueNr } },
                 { subject: studentSession.subject }
             ]}).count();
+        if(nrOfStudents < 10){
+            return '00' + nrOfStudents;
+        } else if(nrOfStudents < 100){
+            return '0' + nrOfStudents;
+        }
+        return nrOfStudents;
+
     },
     stateReady: function () {
         var studentSession = findStudentSession();

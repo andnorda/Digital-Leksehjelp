@@ -216,3 +216,34 @@ hr {
 .hidden {
     display: none;
 }
+
+.ticket-number {
+    position: absolute;
+    left:47%;
+    top:59%;
+    -ms-transform: rotate(-14deg); /* IE 9 */
+    -webkit-transform: rotate(-14deg); /* Chrome, Safari, Opera */
+    transform: rotate(-14deg);
+}
+
+.helper-modal {
+    width: 450px;
+}
+
+@media (max-width: 460px) {
+    .appear-in-gif {
+        width: 100%;
+    }
+    .helper-modal {
+        width: auto;
+    }
+    .ticket-number {
+        left: 46%;
+    }
+}
+
+@media (max-width: 992px) {
+    .ticket-number {
+        top: 54%;
+    }
+}
