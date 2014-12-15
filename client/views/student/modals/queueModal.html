@@ -2,10 +2,6 @@
     <div class="modal fade" id="queueModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content helper-modal">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Kø for Digital Leksehjelp</h4>
-                </div>
                 <div class="modal-body" style="text-align: center;">
                     {{> queueModalBody}}
                 </div>
@@ -20,13 +16,10 @@
 <template name="queueModalBody">
     {{#with studentSession }}
         <p>
-            {{#unless stateReady}}
-                Status: {{{ state }}}
-            {{/unless}}
         <div class="row">
             <div class="col-md-12 full-width">
                 {{#if stateWaiting }}
-                    <h2>Du venter i kø</h2>
+                    <h2 class="queue-header">Du venter i kø</h2>
                     <img style="position:relative;" src="ticket.png">
                     <span class="ticket-number">{{studentsInFront}}</span>
                 {{/if}}

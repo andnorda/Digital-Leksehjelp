@@ -220,7 +220,7 @@ hr {
 .ticket-number {
     position: absolute;
     left:47%;
-    top:59%;
+    top:52%;
     -ms-transform: rotate(-14deg); /* IE 9 */
     -webkit-transform: rotate(-14deg); /* Chrome, Safari, Opera */
     transform: rotate(-14deg);
@@ -242,8 +242,7 @@ hr {
     }
 }
 
-@media (max-width: 992px) {
-    .ticket-number {
-        top: 54%;
-    }
+.queue-header {
+    margin-top: 0;
+    margin-bottom: 0;
 }
