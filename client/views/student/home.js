@@ -153,3 +153,9 @@ Template.todaysVolunteers.helpers({
         }
     }
 });
+
+Template.otherActivities.events({
+    'click a.textLink' : function (event) {
+        mixpanel.track("Andre aktiviteter", { "url": event.currentTarget.href });
+    }
+});
