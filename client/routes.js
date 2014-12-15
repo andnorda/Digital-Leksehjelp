@@ -18,6 +18,13 @@ BaseController = RouteController.extend({
     layoutTemplate: 'layout'
 });
 
+DefaultController = BaseController.extend({
+    yieldTemplates: {
+        'header': { to : 'header'},
+        'footer': { to : 'footer'}
+    }
+});
+
 LoginController = BaseController.extend({
     yieldTemplates: {
         'loggedInHeader': { to : 'header'},
@@ -25,31 +32,29 @@ LoginController = BaseController.extend({
     }
 });
 
-GetHelpController = BaseController.extend({
-    yieldTemplates: {
-        'header': { to : 'header'},
-        'practicalInfo': { to : 'practicalInfo'},
-        'loggedInVolunteers': { to : 'loggedInVolunteers' },
-        'footer': { to : 'footer'}
-    }
-});
-
-QuestionAnswerController = BaseController.extend({
-    yieldTemplates: {
-        'header': { to : 'header'}
-    },
-    loadingTemplate: "loading"
-});
-
-Router.onBeforeAction(checkIfSignedIn, {except: ['getHelp', 'askQuestion', 'notFound', 'search', 'showAnswer']});
+Router.onBeforeAction(checkIfSignedIn, {except: ['home', 'askQuestion', 'notFound', 'search', 'showAnswer']});
 
 Router.onAfterAction(setDocumentTitle);
 
 Router.configure({
-    trackPageView: true
+    trackPageView: true,
+    loadingTemplate: 'loading'
 });
 
 Router.map(function () {
+    this.route('home', {
+        path: '/',
+        waitOn: function() {
+            Meteor.call('questionSearchCount', {}, function(error, result) {
+                Session.set('numberOfQuestions', result);
+            });
+            return Meteor.subscribe("questionSearch", { sort: 'date', limit: 6 });
+        },
+        data: function() {
+            return Questions.find({});
+        }
+    });
+
     this.route('/frivillig', function() {
         this.redirect('/frivillig/profil');
     });
@@ -107,18 +112,13 @@ Router.map(function () {
         template: 'myProfile'
     });
 
-    this.route('getHelp', {
-        controller: GetHelpController,
-        path: '/'
-    });
-
     this.route('askQuestion', {
-        controller: QuestionAnswerController,
+        controller: DefaultController,
         path: '/sporsmal'
     });
 
     this.route('showAnswer', {
-        controller: QuestionAnswerController,
+        controller: DefaultController,
         path: '/sporsmal/:questionId',
         waitOn: function() {
             return Meteor.subscribe("question", this.params.questionId);
@@ -137,7 +137,7 @@ Router.map(function () {
     });
 
     this.route('search', {
-        controller: QuestionAnswerController,
+        controller: DefaultController,
         path: '/sok',
         waitOn: function() {
             // https://github.com/EventedMind/iron-router/issues/1088

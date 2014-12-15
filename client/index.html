@@ -60,40 +60,26 @@
     {{> notSupportedModal}}
 
     {{> moreInfoModal}}
+
+    {{> endSessionModal}}
 </body>
 
 <template name="layout">
     <div class="bodyContainer">
         {{> yield region="header"}}
         {{> yield}}
-        {{> yield region="practicalInfo"}}
-        {{> yield region="loggedInVolunteers"}}
         {{> yield region="footer"}}
     </div>
 </template>
 
 <template name="header">
-    <div id="header">
+    <div class="header">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <a href="/">
-                        <img class="img-responsive" src="/NRX_pos_HVIT bakgrunn_PNG_resized.png" />
-                    </a>
-                </div>
-                <div class="col-md-4">
-                    <div class="header-content">
-                        <h1>Digitalleksehjelp.no</h1>
-                    </div>
-                </div>
-                <div class="col-md-4" style="margin-top: 32px;">
-                    <a href="http://www.rodekors.no">
-                        <button type="button" class="btn btn-primary full-width">
-                            Klikk her for Røde Kors.no
-                        </button>
-                    </a>
-                </div>
-            </div>
+            <a href="https://www.rodekors.no/">
+                <img id="red-cross-logo" src="/NRX_pos_FARGET bakgrunn.png">
+            </a>
+
+            <h1 class="title"><a href="#">Digitalleksehjelp.no</a></h1>
         </div>
     </div>
 </template>
@@ -144,135 +130,6 @@
         </div>
 </template>
 
-<template name="loggedInVolunteer">
-    <div class="col-md-3">
-        <div class="loggedInVolunteer">
-            <img
-                class="img-responsive profile-picture"
-                src="{{profile.pictureUrl}}"/>
-            <div class="volunteerInfo">
-                <h3>{{profile.firstName}}</h3>
-                <img
-                    class="img-responsive"
-                    src="/teacher_hat.png"
-                    style="margin: 10px auto;"/>
-                <span class="subjectList">
-                    {{subjectList profile.subjects}}
-                </span>
-            </div>
-        </div>
-    </div>
-</template>
-
-<template name="loggedInVolunteers">
-    {{#if serviceIsOpen}}
-        {{#if isGreaterThanZero loggedInVolunteers.length}}
-            <div class="loggedInVolunteers">
-                <div class="container" style="margin-top: 2%;">
-                    <div class="row">
-                        <div class="col-md-12" style="text-align:center;">
-                            <h1>Dagens frivillige</h1>
-                        </div>
-                    </div>
-                    <div class="row">
-                        {{#each loggedInVolunteers}}
-                            {{> loggedInVolunteer}}
-                        {{/each}}
-                    </div>
-                </div>
-            </div>
-        {{/if}}
-    {{/if}}
-</template>
-
-<template name="footer">
-    <div>
-        <div class="container" style="margin-top: 2%;">
-            <div class="row">
-                <div class="col-md-12" style="text-align:center;">
-                    <h1 style="padding: 20px 0">Andre aktiviteter Røde Kors tilbyr</h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <a href="http://www.rodekors.no/distriktsider/oslo/aktiviteter/oppvekst1/ressurssentrene-for-ungdom/orkis-rode-kors-ressurssenter/" class="textLink">
-                        <img
-                            class="img-responsive"
-                            src="/110601_Leksehjelp_mortensrud_Width_466_therese_borge.jpeg" />
-                    </a>
-                    <h2>Leksehjelp i Oslo</h2>
-                    <p>
-                        Røde Kors leksehjelp skal være en
-                        møteplass der frivillige leksehjelpere
-                        legger til rette for mestring, motivasjon,
-                        og et godt læringsmiljø. På leksehjelpen
-                        møter elevene voksne med
-                        fagkunnskap og erfaring.
-                    </p>
-                    <a href="http://www.rodekors.no/distriktsider/oslo/aktiviteter/oppvekst1/ressurssentrene-for-ungdom/orkis-rode-kors-ressurssenter/" class="textLink">
-                        <button type="button" class="btn btn-small btn-primary">Les mer</button>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="http://www.rodekors.no/tvangsekteskap" class="textLink">
-                        <img
-                            class="img-responsive"
-                            src="/110525_tvangsekteskap_illustrasjonsbilde_Width_466.jpeg" />
-                    </a>
-                    <h2>Røde Kors - telefonen om tvangsekteskap
-                        og kjønnslemlestelse</h2>
-                    <p>
-                        Her kan du få informasjon og veiledning
-                        om hvordan du kan forholde deg til
-                        situasjoner der tvangsekteskap, kjønnslemlestelse
-                        og æresrelatert vold forekommer.
-                    </p>
-                    <a href="http://www.rodekors.no/tvangsekteskap" class="textLink">
-                        <button type="button" class="btn btn-small btn-primary">Les mer</button>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="http://www.korspahalsen.no/" class="textLink">
-                        <img
-                            class="img-responsive"
-                            src="/large_tema_religion_2_350x229_MG_4753.jpg" />
-                    </a>
-                    <h2>Kors på halsen</h2>
-                    <p>
-                        Hos Kors på halsen kan du som er under
-                        18 år snakke om
-                        <span style="text-decoration: underline;">hva som helst</span> - trygt,
-                        gratis og anonymt!
-                    </p>
-                    <a href="http://www.korspahalsen.no/" class="textLink">
-                        <button type="button" class="btn btn-small btn-primary">Les mer</button>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="http://www.rodekors.no/ungdom/" class="textLink">
-                        <img
-                            class="img-responsive"
-                            src="/mina_og_charlott_jeg_er_ensom_bryr_meg636x420_Width_636_oyvind_stedal.jpeg" />
-                    </a>
-                    <h2>Røde Kors ungdom</h2>
-                    <p>
-                        Røde Kors ungdom er et frivillig tilbud
-                        for deg som er engasjert og gjerne vil
-                        hjelpe til, være en støtte, eller spre
-                        kunnskap og informasjon om Røde Kors
-                        til unge som i dag ikke vet det eksisterer
-                        et hjelpeapparat for de som opplever
-                        en vanskelig tid.
-                    </p>
-                    <a href="http://www.rodekors.no/ungdom/" class="textLink">
-                        <button type="button" class="btn btn-small btn-primary">Les mer</button>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
-
 <template name="loggedInHeader">
     <div class="container">
         {{#if currentUser }}
@@ -297,9 +154,13 @@
                 <li role="presentation" class="{{isActiveTab 'questions'}}"><a href="/frivillig/sporsmal">Spørsmål</a></li>
             </ul>
 
-            {{> endSessionModal}}
+
         {{/if}}
     </div>
+</template>
+
+<template name="footer">
+
 </template>
 
 <template name="loggedInFooter">
