@@ -1,12 +1,16 @@
 <template name="queueModal">
     <div class="modal fade" id="queueModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content helper-modal">
+            <div class="modal-content dl-modal">
+                <div class="modal-header dl-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title">Du venter i kø som nr:</h3>
+                </div>
                 <div class="modal-body" style="text-align: center;">
                     {{> queueModalBody}}
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Forlat kø</button>
+                <div class="modal-footer dl-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Avbryt</button>
                 </div>
             </div>
         </div>
@@ -19,7 +23,6 @@
         <div class="row">
             <div class="col-md-12 full-width">
                 {{#if stateWaiting }}
-                    <h2 class="queue-header">Du venter i kø</h2>
                     <img style="position:relative;" src="ticket.png">
                     <span class="ticket-number">{{studentsInFront}}</span>
                 {{/if}}

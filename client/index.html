@@ -42,14 +42,6 @@
     </script>
     <!-- end Mixpanel -->
     <script src="http://iswebrtcready.appear.in/apiv2.js"></script>
-    <script>
-        API.isAppearinCompatible(function (data) {
-            if (!data.isSupported) {
-                $('#notSupportedModal').modal();
-                mixpanel.track("Feilet teknisk sjekk");
-            }
-        });
-    </script>
 </head>
 
 <body>

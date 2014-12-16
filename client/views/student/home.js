@@ -25,6 +25,14 @@ Template.getHelpBox.events({
     }
 });
 
+Template.videoHelp.events({
+    'click a#more-info' : function (event) {
+        console.log("happens?");
+        $('#moreInfoModal').modal();
+        console.log( $('#moreInfoModal'));
+    }
+});
+
 Template.getVideoHelp.helpers({
     validationError: function (errorType) {
         validationErrorDep.depend();
@@ -61,42 +69,51 @@ Template.getVideoHelp.helpers({
 
 Template.getVideoHelp.events({
     'click button#start-video-session' : function (event) {
-        if ($("button#start-video-session").hasClass("disabled")) {
-            return;
-        }
 
-        var chosenSubject = $('#chosen-subject').text().trim();
-        var chosenGrade = $('#chosen-grade').text().trim();
+        API.isAppearinCompatible(function (data) {
+            if (!data.isSupported) {
+                $('#notSupportedModal').modal();
+                mixpanel.track("Feilet teknisk sjekk");
+                return;
+            }
 
-        validationError = [];
-        validationErrorDep.changed();
-        if (chosenSubject === "Velg fag") {
-            validationError.push("subjectError");
+            if ($("button#start-video-session").hasClass("disabled")) {
+                return;
+            }
+
+            var chosenSubject = $('#chosen-subject').text().trim();
+            var chosenGrade = $('#chosen-grade').text().trim();
+
+            validationError = [];
             validationErrorDep.changed();
-        }
-        if (chosenGrade === "Velg trinn") {
-            validationError.push("gradeError");
-            validationErrorDep.changed();
-        }
-        if (validationError.length === 0) {
-            mixpanel.track("Bedt om leksehjelp", { "fag": chosenSubject, "trinn": chosenGrade });
-            Meteor.call('createSessionOnServer',
-                {
-                    subject: chosenSubject,
-                    grade: chosenGrade,
-                    queueNr: getHighestQueueNr()
-                },
-                function (error, sessionId) {
-                    if (error) {
-                        validationError.push("sessionError");
-                        validationErrorDep.changed();
-                    } else {
-                        Session.set("studentSessionId", sessionId);
-                        Session.set("queueStartTime", new Date().getTime());
-                        $('#queueModal').modal();
-                    }
-                });
-        }
+            if (chosenSubject === "Velg fag") {
+                validationError.push("subjectError");
+                validationErrorDep.changed();
+            }
+            if (chosenGrade === "Velg trinn") {
+                validationError.push("gradeError");
+                validationErrorDep.changed();
+            }
+            if (validationError.length === 0) {
+                mixpanel.track("Bedt om leksehjelp", { "fag": chosenSubject, "trinn": chosenGrade });
+                Meteor.call('createSessionOnServer',
+                    {
+                        subject: chosenSubject,
+                        grade: chosenGrade,
+                        queueNr: getHighestQueueNr()
+                    },
+                    function (error, sessionId) {
+                        if (error) {
+                            validationError.push("sessionError");
+                            validationErrorDep.changed();
+                        } else {
+                            Session.set("studentSessionId", sessionId);
+                            Session.set("queueStartTime", new Date().getTime());
+                            $('#queueModal').modal();
+                        }
+                    });
+            }
+        });
     },
 
     'click .disabled-li' : function (event) {
@@ -147,7 +164,7 @@ Template.todaysVolunteers.helpers({
                 subjectNamesStr += subjectNames[i] + ", ";
             }
             return subjectNamesStr.substring(0, subjectNamesStr.length - 2) +
-            " og " + subjectNames[subjectNames.length-1];
+                " og " + subjectNames[subjectNames.length-1];
         } else {
             return subjectNames.join("");
         }
