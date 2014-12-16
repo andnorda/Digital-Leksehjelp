@@ -13,7 +13,7 @@
             vennligst last ned <a href="http://www.mozilla.org/nb-NO/firefox/new/">Firefox</a>, <a href="https://www.google.com/chrome">Chrome</a>, eller <a href="http://www.opera.com/download">Opera</a> for å bruke
             tjenesten vår.
         </h1>
-        <style type="text/css">.bodyContainer { display: none; } </style>
+        <style type="text/css">.wrapper { display: none; } </style>
     <![endif]-->
     <!-- start Mixpanel -->
     <script>(function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===e.location.protocol?"https:":"http:")+'//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f);b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==
@@ -65,9 +65,11 @@
 </body>
 
 <template name="layout">
-    <div class="bodyContainer">
+    <div class="wrapper">
         {{> yield region="header"}}
-        {{> yield}}
+        <div class="dl-content">
+            {{> yield}}
+        </div>
         {{> yield region="footer"}}
     </div>
 </template>
@@ -79,9 +81,13 @@
                 <img id="red-cross-logo" src="/NRX_pos_FARGET bakgrunn.png">
             </a>
 
-            <h1 class="title"><a href="#">Digitalleksehjelp.no</a></h1>
+            <h1 class="title"><a href="/">Digitalleksehjelp.no</a></h1>
         </div>
     </div>
+</template>
+
+<template name="footer">
+    <div class="footer"></div>
 </template>
 
 <template name="practicalInfo">
@@ -157,10 +163,6 @@
 
         {{/if}}
     </div>
-</template>
-
-<template name="footer">
-
 </template>
 
 <template name="loggedInFooter">

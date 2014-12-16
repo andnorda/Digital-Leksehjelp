@@ -1,14 +1,50 @@
-@red-cross-color: #f10029;
-@title-line-color: #d5d3d1;
-@info-text-color: #8d8070;
-@question-item-bg-color: rgb(245, 241, 235);
-@question-item-footer-color: rgb(165, 157, 149);
-@todays-volunteers-bg-color: rgb(248, 246, 242);
-@todays-volunteers-image-border-color: rgb(229, 223, 213);
-@todays-volunteers-subjects-color: rgb(132, 125, 116);
-@dropdown-text-color: #666666;
-@dropdown-caret-color: #231f20;
-@dropdown-border-color: #dfdad5;
+@import 'colors.import.less';
+
+html,
+body {
+    font-family: 'Open Sans', sans-serif !important;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.wrapper {
+    min-height: 100%;
+    position: relative;
+}
+
+.header {
+    background: url('/header_bg.png');
+    height: 240px;
+    margin-top: -20px;
+}
+
+.dl-content {
+    padding-bottom: 130px;   /* Height of the footer element */
+}
+
+.footer {
+    height: 30px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: @red-cross-color;
+}
+
+.home-header {
+    background: url('/header_bg.png');
+    height: 620px;
+}
+
+.home {
+    margin-top: -20px;
+
+    .container {
+        padding-left: 35px;
+        padding-right: 35px;
+    }
+}
 
 @media (min-width: 1240px) {
     .container {
@@ -48,17 +84,6 @@
     }
 }
 
-.header {
-    background: url('/header_bg.png');
-    height: 240px;
-    margin-top: -20px;
-}
-
-.home-header {
-    background: url('/header_bg.png');
-    height: 620px;
-}
-
 #video-help-container {
     background: url('/studying_man.png') no-repeat center;
     height: 100%;
@@ -90,22 +115,6 @@
     font-size: 16px;
     margin-top: 30px;
     line-height: 34px;
-}
-
-.home {
-    margin-top: -20px;
-
-    .container {
-        padding-left: 35px;
-        padding-right: 35px;
-    }
-
-    .footer {
-        height: 30px;
-        width: 100%;
-        margin-top: 100px;
-        background-color: @red-cross-color;
-    }
 }
 
 .get-help-box-item {

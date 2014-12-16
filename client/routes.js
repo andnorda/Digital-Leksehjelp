@@ -25,6 +25,12 @@ DefaultController = BaseController.extend({
     }
 });
 
+HomeController = BaseController.extend({
+    yieldTemplates: {
+        'footer': { to : 'footer'}
+    }
+});
+
 LoginController = BaseController.extend({
     yieldTemplates: {
         'loggedInHeader': { to : 'header'},
