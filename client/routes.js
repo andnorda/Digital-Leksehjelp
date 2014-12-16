@@ -112,6 +112,18 @@ Router.map(function () {
         template: 'subjectAdmin'
     });
 
+    this.route('questionAdmin', {
+        controller: LoginController,
+        path: '/frivillig/admin/sporsmal',
+        template: 'questionAdmin',
+        waitOn: function() {
+            return Meteor.subscribe("questions");
+        },
+        data: function() {
+            return { verifiedQuestions: Questions.find({ verifiedBy: { $exists: true } }) };
+        }
+    });
+
     this.route('myProfile', {
         controller: LoginController,
         path: '/frivillig/profil',

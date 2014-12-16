@@ -1,0 +1,53 @@
+<template name="questionAdmin">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {{> verifiedQuestionsList}}
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="verifiedQuestionsList">
+    <h3>Alle godkjente spørsmål</h3>
+
+    <table class="table" border="1">
+        <tr>
+            <th>Fag</th>
+            <th>Trinn</th>
+            <th>Dato stilt</th>
+            <th>Dato svart</th>
+            <th>Svart av</th>
+            <th>Publisert</th>
+        </tr>
+
+        {{#each verifiedQuestions}}
+            <tr class="table-row-header">
+                <td>{{subjectName subjectId}}</td>
+                <td>{{grade}}</td>
+                <td>{{prettifyDate questionDate}}</td>
+                <td>{{prettifyDate answerDate}}</td>
+                <td>{{username answeredBy}}</td>
+                <td>
+                    {{#if publishedBy}}
+                        Ja
+                    {{else}}
+                        Nei
+                    {{/if}}
+                </td>
+            </tr>
+            <tr class="table-row-content">
+                <td colspan="6">{{trim question 200}}</td>
+            </tr>
+            <tr class="table-row-content">
+                <td colspan="6">{{trim answer 300}}</td>
+            </tr>
+            <tr class="table-row-content">
+                <td colspan="6">
+                    <a href="/frivillig/sporsmal/svar/{{_id}}" target="_blank">Redigér</a>&nbsp;&nbsp;
+                    <a href="/sporsmal/{{_id}}" target="_blank">Vis</a>
+                </td>
+            </tr>
+        {{/each}}
+    </table>
+</template>
