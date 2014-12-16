@@ -4,7 +4,7 @@ var isNumber = function (obj) {
 
 this.questionPublicFields = {
     answer: true,
-    answeredDate: true,
+    answerDate: true,
     grade: true,
     question: true,
     questionDate: true,
