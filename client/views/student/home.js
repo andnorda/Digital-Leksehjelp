@@ -27,9 +27,7 @@ Template.getHelpBox.events({
 
 Template.videoHelp.events({
     'click a#more-info' : function (event) {
-        console.log("happens?");
         $('#moreInfoModal').modal();
-        console.log( $('#moreInfoModal'));
     }
 });
 

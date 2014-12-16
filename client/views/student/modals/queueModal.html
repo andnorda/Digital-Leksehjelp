@@ -1,15 +1,15 @@
 <template name="queueModal">
     <div class="modal fade" id="queueModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content dl-modal">
-                <div class="modal-header dl-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <div class="modal-content dl-modal-content">
+                <div class="modal-header dl-modal-header">
+                    <button type="button" class="dl-modal-close" data-dismiss="modal" aria-hidden="true">&times; </button>
                     <h3 class="modal-title">Du venter i kø som nr:</h3>
                 </div>
                 <div class="modal-body" style="text-align: center;">
                     {{> queueModalBody}}
                 </div>
-                <div class="modal-footer dl-footer">
+                <div class="modal-footer dl-modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Avbryt</button>
                 </div>
             </div>
