@@ -1,11 +1,27 @@
 <template name="showAnswer">
+    <div class="category-title white-bg-adjustment"><div class="empty-category-title"></div></div>
+
     <div class="container">
-        <p class="question-subtitle">{{subjectName this.subjectId}} &ndash; {{this.grade}}</p>
-        <h2>Spørsmål</h2>
-        <p>{{this.question}}</p>
-        <p><small>{{fromNow this.questionDate}}</small></p>
-        <h2>Svar</h2>
-        <p>{{{transformNewline this.answer}}}</p>
-        <p><small>{{fromNow this.answerDate}}</small></p>
+        <div class="row">
+            <div class="col-md-3 col-md-offset-3">
+                <div class="category-title grid-adjustment">
+                    <h2>
+                        <span>Spørsmål</span>
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9 col-md-offset-3">
+                <div class="question-item show-question">
+                    <p>{{{transformNewline question}}}</p>
+                    <p class="questions-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
+                </div>
+
+                <h3>Svar</h3>
+                <p>{{{transformNewline answer}}}</p>
+            </div>
+        </div>
+
     </div>
 </template>
