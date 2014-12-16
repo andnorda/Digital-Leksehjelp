@@ -14,11 +14,15 @@ Meteor.publish("question", function (questionId) {
     if (this.userId) {
         return Questions.find({ _id: questionId });
     } else {
-        return Questions.find({
+        return Questions.find(
+        {
             _id: questionId,
             answer: { $exists: true },
             verifiedBy: { $exists: true },
             publishedBy: { $exists: true }
+        },
+        {
+            fields: questionPublicFields
         });
     }
 });

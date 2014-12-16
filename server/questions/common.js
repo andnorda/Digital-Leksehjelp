@@ -2,6 +2,16 @@ var isNumber = function (obj) {
   return ! isNaN (obj-0) && obj !== null && obj !== "" && obj !== false;
 }
 
+this.questionPublicFields = {
+    answer: true,
+    answeredDate: true,
+    grade: true,
+    question: true,
+    questionDate: true,
+    subjectId: true,
+    title: true
+}
+
 this.QuestionHelpers = {
     parseSearchParams: function (params) {
         var selector = { $and: [] };
@@ -56,6 +66,7 @@ this.QuestionHelpers = {
                 { verifiedBy: { $exists: true }},
                 { publishedBy: { $exists: true }}
             )
+            searchCritera.options['fields'] = questionPublicFields;
         }
 
         return searchCritera;
