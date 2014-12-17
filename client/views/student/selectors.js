@@ -1,8 +1,7 @@
 Template.subjectSelector.events({
     'click .subjects' : function (event) {
-        if(!$(event.target).hasClass("disabled-li")) {
-            $('#chosen-subject').text(this.name);
-        }
+        $('#chosen-subject').text(this.name);
+        $('#chosen-subject').attr('data-id', this._id);
     },
 });
 

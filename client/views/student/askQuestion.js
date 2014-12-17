@@ -10,7 +10,7 @@ var askQuestion = function (questionFields) {
             }
             $("button[type=submit]").removeClass("disabled");
         });
-}
+};
 
 Template.questionForm.helpers({
     percentUploaded: function () {
@@ -29,9 +29,12 @@ Template.questionForm.events({
         e.preventDefault();
         $("button[type=submit]").addClass("disabled");
 
+        var grade = $('#chosen-grade').text();
+        grade = (grade == "Velg trinn") ? "default" : grade;
+
         var questionFields = {
-            subjectId: template.find("select[name=subject]").value,
-            grade: template.find("select[name=grade]").value,
+            subjectId: $('#chosen-subject').attr('data-id'),
+            grade: grade,
             question: template.find("textarea[name=question]").value,
             studentEmail: template.find("input[name=email]").value
         }
@@ -56,7 +59,7 @@ Template.questionForm.events({
         }
     },
     'keydown, blur, focus textarea[name=question]' : function (event, template) {
-        var subjectId = template.find("select[name=subject]").value;
+        var subjectId = $('#chosen-subject').attr('data-id');
         var subject = Subjects.findOne({ _id: subjectId });
         var question = template.find("textarea[name=question]").value;
 
@@ -69,7 +72,7 @@ Template.questionForm.events({
 
         searchForRelatedQuestions(subject, question);
     },
-    'change .btn-file :file' : function (event, template) {
+    'change .dl-file-chooser :file' : function (event, template) {
         var input = $("input[name=attachment]");
         var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
         Session.set("attachmentLabel", label);

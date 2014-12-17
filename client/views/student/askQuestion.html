@@ -1,17 +1,20 @@
 <template name="askQuestion">
+    <div class="category-title white-bg-adjustment"><div class="empty-category-title"></div></div>
+
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h1>Still et spørsmål</h1>
+            <div class="col-md-offset-3 col-md-9">
+                <div class="category-title grid-adjustment">
+                    <h2>
+                        <span>Still et spørsmål</span>
+                    </h2>
+                </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-offset-3 col-md-9">
                 {{> questionForm}}
-            </div>
-
-            <div class="col-md-4">
                 {{> relatedQuestions}}
             </div>
         </div>
@@ -21,42 +24,27 @@
 <template name="questionForm">
     <form role="form" name="questionForm">
         <div class="row">
-            <div class="form-group col-md-6">
-                <label>Fag</label>
-                <select class="form-control" name="subject">
-                    <option value="default" selected="selected">Velg fag</option>
-                    {{#each subjects}}
-                        <option value="{{_id}}">{{name}}</option>
-                    {{/each}}
-                </select>
+            <div class="form-group col-md-5">
+                {{> subjectSelector}}
             </div>
-            <div class="form-group col-md-6">
-                <label>Årstrinn</label>
-                <select class="form-control" name="grade">
-                    <option value="default" selected="selected">Velg årstrinn</option>
-                    {{#each grades}}
-                        <option value="{{this}}">{{this}}</option>
-                    {{/each}}
-                </select>
+            <div class="form-group col-md-5">
+                {{> gradeSelector}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <h3 class="dl-question-h3">Hva lurer du på?</h3>
+                <textarea class="form-control dl-inputfield" name="question" placeholder="Still spørsmålet ditt her..." rows="8"></textarea>
             </div>
         </div>
         <div class="form-group">
-            <label>Spørsmål</label>
-            <textarea class="form-control" name="question" placeholder="Still spørsmålet ditt her..." rows="6"></textarea>
-        </div>
-        <div class="form-group">
-            <label>Last opp vedlegg <small>(maks 5 MB)</small></label>
+            <h3>Last opp vedlegg <small>(maks 5 MB)</small></h3>
             <div class="input-group">
                 <span class="input-group-btn">
-                    <span class="btn btn-default btn-file">
-                        Velg fil&hellip; <input type="file" name="attachment" accept="image/*|.pdf|.doc|.docx">
+                    <span class="dl-file-chooser btn-file">
+                        <span class="glyphicon glyphicon-plus dl-plus-sign"></span>
+                        Legg til fil&hellip; <input type="file" name="attachment" accept="image/*|.pdf|.doc|.docx">
                     </span>
-                </span>
-                <span class="form-control input-files-label">
-                    {{#if attachmentLabel}}
-                        {{attachmentLabel}}
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    {{/if}}
                 </span>
             </div>
         </div>
@@ -67,13 +55,19 @@
                 </div>
             </div>
         {{/if}}
-        <div class="form-group">
-            <label>E-post</label>
-            <div class="input-group">
-                <span class="input-group-addon">@</span>
-                <input type="text" class="form-control" name="email" placeholder="E-post">
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <div class="col-md-5 input-group">
+                    <input type="text" class="dl-inputfield dl-emailfield form-control" name="email" placeholder="Din e-postadresse">
+                </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg">Send inn spørsmål</button>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <div class="col-md-5 input-group">
+                    <button type="submit" class="btn dl-button full-width">Send inn spørsmål</button>
+                </div>
+            </div>
+        </div>
     </form>
 </template>
