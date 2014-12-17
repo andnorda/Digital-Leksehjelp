@@ -8,30 +8,13 @@ var getHighestQueueNr = function () {
     return StudentQueue.find({}, { sort: { queueNr: -1 }, limit: 1 }).fetch()[0].queueNr;
 };
 
-Template.getHelpBox.helpers({
-    activeQuestionButton: function() {
-        var serviceStatus = Config.findOne({ name: "serviceStatus" });
-        if (serviceStatus && serviceStatus.open) {
-            return "";
-        }
-        return "active";
-    }
-});
-
-Template.getHelpBox.events({
-    'click .question-button' : function (event) {
-        event.preventDefault();
-        Router.go('askQuestion');
-    }
-});
-
-Template.videoHelp.events({
+Template.getHelp.events({
     'click a#more-info' : function (event) {
         $('#moreInfoModal').modal();
     }
 });
 
-Template.getVideoHelp.helpers({
+Template.getHelpBox.helpers({
     validationError: function (errorType) {
         validationErrorDep.depend();
         if (validationError && validationError.indexOf(errorType) > -1) {
@@ -49,6 +32,10 @@ Template.getVideoHelp.helpers({
     serviceStatusLoaded: function () {
         return Session.get("serviceStatusLoaded");
     },
+    videoHelpOpen: function () {
+        var serviceStatus = Config.findOne({ name: "serviceStatus" });
+        return serviceStatus && serviceStatus.open;
+    },
     videoHelpDisabled: function () {
         var serviceStatus = Config.findOne({ name: "serviceStatus" });
         if (serviceStatus && serviceStatus.open) {
@@ -65,7 +52,7 @@ Template.getVideoHelp.helpers({
     }
 });
 
-Template.getVideoHelp.events({
+Template.getHelpBox.events({
     'click button#start-video-session' : function (event) {
 
         API.isAppearinCompatible(function (data) {

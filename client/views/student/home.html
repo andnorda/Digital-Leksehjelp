@@ -1,6 +1,6 @@
 <template name="home">
     <div class="home">
-        {{> videoHelp}}
+        {{> getHelp}}
 
         {{> previousQuestions}}
 
@@ -10,7 +10,7 @@
     </div>
 </template>
 
-<template name="videoHelp">
+<template name="getHelp">
     <div class="home-header">
         <div id="video-help-container">
             <div class="container">
@@ -18,20 +18,17 @@
                     <img id="red-cross-logo" src="/NRX_pos_FARGET bakgrunn.png">
                 </a>
 
+                <h1 class="title"><a href="/">Digitalleksehjelp.no</a></h1>
+
                 <div class="row">
-                    <div class="col-md-8">
-                        <h1 class="title"><a href="/">Digitalleksehjelp.no</a></h1>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p class="info-text">
-                                    Røde Kors leksehjelp skal være en møteplass der frivillige leksehjelpere legger til rette for mestring, motivasjon, og et godt læringsmiljø. På leksehjelpen møter elevene voksne med fagkunnskap og erfaring.
-                                </p>
-                                <a id="more-info" href="#" class="red-cross-link">Les mer om tjenesten</a>
-                            </div>
-                        </div>
+                    <div class="col-md-4">
+                        <p class="info-text">
+                            Røde Kors leksehjelp skal være en møteplass der frivillige leksehjelpere legger til rette for mestring, motivasjon, og et godt læringsmiljø. På leksehjelpen møter elevene voksne med fagkunnskap og erfaring.
+                        </p>
+                        <a id="more-info" href="#" class="red-cross-link">Les mer om tjenesten</a>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-md-offset-4">
                         {{> getHelpBox}}
                     </div>
                 </div>
@@ -41,62 +38,61 @@
 </template>
 
 <template name="getHelpBox">
-    <h3 class="get-help-box-title"><b>Få leksehjelp</b></h3>
-
-    {{> getVideoHelp}}
-
-    <button class="default-button question-button full-width get-help-box-item {{activeQuestionButton}}">Still et spørsmål</button>
-
-    <p class="schedule get-help-box-item">
-        Vi svarer deg i løpet av 2-3 dager
-    </p>
-</template>
-
-<template name="getVideoHelp">
     {{#if serviceStatusLoaded}}
-        <div class="btn-group full-width get-help-box-item">
-            <button type="button" class="btn btn-default dropdown-toggle my-dropdown full-width {{validationError 'subjectError'}} {{videoHelpDisabled}}" data-toggle="dropdown">
+        {{#if videoHelpOpen}}
+            <h3 class="get-help-box-title"><b>Få leksehjelp</b></h3>
 
-                <span id="chosen-subject">Velg fag</span>
-                <span class="glyphicon glyphicon-chevron-down dropdown-caret"></span>
-            </button>
-            <ul class="dropdown-menu full-width" role="menu">
-                {{#each subjects}}
-                    <li class="subjects {{subjectDisabled availableVolunteers.length}}" role="presentation">{{name}}</li>
-                {{/each}}
-            </ul>
-        </div>
+            <div class="btn-group full-width get-help-box-item">
+                <button type="button" class="btn btn-default dropdown-toggle my-dropdown full-width {{validationError 'subjectError'}}" data-toggle="dropdown">
 
-        <div class="btn-group full-width get-help-box-item">
-           <button type="button" class="btn btn-default dropdown-toggle my-dropdown full-width {{validationError 'gradeError'}} {{videoHelpDisabled}}" data-toggle="dropdown">
-              <span id="chosen-grade">Velg trinn</span>
-              <span class="glyphicon glyphicon-chevron-down dropdown-caret"></span>
-           </button>
-           <ul class="dropdown-menu full-width" role="menu">
-                {{#each grades}}
-                    <li class="grades" role="presentation">{{this}}</li>
-                {{/each}}
-           </ul>
-        </div>
+                    <span id="chosen-subject">Velg fag</span>
+                    <span class="glyphicon glyphicon-chevron-down dropdown-caret"></span>
+                </button>
+                <ul class="dropdown-menu full-width" role="menu">
+                    {{#each subjects}}
+                        <li class="subjects {{subjectDisabled availableVolunteers.length}}" role="presentation">{{name}}</li>
+                    {{/each}}
+                </ul>
+            </div>
 
-        <button id="start-video-session" class="default-button full-width get-help-box-item {{videoHelpDisabled}}">Start videohjelp</button>
+            <div class="btn-group full-width get-help-box-item">
+               <button type="button" class="btn btn-default dropdown-toggle my-dropdown full-width {{validationError 'gradeError'}}" data-toggle="dropdown">
+                  <span id="chosen-grade">Velg trinn</span>
+                  <span class="glyphicon glyphicon-chevron-down dropdown-caret"></span>
+               </button>
+               <ul class="dropdown-menu full-width" role="menu">
+                    {{#each grades}}
+                        <li class="grades" role="presentation">{{this}}</li>
+                    {{/each}}
+               </ul>
+            </div>
+
+            <button id="start-video-session" class="default-button full-width get-help-box-item">Start videohjelp</button>
+
+            <p class="schedule center get-help-box-item">
+                {{{openingHours}}}
+            </p>
+
+            <p class="schedule center get-help-box-item extra-margin">Eller <a href="/sporsmal" class="red-cross-link">sende inn spørsmål</a> og vi svarer <br>deg innen 2-3 dager.</p>
+        {{else}}
+            <h3 class="get-help-box-title"><b>Vår videochat er ikke åpen for øyeblikket</b></h3>
+            <p class="get-help-box-item">Du kan <a href="/sporsmal" class="red-cross-link">sende inn spørsmål</a> som vi besvarer innen 2-3 dager.</p>
+            <br>
+            <h3><b>Åpningstider for videochat</b></h3>
+            <p class="schedule get-help-box-item">
+                {{{openingHours}}}
+            </p>
+        {{/if}}
     {{else}}
         <div class="videohelp-spinner">
             {{> spinner}}
         </div>
     {{/if}}
-
-    <p class="schedule get-help-box-item">
-        {{{openingHours}}}
-    </p>
 </template>
 
 <template name="previousQuestions">
-
     <div class="category-title white-bg-adjustment">
-        <h2>
-            <span>Tidligere spørsmål</span>
-        </h2>
+        <h2><span>Tidligere spørsmål</span></h2>
     </div>
     <div class="container">
         <div class="row">

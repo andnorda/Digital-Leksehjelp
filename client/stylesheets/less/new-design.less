@@ -150,11 +150,14 @@ body {
 }
 
 .get-help-box-item {
-    margin-top: 20px;
+    margin-top: 15px;
+
+    &.extra-margin {
+        margin-top: 20px;
+    }
 }
 
 .get-help-box-title {
-    margin-top: 60px;
     font-size: 28px;
     font-weight: bold;
     color: black;
@@ -211,7 +214,6 @@ body {
 }
 
 .schedule {
-    text-align: center;
     line-height: 1.6em;
 
     a {
@@ -224,6 +226,10 @@ body {
             border-bottom: 1px solid @red-cross-color;
             text-decoration: none;
         }
+    }
+
+    &.center {
+        text-align: center;
     }
 }
 
