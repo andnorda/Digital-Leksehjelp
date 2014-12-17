@@ -132,7 +132,7 @@ Template.getVideoHelp.events({
 
 Template.previousQuestions.helpers({
     previousQuestions: function (skip, limit) {
-        return Questions.find({}, {skip: skip, limit: limit});
+        return Questions.find({}, {sort: {questionDate: -1}, skip: skip, limit: limit});
     },
     numberOfQuestions: function() {
         var numberOfQuestions = Session.get("numberOfQuestions");
