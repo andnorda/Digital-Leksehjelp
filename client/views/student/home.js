@@ -32,10 +32,6 @@ Template.getHelpBox.helpers({
     serviceStatusLoaded: function () {
         return Session.get("serviceStatusLoaded");
     },
-    videoHelpOpen: function () {
-        var serviceStatus = Config.findOne({ name: "serviceStatus" });
-        return serviceStatus && serviceStatus.open;
-    },
     videoHelpDisabled: function () {
         var serviceStatus = Config.findOne({ name: "serviceStatus" });
         if (serviceStatus && serviceStatus.open) {
@@ -126,6 +122,12 @@ Template.previousQuestions.helpers({
         if (numberOfQuestions) {
             return " (" + numberOfQuestions + ")";
         }
+    }
+});
+
+Template.previousQuestions.events({
+    'click button#ask-question' : function () {
+        Router.go('askQuestion');
     }
 });
 

@@ -39,7 +39,7 @@
 
 <template name="getHelpBox">
     {{#if serviceStatusLoaded}}
-        {{#if videoHelpOpen}}
+        {{#if serviceIsOpen}}
             <h3 class="get-help-box-title"><b>Få leksehjelp</b></h3>
 
             <div class="btn-group full-width get-help-box-item">
@@ -97,12 +97,19 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-sm-6">
+            {{#if serviceIsOpen}}
                 {{#each previousQuestions 0 2}}
                     <div class="question-item">
                         <p><a href="/sporsmal/{{this._id}}">{{trim question 200}}</a></p>
                         <p class="questions-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
                     </div>
                 {{/each}}
+            {{else}}
+                <p class="schedule">
+                    Du kan også sende inn spørsmål til oss her på nettsidene. Vi svarer deg i løpet av 2-3 dager.
+                </p>
+                <button id="ask-question" class="default-button full-width">Send inn spørsmål</button>
+            {{/if}}
             </div>
             <div class="col-md-4 hidden-sm hidden-xs">
                 {{#each previousQuestions 2 2}}
