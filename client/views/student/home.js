@@ -39,11 +39,16 @@ Template.getHelpBox.helpers({
         }
         return "disabled";
     },
-    subjectDisabled: function (availableVolunteers) {
-        if(availableVolunteers > 0) {
-            return '';
-        } else {
-            return 'disabled-li';
+    subjectDisabled: function (subjectId) {
+        var numberOfLoggedInUsersForSubject = Meteor.users.find({$and: [
+                { 'profile.subjects.subjectId': subjectId },
+                { 'status.online': true },
+                { 'profile.allowVideohelp': true },
+                { 'profile.firstName': { $not: "Orkis" }}
+        ]}).count();
+
+        if (numberOfLoggedInUsersForSubject === 0) {
+            return 'disabled-li'
         }
     }
 });

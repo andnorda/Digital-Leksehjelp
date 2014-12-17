@@ -26,6 +26,7 @@ Meteor.publish("loggedInUsers", function () {
     var user = Meteor.users.findOne(this.userId);
     var publicLoggedInCursor = Meteor.users.find({
             $and: [
+                { 'profile.allowVideohelp': { $exists: true } },
                 { 'services.resume.loginTokens': { $exists:true } },
                 { 'services.resume.loginTokens': { $not: { $size: 0 } }}
             ]
@@ -35,9 +36,9 @@ Meteor.publish("loggedInUsers", function () {
                 'profile.pictureUrl': 1,
                 'profile.firstName': 1,
                 'profile.subjects': 1,
-                //TODO(martin): The next field could be more restricted
                 'profile.role': 1,
-                'status.online': 1
+                'status.online': 1,
+                'profile.allowVideohelp': 1
             }
         });
 
