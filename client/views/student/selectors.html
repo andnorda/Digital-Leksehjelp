@@ -1,0 +1,28 @@
+<template name="subjectSelector">
+    <div class="btn-group full-width get-help-box-item">
+        <button type="button" class="btn btn-default dropdown-toggle my-dropdown full-width" data-toggle="dropdown">
+
+            <span id="chosen-subject">Velg fag</span>
+            <span class="glyphicon glyphicon-chevron-down dropdown-caret"></span>
+        </button>
+        <ul class="dropdown-menu full-width" role="menu">
+          {{#each subjects}}
+              <li class="dl-dropdown-item subjects" role="presentation">{{name}}</li>
+          {{/each}}
+        </ul>
+    </div>
+</template>
+
+<template name="gradeSelector">
+    <div class="btn-group full-width get-help-box-item">
+        <button type="button" class="btn btn-default dropdown-toggle my-dropdown full-width" data-toggle="dropdown">
+            <span id="chosen-grade">Velg trinn</span>
+            <span class="glyphicon glyphicon-chevron-down dropdown-caret"></span>
+        </button>
+        <ul class="dropdown-menu full-width" role="menu">
+          {{#each grades}}
+              <li class="dl-dropdown-item grades" role="presentation">{{this}}</li>
+          {{/each}}
+        </ul>
+    </div>
+</template>
