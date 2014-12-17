@@ -7,6 +7,7 @@ S3.config = {
 };
 
 Meteor.startup(function () {
+    updateLastUpdatedBy();
     addHumanReadableIdToSubjectsCollection();
 
     Accounts.emailTemplates.from = "Digital Leksehjelp <digitalleksehjelp@oslo.redcross.no>";
@@ -101,6 +102,22 @@ Accounts.validateNewUser(function (user) {
 
     return true;
 });
+
+var updateLastUpdatedBy = function () {
+    var questions = Questions.find({ $and: [
+        { lastUpdatedBy: { $exists: false }},
+        { answeredBy: { $exists: true }}
+        ]}).fetch();
+
+    questions.forEach(function (question) {
+        Questions.update(
+            { _id: question._id },
+            { $set: {
+                lastUpdatedBy: question.answeredBy,
+                lastUpdatedDate: question.answerDate
+            }});
+    });
+}
 
 var addHumanReadableIdToSubjectsCollection = function() {
     Subjects.find({humanReadableId: { $exists: false }}).forEach(function(subject) {

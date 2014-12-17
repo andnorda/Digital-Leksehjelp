@@ -46,8 +46,8 @@ Template.unverifiedQuestions.helpers({
         return Questions.find({
             $and: [
                 { answer: { $exists: true } },
-                { answeredBy: { $exists: true } },
-                { answeredBy: { $ne: Meteor.userId() } },
+                { lastUpdatedBy: { $exists: true } },
+                { lastUpdatedBy: { $ne: Meteor.userId() } },
                 { verifiedBy: { $exists: false } }
             ]
         });
@@ -58,8 +58,8 @@ Template.unverifiedQuestions.helpers({
         return Questions.find({
             $and: [
                 { answer: { $exists: true } },
-                { answeredBy: { $exists: true } },
-                { answeredBy: Meteor.userId() },
+                { lastUpdatedBy: { $exists: true } },
+                { lastUpdatedBy: Meteor.userId() },
                 { verifiedBy: { $exists: false } }
             ]
         });

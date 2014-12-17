@@ -84,7 +84,7 @@
         <th>Trinn</th>
         <th>Dato stilt</th>
         <th>Dato svart</th>
-        <th>Svart av</th>
+        <th>Sist redigert av</th>
         <th>Status</th>
         <th>Skal publiseres</th>
     </tr>
@@ -95,8 +95,8 @@
         <td>{{subjectName subjectId}}</td>
         <td>{{grade}}</td>
         <td>{{prettifyDate questionDate}}</td>
-        <td>{{prettifyDate answerDate}}</td>
-        <td>{{username answeredBy}}</td>
+        <td>{{prettifyDate lastUpdatedDate}}</td>
+        <td>{{username lastUpdatedBy}}</td>
         {{{status}}}
         <td>
             {{#if publishedBy}}
@@ -116,7 +116,7 @@
         <td colspan="7">
             <a href="/frivillig/sporsmal/svar/{{_id}}" target="_blank">Redigér</a>&nbsp;&nbsp;
             <a href="/sporsmal/{{_id}}" target="_blank">Forhåndsvis</a>
-            {{#if isNotMe answeredBy}}
+            {{#if isNotMe lastUpdatedBy}}
                 <button class="btn btn-xs btn-success verify-answer pull-right">Godkjenn svar</button>
             {{/if}}
         </td>
