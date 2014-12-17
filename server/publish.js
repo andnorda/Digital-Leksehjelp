@@ -1,13 +1,25 @@
 Meteor.publish("all-users", function () {
     var user = Meteor.users.findOne(this.userId);
-    if(!user) { return null; }
-    var fields;
-
-    if (user.profile.role  === ROLES.ADMIN) {
-        return Meteor.users.find({}, {fields: {username: 1, emails: 1, profile: 1}});
+    if (user) {
+        if (user.profile.role  === ROLES.ADMIN) {
+            return Meteor.users.find({}, {fields: {username: 1, emails: 1, profile: 1}});
+        } else {
+            return Meteor.users.find({},
+                {
+                    fields: {
+                        username: true,
+                        'profile.pictureUrl': 1,
+                        'profile.firstName': 1,
+                        'profile.subjects': 1,
+                        //TODO(martin): The next field could be more restricted
+                        'profile.role': 1,
+                        'status.online': 1
+                    }
+                });
+        }
     }
 
-    return null;
+    this.ready()
 });
 
 Meteor.publish("loggedInUsers", function () {

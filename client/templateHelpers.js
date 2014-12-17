@@ -70,7 +70,6 @@ Template.registerHelper('subjectName', function(subjectId) {
 
 Template.registerHelper('username', function(userId) {
     if (Meteor.userId()) {
-        Meteor.users.findOne(userId)
         var user = Meteor.users.findOne(userId);
         return (user) ? user.username : "";
     }
