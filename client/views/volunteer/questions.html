@@ -47,7 +47,7 @@
         <td>{{subjectName subjectId}}</td>
         <td>{{grade}}</td>
         <td>{{prettifyDate questionDate}}</td>
-        <td>{{status}}</td>
+        {{{status}}}
     </tr>
     <tr class="table-row-content">
         <td colspan="4">
@@ -97,7 +97,7 @@
         <td>{{prettifyDate questionDate}}</td>
         <td>{{prettifyDate answerDate}}</td>
         <td>{{username answeredBy}}</td>
-        <td>{{status}}</td>
+        {{{status}}}
         <td>
             {{#if publishedBy}}
                 Ja

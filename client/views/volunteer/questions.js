@@ -6,14 +6,6 @@ var subjectIds = function(user) {
     });
 }
 
-var status = function (editing) {
-    if (!editing || editing.length === 0) {
-        return "Ubesvart";
-    } else {
-        return "Redigeres";
-    }
-}
-
 Template.unansweredQuestions.helpers({
     myUnansweredQuestions: function() {
         var mySubjectIds = subjectIds(Meteor.user());
@@ -39,7 +31,11 @@ Template.unansweredQuestions.helpers({
 
 Template.unansweredQuestionRow.helpers({
     status: function() {
-        return status(this.editing);
+        if (!this.editing || this.editing.length === 0) {
+            return new Spacebars.SafeString("<td>Ubesvart</td>");
+        } else {
+            return new Spacebars.SafeString("<td class='warning'>Redigeres</td>");
+        }
     }
 });
 
@@ -86,6 +82,10 @@ Template.answeredQuestionRow.events({
 
 Template.answeredQuestionRow.helpers({
     status: function() {
-        return status(this.editing);
+        if (!this.editing || this.editing.length === 0) {
+            return new Spacebars.SafeString("<td>Venter på godkjenning</td>");
+        } else {
+            return new Spacebars.SafeString("<td class='warning'>Redigeres</td>");
+        }
     }
 });
