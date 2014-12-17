@@ -110,20 +110,6 @@ hr {
     background-color: white !important;
 }
 
-.table-row-content a {
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-}
-
-.preview-edit-buttons,
-.preview-edit-buttons:hover,
-.preview-edit-buttons:active,
-.preview-edit-buttons:focus,
-.preview-edit-buttons:visited {
-    color: white;
-}
-
 .attachment-link {
     word-wrap: break-word;
 }

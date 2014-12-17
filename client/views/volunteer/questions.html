@@ -114,8 +114,8 @@
     </tr>
     <tr class="table-row-content">
         <td colspan="7">
-            <button class="btn btn-xs btn-primary"><a href="/frivillig/sporsmal/svar/{{_id}}" target="_blank" class="preview-edit-buttons">Redigér</a></button>
-            <button class="btn btn-xs btn-warning"><a href="/sporsmal/{{_id}}" target="_blank" class="preview-edit-buttons">Forhåndsvis</a></button>
+            <a href="/frivillig/sporsmal/svar/{{_id}}" target="_blank">Redigér</a>&nbsp;&nbsp;
+            <a href="/sporsmal/{{_id}}" target="_blank">Forhåndsvis</a>
             {{#if isNotMe answeredBy}}
                 <button class="btn btn-xs btn-success verify-answer pull-right">Godkjenn svar</button>
             {{/if}}
