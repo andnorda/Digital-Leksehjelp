@@ -545,3 +545,25 @@ a.red-cross-link {
         background-color: @red-cross-color;
     }
 }
+
+.pagination {
+    & > .active > a {
+        background-color: @red-cross-color;
+        border-color: @red-cross-color;
+
+        &:hover {
+            background-color: darken(@red-cross-color, 5%);
+            border-color: darken(@red-cross-color, 5%);
+            cursor: pointer;
+        }
+    }
+
+    & > li > a {
+        color: @red-cross-color;
+
+        &:hover {
+            color: darken(@red-cross-color, 5%);
+            background-color: darken(white, 5%);
+        }
+    }
+}

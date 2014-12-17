@@ -3,7 +3,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-md-offset-3">
+            <div class="col-md-9 col-md-offset-3">
                 <div class="category-title grid-adjustment">
                     <h2>
                         <span>Søk i spørsmål og svar</span>
@@ -12,23 +12,31 @@
             </div>
         </div>
 
-        <a href="/sporsmal">
-            <button class="default-button">Still et nytt spørsmål</button>
-        </a>
+        <div class="row">
+            <div class="col-md-9 col-md-offset-3">
+                <div class="row">
+                    <div class="col-md-5">
+                        <a href="/sporsmal">
+                            <button class="default-button full-width">Still et nytt spørsmål</button>
+                        </a>
+                    </div>
+                </div>
 
-        <hr>
-            {{> searchForm}}
-        <hr>
+                <hr>
+                    {{> searchForm}}
+                <hr>
 
-        <label>{{numberOfResults}}</label>
+                <label>{{numberOfResults}}</label>
 
-        <div class="list-group">
-            {{#each searchResults}}
-                {{> searchQuestionItem}}
-            {{/each}}
+                <div class="list-group">
+                    {{#each searchResults}}
+                        {{> searchQuestionItem}}
+                    {{/each}}
+                </div>
+
+                {{> pagination}}
+            </div>
         </div>
-
-        {{> pagination}}
     </div>
 </template>
 
@@ -47,7 +55,7 @@
 <template name="searchForm">
     <form role="form">
         <div class="row">
-            <div class="form-group col-md-4 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 <label>Søk</label>
                 <div class="input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
@@ -79,7 +87,7 @@
                     <option value="date" selected="{{eq queryParams.sort 'date'}}">Dato</option>
                 </select>
             </div>
-            <div class="form-group col-md-2 col-sm-3 col-xs-12">
+            <div class="col-md-2 col-sm-3 col-xs-12">
                 <label>&nbsp;</label>
                 <input type="submit" class="default-button auto-height full-width" role="button" value="Søk">
             </div>
