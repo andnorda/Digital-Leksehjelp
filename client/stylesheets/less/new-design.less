@@ -478,9 +478,10 @@ a.red-cross-link {
     position: relative;
     overflow: hidden;
     color: @red-cross-color;
-    font-weight: bold;
+    font-weight: bolder;
     font-size: 16px;
     float: left;
+    height: 50px;
 
     &:hover {
         cursor: pointer;
@@ -504,9 +505,34 @@ a.red-cross-link {
 }
 
 .dl-attachment-label {
+    position: relative;
     width: 100%;
+    height: 50px;
     font-size: 14px;
     line-height: 50px;
-    padding-left: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
     background-color: @dl-file-color;
+
+    .remove-attachment {
+        position: absolute;
+        top: 18px;
+        right: 15px;
+        color: @red-cross-color;
+        line-height: 14px;
+        border-bottom: 1px dashed @red-cross-color;
+
+        &:hover {
+            cursor: pointer;
+            border-bottom: 1px solid @red-cross-color;
+        }
+    }
+}
+
+.progress {
+    border-radius: 0;
+
+    .progress-bar {
+        background-color: @red-cross-color;
+    }
 }

@@ -176,18 +176,6 @@ hr {
     word-wrap: break-word;
 }
 
-.input-files-label {
-    border: none !important;
-    box-shadow: none !important;
-    width: auto !important;
-}
-
-.input-files-label span {
-    font-size: 0.9em;
-    margin-left: 7px;
-    cursor: pointer;
-}
-
 .hidden {
     display: none;
 }

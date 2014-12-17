@@ -21,6 +21,11 @@ Template.questionForm.helpers({
     },
     attachmentLabel: function () {
         return Session.get("attachmentLabel");
+    },
+    attachmentSelected: function () {
+        if (Session.get("attachmentLabel")) {
+            return "hidden";
+        }
     }
 });
 
@@ -77,7 +82,7 @@ Template.questionForm.events({
         var label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
         Session.set("attachmentLabel", label);
     },
-    'click .input-files-label span' : function () {
+    'click .remove-attachment' : function () {
         var fileInput = $("input[name=attachment]");
         fileInput.replaceWith(fileInput = fileInput.clone(true));
         Session.set('attachmentLabel', undefined);
