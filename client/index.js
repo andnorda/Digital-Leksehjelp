@@ -13,6 +13,15 @@ Template.loggedInHeader.helpers({
     isVideohelper: function () {
         var user = Meteor.user();
         return user.profile.role === ROLES.ADMIN || user.profile.allowVideohelp;
+    },
+    numberOfStudentsWaitingInQueue: function () {
+        var number = StudentSessions.find({
+            state: STUDENT_SESSION_STATE.WAITING
+        }).count();
+
+        if (number > 0) {
+            return " (" + number + " i kø)";
+        }
     }
 });
 
