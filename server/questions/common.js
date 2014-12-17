@@ -12,6 +12,10 @@ this.questionPublicFields = {
     title: true
 }
 
+this.questionPrivateFields = {
+    studentEmail: false
+}
+
 this.QuestionHelpers = {
     parseSearchParams: function (params) {
         var selector = { $and: [] };
@@ -56,23 +60,33 @@ this.QuestionHelpers = {
 
         return {selector: selector, options: options};
     },
-    searchCriteraBuilder: function (params) {
+    searchCriteraBuilder: function (params, userId) {
         var searchCritera = QuestionHelpers.parseSearchParams(params);
 
         searchCritera.selector.$and.push({ answer: { $exists: true }});
 
-        if (!this.userId) {
+        if (userId) {
+            if (params.hasOwnProperty('related') && params.related) {
+                searchCritera.selector.$and.push(
+                    { verifiedBy: { $exists: true }},
+                    { publishedBy: { $exists: true }}
+                );
+            }
+
+            _.extend(searchCritera.options['fields'], questionPrivateFields);
+        } else {
             searchCritera.selector.$and.push(
                 { verifiedBy: { $exists: true }},
                 { publishedBy: { $exists: true }}
-            )
-            searchCritera.options['fields'] = questionPublicFields;
+            );
+
+            _.extend(searchCritera.options['fields'], questionPublicFields);
         }
 
         return searchCritera;
     },
-    search: function (params) {
-        var searchCritera = QuestionHelpers.searchCriteraBuilder(params);
+    search: function (params, userId) {
+        var searchCritera = QuestionHelpers.searchCriteraBuilder(params, userId);
 
         return Questions.find(searchCritera.selector, searchCritera.options);
     }
