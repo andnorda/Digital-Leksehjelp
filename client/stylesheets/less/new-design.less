@@ -312,7 +312,7 @@ a.red-cross-link {
     line-height: 26px;
     color: black;
 
-    .questions-item-footer {
+    .question-item-footer {
         color: @question-item-footer-color;
         font-weight: 100;
         font-size: 14px;
@@ -335,6 +335,15 @@ a.red-cross-link {
     }
 }
 
+.related-question-item {
+    margin-bottom: 20px;
+    line-height: 20px;
+
+    &:after {
+        display: none;
+    }
+}
+
 .show-question {
     margin-top: -30px;
     margin-left: -20px;
@@ -344,7 +353,7 @@ a.red-cross-link {
         border-color: @show-question-color transparent;
     }
 
-    .questions-item-footer {
+    .question-item-footer {
         color: @show-question-footer-color;
     }
 }

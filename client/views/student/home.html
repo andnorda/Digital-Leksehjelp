@@ -101,7 +101,7 @@
                 {{#each previousQuestions 0 2}}
                     <div class="question-item">
                         <p><a href="/sporsmal/{{this._id}}">{{trim question 200}}</a></p>
-                        <p class="questions-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
+                        <p class="question-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
                     </div>
                 {{/each}}
             {{else}}
@@ -115,7 +115,7 @@
                 {{#each previousQuestions 2 2}}
                     <div class="question-item">
                         <p><a href="/sporsmal/{{this._id}}">{{trim question 200}}</a></p>
-                        <p class="questions-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
+                        <p class="question-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
                     </div>
                 {{/each}}
             </div>
@@ -123,7 +123,7 @@
                 {{#each previousQuestions 4 2}}
                     <div class="question-item">
                         <p><a href="/sporsmal/{{this._id}}">{{trim question 200}}</a></p>
-                        <p class="questions-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
+                        <p class="question-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
                     </div>
                 {{/each}}
                 <a href="/sok?grade=_all&amp;subject=_all&amp;sort=date&amp;offset=0&amp;limit=10" class="red-cross-link">Les alle innsendte spørsmål{{numberOfQuestions}}</a>

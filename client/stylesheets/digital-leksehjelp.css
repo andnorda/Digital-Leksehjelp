@@ -62,10 +62,6 @@ tr:nth-of-type(odd) {
     text-align: center;
 }
 
-.search-list-group-item {
-    margin-bottom: 6px;
-}
-
 th {
     padding: 4px;
 }
