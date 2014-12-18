@@ -53,14 +53,17 @@
         </div>
 
         <h3 class="dl-question-h3">Hva lurer du på?</h3>
-        <textarea class="form-control dl-inputfield" name="question" placeholder="Still spørsmålet ditt her..." rows="8"></textarea>
+        <textarea class="form-control dl-inputfield {{validationError 'questionFieldError'}}" name="question" placeholder="Still spørsmålet ditt her..." rows="8"></textarea>
 
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
                     <h3>Last opp vedlegg <small>(maks 5 MB)</small></h3>
                     {{#if attachmentLabel}}
-                        <div class="dl-attachment-label">
+                        <div id="attachment-error" class="alert alert-danger hidden-error hidden" role="alert">
+                            Vedlegget du har valgt er for stort (maks 5 <a href="http://no.wikipedia.org/wiki/Megabyte">MB</a>).
+                        </div>
+                        <div class="dl-attachment-label {{validationError 'attachmentError'}}">
                             <p>
                                 {{attachmentLabel}}
                             </p>
@@ -89,7 +92,7 @@
             <div class="col-sm-5">
                 <div class="form-group">
                     <div class="input-group full-width">
-                        <input type="text" class="dl-inputfield dl-emailfield form-control" name="email" placeholder="Din e-postadresse">
+                        <input type="text" class="dl-inputfield dl-emailfield form-control {{validationError 'emailError'}}" name="email" placeholder="Din e-postadresse">
                     </div>
                 </div>
             </div>

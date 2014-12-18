@@ -1,3 +1,6 @@
+validationErrorDep = new Deps.Dependency;
+validationError = [];
+
 Template.registerHelper('isGreaterThanZero', function(value) {
   if(value > 0) {
     return true;
@@ -84,6 +87,16 @@ Template.registerHelper('fromNow', function(date) {
 Template.registerHelper('prettifyDate', function(date) {
     if (date) {
         return moment(date).format("D.M.YYYY HH:mm");
+    }
+});
+
+Template.registerHelper('validationError', function(errorType){
+    validationErrorDep.depend();
+    if (validationError && validationError.indexOf(errorType) > -1) {
+        if(errorType === 'attachmentError'){
+            return "dl-attachment-error";
+        }
+        return "validation-error";
     }
 });
 

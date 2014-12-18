@@ -1,6 +1,3 @@
-var validationErrorDep = new Deps.Dependency;
-var validationError;
-
 var getHighestQueueNr = function () {
     if(StudentQueue.find({}).count() === 0) {
         return 0;
@@ -15,12 +12,6 @@ Template.getHelp.events({
 });
 
 Template.getHelpBox.helpers({
-    validationError: function (errorType) {
-        validationErrorDep.depend();
-        if (validationError && validationError.indexOf(errorType) > -1) {
-            return "validation-error";
-        }
-    },
     openingHours: function () {
         var openingHoursArray = Config.find({ name: "openingHours" }).fetch();
 

@@ -394,9 +394,22 @@ a.red-cross-link {
     }
 }
 
-.validation-error {
-    border-color: @red-cross-color;
+.hidden-error {
+    border-radius: 0px;
+    line-height: 5px;
+    font-size: 12px;
+    margin-bottom: 10px;
+    background-color: lighten(@red-cross-color, 50);
     color: @red-cross-color;
+    border-color: lighten(@red-cross-color, 45);
+}
+
+.validation-error {
+    border-color: @red-cross-color !important;
+}
+
+.dl-attachment-error {
+    border: solid 2px @red-cross-color;
 }
 
 .row-centered {
@@ -466,7 +479,8 @@ a.red-cross-link {
 
 .dl-inputfield {
     border-radius: 0px;
-    border: solid 2px @dl-border-color;
+    border: solid 2px;
+    border-color: @dl-border-color;
 }
 
 .dl-emailfield {
@@ -573,4 +587,3 @@ td.warning {
     color: @warning-color;
     font-weight: bolder;
 }
-
