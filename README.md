@@ -59,8 +59,8 @@ Environment variables
 
 These need to be set:
 
-In production `heroku config:set VARIABLE=BLABLA --app digital-leksehjelp` *Note: All of the production variables should be set, so you can run `heroku config --app digital-leksehjelp` to see them.* 
-For S3_KEY and S3_SECRET, send email to ops@iterate.no. 
+In production `heroku config:set VARIABLE=BLABLA --app digital-leksehjelp` *Note: All of the production variables should be set, so you can run `heroku config --app digital-leksehjelp` to see them.*
+For S3_KEY and S3_SECRET, send email to ops@iterate.no.
 
 1. MAIL_URL *Note: In development you can* **skip** *the MAIL_URL, the emails sent will then be output to standard out (your console).*
 
@@ -120,10 +120,13 @@ To deploy a new instance of Digital Leksehjelp on Heroku.
 
    `S3_SECRET=<SECRET>;`
 
-3. `heroku apps:create $APPNAME --remote $HEROKU_REMOTE --region eu --stack cedar --buildpack https://github.com/AdmitHub/meteor-buildpack-horse.git; heroku addons:add papertrail:choklad --app $APPNAME; heroku addons:add mongolab:sandbox --app $APPNAME; heroku config:set MONGO_URL=$(heroku config:get MONGOLAB_URI --app $APPNAME) --app $APPNAME; heroku config:set ROOT_URL=http://$APPNAME.herokuapp.com --app $APPNAME; heroku config:set S3_KEY=$S3_KEY --app $APPNAME; heroku config:set S3_SECRET=$S3_SECRET --app $APPNAME;`
+3. `heroku apps:create $APPNAME --remote $HEROKU_REMOTE --region eu --stack cedar --buildpack https://github.com/henrikgs/meteor-buildpack-horse.git; heroku addons:add papertrail:choklad --app $APPNAME; heroku addons:add mongolab:sandbox --app $APPNAME; heroku config:set MONGO_URL=$(heroku config:get MONGOLAB_URI --app $APPNAME) --app $APPNAME; heroku config:set ROOT_URL=http://$APPNAME.herokuapp.com --app $APPNAME; heroku config:set S3_KEY=$S3_KEY --app $APPNAME; heroku config:set S3_SECRET=$S3_SECRET --app $APPNAME;`
 
 4. `git push $HEROKU_REMOTE <FROM_BRANCH>:master;` and wait for deployed app on `$APPNAME.herokuapp.com`
 
+**Buildpack:**
+
+We use the [meteor-buildpack-horse](https://github.com/henrikgs/meteor-buildpack-horse.git) buildpack to build the Meteor application on Heroku. *Note: It is a fork of the [original](https://github.com/AdminHub/meteor-buildpack-horse.git) buildpack due to a missing certificate in the newest NodeJS 0.10.\* version ([GitHub issue](https://github.com/joyent/node/issues/8894)), restricting the version to 0.10.33.*
 
 Browser compatibility
 ---------------------
