@@ -126,7 +126,7 @@ To deploy a new instance of Digital Leksehjelp on Heroku.
 
 **Buildpack:**
 
-We use the [meteor-buildpack-horse](https://github.com/henrikgs/meteor-buildpack-horse.git) buildpack to build the Meteor application on Heroku. *Note: It is a fork of the [original](https://github.com/AdminHub/meteor-buildpack-horse.git) buildpack due to a missing certificate in the newest NodeJS 0.10.\* version ([GitHub issue](https://github.com/joyent/node/issues/8894)), restricting the version to 0.10.33.*
+We use the [meteor-buildpack-horse](https://github.com/henrikgs/meteor-buildpack-horse.git) buildpack to build the Meteor application on Heroku. *Note: It is a fork of the [original](https://github.com/AdminHub/meteor-buildpack-horse.git) buildpack due to a missing certificate in NodeJS version 0.10.34 ([GitHub issue](https://github.com/joyent/node/issues/8894)), restricting the version to 0.10.33.*
 
 Browser compatibility
 ---------------------
