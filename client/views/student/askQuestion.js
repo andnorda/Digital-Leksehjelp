@@ -16,6 +16,11 @@ var askQuestion = function (questionFields) {
         });
 };
 
+var isEmail = function(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+}
+
 Template.questionForm.helpers({
     percentUploaded: function () {
         var file = S3.collection.findOne({ uploading: true });
@@ -46,6 +51,29 @@ Template.questionForm.events({
             grade: grade,
             question: template.find("textarea[name=question]").value,
             studentEmail: template.find("input[name=email]").value
+        };
+
+        validationError = [];
+        validationErrorDep.changed();
+        if (questionFields.subjectId === "default") {
+            validationError.push("subjectError");
+            validationErrorDep.changed();
+        }
+        if (questionFields.grade === "default") {
+            validationError.push("gradeError");
+            validationErrorDep.changed();
+        }
+        if(questionFields.question.trim() === ''){
+            validationError.push("questionFieldError");
+            validationErrorDep.changed();
+        }
+        if(!isEmail(questionFields.studentEmail)) {
+            validationError.push("emailError");
+            validationErrorDep.changed();
+        }
+        if(validationError.length > 0) {
+            $("button[type=submit]").removeClass("disabled");
+            return;
         }
 
         var files = $("input[name=attachment]")[0].files;

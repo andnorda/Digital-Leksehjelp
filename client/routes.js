@@ -4,7 +4,7 @@ var checkIfSignedIn = function (pause) {
     } else {
         this.next();
     }
-}
+};
 
 var setDocumentTitle = function(title) {
     if (title) {
@@ -12,7 +12,7 @@ var setDocumentTitle = function(title) {
     } else {
         document.title = "Røde Kors - Digital Leksehjelp";
     }
-}
+};
 
 BaseController = RouteController.extend({
     layoutTemplate: 'layout'
@@ -50,6 +50,10 @@ Router.configure({
 Router.map(function () {
     this.route('home', {
         path: '/',
+        onBeforeAction: function(){
+            validationError = [];
+            this.next();
+        },
         waitOn: function() {
             Meteor.call('questionSearchCount', {}, function(error, result) {
                 Session.set('numberOfQuestions', result);
@@ -132,7 +136,11 @@ Router.map(function () {
 
     this.route('askQuestion', {
         controller: DefaultController,
-        path: '/sporsmal'
+        path: '/sporsmal',
+        onBeforeAction: function(){
+            validationError = [];
+            this.next();
+        }
     });
 
     this.route('showAnswer', {
