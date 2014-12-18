@@ -60,7 +60,10 @@
                 <div class="form-group">
                     <h3>Last opp vedlegg <small>(maks 5 MB)</small></h3>
                     {{#if attachmentLabel}}
-                        <div class="dl-attachment-label">
+                        <div id="attachment-error" class="alert alert-danger hidden-error hidden" role="alert">
+                            Vedlegget du har valgt er for stort (maks 5 <a href="http://no.wikipedia.org/wiki/Megabyte">MB</a>).
+                        </div>
+                        <div class="dl-attachment-label {{validationError 'attachmentError'}}">
                             <p>
                                 {{attachmentLabel}}
                             </p>

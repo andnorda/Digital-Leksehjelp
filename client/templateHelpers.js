@@ -93,6 +93,9 @@ Template.registerHelper('prettifyDate', function(date) {
 Template.registerHelper('validationError', function(errorType){
     validationErrorDep.depend();
     if (validationError && validationError.indexOf(errorType) > -1) {
+        if(errorType === 'attachmentError'){
+            return "dl-attachment-error";
+        }
         return "validation-error";
     }
 });

@@ -1,6 +1,9 @@
 var resetForm = function () {
     $("form[name=questionForm]")[0].reset();
     Session.set('attachmentLabel', undefined);
+    $('#chosen-grade').text("Velg trinn");
+    $('#chosen-subject').attr('data-id', 'default');
+    $('#chosen-subject').text('Velg fag');
 }
 
 var askQuestion = function (questionFields) {
@@ -16,10 +19,9 @@ var askQuestion = function (questionFields) {
         });
 };
 
-var isEmail = function(email) {
-    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    return regex.test(email);
-}
+Template.questionForm.rendered = function () {
+    Session.set("attachmentLabel", undefined);
+};
 
 Template.questionForm.helpers({
     percentUploaded: function () {
@@ -67,7 +69,7 @@ Template.questionForm.events({
             validationError.push("questionFieldError");
             validationErrorDep.changed();
         }
-        if(!isEmail(questionFields.studentEmail)) {
+        if(!SimpleSchema.RegEx.Email.test(questionFields.studentEmail)) {
             validationError.push("emailError");
             validationErrorDep.changed();
         }
@@ -80,12 +82,29 @@ Template.questionForm.events({
 
         if (files.length === 1) {
             if (files[0].size > CONSTANTS.S3_MAX_UPLOAD_FILE_SIZE) {
-                FlashMessages.sendError("For stort vedlegg (maks 5 MB).", { autoHide: true, hideDelay: 6000 });
+                validationError.push("attachmentError");
+                validationErrorDep.changed();
+                $("#attachment-error").removeClass('hidden');
+                setTimeout(function() {
+                    $("#attachment-error").addClass('hidden');
+                }, 5000);
                 $("button[type=submit]").removeClass("disabled");
                 return;
             }
 
             S3.upload(files, "/vedlegg", function(error, result) {
+                if (error) {
+                    $("#attachment-error").removeClass('hidden');
+                    $("#attachment-error").text('Det skjedde noe galt med opplastningen. Prøv igjen');
+                    setTimeout(function() {
+                        $("#attachment-error").addClass('hidden');
+                        $("#attachment-error").html("Vedlegget du har valgt er for stort (maks 5 <a href=\"http://no.wikipedia.org/wiki/Megabyte\">MB</a>)");
+
+                    }, 5000);
+                    validationError.push("attachmentError");
+                    validationErrorDep.changed();
+                    return;
+                }
                 if (!result.uploading) {
                     questionFields['attachmentUrl'] = result.url;
                     askQuestion(questionFields);
