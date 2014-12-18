@@ -1,11 +1,15 @@
+var resetForm = function () {
+    $("form[name=questionForm]")[0].reset();
+    Session.set('attachmentLabel', undefined);
+}
+
 var askQuestion = function (questionFields) {
     Meteor.call('askQuestion', questionFields,
         function (error) {
             if (error) {
                 FlashMessages.sendError("Noe gikk galt ved innsending av spørsmål. Vennligst prøv igjen.", { autoHide: true, hideDelay: 6000 });
             } else {
-                $("form[name=questionForm]")[0].reset();
-                Session.set('attachmentLabel', undefined);
+                resetForm();
                 FlashMessages.sendSuccess("Spørsmål sendt inn. Du vil få beskjed på e-post når spørsmålet er besvart.", { autoHide: true, hideDelay: 6000 });
             }
             $("button[type=submit]").removeClass("disabled");
