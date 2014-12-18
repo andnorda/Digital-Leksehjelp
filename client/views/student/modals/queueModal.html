@@ -2,15 +2,10 @@
     <div class="modal fade" id="queueModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content dl-modal-content">
-                <div class="modal-header dl-modal-header">
-                    <button type="button" class="dl-modal-close" data-dismiss="modal" aria-hidden="true">&times; </button>
-                    <h3 class="modal-title">Du venter i kø som nr:</h3>
-                </div>
-                <div class="modal-body" style="text-align: center;">
-                    {{> queueModalBody}}
-                </div>
+
+                {{> queueModalBody}}
                 <div class="modal-footer dl-modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Avbryt</button>
+                    <a class="red-cross-link" data-dismiss="modal">Avbryt</a>
                 </div>
             </div>
         </div>
@@ -19,37 +14,56 @@
 
 <template name="queueModalBody">
     {{#with studentSession }}
-        <p>
-        <div class="row">
-            <div class="col-md-12 full-width">
-                {{#if stateWaiting }}
-                    <img style="position:relative;" src="ticket.png">
-                    <span class="ticket-number">{{studentsInFront}}</span>
-                {{/if}}
-                {{#if stateReady }}
-                    <button type="button" class="btn btn-success btn-lg" id="getHelp">
-                        Den frivillige er klar - Få leksehjelp nå
-                    </button>
-                {{/if}}
+        <div class="modal-header dl-modal-header">
+            <button type="button" class="dl-modal-close" data-dismiss="modal" aria-hidden="true">&times; </button>
+            {{#if stateWaiting }}
+                <h2 class="modal-title">Du venter i kø</h2>
+            {{/if}}
+            {{#if stateReady }}
+                <h2 class="modal-title">Vi er klare</h2>
+            {{/if}}
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12 full-width">
+                    {{#if stateWaiting }}
+                        <p class="text-left">
+                            Når en frivillig er ledig kan du starte videochatten fra dette vinduet.
+                            Den åpnes da i et nytt vindu.
+                        </p>
+                        <h4 class="dl-modal-number-line">du er <span class="modal-number">nr</span> <span class="student-number">{{studentsInFront}}</span> i køen...</h4>
+                    {{/if}}
+                    {{#if stateReady }}
+                        <div class="text-center">
+                            <button type="button" class="btn btn-success btn-lg dl-button-accept-help " id="getHelp">
+                                Klikk for å starte videochatten
+                            </button>
+                        </div>
+                    {{/if}}
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 text-left">
-                <p>
-                    Når en frivillig er ledig så kan du starte videochatten
-                    fra dette vinduet. Chatten åpnes da i et nytt vindu.
-                </p>
-                <img class="appear-in-gif" src="appear.in.gif">
-                <p>
-                    Slik slår du av kameraet. Chat og lyd vil fortsatt fungere,
-                    også etter at du har deaktivert kameraet.
-                </p>
+        <div class="dl-modal-body-wrapper">
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-12 text-left ">
+                        <div class="gif-container">
+                            <img src="appear.in.gif">
+                        </div>
+                        <p>
+                            Slik slår du av kameraet. Chat og lyd vil fortsatt fungere,
+                            også etter at du har deaktivert kameraet.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
-        </p>
     {{else}}
-        <p>
-            Sesjonen er avsluttet. Håper du fikk den hjelpen du trengte!
-        </p>
+        <div class="modal-body">
+            <h4>
+                Sesjonen er avsluttet. Håper du fikk den hjelpen du trengte!
+            </h4>
+        </div>
     {{/with}}
 </template>

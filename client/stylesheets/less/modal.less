@@ -1,0 +1,76 @@
+@import "colors.import.less";
+
+.dl-modal-content {
+  border-radius: 0px;
+  border: solid 8px rgba(0, 0, 0, 0.4);
+  box-shadow: none;
+}
+
+.dl-modal-header {
+  border-bottom: 0px;
+}
+
+.dl-modal-footer {
+  border-top: 0px;
+  text-align: center;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  font-weight: bold;
+}
+
+.dl-modal-close {
+  -webkit-appearance: none;
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  margin-top: -3px;
+  float: right;
+  font-size: 30px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.modal-number {
+  color: @red-cross-color;
+}
+
+.student-number {
+  color: @red-cross-color;
+  font-size: 35px;
+  top: -5px;
+}
+
+.dl-button-accept-help {
+  border-radius: 0px;
+  background-color: rgb(130, 177, 71);
+  border-color: rgb(130, 177, 71);
+}
+
+.dl-modal-body-wrapper {
+  background-color: rgb(249, 247, 244);
+  padding-top: 5px;
+  margin-top: 15px;
+}
+
+.dl-modal-number-line {
+  text-align: center;
+}
+
+.gif-container {
+  text-align: center;
+  padding-bottom: 25px;
+
+  img {
+    display: inline-block;
+  }
+}
+
+@media (max-width: 460px) {
+  .gif-container {
+    img {
+      width: 100%;
+    }
+  }
+}
+

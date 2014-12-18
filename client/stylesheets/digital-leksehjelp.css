@@ -118,31 +118,6 @@ hr {
     display: none;
 }
 
-.ticket-number {
-    position: absolute;
-    left:47%;
-    top:52%;
-    -ms-transform: rotate(-14deg); /* IE 9 */
-    -webkit-transform: rotate(-14deg); /* Chrome, Safari, Opera */
-    transform: rotate(-14deg);
-}
-
-.helper-modal {
-    width: 450px;
-}
-
-@media (max-width: 460px) {
-    .appear-in-gif {
-        width: 100%;
-    }
-    .helper-modal {
-        width: auto;
-    }
-    .ticket-number {
-        left: 46%;
-    }
-}
-
 .queue-header {
     margin-top: 0;
     margin-bottom: 0;
