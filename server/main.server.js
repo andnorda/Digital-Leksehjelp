@@ -33,7 +33,9 @@ Meteor.startup(function () {
     var query = Meteor.users.find({
             $and: [
                 { 'services.resume.loginTokens': { $exists:true } },
-                { 'services.resume.loginTokens': { $not: { $size: 0 } }}
+                { 'services.resume.loginTokens': { $not: { $size: 0 } }},
+                { 'profile.allowVideohelp': true },
+                { 'profile.subjects.0': { $exists: true }}
             ]});
     var initializing = true;
     var handle = query.observeChanges({
