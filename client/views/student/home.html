@@ -21,14 +21,14 @@
                 <h1 class="title"><a href="/">Digitalleksehjelp.no</a></h1>
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-sm-6">
                         <p class="info-text">
                             Røde Kors leksehjelp skal være en møteplass der frivillige leksehjelpere legger til rette for mestring, motivasjon, og et godt læringsmiljø. På leksehjelpen møter elevene voksne med fagkunnskap og erfaring.
                         </p>
                         <a id="more-info" href="#" class="red-cross-link">Les mer om tjenesten</a>
                     </div>
 
-                    <div class="col-md-4 col-md-offset-4">
+                    <div class="col-md-4 col-md-offset-4 col-sm-6">
                         {{> getHelpBox}}
                     </div>
                 </div>
@@ -75,10 +75,9 @@
 
             <p class="schedule center get-help-box-item extra-margin">Du kan også <a href="/sporsmal" class="red-cross-link">sende inn spørsmål</a> så <br>svarer vi deg innen 2-3 dager.</p>
         {{else}}
-            <h3 class="get-help-box-title"><b>Vår videochat er ikke åpen for øyeblikket</b></h3>
+            <h3 class="get-help-box-title">Vår videochat er ikke åpen for øyeblikket</h3>
             <p class="get-help-box-item">Du kan <a href="/sporsmal" class="red-cross-link">sende inn spørsmål</a> som vi <br>besvarer innen 2-3 dager.</p>
-            <br>
-            <h3><b>Åpningstider for videochat</b></h3>
+            <h3 class="get-help-box-title smaller">Åpningstider for videochat</h3>
             <p class="schedule get-help-box-item">
                 {{{openingHours}}}
             </p>
@@ -97,19 +96,12 @@
     <div class="container previous-questions-container">
         <div class="row">
             <div class="col-md-4 col-sm-6">
-            {{#if serviceIsOpen}}
                 {{#each previousQuestions 0 2}}
                     <div class="question-item">
                         <p><a href="/sporsmal/{{_id}}">{{trim question 120}}</a></p>
                         <p class="question-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
                     </div>
                 {{/each}}
-            {{else}}
-                <p class="schedule">
-                    Du kan også sende inn spørsmål til oss her på nettsidene. Vi svarer deg i løpet av 2-3 dager.
-                </p>
-                <button id="ask-question" class="default-button full-width">Send inn spørsmål</button>
-            {{/if}}
             </div>
             <div class="col-md-4 hidden-sm hidden-xs">
                 {{#each previousQuestions 2 2}}
