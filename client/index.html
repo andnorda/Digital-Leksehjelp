@@ -44,8 +44,6 @@
 </head>
 
 <body>
-    {{> flashMessages}}
-
     {{> queueModal}}
 
     {{> notSupportedModal}}
@@ -129,6 +127,8 @@
 
 <template name="loggedInHeader">
     <div class="container">
+        {{> flashMessages}}
+
         {{#if currentUser }}
             {{#if isAdmin }}
                 <h3>Digital Leksehjelp - Administrator</h3>

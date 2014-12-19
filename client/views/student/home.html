@@ -38,6 +38,8 @@
 </template>
 
 <template name="getHelpBox">
+    {{> flashMessages}}
+
     {{#if serviceStatusLoaded}}
         {{#if serviceIsOpen}}
             <h3 class="get-help-box-title">Få leksehjelp</h3>
