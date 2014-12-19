@@ -100,7 +100,7 @@
             {{#if serviceIsOpen}}
                 {{#each previousQuestions 0 2}}
                     <div class="question-item">
-                        <p><a href="/sporsmal/{{this._id}}">{{trim question 200}}</a></p>
+                        <p><a href="/sporsmal/{{_id}}">{{trim question 120}}</a></p>
                         <p class="question-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
                     </div>
                 {{/each}}
@@ -114,7 +114,7 @@
             <div class="col-md-4 hidden-sm hidden-xs">
                 {{#each previousQuestions 2 2}}
                     <div class="question-item">
-                        <p><a href="/sporsmal/{{this._id}}">{{trim question 200}}</a></p>
+                        <p><a href="/sporsmal/{{_id}}">{{trim question 120}}</a></p>
                         <p class="question-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
                     </div>
                 {{/each}}
@@ -122,7 +122,7 @@
             <div class="col-md-4 col-sm-6">
                 {{#each previousQuestions 4 2}}
                     <div class="question-item">
-                        <p><a href="/sporsmal/{{this._id}}">{{trim question 200}}</a></p>
+                        <p><a href="/sporsmal/{{_id}}">{{trim question 120}}</a></p>
                         <p class="question-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
                     </div>
                 {{/each}}
