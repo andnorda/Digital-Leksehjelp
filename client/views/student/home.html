@@ -40,7 +40,7 @@
 <template name="getHelpBox">
     {{#if serviceStatusLoaded}}
         {{#if serviceIsOpen}}
-            <h3 class="get-help-box-title"><b>Få leksehjelp</b></h3>
+            <h3 class="get-help-box-title">Få leksehjelp</h3>
 
             <div class="btn-group full-width get-help-box-item">
                 <button type="button" class="btn dl-dropdown full-width {{validationError 'subjectError'}}" data-toggle="dropdown">
@@ -94,7 +94,7 @@
     <div class="category-title white-bg-adjustment">
         <h2><span>Siste spørsmål</span></h2>
     </div>
-    <div class="container">
+    <div class="container previous-questions-container">
         <div class="row">
             <div class="col-md-4 col-sm-6">
             {{#if serviceIsOpen}}
@@ -141,7 +141,7 @@
                         <span class="todays-volunteers-bg-color">Dagens frivillige</span>
                     </h2>
                 </div>
-                <div class="container">
+                <div class="container todays-volunteers-container">
                     <div class="row row-centered">
                         {{#each todaysVolunteers}}
                             <div class="col-md-4 col-centered">
