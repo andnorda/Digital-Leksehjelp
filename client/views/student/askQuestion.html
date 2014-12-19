@@ -44,10 +44,10 @@
 <template name="questionForm">
     <form role="form" name="questionForm">
         <div class="row">
-            <div class="col-sm-5">
+            <div class="col-md-5 questionform-selector-col">
                 {{> subjectSelector}}
             </div>
-            <div class="col-sm-5">
+            <div class="col-md-5 questionform-selector-col">
                 {{> gradeSelector}}
             </div>
         </div>
@@ -92,7 +92,7 @@
             <div class="col-sm-5">
                 <div class="form-group">
                     <div class="input-group full-width">
-                        <input type="text" class="dl-inputfield dl-emailfield form-control {{validationError 'emailError'}}" name="email" placeholder="Din e-postadresse">
+                        <input type="text" class="dl-emailfield form-control {{validationError 'emailError'}}" name="email" placeholder="Din e-postadresse">
                     </div>
                 </div>
             </div>

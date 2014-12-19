@@ -174,7 +174,7 @@ a {
     color: @dropdown-text-color;
     font-size: 18px;
     line-height: 1.8em;
-    padding-left: 20px;
+    padding-left: 25px;
 
     border: 3px solid @dropdown-border-color;
     border-radius: 0px;
@@ -187,6 +187,10 @@ a {
         top: 13px;
         color: @dropdown-caret-color;
         font-size: 1.1em;
+    }
+
+    &:hover, :focus, :active, :visited {
+        border: 3px solid @dropdown-border-color;
     }
 }
 
@@ -426,9 +430,16 @@ a.red-cross-link {
     margin-right:-4px;
 }
 
+@media (min-width: 1240px) {
+    .questionform-selector-col {
+        width: 400px !important;
+        margin-right: -30px !important;
+    }
+}
+
 .dl-dropdown-ul {
     border-radius: 0px;
-    border: solid 3px #adadad;
+    border: solid 3px @dropdown-item-color;
     margin-top: -3px;
     padding: 0px;
 }
@@ -437,9 +448,9 @@ a.red-cross-link {
     padding-left: 15px;
     margin-left: 5px;
     margin-right: 5px;
-    border-bottom: solid 1px @dl-border-color;
+    border-bottom: solid 1px @dropdown-item-color;
     font-size: 18px;
-    line-height: 2em;
+    line-height: 50px;
 
     &:last-child {
         border-bottom: none;
@@ -456,12 +467,21 @@ a.red-cross-link {
 .dl-inputfield {
     border-radius: 0px;
     border: solid 2px;
-    border-color: @dl-border-color;
+    border-color: @dropdown-item-color;
+    line-height: 30px;
+    font-size: 18px;
+    padding-left: 25px;
+    padding-top: 20px;
 }
 
 .dl-emailfield {
     height: 42px;
-    font-size: 16px;
+    border-radius: 0px;
+    border: solid 2px;
+    border-color: @dropdown-item-color;
+    line-height: 30px;
+    font-size: 18px;
+    padding-left: 25px;
 }
 
 .dl-question-h3 {
