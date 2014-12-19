@@ -15,12 +15,9 @@
     <p>
         Her kan du laste opp bilde av deg selv, som vil bli vist under
         dagens frivillige når tjenesten er åpen, og du er innlogget.
+        Dette gjelder kun for videohjelpere.
     </p>
-    <p>
-        For at det skal se bra ut, bør bildet være på 200 x 245 piksler i
-        høyde x bredde. Bildet blir uansett endret til denne størrelsen ved
-        opplasting.
-    </p>
+
     <div class="input-group">
         <div class="input-group-btn">
             <button class="btn btn-primary">Last opp</button>
@@ -29,8 +26,16 @@
     </div>
 
     <div>
-        <h6>Ditt profilbilde:</h6>
-        <img src="{{ profilePictureUrl }}" />
+        <h4>Forhåndsvisning</h4>
+        {{#with user}}
+            <div class="todays-volunteer-item" style="float: left;">
+                <div class="round">
+                    <img src="{{profile.pictureUrl}}">
+                </div>
+                <h4 class="todays-volunteer-item-name">{{profile.firstName}}</h4>
+                <p class="todays-volunteer-item-subjects">{{subjectList profile.subjects}}</p>
+            </div>
+        {{/with}}
     </div>
 </template>
 

@@ -139,22 +139,6 @@ Template.todaysVolunteers.helpers({
                 { 'profile.subjects.0': { $exists: true }},
                 { 'profile.allowVideohelp': true }
             ]}).fetch();
-    },
-    subjectList: function (subjects) {
-        var subjectNames = subjects.map(function(subject) {
-            return subject.subjectName;
-        });
-
-        if (subjectNames.length > 1) {
-            var subjectNamesStr = "";
-            for (var i = 0; i < subjectNames.length - 1; i++) {
-                subjectNamesStr += subjectNames[i] + ", ";
-            }
-            return subjectNamesStr.substring(0, subjectNamesStr.length - 2) +
-                " og " + subjectNames[subjectNames.length-1];
-        } else {
-            return subjectNames.join("");
-        }
     }
 });
 

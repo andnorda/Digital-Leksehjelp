@@ -18,11 +18,8 @@ Template.mySubjectsSelector.rendered = function () {
 };
 
 Template.profilePicture.helpers({
-    profilePictureUrl: function () {
-        var user = Meteor.user();
-        if (user) {
-            return user.profile.pictureUrl;
-        }
+    user: function () {
+        return Meteor.user();
     }
 });
 

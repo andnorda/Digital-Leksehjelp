@@ -103,3 +103,24 @@ Template.registerHelper('validationError', function(errorType){
 Template.registerHelper('isNotMe', function(userId) {
     return Meteor.userId() && Meteor.userId() != userId;
 });
+
+Template.registerHelper('subjectList', function (subjects) {
+    if (!subjects) {
+        return "";
+    }
+
+    var subjectNames = subjects.map(function(subject) {
+        return subject.subjectName;
+    });
+
+    if (subjectNames.length > 1) {
+        var subjectNamesStr = "";
+        for (var i = 0; i < subjectNames.length - 1; i++) {
+            subjectNamesStr += subjectNames[i] + ", ";
+        }
+        return subjectNamesStr.substring(0, subjectNamesStr.length - 2) +
+            " og " + subjectNames[subjectNames.length-1];
+    } else {
+        return subjectNames.join("");
+    }
+});
