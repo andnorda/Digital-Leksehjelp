@@ -27,6 +27,15 @@ var findStudentSession = function () {
     return StudentSessions.findOne({ _id: Session.get("studentSessionId") });
 }
 
+Template.queueModal.events({
+    'click a#leave-queue' : function () {
+        Meteor.call('removeSession',
+            {
+                sessionId: Session.get("studentSessionId")
+            });
+    }
+});
+
 Template.queueModalBody.helpers({
     studentSession: function () {
         return findStudentSession();
