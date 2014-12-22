@@ -51,6 +51,7 @@ Router.map(function () {
     this.route('home', {
         path: '/',
         onBeforeAction: function(){
+            FlashMessages.clear();
             validationError = [];
             this.next();
         },
@@ -137,7 +138,8 @@ Router.map(function () {
     this.route('askQuestion', {
         controller: DefaultController,
         path: '/sporsmal',
-        onBeforeAction: function(){
+        onBeforeAction: function() {
+            FlashMessages.clear();
             validationError = [];
             this.next();
         }
@@ -165,6 +167,11 @@ Router.map(function () {
     this.route('search', {
         controller: DefaultController,
         path: '/sok',
+        onBeforeAction: function() {
+            FlashMessages.clear();
+            validationError = [];
+            this.next();
+        },
         waitOn: function() {
             // https://github.com/EventedMind/iron-router/issues/1088
             var self = this;
