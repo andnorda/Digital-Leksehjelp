@@ -19,7 +19,13 @@
                 </div>
 
                 <h3>Svar</h3>
-                <p>{{{transformNewline answer}}}</p>
+                <p class="answer-text">{{{transformNewline answer}}}</p>
+
+                {{#if answerAttachmentUrl}}
+                    <p>
+                        <a href="{{answerAttachmentUrl}}" target="_blank" class="red-cross-link">Vedlegg</a>
+                    </p>
+                {{/if}}
             </div>
         </div>
 

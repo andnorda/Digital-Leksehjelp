@@ -17,26 +17,17 @@ Template.answerQuestionForm.destroyed = function () {
 Template.answerQuestionForm.helpers({
     publishIsChecked: function(question) {
         return !question.answer || question.publishedBy;
+    },
+    percentUploaded: function () {
+        var file = S3.collection.findOne({ uploading: true });
+        if (file) {
+            return file.percent_uploaded;
+        }
     }
 });
 
-Template.answerQuestionForm.events({
-    'submit form' : function(event, template)  {
-        event.preventDefault();
-        var questionId = template.data._id;
-        var question = template.find("textarea[name=question]").value;
-        var title = template.find("input[name=title]").value.substring(0, 120);
-        var answer = template.find("textarea[name=answer]").value;
-        var publishAnswer = (template.find("input[name=publishAnswer]:checked")) ? true : false;
-
-        Meteor.call('answerQuestion',
-        {
-            questionId: questionId,
-            question: question,
-            title: title,
-            answer: answer,
-            publishAnswer: publishAnswer
-        },
+var answerQuestion = function (answerFields) {
+    Meteor.call('answerQuestion', answerFields,
         function (error) {
             if (error) {
                 FlashMessages.sendError(error.message);
@@ -44,6 +35,42 @@ Template.answerQuestionForm.events({
                 FlashMessages.sendSuccess("Svar lagret", { autoHide: true, hideDelay: 6000 });
             }
         });
+}
+
+Template.answerQuestionForm.events({
+    'submit form' : function(event, template)  {
+        event.preventDefault();
+        var answerFields = {
+            questionId: template.data._id,
+            question: template.find("textarea[name=question]").value,
+            title: template.find("input[name=title]").value.substring(0, 120),
+            answer: template.find("textarea[name=answer]").value,
+            publishAnswer: (template.find("input[name=publishAnswer]:checked")) ? true : false
+        }
+
+        var files = $("input[name=attachment]")[0].files;
+
+        if (files.length === 1) {
+            if (files[0].size > CONSTANTS.S3_MAX_UPLOAD_FILE_SIZE) {
+                FlashMessages.sendError("For stor fil. Maks 5 MB.");
+                return;
+            }
+
+            S3.upload(files, "/vedlegg", function(error, result) {
+                if (error) {
+                    FlashMessages.sendError("Noe gikk galt ved opplastningen. Prøv igjen.\n" + error.message);
+                    return;
+                }
+                if (!result.uploading) {
+                    answerFields['answerAttachmentUrl'] = result.url;
+                    answerQuestion(answerFields);
+                }
+            });
+        } else {
+            answerQuestion(answerFields);
+        }
+
+
     },
     'click #setTitleButton' : function (event, template) {
         var question = template.find("textarea[name=question]").value;

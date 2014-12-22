@@ -7,8 +7,12 @@
             </div>
             <div class="col-md-4">
                 {{#if attachmentUrl}}
-                    <h3>Vedlegg</h3>
+                    <h3>Vedlegg til spørsmålet</h3>
                     <a href="{{attachmentUrl}}" target="_blank" class="attachment-link">{{attachmentUrl}}</a>
+                {{/if}}
+                {{#if answerAttachmentUrl}}
+                    <h3>Vedlegg til svaret</h3>
+                    <a href="{{answerAttachmentUrl}}" target="_blank" class="attachment-link">{{answerAttachmentUrl}}</a>
                 {{/if}}
 
                 <h3>Relaterte spørsmål</h3>
@@ -34,6 +38,24 @@
                 <h4>Svar</h4>
                 <textarea class="form-control" name="answer" placeholder="Skriv svaret ditt her..." value="{{answer}}" rows="10"></textarea>
             </div>
+            <div class="form-group">
+                <h4>Vedlegg <small>(maks 5 MB)</small></h4>
+                <p>Dette vil bli gjort tilgjengelig når man leser spørsmålet.
+                    {{#if answerAttachmentUrl}}
+                        Obs! Ved å laste opp nytt vedlegg, blir det gamle overskrevet.
+                    {{/if}}
+                </p>
+                <div class="input-group">
+                    <input type="file" class="form-control" name="attachment">
+                </div>
+            </div>
+            {{#if percentUploaded}}
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="{{percentUploaded}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percentUploaded}}%;">
+                        <span class="sr-only">{{percentUploaded}} % ferdig</span>
+                    </div>
+                </div>
+            {{/if}}
             <div class="checkbox">
                 <label>
                     <input type="checkbox" name="publishAnswer" checked="{{publishIsChecked this}}"> Publisér svaret når det blir godkjent
