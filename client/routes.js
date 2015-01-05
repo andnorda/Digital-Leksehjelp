@@ -157,7 +157,9 @@ Router.map(function () {
         },
         onAfterAction: function() {
             var question  = Questions.findOne({_id: this.params.questionId});
-            setDocumentTitle(question.title);
+            if (question) {
+                setDocumentTitle(question.title);
+            }
         }
     });
 
