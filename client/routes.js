@@ -123,9 +123,6 @@ Router.map(function () {
         template: 'questionAdmin',
         waitOn: function() {
             return Meteor.subscribe("questions");
-        },
-        data: function() {
-            return { verifiedQuestions: Questions.find({ verifiedBy: { $exists: true } }) };
         }
     });
 
