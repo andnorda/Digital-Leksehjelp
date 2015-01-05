@@ -1,6 +1,13 @@
 Template.answerQuestionForm.rendered = function() {
     var subject = Subjects.findOne({ _id: this.data.subjectId });
     searchForRelatedQuestions(subject, this.data.question);
+    $('#answer').summernote({
+      height: 300,
+      toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['para', ['ul', 'ol']]
+      ]
+    });
 }
 
 Template.answerQuestionForm.created = function () {
@@ -44,7 +51,7 @@ Template.answerQuestionForm.events({
             questionId: template.data._id,
             question: template.find("textarea[name=question]").value,
             title: template.find("input[name=title]").value.substring(0, 120),
-            answer: template.find("textarea[name=answer]").value,
+            answer: $('#answer').code(),
             publishAnswer: (template.find("input[name=publishAnswer]:checked")) ? true : false
         }
 
