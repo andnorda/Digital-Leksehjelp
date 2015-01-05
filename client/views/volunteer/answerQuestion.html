@@ -4,6 +4,7 @@
         <div class="row">
             <div class="col-md-8">
                 {{> answerQuestionForm}}
+                {{> answerQuestionHelp}}
             </div>
             <div class="col-md-4">
                 {{#if attachmentUrl}}
@@ -23,46 +24,63 @@
 </template>
 
 <template name="answerQuestionForm">
-        <form role="form">
-            <p class="question-subtitle">{{subjectName subjectId}} &ndash; {{grade}}</p>
-            <div class="form-group">
-                <h4>Spørsmål</h4>
-                <textarea class="form-control" name="question" value="{{question}}" rows="8"></textarea>
+    <form role="form">
+        <p class="question-subtitle">{{subjectName subjectId}} &ndash; {{grade}}</p>
+        <div class="form-group">
+            <h4>Spørsmål</h4>
+            <textarea class="form-control" name="question" value="{{question}}" rows="8"></textarea>
+        </div>
+        <div class="form-group">
+            <h4>Tittel</h4>
+            <button type="button" class="btn btn-xs btn-default" id="setTitleButton">Bruk spørsmål som tittel (maks 120 tegn)</button>
+            <input type="text" class="form-control" name="title" placeholder="Tittel" value="{{title}}">
+        </div>
+        <div class="form-group">
+            <h4>Svar <small><a href="#question-help">Hjelp</a></small></h4>
+            <div id="answer">
+                {{{answer}}}
             </div>
-            <div class="form-group">
-                <h4>Tittel</h4>
-                <button type="button" class="btn btn-xs btn-default" id="setTitleButton">Bruk spørsmål som tittel (maks 120 tegn)</button>
-                <input type="text" class="form-control" name="title" placeholder="Tittel" value="{{title}}">
+        </div>
+        <div class="form-group">
+            <h4>Vedlegg <small>(maks 5 MB)</small></h4>
+            <p>Dette vil bli gjort tilgjengelig når man leser spørsmålet.
+                {{#if answerAttachmentUrl}}
+                    Obs! Ved å laste opp nytt vedlegg, blir det gamle overskrevet.
+                {{/if}}
+            </p>
+            <div class="input-group">
+                <input type="file" class="form-control" name="attachment">
             </div>
-            <div class="form-group">
-                <h4>Svar</h4>
-                <div id="answer">
-                    {{{answer}}}
+        </div>
+        {{#if percentUploaded}}
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="{{percentUploaded}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percentUploaded}}%;">
+                    <span class="sr-only">{{percentUploaded}} % ferdig</span>
                 </div>
             </div>
-            <div class="form-group">
-                <h4>Vedlegg <small>(maks 5 MB)</small></h4>
-                <p>Dette vil bli gjort tilgjengelig når man leser spørsmålet.
-                    {{#if answerAttachmentUrl}}
-                        Obs! Ved å laste opp nytt vedlegg, blir det gamle overskrevet.
-                    {{/if}}
-                </p>
-                <div class="input-group">
-                    <input type="file" class="form-control" name="attachment">
-                </div>
-            </div>
-            {{#if percentUploaded}}
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="{{percentUploaded}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percentUploaded}}%;">
-                        <span class="sr-only">{{percentUploaded}} % ferdig</span>
-                    </div>
-                </div>
-            {{/if}}
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="publishAnswer" checked="{{publishIsChecked this}}"> Publisér svaret når det blir godkjent
-                </label>
-              </div>
-            <button type="submit" class="btn btn-primary btn-lg">Lagre svar</button>
-        </form>
+        {{/if}}
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="publishAnswer" checked="{{publishIsChecked this}}"> Publisér svaret når det blir godkjent
+            </label>
+          </div>
+        <button type="submit" class="btn btn-primary btn-lg">Lagre svar</button>
+    </form>
+</template>
+
+<template name="answerQuestionHelp">
+    <br><br><br><br>
+    <h3 id="question-help">Hjelp</h3>
+    For å lage formler må man
+    <ol>
+        <li>Gå til <a href="http://www.sciweavers.org/free-online-latex-equation-editor" target="_blank">http://www.sciweavers.org/free-online-latex-equation-editor</a></li>
+        <li>Lage formelen i editoren</li>
+        <li>Klikk "Convert"</li>
+        <li>Enten kopiere lenken til høyre for "Twitter, Google Docs" <i>eller</i> last ned bildet ved å klikke "Download"</li>
+        <li>Klikk på "Picture"-knappen i Svar-editoren ovenfor</li>
+        <li>Enten lim inn lenken du kopierte <i>eller</i> last opp bildet du lasted ned</li>
+    </ol>
+    <p>
+        NB! Unngå å laste opp store bilder ved bruk av "Picture"-knappen &ndash; benytt heller vedlegg.
+    </p>
 </template>

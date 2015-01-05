@@ -2,11 +2,13 @@ Template.answerQuestionForm.rendered = function() {
     var subject = Subjects.findOne({ _id: this.data.subjectId });
     searchForRelatedQuestions(subject, this.data.question);
     $('#answer').summernote({
-      height: 300,
-      toolbar: [
-        ['style', ['bold', 'italic', 'underline', 'clear']],
-        ['para', ['ul', 'ol']]
-      ]
+        height: 300,
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['para', ['ul', 'ol']],
+            ['insert', ['link', 'picture']],
+            ['misc', ['fullscreen', 'undo', 'redo']]
+        ]
     });
 }
 
