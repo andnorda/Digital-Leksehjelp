@@ -149,14 +149,24 @@ Router.map(function () {
             return Meteor.subscribe("question", this.params.questionId);
         },
         data: function() {
-            var question = Questions.findOne({_id: this.params.questionId});
+            var question = Questions.findOne(
+                { $or: [
+                    { slug: this.params.questionId },
+                    { _id: this.params.questionId }
+                ]});
+
             if (!question) {
                 this.render('notFound');
             }
             return question;
         },
         onAfterAction: function() {
-            var question  = Questions.findOne({_id: this.params.questionId});
+            var question = Questions.findOne(
+                { $or: [
+                    { slug: this.params.questionId },
+                    { _id: this.params.questionId }
+                ]});
+
             if (question) {
                 setDocumentTitle(question.title);
             }

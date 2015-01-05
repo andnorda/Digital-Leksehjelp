@@ -15,14 +15,21 @@ Meteor.publish("question", function (questionId) {
     check(questionId, String);
 
     if (this.userId) {
-        return Questions.find({ _id: questionId },
+        return Questions.find(
+            { $or: [
+                { slug: questionId },
+                { _id: questionId }
+            ]},
             {
                 fields: questionPrivateFields
             });
     } else {
         return Questions.find(
         {
-            _id: questionId,
+            $or: [
+                { slug: questionId },
+                { _id: questionId }
+                ],
             answer: { $exists: true },
             verifiedBy: { $exists: true },
             publishedBy: { $exists: true }

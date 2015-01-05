@@ -9,6 +9,7 @@ S3.config = {
 Meteor.startup(function () {
     updateLastUpdatedBy();
     addHumanReadableIdToSubjectsCollection();
+    addSlugToQuestions();
 
     Accounts.emailTemplates.from = "Digital Leksehjelp <digitalleksehjelp@oslo.redcross.no>";
 
@@ -104,6 +105,24 @@ Accounts.validateNewUser(function (user) {
 
     return true;
 });
+
+var addSlugToQuestions = function () {
+    var questions = Questions.find({ $and: [
+        { slug: { $exists: false }},
+        { answer: { $exists: true }},
+        { title: { $exists: true }}
+        ]}).fetch();
+
+    questions.forEach(function (question) {
+        if (question.title && question.title.length > 0) {
+            Questions.update(
+                { _id: question._id },
+                { $set: {
+                    slug: DigitalLeksehjelp.generateUniqueSlug(question.title)
+                }});
+        }
+    });
+}
 
 var updateLastUpdatedBy = function () {
     var questions = Questions.find({ $and: [

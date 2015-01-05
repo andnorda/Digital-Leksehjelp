@@ -124,3 +124,7 @@ Template.registerHelper('subjectList', function (subjects) {
         return subjectNames.join("");
     }
 });
+
+Template.registerHelper('slugOrId', function(question) {
+    return question.slug || question._id;
+});
