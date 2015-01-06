@@ -1,4 +1,5 @@
 Meteor.publish("questionSearch", function (params) {
+    params['limit'] = CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE;
     return QuestionHelpers.search(params, this.userId);
 });
 

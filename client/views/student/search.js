@@ -23,32 +23,22 @@ Template.search.helpers({
     }
 });
 
-Template.searchForm.helpers({
-    limit: function () {
-        return CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE;
-    }
-});
-
 Template.pagination.helpers({
     pages: function () {
         var numberOfResults = Session.get("questionSearchCount") || 0;
-        var limit = this.queryParams.limit || CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE;
-        if (limit < 1) {
-            limit = 1;
-        }
-        var numberOfPages = numberOfResults / limit;
+
+        var numberOfPages = numberOfResults / CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE;
 
         var pages = [];
         for (var i = 0; i < numberOfPages; i++) {
             var offset = i * CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE;
 
             var pageSearchUrl = updateQueryStringParameter(window.location.search, "offset", offset);
-            pageSearchUrl = updateQueryStringParameter(pageSearchUrl, "limit", limit);
 
             var page = {
                 url: "/sok" + pageSearchUrl,
                 index: i + 1,
-                active: (this.queryParams.offset / limit === i) ? "active" : ""
+                active: (this.queryParams.offset / CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE === i) ? "active" : ""
             }
 
             pages.push(page);
