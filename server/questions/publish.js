@@ -10,6 +10,8 @@ Meteor.publish("questions", function () {
             fields: questionPrivateFields
         });
     }
+
+    this.ready();
 });
 
 Meteor.publish("question", function (questionId) {

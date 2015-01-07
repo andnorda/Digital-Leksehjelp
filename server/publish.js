@@ -108,9 +108,10 @@ Meteor.publish("serviceStatus", function () {
 
 Meteor.publish("config", function () {
     var user = Meteor.users.findOne(this.userId);
-    if (!user) { return null; }
 
-    if (user.profile.role === ROLES.ADMIN) {
+    if (user && user.profile.role === ROLES.ADMIN) {
         return Config.find({});
     }
+
+    this.ready();
 });
