@@ -63,7 +63,7 @@ Template.registerHelper('grades', function() {
 });
 
 Template.registerHelper('subjects', function() {
-    return Subjects.find({});
+    return Subjects.find({}, {sort: {name: 1}});
 });
 
 Template.registerHelper('subjectName', function(subjectId) {
