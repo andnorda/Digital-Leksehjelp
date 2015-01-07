@@ -204,7 +204,7 @@ Router.map(function () {
     });
 
     this.route('notFound', {
-        path: '*',
+        path: '/(.*)',
         action: function () {
             this.redirect('/');
         }
