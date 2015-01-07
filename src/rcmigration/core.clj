@@ -9,7 +9,7 @@
            [com.mongodb DB WriteConcern])
   (:gen-class))
 
-(def db (:db (mg/connect-via-uri "mongodb://migrate:migrate123@ds063889.mongolab.com:63889/heroku_app31146736")))
+(def db (:db (mg/connect-via-uri "mongodb://<dbuser>:<dbpassword>@ds012345.mongolab.com:56789/dbname")))
 
 (def formatter (f/formatter "YYYY-MM-dd HH:mm:ss"))
 
@@ -21,9 +21,12 @@
   (map (fn [d] {:question (clojure.string/replace (d "question") #"<p>|</p>|<strong>|</strong>|&nbsp;|<br />|<br>|<div>|</div>|<em>|</em>" "")
                 :answer (d "answer")
                 :answeredBy (mongo-get-user-id "Nettleksehjelpen.no")
+                :lastUpdatedBy (mongo-get-user-id "Nettleksehjelpen.no")
+                :publishedBy (mongo-get-user-id "Nettleksehjelpen.no")
                 :subjectId ((mongo-get-subjects) (d "subject"))
                 :grade (d "grade")
                 :answerDate (.toDate (f/parse formatter (d "answerDate")))
+                :lastUpdatedDate (.toDate (f/parse formatter (d "answerDate")))
                 :questionDate (.toDate (f/parse formatter (d "questionDate")))}) data))
 
 (defn load-json [] (json/read-str (slurp "data.json")))
@@ -31,17 +34,6 @@
 (defn mongo-insert [data]  (map (fn [i]
                                   (mc/insert db "questions"
                                              (merge { :_id (.toString (ObjectId.)) } i))) data))
-(comment
- (let [db (mg/get-db conn "digital-leksehjelp")]
-   (mc/insert db "questions" { :_id (ObjectId.)
-                              :subjectId "Engelsk"
-                              :grade "Vg 1"
-                              :question "hur många bultar finns det i ölandsbron?"
-                              :questionDate (new java.util.Date)
-                              :email "test"
-                              :published false})))
-
-(comment (map (fn [d] (print (str (d "subject") ", "))) (load-json)))
 
 (defn -main
   [& args]
