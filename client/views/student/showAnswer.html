@@ -28,6 +28,12 @@
                         <a href="{{answerAttachmentUrl}}" target="_blank" class="red-cross-link">Åpne vedlegg</a>
                     </p>
                 {{/if}}
+
+                {{#if showNonpublicQuestionWarning}}
+                    <div class="alert alert-warning" role="alert">
+                        <strong>NB!</strong> Dette spørsmålet/svaret er kun synlig fordi du er logget inn som frivillig. Det er enten upublisert eller ikke ennå godkjent.
+                    </div>
+                {{/if}}
             </div>
         </div>
 
