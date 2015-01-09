@@ -3,6 +3,9 @@ Template.showAnswer.rendered = function() {
 }
 
 Template.showAnswer.helpers({
+    questionContext: function() {
+        return Questions.findOne({});
+    },
     showNonpublicQuestionWarning: function () {
         if (Meteor.user() && this.question) {
             return !this.publishedBy || !this.verifiedBy;

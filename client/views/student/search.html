@@ -25,7 +25,7 @@
                 </div>
 
                 <hr>
-                    {{> searchForm}}
+                    {{> searchForm queryParams}}
                 <hr>
 
                 <label>{{numberOfResults}}</label>
@@ -61,32 +61,32 @@
                 <label>Søk</label>
                 <div class="input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
-                    <input name="q" type="text" class="form-control" value="{{queryParams.q}}">
+                    <input name="q" type="text" class="form-control" value="{{q}}">
                 </div>
             </div>
             <div class="form-group col-md-2 col-sm-3 col-xs-4">
                 <label>Fag</label>
                 <select class="form-control" name="subject">
-                    <option value="_all" selected="{{eq queryParams.subject '_all'}}">Alle</option>
+                    <option value="_all" selected="{{eq subject '_all'}}">Alle</option>
                     {{#each subjects}}
-                        <option value="{{humanReadableId}}" selected="{{eq humanReadableId ../queryParams.subject}}">{{name}}</option>
+                        <option value="{{humanReadableId}}" selected="{{eq humanReadableId ../subject}}">{{name}}</option>
                     {{/each}}
                 </select>
             </div>
             <div class="form-group col-md-2 col-sm-3 col-xs-4">
                 <label>Årstrinn</label>
                 <select class="form-control" name="grade">
-                    <option value="_all" selected="{{eq queryParams.grade '_all'}}">Alle</option>
+                    <option value="_all" selected="{{eq grade '_all'}}">Alle</option>
                     {{#each grades}}
-                        <option value="{{this}}" selected="{{eq this ../queryParams.grade}}">{{this}}</option>
+                        <option value="{{this}}" selected="{{eq this ../grade}}">{{this}}</option>
                     {{/each}}
                 </select>
             </div>
             <div class="form-group col-md-2 col-sm-3 col-xs-4">
                 <label>Sortér</label>
                 <select class="form-control" name="sort">
-                    <option value="relevance" selected="{{eq queryParams.sort 'relevance'}}">Relevans</option>
-                    <option value="date" selected="{{eq queryParams.sort 'date'}}">Dato</option>
+                    <option value="relevance" selected="{{eq sort 'relevance'}}">Relevans</option>
+                    <option value="date" selected="{{eq sort 'date'}}">Dato</option>
                 </select>
             </div>
             <div class="col-md-2 col-sm-3 col-xs-12">
