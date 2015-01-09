@@ -12,30 +12,37 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-9 col-md-offset-3">
-                <div class="question-item show-question">
-                    <p>{{{transformNewline question}}}</p>
-                    <p class="question-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
-                </div>
+            <div class="row">
+                <div class="col-md-9 col-md-offset-3" itemscope itemtype="http://schema.org/Question">
+                    <meta itemprop="headline" content="{{title}}" />
+                    <meta itemprop="dateCreated" content="{{questionDate}}" />
+                    <meta itemprop="datePublished" content="{{answerDate}}" />
 
-                <h3>Svar</h3>
-                <p class="answer-text">
-                    {{{answer}}}
-                </p>
-
-                {{#if answerAttachmentUrl}}
-                    <p>
-                        <a href="{{answerAttachmentUrl}}" target="_blank" class="red-cross-link">Åpne vedlegg</a>
-                    </p>
-                {{/if}}
-
-                {{#if showNonpublicQuestionWarning}}
-                    <div class="alert alert-warning" role="alert">
-                        <strong>NB!</strong> Dette spørsmålet/svaret er kun synlig fordi du er logget inn som frivillig. Det er enten upublisert eller ikke ennå godkjent.
+                    <div class="question-item show-question">
+                        <p itemprop="text">{{{transformNewline question}}}</p>
+                        <p class="question-item-footer"><span itemprop="genre">{{subjectName subjectId}}</span>, {{grade}} &ndash; {{fromNow questionDate}}</p>
                     </div>
-                {{/if}}
+
+                    <h3>Svar</h3>
+                    <div itemprop="acceptedAnswer" itemscope itemtype="http://schema.org/Answer">
+                        <p class="answer-text" itemprop="text">
+                            {{{answer}}}
+                        </p>
+
+
+                        {{#if answerAttachmentUrl}}
+                            <p>
+                                <a href="{{answerAttachmentUrl}}" target="_blank" class="red-cross-link">Åpne vedlegg</a>
+                            </p>
+                        {{/if}}
+                    </div>
+
+                    {{#if showNonpublicQuestionWarning}}
+                        <div class="alert alert-warning" role="alert">
+                            <strong>NB!</strong> Dette spørsmålet/svaret er kun synlig fordi du er logget inn som frivillig. Det er enten upublisert eller ikke ennå godkjent.
+                        </div>
+                    {{/if}}
+                </div>
             </div>
 
         </div>
