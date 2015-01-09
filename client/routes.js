@@ -148,24 +148,8 @@ Router.map(function () {
         waitOn: function() {
             return Meteor.subscribe("question", this.params.questionId);
         },
-        data: function() {
-            var question = Questions.findOne(
-                { $or: [
-                    { slug: this.params.questionId },
-                    { _id: this.params.questionId }
-                ]});
-
-            if (!question) {
-                this.render('notFound');
-            }
-            return question;
-        },
         onAfterAction: function() {
-            var question = Questions.findOne(
-                { $or: [
-                    { slug: this.params.questionId },
-                    { _id: this.params.questionId }
-                ]});
+            var question = Questions.findOne({});
 
             if (question) {
                 setDocumentTitle(question.title);
@@ -188,18 +172,10 @@ Router.map(function () {
                 self.params.query[key] = self.params.query[key].replace(/\+/g, " ");
             });
 
-            if (Object.keys(this.params.query).length > 0) {
-                Meteor.call('questionSearchCount', this.params.query, function(error, result) {
-                    Session.set('questionSearchCount', result);
-                });
-                return Meteor.subscribe("questionSearch", this.params.query);
-            }
-        },
-        data: function() {
-            return {
-                searchResults: Questions.find({}),
-                queryParams: this.params.query
-            };
+            Meteor.call('questionSearchCount', this.params.query, function(error, result) {
+                Session.set('questionSearchCount', result);
+            });
+            return Meteor.subscribe("questionSearch", this.params.query);
         }
     });
 

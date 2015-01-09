@@ -39,7 +39,9 @@ Template.registerHelper('optionsSelected', function(values, defaultValue) {
 });
 
 Template.registerHelper('transformNewline', function(text) {
-    return new Spacebars.SafeString(text.replace(/(\r\n|\n|\r)/g, "<br>"));
+    if (text) {
+        return new Spacebars.SafeString(text.replace(/(\r\n|\n|\r)/g, "<br>"));
+    }
 });
 
 Template.registerHelper('serviceIsOpen', function () {

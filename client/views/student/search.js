@@ -10,6 +10,12 @@ var updateQueryStringParameter = function (uri, key, value) {
 }
 
 Template.search.helpers({
+    searchResults: function() {
+        return Questions.find({});
+    },
+    queryParams: function() {
+        return Router.current().params.query;
+    },
     numberOfResults: function() {
         var count = Session.get("questionSearchCount");
 
@@ -26,8 +32,8 @@ Template.search.helpers({
 Template.pagination.helpers({
     pages: function () {
         var numberOfResults = Session.get("questionSearchCount") || 0;
-
         var numberOfPages = numberOfResults / CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE;
+        var currentOffset = Router.current().params.query.offset || 0;
 
         var pages = [];
         for (var i = 0; i < numberOfPages; i++) {
@@ -38,7 +44,7 @@ Template.pagination.helpers({
             var page = {
                 url: "/sok" + pageSearchUrl,
                 index: i + 1,
-                active: (this.queryParams.offset / CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE === i) ? "active" : ""
+                active: (currentOffset / CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE === i) ? "active" : ""
             }
 
             pages.push(page);
