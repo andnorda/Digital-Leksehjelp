@@ -29,7 +29,6 @@
                             {{{answer}}}
                         </p>
 
-
                         {{#if answerAttachmentUrl}}
                             <p>
                                 <a href="{{answerAttachmentUrl}}" target="_blank" class="red-cross-link">Åpne vedlegg</a>
@@ -46,5 +45,7 @@
             </div>
 
         </div>
+    {{else}}
+        {{> notFound}}
     {{/with}}
 </template>
