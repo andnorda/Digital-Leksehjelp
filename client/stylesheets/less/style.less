@@ -163,7 +163,7 @@ a {
     font-weight: 300;
     font-size: 70px;
     margin-left: -7px;
-    margin-top: 10px;
+    margin-top: 30px;
     color: black;
 
     a {
@@ -176,9 +176,15 @@ a {
     color: @info-text-color;
     font-family: @merriweather;
     font-weight: 300;
-    font-size: 16px;
-    margin-top: 30px;
-    line-height: 34px;
+    font-size: 18px;
+    margin-top: 0;
+    line-height: 38px;
+}
+
+@media screen and (min-width: 768px) {
+    .get-help-box {
+        margin-top: -18px;
+    }
 }
 
 .get-help-box-item {
