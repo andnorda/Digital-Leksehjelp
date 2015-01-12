@@ -10,7 +10,8 @@ this.questionPublicFields = {
     question: true,
     questionDate: true,
     subjectId: true,
-    title: true
+    title: true,
+    slug: true
 }
 
 this.questionPrivateFields = {
