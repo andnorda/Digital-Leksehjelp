@@ -32,6 +32,13 @@ Template.answerQuestionForm.helpers({
         if (file) {
             return file.percent_uploaded;
         }
+    },
+    answerText: function (question) {
+      if (question.answer) {
+        return question.answer;
+      } else {
+        return "<br><br>Med vennlig hilsen,<br>Digital leksehjelp";
+      }
     }
 });
 
