@@ -38,6 +38,12 @@ LoginController = BaseController.extend({
     }
 });
 
+AnswerQuestionController = BaseController.extend({
+    yieldTemplates: {
+        'loggedInFooter': { to : 'footer'}
+    }
+});
+
 Router.onBeforeAction(checkIfSignedIn, {except: ['home', 'askQuestion', 'notFound', 'search', 'showAnswer']});
 
 Router.onAfterAction(setDocumentTitle);
@@ -95,7 +101,7 @@ Router.map(function () {
     });
 
     this.route('answerQuestion', {
-        controller: LoginController,
+        controller: AnswerQuestionController,
         path: '/frivillig/sporsmal/svar/:questionId',
         waitOn: function() {
             return Meteor.subscribe("questions");

@@ -68,3 +68,14 @@ Meteor.Spinner.options = {
     };
 
 }());
+
+Deps.autorun(function () {
+    var user = Meteor.user();
+    if (user && (user.profile.allowVideohelp || user.profile.role === ROLES.ADMIN)) {
+        var number = StudentSessions.find({
+            state: STUDENT_SESSION_STATE.WAITING
+        }).count();
+
+        flashTitle(number + " i videohjelpkø", 10);
+    }
+});
