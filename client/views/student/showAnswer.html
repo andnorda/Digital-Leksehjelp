@@ -41,6 +41,11 @@
                             <strong>NB!</strong> Dette spørsmålet/svaret er kun synlig fordi du er logget inn som frivillig. Det er enten upublisert eller ikke ennå godkjent.
                         </div>
                     {{/if}}
+                    {{#if canBeVerified}}
+                        {{#if isNotMe lastUpdatedBy}}
+                            <button class="btn btn-success verify-answer">Godkjenn svar</button>
+                        {{/if}}
+                    {{/if}}
                 </div>
             </div>
 
