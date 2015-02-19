@@ -60,6 +60,17 @@ Template.registerHelper('trim', function(str, stopIndex) {
     return str.substring(0, stopIndex) + "...";
 });
 
+Template.registerHelper('titleOrTrimmedQuestion', function(question, stopIndex) {
+  console.log(question)
+    if (question.title && question.title.length > 1) {
+      return question.title;
+    }
+    if (question.question.length < stopIndex) {
+        return question.question;
+    }
+    return question.question.substring(0, stopIndex) + "...";
+});
+
 Template.registerHelper('grades', function() {
     return GRADES;
 });
