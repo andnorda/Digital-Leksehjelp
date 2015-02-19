@@ -6,6 +6,10 @@ S3.config = {
     bucket: 'digitalleksehjelp'
 };
 
+if (process.env.ROOT_URL === "http://digitalleksehjelp.no") {
+    Kadira.connect('A8iXcSuRt35CN98xm', 'a5a34ea3-55be-4d7c-a079-9f2d5cbc1e0d');
+}
+
 Meteor.startup(function () {
     updateLastUpdatedBy();
     addHumanReadableIdToSubjectsCollection();

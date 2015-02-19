@@ -61,7 +61,6 @@ Template.registerHelper('trim', function(str, stopIndex) {
 });
 
 Template.registerHelper('titleOrTrimmedQuestion', function(question, stopIndex) {
-  console.log(question)
     if (question.title && question.title.length > 1) {
       return question.title;
     }
