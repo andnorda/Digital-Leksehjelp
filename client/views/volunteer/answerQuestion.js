@@ -25,7 +25,10 @@ Template.answerQuestionForm.destroyed = function () {
 
 Template.answerQuestionForm.helpers({
     publishIsChecked: function(question) {
-        return !question.answer || question.publishedBy;
+        if (question.answer) {
+            return question.publishedBy;
+        }
+        return false;
     },
     percentUploaded: function () {
         var file = S3.collection.findOne({ uploading: true });
