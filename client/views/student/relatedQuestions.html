@@ -1,9 +1,18 @@
 <template name="relatedQuestions">
     {{#if isGreaterThanZero relatedQuestions.length}}
         {{#each relatedQuestions}}
-            {{> searchQuestionItem target=../target }}
+            {{> relatedQuestionItem question=this target=../target }}
         {{/each}}
     {{else}}
         <p>Ingen relaterte spørsmål funnet</p>
     {{/if}}
+</template>
+
+<template name="relatedQuestionItem">
+    <div class="question-item related-question-item">
+        <p><a href="/sporsmal/{{slugOrId question}}" target="{{target}}">{{trim question.question 200}}</a></p>
+        <p class="question-item-footer">
+          {{subjectName question.subjectId}}, {{question.grade}} &ndash; {{fromNow question.questionDate}}
+        </p>
+    </div>
 </template>
