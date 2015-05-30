@@ -106,7 +106,7 @@
 
 <template name="searchQuestionItem">
     <div class="question-item related-question-item">
-        <p><a href="/sporsmal/{{slugOrId this}}">{{trim question 200}}</a></p>
+        <p><a href="/sporsmal/{{slugOrId this}}" target="{{this.target}}">{{trim question 200}}</a></p>
         <p class="question-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
     </div>
 </template>

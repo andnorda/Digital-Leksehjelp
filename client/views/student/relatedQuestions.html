@@ -1,7 +1,7 @@
 <template name="relatedQuestions">
     {{#if isGreaterThanZero relatedQuestions.length}}
         {{#each relatedQuestions}}
-            {{> searchQuestionItem}}
+            {{> searchQuestionItem target=../target }}
         {{/each}}
     {{else}}
         <p>Ingen relaterte spørsmål funnet</p>
