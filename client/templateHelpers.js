@@ -113,7 +113,7 @@ Template.registerHelper('validationError', function(errorType){
 });
 
 Template.registerHelper('isNotMe', function(userId) {
-    return Meteor.userId() && Meteor.userId() != userId;
+    return Meteor.userId() && Meteor.userId() !== userId;
 });
 
 Template.registerHelper('subjectList', function (subjects) {

@@ -40,11 +40,8 @@
                         <div class="alert alert-warning" role="alert">
                             <strong>NB!</strong> Dette spørsmålet/svaret er kun synlig fordi du er logget inn som frivillig. Det er enten upublisert eller ikke ennå godkjent.
                         </div>
-                    {{/if}}
-                    {{#if canBeVerified}}
-                        {{#if isNotMe lastUpdatedBy}}
-                            <button class="btn btn-success verify-answer">Godkjenn svar</button>
-                        {{/if}}
+
+                        {{> volunteerMiniForm}}
                     {{/if}}
                 </div>
             </div>
@@ -53,4 +50,35 @@
     {{else}}
         {{> notFound}}
     {{/with}}
+</template>
+
+<template name="volunteerMiniForm">
+    <div>
+        <!--
+        <h4>Frivilligskjema</h4>
+        <form>
+            <div class="form-group">
+                <label>Tittel</label>
+                <input type="text" class="form-control" name="title" placeholder="Tittel" value="{{title}}">
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="publishAnswer" checked="{{publishIsChecked}}"> Publisér svaret når det blir godkjent
+                </label>
+            </div>
+
+            <button class="btn btn-primary" id="updateQuestion">Lagre</button>
+            {{#if isNotMe lastUpdatedBy}}
+              Ved å lagre endringer her må en annen frivillig godkjenne svaret
+            {{/if}}
+        </form>
+
+        <br /><br />
+        -->
+        {{#if canBeVerified}}
+            {{#if isNotMe lastUpdatedBy}}
+                <button class="btn btn-success verify-answer">Godkjenn svar</button>
+            {{/if}}
+        {{/if}}
+    </div>
 </template>
