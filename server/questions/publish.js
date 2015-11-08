@@ -3,12 +3,31 @@ Meteor.publish("questionSearch", function (params) {
     return QuestionHelpers.search(params, this.userId);
 });
 
-Meteor.publish("questions", function () {
+Meteor.publish("questions", function (subscriptionLevel) {
     if (this.userId) {
-        return Questions.find({},
-        {
-            fields: questionPrivateFields
-        });
+        var user = Meteor.users.findOne(this.userId);
+
+        if (subscriptionLevel === QUESTION_SUBSCRIPTION_LEVEL.ALL &&
+            user.profile.role  === ROLES.ADMIN) {
+
+            return Questions.find({},
+            {
+                fields: questionPrivateFields
+            });
+        } else if (subscriptionLevel === QUESTION_SUBSCRIPTION_LEVEL.REGULAR) {
+
+          return Questions.find(
+          { $or: [
+              { answer: { $exists: false } },
+              { $and: [
+                  { answer: { $exists: true } },
+                  { verifiedBy: { $exists: false } }
+              ]}
+          ]},
+          {
+              fields: questionPrivateFields
+          });
+        }
     }
 
     this.ready();
