@@ -93,7 +93,7 @@ Router.map(function () {
         controller: LoginController,
         path: '/frivillig/sporsmal',
         waitOn: function() {
-            return Meteor.subscribe("questions");
+            return Meteor.subscribe("questions", QUESTION_SUBSCRIPTION_LEVEL.REGULAR);
         },
         data: function() {
             return { searchResults: Questions.find({}) };
@@ -104,7 +104,7 @@ Router.map(function () {
         controller: AnswerQuestionController,
         path: '/frivillig/sporsmal/svar/:questionId',
         waitOn: function() {
-            return Meteor.subscribe("questions");
+            return Meteor.subscribe("question", this.params.questionId);
         },
         data: function() {
             return Questions.findOne({_id: this.params.questionId});
@@ -128,7 +128,7 @@ Router.map(function () {
         path: '/frivillig/admin/sporsmal',
         template: 'questionAdmin',
         waitOn: function() {
-            return Meteor.subscribe("questions");
+            return Meteor.subscribe("questions", QUESTION_SUBSCRIPTION_LEVEL.ALL);
         }
     });
 
