@@ -54,8 +54,9 @@
 
 <template name="volunteerMiniForm">
     <div>
-        <!--
-        <h4>Frivilligskjema</h4>
+        {{> flashMessages}}
+
+        <h4>Skjema for frivillige</h4>
         <form>
             <div class="form-group">
                 <label>Tittel</label>
@@ -69,12 +70,11 @@
 
             <button class="btn btn-primary" id="updateQuestion">Lagre</button>
             {{#if isNotMe lastUpdatedBy}}
-              Ved å lagre endringer her må en annen frivillig godkjenne svaret
+                <span style="font-size: 70%; margin-left: 15px;">Ved å lagre endringer her må en annen frivillig godkjenne svaret</span>
             {{/if}}
         </form>
 
         <br /><br />
-        -->
         {{#if canBeVerified}}
             {{#if isNotMe lastUpdatedBy}}
                 <button class="btn btn-success verify-answer">Godkjenn svar</button>
