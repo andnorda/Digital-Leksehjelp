@@ -2,10 +2,21 @@
     {{> flashMessages}}
 
     <div class="container">
+        <br>
+        <button type="button" class="btn btn-danger ignore-changes-and-close-window">
+            Forkast mine endringer og lukk vindu
+        </button>
+
         <h3>Svar på spørsmål</h3>
         <div class="row">
             <div class="col-md-8">
                 {{> answerQuestionForm}}
+
+                <br>
+                <button type="button" class="btn btn-danger ignore-changes-and-close-window">
+                    Forkast mine endringer og lukk vindu
+                </button>
+
                 {{> answerQuestionHelp}}
             </div>
             <div class="col-md-4">
