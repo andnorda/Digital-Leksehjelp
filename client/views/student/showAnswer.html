@@ -40,12 +40,13 @@
                         <div class="alert alert-warning" role="alert">
                             <strong>NB!</strong> Dette spørsmålet/svaret er kun synlig fordi du er logget inn som frivillig. Det er enten upublisert eller ikke ennå godkjent.
                         </div>
+                    {{/if}}
 
+                    {{#if showVolunteerMiniForm}}
                         {{> volunteerMiniForm}}
                     {{/if}}
                 </div>
             </div>
-
         </div>
     {{else}}
         {{> notFound}}

@@ -10,22 +10,13 @@ Template.showAnswer.helpers({
         if (Meteor.user() && this.question) {
             return !this.publishedBy || !this.verifiedBy;
         }
-    }
-});
-
-Template.showAnswer.events({
-    'click .verify-answer': function(event, template) {
-        if (Meteor.user()) {
-            Meteor.call('verifyAnswer',
-            {
-                questionId: this._id
-            },
-            function (error) {
-                if (error) {
-                    FlashMessages.sendError(error.message);
-                }
-            });
+    },
+    showVolunteerMiniForm: function () {
+        if (Meteor.user() && this.question) {
+            return !this.verifiedBy;
         }
+
+        return false;
     }
 });
 
@@ -63,6 +54,22 @@ Template.volunteerMiniForm.events({
                     FlashMessages.sendError(error.message);
                 } else {
                     FlashMessages.sendSuccess("Svar lagret", { autoHide: true, hideDelay: 6000 });
+                }
+            });
+        }
+    },
+
+    'click .verify-answer': function(event, template) {
+        event.preventDefault();
+
+        if (Meteor.user()) {
+            Meteor.call('verifyAnswer',
+            {
+                questionId: this._id
+            },
+            function (error) {
+                if (error) {
+                    FlashMessages.sendError(error.message);
                 }
             });
         }
