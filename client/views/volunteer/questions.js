@@ -92,9 +92,18 @@ Template.answeredQuestionRow.events({
 Template.answeredQuestionRow.helpers({
     status: function() {
         if (!this.editing || this.editing.length === 0) {
-            return new Spacebars.SafeString("<td>Venter på godkjenning</td>");
+            return new Spacebars.SafeString("<td>Ubesvart</td>");
         } else {
-            return new Spacebars.SafeString("<td class='warning'>Redigeres</td>");
+            var usersEditing = this.editing.map(function (userId) {
+                var user = Meteor.users.findOne({_id: userId});
+                if (user) {
+                    return user.emails[0] && user.emails[0].address;
+                } else {
+                    return "ukjent bruker";
+                }
+            }).join(", ");
+
+            return new Spacebars.SafeString("<td class='warning'>Redigeres av " + usersEditing + "</td>");
         }
     }
 });
