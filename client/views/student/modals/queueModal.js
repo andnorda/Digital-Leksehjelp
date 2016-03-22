@@ -1,12 +1,7 @@
-function deleteAllCookies() {
-    var cookies = document.cookie.split(";");
-
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i];
-        var eqPos = cookie.indexOf("=");
-        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
+function showSurvey() {
+    (function (w,i,d,g,e,t,s) {w[d] = w[d]||[];t= i.createElement(g);
+        t.async=1;t.src=e;s=i.getElementsByTagName(g)[0];s.parentNode.insertBefore(t, s);
+    })(window, document, '_gscq','script','//widgets.getsitecontrol.com/39414/script.js');
 }
 
 Template.queueModal.rendered = function () {
@@ -89,10 +84,7 @@ Template.queueModalBody.events({
             state: STUDENT_SESSION_STATE.GETTING_HELP
         });
 
-        // need to delete RapidEngage cookies to make sure the the survey pops up
-        // (can possibly leave the cookie after testing is done)
-        deleteAllCookies();
-        startRapidEngageSurvey();
+        showSurvey();
 
         cancelFlashTitle();
     }
