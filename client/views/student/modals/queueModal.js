@@ -1,9 +1,3 @@
-function showSurvey() {
-    (function (w,i,d,g,e,t,s) {w[d] = w[d]||[];t= i.createElement(g);
-        t.async=1;t.src=e;s=i.getElementsByTagName(g)[0];s.parentNode.insertBefore(t, s);
-    })(window, document, '_gscq','script','//widgets.getsitecontrol.com/39414/script.js');
-}
-
 Template.queueModal.rendered = function () {
     var elem = $('#queueModal')[0];
     var data = $.hasData(elem) && $._data(elem);
@@ -39,6 +33,8 @@ Template.queueModal.events({
             {
                 sessionId: Session.get("studentSessionId")
             });
+
+        window.showSurvey();
     }
 });
 
@@ -83,8 +79,6 @@ Template.queueModalBody.events({
             sessionId: Session.get("studentSessionId"),
             state: STUDENT_SESSION_STATE.GETTING_HELP
         });
-
-        showSurvey();
 
         cancelFlashTitle();
     }
