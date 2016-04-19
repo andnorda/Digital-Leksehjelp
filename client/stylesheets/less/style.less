@@ -154,17 +154,25 @@ h1, h2, h3, h4, h5 {
     width: 135px;
 }
 
-#facebook-logo {
-    position: absolute;
-    right: 35px;
-    top: 50px;
-    img {
-        width: 40px;
-    }
-}
-
 a {
     cursor: pointer;
+}
+
+p.get-help-box-item {
+    a.facebook-link {
+        border: none;
+
+        span {
+            color: #333;
+            border-bottom: 1px dashed #333;
+        }
+
+        img {
+            border-radius: 50%;
+            width: 24px;
+            margin-right: 6px;
+        }
+    }
 }
 
 .title {
@@ -190,9 +198,9 @@ a {
     line-height: 38px;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
     .get-help-box {
-        margin-top: -18px;
+        margin-top: 63px;
     }
 }
 
