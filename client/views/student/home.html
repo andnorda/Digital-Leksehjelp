@@ -18,17 +18,27 @@
                     <img id="red-cross-logo" src="/NRX_pos_FARGET bakgrunn.png">
                 </a>
 
-                <h1 class="title"><a href="/">Digital leksehjelp</a></h1>
-
                 <div class="row">
-                    <div class="col-md-4 col-sm-6">
-                        <p class="info-text">
-                            Røde Kors leksehjelp skal være en møteplass der frivillige leksehjelpere legger til rette for mestring, motivasjon, og et godt læringsmiljø. På leksehjelpen møter elevene voksne med fagkunnskap og erfaring.
-                        </p>
-                        <a id="more-info" href="#" class="red-cross-link">Les mer om tjenesten</a>
+                    <div class="col-md-8 col-sm-12">
+                        <h1 class="title"><a href="/">Digital leksehjelp</a></h1>
+
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+
+                                <p class="info-text">
+                                    Røde Kors leksehjelp skal være en møteplass der frivillige leksehjelpere legger til rette for mestring, motivasjon, og et godt læringsmiljø. På leksehjelpen møter elevene voksne med fagkunnskap og erfaring.
+                                </p>
+                                <a id="more-info" href="#" class="red-cross-link">Les mer om tjenesten</a>
+                                <br><br>
+                                <p class="info-text" style="margin-bottom: 0; font-size: 16px;">
+                                    Trenger du bare noen å prate med? <br>
+                                </p>
+                                <a href="https://www.korspahalsen.no/" target="_blank" class="red-cross-link">Kors på halsen</a>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="col-md-4 col-md-offset-4 col-sm-6 get-help-box">
+                    <div class="col-md-4 col-sm-12 get-help-box">
                         {{> getHelpBox}}
                     </div>
                 </div>
@@ -76,12 +86,24 @@
             </p>
 
             <p class="schedule center get-help-box-item extra-margin">Du kan også <a href="/sporsmal" class="red-cross-link">sende inn spørsmål</a> så <br>svarer vi deg innen 2-3 dager.</p>
+            <p class="schedule center get-help-box-item extra-margin">
+                <a class="facebook-link" href="http://www.facebook.com/digitalleksehjelp">
+                    <img src="/fb_logo_blue_50.png" />
+                    <span>Få oppdateringer</span>
+                </a>
+            </p>
         {{else}}
             <h3 class="get-help-box-title">Vår videochat er ikke åpen for øyeblikket</h3>
             <p class="get-help-box-item">Du kan <a href="/sporsmal" class="red-cross-link">sende inn spørsmål</a> som vi <br>besvarer innen 2-3 dager.</p>
             <h3 class="get-help-box-title smaller">Åpningstider for videochat</h3>
             <p class="schedule get-help-box-item">
                 {{{openingHours}}}
+            </p>
+            <p class="get-help-box-item">
+                <a class="facebook-link" href="http://www.facebook.com/digitalleksehjelp">
+                    <img src="/fb_logo_blue_50.png" />
+                    <span>Få oppdateringer</span>
+                </a>
             </p>
         {{/if}}
     {{else}}

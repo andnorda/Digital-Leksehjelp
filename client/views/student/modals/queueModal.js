@@ -33,6 +33,8 @@ Template.queueModal.events({
             {
                 sessionId: Session.get("studentSessionId")
             });
+
+        window.showSurvey();
     }
 });
 

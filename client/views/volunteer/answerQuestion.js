@@ -56,6 +56,16 @@ var answerQuestion = function (answerFields) {
         });
 }
 
+Template.answerQuestion.events({
+    'click .ignore-changes-and-close-window' : function(event)  {
+        event.preventDefault();
+
+        Meteor.call('setEditing', {questionId: this._id, editing: false}, function () {
+            window.close();
+        });
+    }
+});
+
 Template.answerQuestionForm.events({
     'submit form' : function(event, template)  {
         event.preventDefault();

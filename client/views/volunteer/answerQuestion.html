@@ -2,10 +2,23 @@
     {{> flashMessages}}
 
     <div class="container">
+        <br>
+        <button type="button" class="btn btn-danger ignore-changes-and-close-window">
+            Lukk vindu
+        </button>
+        <span style="font-size: 85%; margin-left: 15px;">(forkaster eventuelle endringer)</span>
+
         <h3>Svar på spørsmål</h3>
         <div class="row">
             <div class="col-md-8">
                 {{> answerQuestionForm}}
+
+                <br>
+                <button type="button" class="btn btn-danger ignore-changes-and-close-window">
+                    Lukk vindu
+                </button>
+                <span style="font-size: 85%; margin-left: 15px;">(forkaster eventuelle endringer)</span>
+
                 {{> answerQuestionHelp}}
             </div>
             <div class="col-md-4">
@@ -19,7 +32,7 @@
                 {{/if}}
 
                 <h3>Relaterte spørsmål</h3>
-                {{> relatedQuestions}}
+                {{> relatedQuestions target="_blank"}}
             </div>
         </div>
     </div>
@@ -65,7 +78,7 @@
             <label>
                 <input type="checkbox" name="publishAnswer" checked="{{publishIsChecked this}}"> Publisér svaret når det blir godkjent
             </label>
-          </div>
+        </div>
         <button type="submit" class="btn btn-primary btn-lg">Lagre svar</button>
     </form>
 </template>

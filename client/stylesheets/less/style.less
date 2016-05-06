@@ -158,6 +158,23 @@ a {
     cursor: pointer;
 }
 
+p.get-help-box-item {
+    a.facebook-link {
+        border: none;
+
+        span {
+            color: #333;
+            border-bottom: 1px dashed #333;
+        }
+
+        img {
+            border-radius: 50%;
+            width: 24px;
+            margin-right: 6px;
+        }
+    }
+}
+
 .title {
     font-family: @sans;
     font-weight: 300;
@@ -181,9 +198,9 @@ a {
     line-height: 38px;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
     .get-help-box {
-        margin-top: -18px;
+        margin-top: 63px;
     }
 }
 
@@ -665,6 +682,7 @@ tr:nth-of-type(odd) {
 }
 
 .container {
+    position: relative;
     padding: 0 15px;
 }
 
