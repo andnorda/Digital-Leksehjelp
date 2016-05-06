@@ -162,9 +162,17 @@ p.get-help-box-item {
     a.facebook-link {
         border: none;
 
+        &:hover {
+          text-decoration: none;
+        }
+
         span {
             color: #333;
             border-bottom: 1px dashed #333;
+
+            &:hover {
+                border-bottom: 1px solid #333;
+            }
         }
 
         img {
