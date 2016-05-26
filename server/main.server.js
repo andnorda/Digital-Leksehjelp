@@ -99,6 +99,13 @@ Meteor.startup(function () {
 Accounts.validateNewUser(function (user) {
     // A simple check to avoid people from signing up from outside the
     // admin panel.
+    if (Meteor.users.find().count() > 0) {
+        var loggedInUser = Meteor.user();
+        if (!loggedInUser || !loggedInUser.profile || loggedInUser.profile.role !== ROLES.ADMIN) {
+            throw new Meteor.Error(403, "You are not allowed to create new users");
+        }
+    }
+
     if (!user.profile) {
         throw new Meteor.Error(403, "You are not allowed to create new users");
     }
