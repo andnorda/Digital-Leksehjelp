@@ -82,7 +82,7 @@ Router.map(function () {
         template: 'studentSessions',
         onAfterAction: function() {
             var user = Meteor.user();
-            if (!(user.profile.role === ROLES.ADMIN || user.profile.allowVideohelp)) {
+            if (!user || !user.profile || !(user.profile.role === ROLES.ADMIN || user.profile.allowVideohelp)) {
                 this.redirect('/frivillig/profil');
             }
         }

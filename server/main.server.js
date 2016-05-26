@@ -58,7 +58,9 @@ Meteor.startup(function () {
     Meteor.users.find({ "status.online" : true }).observe({
         removed: function (user) {
             Meteor.users.update({ _id: user._id }, { $set: { 'profile.forceLogOut': false }});
-            for (var i = 0; i < user.profile.subjects.length; i++) {
+
+            var subjectsLength = user.profile && user.profile.subjects && user.profile.subjects.length || 0;
+            for (var i = 0; i < subjectsLength; i++) {
                 Subjects.update(
                     { _id: user.profile.subjects[i].subjectId },
                     { $pull: { availableVolunteers: user._id } },

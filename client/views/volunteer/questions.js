@@ -31,19 +31,24 @@ Template.unansweredQuestions.helpers({
 
 Template.unansweredQuestionRow.helpers({
     status: function() {
-        if (!this.editing || this.editing.length === 0) {
-            return new Spacebars.SafeString("<td>Ubesvart</td>");
-        } else {
-            var usersEditing = this.editing.map(function (userId) {
-                var user = Meteor.users.findOne({_id: userId});
-                if (user) {
-                    return user.emails[0] && user.emails[0].address;
-                } else {
-                    return "ukjent bruker";
-                }
-            }).join(", ");
+        try {
+            if (!this.editing || this.editing.length === 0) {
+                return new Spacebars.SafeString("<td>Ubesvart</td>");
+            } else {
+                var usersEditing = this.editing.map(function (userId) {
+                    var user = Meteor.users.findOne({_id: userId});
+                    if (user) {
+                        return user.emails[0] && user.emails[0].address;
+                    } else {
+                        return "ukjent bruker";
+                    }
+                }).join(", ");
 
-            return new Spacebars.SafeString("<td class='warning'>Redigeres av " + usersEditing + "</td>");
+                return new Spacebars.SafeString("<td class='warning'>Redigeres av " + usersEditing + "</td>");
+            }
+        } catch (error) {
+            console.error(error);
+            return new Spacebars.SafeString("<td>Ubesvart</td>");
         }
     }
 });
