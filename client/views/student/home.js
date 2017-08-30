@@ -47,53 +47,45 @@ Template.getHelpBox.helpers({
 Template.getHelpBox.events({
     'click button#start-video-session' : function (event) {
 
-        API.isAppearinCompatible(function (data) {
-            if (!data.isSupported) {
-                $('#notSupportedModal').modal();
-                mixpanel.track("Feilet teknisk sjekk");
-                return;
-            }
+        if ($("button#start-video-session").hasClass("disabled")) {
+            return;
+        }
 
-            if ($("button#start-video-session").hasClass("disabled")) {
-                return;
-            }
+        var chosenSubject = $('#chosen-subject').text().trim();
+        var chosenGrade = $('#chosen-grade').text().trim();
 
-            var chosenSubject = $('#chosen-subject').text().trim();
-            var chosenGrade = $('#chosen-grade').text().trim();
-
-            validationError = [];
+        validationError = [];
+        validationErrorDep.changed();
+        if (chosenSubject === "Velg fag") {
+            validationError.push("subjectError");
             validationErrorDep.changed();
-            if (chosenSubject === "Velg fag") {
-                validationError.push("subjectError");
-                validationErrorDep.changed();
-            }
-            if (chosenGrade === "Velg trinn") {
-                validationError.push("gradeError");
-                validationErrorDep.changed();
-            }
-            if (validationError.length === 0) {
-                mixpanel.track("Bedt om leksehjelp", { "fag": chosenSubject, "trinn": chosenGrade });
-                Meteor.call('createSessionOnServer',
-                    {
-                        subject: chosenSubject,
-                        grade: chosenGrade,
-                        queueNr: getHighestQueueNr()
-                    },
-                    function (error, sessionId) {
-                        if (error) {
-                            validationError.push("sessionError");
-                            validationErrorDep.changed();
-                        } else {
-                            Session.set("studentSessionId", sessionId);
-                            Session.set("queueStartTime", new Date().getTime());
-                            $('#queueModal').modal({
-                                backdrop: 'static',
-                                keyboard: false
-                            });
-                        }
-                    });
-            }
-        });
+        }
+        if (chosenGrade === "Velg trinn") {
+            validationError.push("gradeError");
+            validationErrorDep.changed();
+        }
+        if (validationError.length === 0) {
+            mixpanel.track("Bedt om leksehjelp", { "fag": chosenSubject, "trinn": chosenGrade });
+            Meteor.call('createSessionOnServer',
+                {
+                    subject: chosenSubject,
+                    grade: chosenGrade,
+                    queueNr: getHighestQueueNr()
+                },
+                function (error, sessionId) {
+                    if (error) {
+                        validationError.push("sessionError");
+                        validationErrorDep.changed();
+                    } else {
+                        Session.set("studentSessionId", sessionId);
+                        Session.set("queueStartTime", new Date().getTime());
+                        $('#queueModal').modal({
+                            backdrop: 'static',
+                            keyboard: false
+                        });
+                    }
+                });
+        }
     },
 
     'click .disabled-li' : function (event) {
