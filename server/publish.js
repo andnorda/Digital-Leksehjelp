@@ -1,10 +1,14 @@
-Meteor.publish("all-users", function () {
+Meteor.publish('all-users', function() {
     var user = Meteor.users.findOne(this.userId);
     if (user) {
-        if (user.profile.role  === ROLES.ADMIN) {
-            return Meteor.users.find({}, {fields: {username: 1, emails: 1, profile: 1}});
+        if (user.profile.role === ROLES.ADMIN) {
+            return Meteor.users.find(
+                {},
+                { fields: { username: 1, emails: 1, profile: 1 } }
+            );
         } else {
-            return Meteor.users.find({},
+            return Meteor.users.find(
+                {},
                 {
                     fields: {
                         username: true,
@@ -15,20 +19,22 @@ Meteor.publish("all-users", function () {
                         'profile.role': 1,
                         'status.online': 1
                     }
-                });
+                }
+            );
         }
     }
 
-    this.ready()
+    this.ready();
 });
 
-Meteor.publish("loggedInUsers", function () {
+Meteor.publish('loggedInUsers', function() {
     var user = Meteor.users.findOne(this.userId);
-    var publicLoggedInCursor = Meteor.users.find({
+    var publicLoggedInCursor = Meteor.users.find(
+        {
             $and: [
                 { 'profile.allowVideohelp': { $exists: true } },
-                { 'services.resume.loginTokens': { $exists:true } },
-                { 'services.resume.loginTokens': { $not: { $size: 0 } }}
+                { 'services.resume.loginTokens': { $exists: true } },
+                { 'services.resume.loginTokens': { $not: { $size: 0 } } }
             ]
         },
         {
@@ -40,7 +46,8 @@ Meteor.publish("loggedInUsers", function () {
                 'status.online': 1,
                 'profile.allowVideohelp': 1
             }
-        });
+        }
+    );
 
     if (!user) {
         return publicLoggedInCursor;
@@ -48,11 +55,11 @@ Meteor.publish("loggedInUsers", function () {
 
     var userRole = user.profile.role;
 
-    if (userRole  === ROLES.ADMIN) {
+    if (userRole === ROLES.ADMIN) {
         return Meteor.users.find({
             $and: [
-                { 'services.resume.loginTokens': { $exists:true } },
-                { 'services.resume.loginTokens': { $not: { $size: 0 } }}
+                { 'services.resume.loginTokens': { $exists: true } },
+                { 'services.resume.loginTokens': { $not: { $size: 0 } } }
             ]
         });
     } else {
@@ -60,31 +67,35 @@ Meteor.publish("loggedInUsers", function () {
     }
 });
 
-Meteor.publish("user-data", function () {
+Meteor.publish('user-data', function() {
     return Meteor.users.findOne(this.userId);
 });
 
-Meteor.publish("student-queue", function () {
+Meteor.publish('student-queue', function() {
     var self = this;
     var id = Random.id();
-    var handle = StudentSessions.find({ state: STUDENT_SESSION_STATE.WAITING })
-        .observeChanges({
-            added: function (id, fields) {
-                self.added("student-queue", id, { queueNr: fields.queueNr, subject: fields.subject });
-            },
-            removed: function (id) {
-                self.removed("student-queue", id);
-            }
-        });
+    var handle = StudentSessions.find({
+        state: STUDENT_SESSION_STATE.WAITING
+    }).observeChanges({
+        added: function(id, fields) {
+            self.added('student-queue', id, {
+                queueNr: fields.queueNr,
+                subject: fields.subject
+            });
+        },
+        removed: function(id) {
+            self.removed('student-queue', id);
+        }
+    });
 
     self.ready();
 
-    self.onStop(function () {
+    self.onStop(function() {
         handle.stop();
     });
 });
 
-Meteor.publish("sessions", function (sessionId) {
+Meteor.publish('sessions', function(sessionId) {
     var user = Meteor.users.findOne(this.userId);
     if (!user) {
         check(sessionId, Match.OneOf(String, null));
@@ -94,19 +105,19 @@ Meteor.publish("sessions", function (sessionId) {
     return StudentSessions.find({});
 });
 
-Meteor.publish("subjects", function () {
+Meteor.publish('subjects', function() {
     return Subjects.find({});
 });
 
-Meteor.publish("openingHours", function () {
-    return Config.find({ name: "openingHours" });
+Meteor.publish('openingHours', function() {
+    return Config.find({ name: 'openingHours' });
 });
 
-Meteor.publish("serviceStatus", function () {
-    return Config.find({ name: "serviceStatus"});
+Meteor.publish('serviceStatus', function() {
+    return Config.find({ name: 'serviceStatus' });
 });
 
-Meteor.publish("config", function () {
+Meteor.publish('config', function() {
     var user = Meteor.users.findOne(this.userId);
 
     if (user && user.profile.role === ROLES.ADMIN) {

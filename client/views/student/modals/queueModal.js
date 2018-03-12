@@ -1,20 +1,23 @@
-Template.queueModal.rendered = function () {
+Template.queueModal.rendered = function() {
     var elem = $('#queueModal')[0];
     var data = $.hasData(elem) && $._data(elem);
 
     if (data && data.events) {
         if (!data.events.hidden) {
-            $('#queueModal').on('hidden.bs.modal', function () {
+            $('#queueModal').on('hidden.bs.modal', function() {
                 var session = findStudentSession();
-                if (session && (session.state !== STUDENT_SESSION_STATE.GETTING_HELP)) {
-                    mixpanel.track("Forlot leksehjelp-kø",
-                        {
-                            "Minutter i kø" : DigitalLeksehjelp.getQueueTime(
-                                Session.get("queueStartTime"), "minutes")
-                        });
-                    Meteor.call('removeSession',
-                    {
-                        sessionId: Session.get("studentSessionId")
+                if (
+                    session &&
+                    session.state !== STUDENT_SESSION_STATE.GETTING_HELP
+                ) {
+                    mixpanel.track('Forlot leksehjelp-kø', {
+                        'Minutter i kø': DigitalLeksehjelp.getQueueTime(
+                            Session.get('queueStartTime'),
+                            'minutes'
+                        )
+                    });
+                    Meteor.call('removeSession', {
+                        sessionId: Session.get('studentSessionId')
                     });
                 }
                 $(this).off('hidden.bs.modal');
@@ -23,60 +26,65 @@ Template.queueModal.rendered = function () {
     }
 };
 
-var findStudentSession = function () {
-    return StudentSessions.findOne({ _id: Session.get("studentSessionId") });
-}
+var findStudentSession = function() {
+    return StudentSessions.findOne({ _id: Session.get('studentSessionId') });
+};
 
 Template.queueModal.events({
-    'click a#leave-queue' : function () {
-        Meteor.call('removeSession',
-            {
-                sessionId: Session.get("studentSessionId")
-            });
+    'click a#leave-queue': function() {
+        Meteor.call('removeSession', {
+            sessionId: Session.get('studentSessionId')
+        });
 
         window.showSurvey();
     }
 });
 
 Template.queueModalBody.helpers({
-    studentSession: function () {
+    studentSession: function() {
         return findStudentSession();
     },
-    stateWaiting: function () {
+    stateWaiting: function() {
         var studentSession = findStudentSession();
-        return studentSession && studentSession.state == STUDENT_SESSION_STATE.WAITING;
+        return (
+            studentSession &&
+            studentSession.state == STUDENT_SESSION_STATE.WAITING
+        );
     },
-    studentsInFront: function () {
+    studentsInFront: function() {
         var studentSession = findStudentSession();
-        var nrOfStudents = StudentQueue.find({ $and: [
+        var nrOfStudents = StudentQueue.find({
+            $and: [
                 { queueNr: { $lt: studentSession.queueNr } },
                 { subject: studentSession.subject }
-            ]}).count();
+            ]
+        }).count();
         return nrOfStudents + 1;
-
     },
-    stateReady: function () {
+    stateReady: function() {
         var studentSession = findStudentSession();
-        var stateReady = studentSession && studentSession.state == STUDENT_SESSION_STATE.READY;
+        var stateReady =
+            studentSession &&
+            studentSession.state == STUDENT_SESSION_STATE.READY;
         if (stateReady) {
-            flashTitle("Leksehjelpen er klar!", 20);
+            flashTitle('Leksehjelpen er klar!', 20);
         }
         return stateReady;
     }
 });
 
 Template.queueModalBody.events({
-    'click button#getHelp' : function () {
-        mixpanel.track("Fullført kø, og gått til rom",
-            {
-                "Minutter i kø": DigitalLeksehjelp.getQueueTime(
-                    Session.get("queueStartTime"), "minutes")
-            });
+    'click button#getHelp': function() {
+        mixpanel.track('Fullført kø, og gått til rom', {
+            'Minutter i kø': DigitalLeksehjelp.getQueueTime(
+                Session.get('queueStartTime'),
+                'minutes'
+            )
+        });
         window.open(this.videoConferenceUrl);
 
-        Meteor.call('setSessionState',
-        {
-            sessionId: Session.get("studentSessionId"),
+        Meteor.call('setSessionState', {
+            sessionId: Session.get('studentSessionId'),
             state: STUDENT_SESSION_STATE.GETTING_HELP
         });
 

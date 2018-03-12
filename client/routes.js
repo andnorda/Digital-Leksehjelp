@@ -1,4 +1,4 @@
-var checkIfSignedIn = function (pause) {
+var checkIfSignedIn = function(pause) {
     if (!Meteor.userId()) {
         this.render('login');
     } else {
@@ -8,9 +8,9 @@ var checkIfSignedIn = function (pause) {
 
 var setDocumentTitle = function(title) {
     if (title) {
-        document.title = "Røde Kors - Digital Leksehjelp - " + title;
+        document.title = 'Røde Kors - Digital Leksehjelp - ' + title;
     } else {
-        document.title = "Røde Kors - Digital Leksehjelp";
+        document.title = 'Røde Kors - Digital Leksehjelp';
     }
 };
 
@@ -20,31 +20,33 @@ BaseController = RouteController.extend({
 
 DefaultController = BaseController.extend({
     yieldTemplates: {
-        'header': { to : 'header'},
-        'footer': { to : 'footer'}
+        header: { to: 'header' },
+        footer: { to: 'footer' }
     }
 });
 
 HomeController = BaseController.extend({
     yieldTemplates: {
-        'footer': { to : 'footer'}
+        footer: { to: 'footer' }
     }
 });
 
 LoginController = BaseController.extend({
     yieldTemplates: {
-        'loggedInHeader': { to : 'header'},
-        'loggedInFooter': { to : 'footer'}
+        loggedInHeader: { to: 'header' },
+        loggedInFooter: { to: 'footer' }
     }
 });
 
 AnswerQuestionController = BaseController.extend({
     yieldTemplates: {
-        'loggedInFooter': { to : 'footer'}
+        loggedInFooter: { to: 'footer' }
     }
 });
 
-Router.onBeforeAction(checkIfSignedIn, {except: ['home', 'askQuestion', 'notFound', 'search', 'showAnswer']});
+Router.onBeforeAction(checkIfSignedIn, {
+    except: ['home', 'askQuestion', 'notFound', 'search', 'showAnswer']
+});
 
 Router.onAfterAction(setDocumentTitle);
 
@@ -53,10 +55,10 @@ Router.configure({
     loadingTemplate: 'loading'
 });
 
-Router.map(function () {
+Router.map(function() {
     this.route('home', {
         path: '/',
-        onBeforeAction: function(){
+        onBeforeAction: function() {
             FlashMessages.clear();
             validationError = [];
             this.next();
@@ -65,7 +67,10 @@ Router.map(function () {
             Meteor.call('questionSearchCount', {}, function(error, result) {
                 Session.set('numberOfQuestions', result);
             });
-            return Meteor.subscribe("questionSearch", { sort: 'date', limit: 6 });
+            return Meteor.subscribe('questionSearch', {
+                sort: 'date',
+                limit: 6
+            });
         },
         data: function() {
             return Questions.find({});
@@ -82,18 +87,27 @@ Router.map(function () {
         template: 'studentSessions',
         onAfterAction: function() {
             var user = Meteor.user();
-            if (!user || !user.profile || !(user.profile.role === ROLES.ADMIN || user.profile.allowVideohelp)) {
+            if (
+                !user ||
+                !user.profile ||
+                !(
+                    user.profile.role === ROLES.ADMIN ||
+                    user.profile.allowVideohelp
+                )
+            ) {
                 this.redirect('/frivillig/profil');
             }
         }
-
     });
 
     this.route('questions', {
         controller: LoginController,
         path: '/frivillig/sporsmal',
         waitOn: function() {
-            return Meteor.subscribe("questions", QUESTION_SUBSCRIPTION_LEVEL.REGULAR);
+            return Meteor.subscribe(
+                'questions',
+                QUESTION_SUBSCRIPTION_LEVEL.REGULAR
+            );
         },
         data: function() {
             return { searchResults: Questions.find({}) };
@@ -104,10 +118,10 @@ Router.map(function () {
         controller: AnswerQuestionController,
         path: '/frivillig/sporsmal/svar/:questionId',
         waitOn: function() {
-            return Meteor.subscribe("question", this.params.questionId);
+            return Meteor.subscribe('question', this.params.questionId);
         },
         data: function() {
-            return Questions.findOne({_id: this.params.questionId});
+            return Questions.findOne({ _id: this.params.questionId });
         }
     });
 
@@ -128,7 +142,10 @@ Router.map(function () {
         path: '/frivillig/admin/sporsmal',
         template: 'questionAdmin',
         waitOn: function() {
-            return Meteor.subscribe("questions", QUESTION_SUBSCRIPTION_LEVEL.ALL);
+            return Meteor.subscribe(
+                'questions',
+                QUESTION_SUBSCRIPTION_LEVEL.ALL
+            );
         }
     });
 
@@ -152,7 +169,7 @@ Router.map(function () {
         controller: DefaultController,
         path: '/sporsmal/:questionId',
         waitOn: function() {
-            return Meteor.subscribe("question", this.params.questionId);
+            return Meteor.subscribe('question', this.params.questionId);
         },
         onAfterAction: function() {
             var question = Questions.findOne({});
@@ -174,20 +191,26 @@ Router.map(function () {
         waitOn: function() {
             // https://github.com/EventedMind/iron-router/issues/1088
             var self = this;
-            Object.keys(self.params.query).forEach(function (key) {
-                self.params.query[key] = self.params.query[key].replace(/\+/g, " ");
+            Object.keys(self.params.query).forEach(function(key) {
+                self.params.query[key] = self.params.query[key].replace(
+                    /\+/g,
+                    ' '
+                );
             });
 
-            Meteor.call('questionSearchCount', this.params.query, function(error, result) {
+            Meteor.call('questionSearchCount', this.params.query, function(
+                error,
+                result
+            ) {
                 Session.set('questionSearchCount', result);
             });
-            return Meteor.subscribe("questionSearch", this.params.query);
+            return Meteor.subscribe('questionSearch', this.params.query);
         }
     });
 
     this.route('notFound', {
         path: '/(.*)',
-        action: function () {
+        action: function() {
             this.redirect('/');
         }
     });

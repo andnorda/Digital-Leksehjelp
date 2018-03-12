@@ -1,6 +1,6 @@
-var isNumber = function (obj) {
-  return ! isNaN (obj-0) && obj !== null && obj !== "" && obj !== false;
-}
+var isNumber = function(obj) {
+    return !isNaN(obj - 0) && obj !== null && obj !== '' && obj !== false;
+};
 
 this.questionPublicFields = {
     answer: true,
@@ -12,19 +12,19 @@ this.questionPublicFields = {
     subjectId: true,
     title: true,
     slug: true
-}
+};
 
 this.questionPrivateFields = {
     studentEmail: false
-}
+};
 
 this.QuestionHelpers = {
-    parseSearchParams: function (params) {
+    parseSearchParams: function(params) {
         var selector = { $and: [] };
-        var options = { fields: { score: { $meta: "textScore" }}};
+        var options = { fields: { score: { $meta: 'textScore' } } };
 
         if (params.hasOwnProperty('q') && params['q'] !== '') {
-            selector.$and.push({ "$text": { "$search": params.q } });
+            selector.$and.push({ $text: { $search: params.q } });
         }
         if (params.hasOwnProperty('subject') && params['subject'] !== '_all') {
             var subject = Subjects.findOne({ humanReadableId: params.subject });
@@ -37,7 +37,7 @@ this.QuestionHelpers = {
         }
 
         // default sorting
-        options['sort'] = { score: { $meta: "textScore" }};
+        options['sort'] = { score: { $meta: 'textScore' } };
 
         if (params.hasOwnProperty('sort')) {
             if (params['sort'] === 'date') {
@@ -60,26 +60,26 @@ this.QuestionHelpers = {
             options['skip'] = parseInt(params.offset);
         }
 
-        return {selector: selector, options: options};
+        return { selector: selector, options: options };
     },
-    searchCriteraBuilder: function (params, userId) {
+    searchCriteraBuilder: function(params, userId) {
         var searchCritera = QuestionHelpers.parseSearchParams(params);
 
-        searchCritera.selector.$and.push({ answer: { $exists: true }});
+        searchCritera.selector.$and.push({ answer: { $exists: true } });
 
         if (userId) {
             if (params.hasOwnProperty('related') && params.related) {
                 searchCritera.selector.$and.push(
-                    { verifiedBy: { $exists: true }},
-                    { publishedBy: { $exists: true }}
+                    { verifiedBy: { $exists: true } },
+                    { publishedBy: { $exists: true } }
                 );
             }
 
             _.extend(searchCritera.options['fields'], questionPrivateFields);
         } else {
             searchCritera.selector.$and.push(
-                { verifiedBy: { $exists: true }},
-                { publishedBy: { $exists: true }}
+                { verifiedBy: { $exists: true } },
+                { publishedBy: { $exists: true } }
             );
 
             _.extend(searchCritera.options['fields'], questionPublicFields);
@@ -87,9 +87,12 @@ this.QuestionHelpers = {
 
         return searchCritera;
     },
-    search: function (params, userId) {
-        var searchCritera = QuestionHelpers.searchCriteraBuilder(params, userId);
+    search: function(params, userId) {
+        var searchCritera = QuestionHelpers.searchCriteraBuilder(
+            params,
+            userId
+        );
 
         return Questions.find(searchCritera.selector, searchCritera.options);
     }
-}
+};

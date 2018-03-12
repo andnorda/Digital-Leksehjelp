@@ -1,8 +1,8 @@
-var userAddedDep = new Deps.Dependency;
+var userAddedDep = new Deps.Dependency();
 var userAdded;
 
 Template.addUser.helpers({
-    userAdded: function () {
+    userAdded: function() {
         userAddedDep.depend();
         return userAdded;
     }
@@ -27,26 +27,31 @@ Template.addUser.events({
                     allowVideohelp: allowVideohelp
                 }
             },
-            function (error, result) {
+            function(error, result) {
                 if (error) {
-                    userAdded = "Feil, brukeren med epost: " + email +
-                        ", ble IKKE lagt til. Vennligst prøv igjen.";
+                    userAdded =
+                        'Feil, brukeren med epost: ' +
+                        email +
+                        ', ble IKKE lagt til. Vennligst prøv igjen.';
                     FlashMessages.sendError(error.message);
                 } else {
-                    userAdded = "Brukeren med epost: " + email +
-                        " er nå lagt til, og har fått tilsendt en bekreftelses-epost.";
-                    $('#email').val("");
-                    $('#firstName').val("");
+                    userAdded =
+                        'Brukeren med epost: ' +
+                        email +
+                        ' er nå lagt til, og har fått tilsendt en bekreftelses-epost.';
+                    $('#email').val('');
+                    $('#firstName').val('');
                     $('#adminCheck').attr('checked', false);
                 }
                 userAddedDep.changed();
-            });
+            }
+        );
     }
 });
 
 // === ROLESELECTOR ===
 Template.roleSelector.helpers({
-    roles: function () {
+    roles: function() {
         var rolesArray = [];
         for (var key in ROLES) {
             if (ROLES.hasOwnProperty(key)) {
@@ -60,7 +65,7 @@ Template.roleSelector.helpers({
 
 // === USERSTABLE ===
 Template.usersTable.helpers({
-    users: function () {
+    users: function() {
         return Meteor.users.find({}).fetch();
     }
 });
@@ -69,106 +74,123 @@ Template.usersTable.helpers({
 var newUserRole;
 
 Template.userRow.helpers({
-    remoteUserLoggedIn: function () {
-        var userLoggedInArray = Meteor.users.find({
+    remoteUserLoggedIn: function() {
+        var userLoggedInArray = Meteor.users
+            .find({
                 $and: [
-                    { '_id': this._id },
-                    { 'services.resume.loginTokens': { $exists:true } },
-                    { 'services.resume.loginTokens': { $not: { $size: 0 } }}
-                ]}).fetch();
-        return (userLoggedInArray.length > 0) ? true : false;
+                    { _id: this._id },
+                    { 'services.resume.loginTokens': { $exists: true } },
+                    { 'services.resume.loginTokens': { $not: { $size: 0 } } }
+                ]
+            })
+            .fetch();
+        return userLoggedInArray.length > 0 ? true : false;
     }
 });
 
 Template.userRow.events({
-    'change .newRole' : function (event) {
+    'change .newRole': function(event) {
         newUserRole = event.target.value;
-        Meteor.call('updateUserRole',
+        Meteor.call(
+            'updateUserRole',
             {
                 userId: this._id,
                 role: newUserRole
             },
-            function (error, result) {
+            function(error, result) {
                 if (error) {
                     FlashMessages.sendError(error.message);
-                };
-            });
+                }
+            }
+        );
     },
 
-    'click .deleteUser' : function (event) {
-        Meteor.call('removeUser',
+    'click .deleteUser': function(event) {
+        Meteor.call(
+            'removeUser',
             {
                 userId: this._id
             },
-            function (error, result) {
+            function(error, result) {
                 if (error) {
                     FlashMessages.sendError(error.message);
-                };
-            });
+                }
+            }
+        );
     },
 
-    'click .logoutUser' : function (event) {
-        Meteor.call('remoteLogOutUser',
-        {
-            userId: this._id
-        },
-        function (error, result) {
-            if (error) {
-                FlashMessages.sendError(error.message);
+    'click .logoutUser': function(event) {
+        Meteor.call(
+            'remoteLogOutUser',
+            {
+                userId: this._id
+            },
+            function(error, result) {
+                if (error) {
+                    FlashMessages.sendError(error.message);
+                }
             }
-        });
+        );
     },
 
-    'click .allowVideohelp' : function (event) {
-        Meteor.call('toggleAllowVideohelp',
-        {
-            userId: this._id
-        },
-        function (error, result) {
-            if (error) {
-                FlashMessages.sendError(error.message);
+    'click .allowVideohelp': function(event) {
+        Meteor.call(
+            'toggleAllowVideohelp',
+            {
+                userId: this._id
+            },
+            function(error, result) {
+                if (error) {
+                    FlashMessages.sendError(error.message);
+                }
             }
-        });
+        );
     }
 });
 
 // === OPENINGHOURS ===
 Template.openingHours.helpers({
-    openingHours: function () {
-        var openingHoursArray = Config.find({ name: "openingHours" }).fetch();
+    openingHours: function() {
+        var openingHoursArray = Config.find({ name: 'openingHours' }).fetch();
 
         if (openingHoursArray.length > 0) {
             return openingHoursArray[0].text;
         }
-        return "";
+        return '';
     }
 });
 
 Template.openingHours.events({
-    'click button#updateOpeningHours' : function () {
-        Meteor.call('upsertOpeningHours',
+    'click button#updateOpeningHours': function() {
+        Meteor.call(
+            'upsertOpeningHours',
             {
-                newOpeningHours: $('#openingHours').val().trim()
+                newOpeningHours: $('#openingHours')
+                    .val()
+                    .trim()
             },
-            function (error, data) {
+            function(error, data) {
                 if (error) {
                     FlashMessages.sendError(error.message);
                 }
-            });
+            }
+        );
     }
 });
 
 // === SERVICESTATUS ===
 Template.serviceClosedAdmin.events({
-    'click button#updateClosedStatus' : function () {
-        Meteor.call('upsertServiceStatus',
+    'click button#updateClosedStatus': function() {
+        Meteor.call(
+            'upsertServiceStatus',
             {
                 newServiceStatus: false
             },
-            function (error, data) {
+            function(error, data) {
                 if (error) {
                     FlashMessages.sendError(error.message);
                 }
-            });
+            }
+        );
     }
 });

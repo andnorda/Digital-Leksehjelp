@@ -1,7 +1,10 @@
 var MongoClient = require('mongodb').MongoClient;
 var exec = require('child_process').exec;
 
-MongoClient.connect("mongodb://localhost:27017/digital-leksehjelp", function(err, db) {
+MongoClient.connect('mongodb://localhost:27017/digital-leksehjelp', function(
+    err,
+    db
+) {
     db.collection('sessions').remove({}, function(err, res) {
         db.close();
         runTests();
