@@ -1,3 +1,7 @@
+Meteor.setInterval(function() {
+    Session.set('time', new Date());
+}, 1000);
+
 Template.studentSessionsTable.helpers({
     myStudentSessions: function() {
         var query = {
@@ -28,6 +32,12 @@ Template.studentSessionsTable.helpers({
         } else {
             return StudentSessions.find(query);
         }
+    }
+});
+
+Template.studentSessionRow.helpers({
+    time: function() {
+        return Session.get('time') || new Date();
     }
 });
 

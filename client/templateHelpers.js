@@ -145,3 +145,22 @@ Template.registerHelper('subjectList', function(subjects) {
 Template.registerHelper('slugOrId', function(question) {
     return question.slug || question._id;
 });
+
+function pad(n) {
+    return Number(n) > 9 ? n : '0' + n;
+}
+
+Template.registerHelper('timeSince', function(date, time) {
+    const timeSince = time.getTime() - date.getTime();
+    if (timeSince < 1) {
+        return '0:00';
+    }
+    const seconds = Math.floor(timeSince / 1000) % 60;
+    const minutes = Math.floor(timeSince / 60000) % 60;
+    const hours = Math.floor(timeSince / 3600000);
+    if (hours) {
+        return hours + ':' + minutes + ':' + pad(seconds);
+    } else {
+        return minutes + ':' + pad(seconds);
+    }
+});

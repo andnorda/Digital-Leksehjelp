@@ -49,7 +49,8 @@ Meteor.methods({
             grade: options.grade,
             videoConferenceUrl: videoConferenceUrl,
             state: STUDENT_SESSION_STATE.WAITING,
-            queueNr: queueNr
+            queueNr: queueNr,
+            createdAt: new Date()
         });
     },
 

@@ -22,6 +22,7 @@
     <h2>Mine fag</h2>
         <table border="1">
             <tr>
+                <th>Tid i kø</th>
                 <th>Kø id</th>
                 <th>Fag</th>
                 <th>Trinn</th>
@@ -38,6 +39,7 @@
     <h2>Andre fag</h2>
         <table border="1">
             <tr>
+                <th>Tid i kø</th>
                 <th>Kø id</th>
                 <th>Fag</th>
                 <th>Trinn</th>
@@ -54,6 +56,7 @@
 
 <template name="studentSessionRow">
     <tr>
+        <td>{{ timeSince createdAt time }}</td>
         <td>{{ queueNr }}</td>
         <td>{{ subject }}</td>
         <td>{{ grade }}</td>
