@@ -40,8 +40,8 @@ Template.unansweredQuestionRow.helpers({
                 var usersEditing = this.editing
                     .map(function(userId) {
                         var user = Meteor.users.findOne({ _id: userId });
-                        if (user) {
-                            return user.emails[0] && user.emails[0].address;
+                        if (user && user.profile && user.profile.firstName) {
+                            return user.profile.firstName;
                         } else {
                             return 'ukjent bruker';
                         }
@@ -110,8 +110,8 @@ Template.answeredQuestionRow.helpers({
             var usersEditing = this.editing
                 .map(function(userId) {
                     var user = Meteor.users.findOne({ _id: userId });
-                    if (user) {
-                        return user.emails[0] && user.emails[0].address;
+                    if (user && user.profile && user.profile.firstName) {
+                        return user.profile.firstName;
                     } else {
                         return 'ukjent bruker';
                     }
