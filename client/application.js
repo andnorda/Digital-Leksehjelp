@@ -9,6 +9,7 @@ Meteor.subscribe('openingHours', function onComplete() {
 });
 Meteor.subscribe('subjects');
 Meteor.subscribe('loggedInUsers');
+Meteor.subscribe('student-queue');
 
 var lastUserId;
 Deps.autorun(function() {
@@ -16,7 +17,6 @@ Deps.autorun(function() {
     if (Meteor.user()) {
         if (Meteor.user().profile && Meteor.user().profile.firstName) {
             Meteor.subscribe('all-users');
-            Meteor.subscribe('student-queue');
             Meteor.subscribe('config');
             if (Meteor.user().profile.setSubjectsAvailable) {
                 Meteor.call('setSubjectsAvailable', {
