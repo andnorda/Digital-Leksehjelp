@@ -142,10 +142,7 @@ Router.map(function() {
         path: '/frivillig/admin/sporsmal',
         template: 'questionAdmin',
         waitOn: function() {
-            return Meteor.subscribe(
-                'questions',
-                QUESTION_SUBSCRIPTION_LEVEL.ALL
-            );
+            return Meteor.subscribe('verifiedQuestions', 0);
         }
     });
 
