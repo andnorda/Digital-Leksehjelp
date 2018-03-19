@@ -12,22 +12,32 @@ Template.unansweredQuestions.helpers({
     myUnansweredQuestions: function() {
         var mySubjectIds = subjectIds(Meteor.user());
 
-        return Questions.find({
-            $and: [
-                { answer: { $exists: false } },
-                { subjectId: { $in: mySubjectIds } }
-            ]
-        });
+        return Questions.find(
+            {
+                $and: [
+                    { answer: { $exists: false } },
+                    { subjectId: { $in: mySubjectIds } }
+                ]
+            },
+            {
+                sort: { questionDate: 1 }
+            }
+        );
     },
     otherUnansweredQuestions: function() {
         var mySubjectIds = subjectIds(Meteor.user());
 
-        return Questions.find({
-            $and: [
-                { answer: { $exists: false } },
-                { subjectId: { $nin: mySubjectIds } }
-            ]
-        });
+        return Questions.find(
+            {
+                $and: [
+                    { answer: { $exists: false } },
+                    { subjectId: { $nin: mySubjectIds } }
+                ]
+            },
+            {
+                sort: { questionDate: 1 }
+            }
+        );
     }
 });
 
@@ -63,26 +73,36 @@ Template.unverifiedQuestions.helpers({
     myApprovableQuestions: function() {
         var mySubjectIds = subjectIds(Meteor.user());
 
-        return Questions.find({
-            $and: [
-                { answer: { $exists: true } },
-                { lastUpdatedBy: { $exists: true } },
-                { lastUpdatedBy: { $ne: Meteor.userId() } },
-                { verifiedBy: { $exists: false } }
-            ]
-        });
+        return Questions.find(
+            {
+                $and: [
+                    { answer: { $exists: true } },
+                    { lastUpdatedBy: { $exists: true } },
+                    { lastUpdatedBy: { $ne: Meteor.userId() } },
+                    { verifiedBy: { $exists: false } }
+                ]
+            },
+            {
+                sort: { lastUpdatedDate: 1 }
+            }
+        );
     },
     otherApprovableQuestions: function() {
         var mySubjectIds = subjectIds(Meteor.user());
 
-        return Questions.find({
-            $and: [
-                { answer: { $exists: true } },
-                { lastUpdatedBy: { $exists: true } },
-                { lastUpdatedBy: Meteor.userId() },
-                { verifiedBy: { $exists: false } }
-            ]
-        });
+        return Questions.find(
+            {
+                $and: [
+                    { answer: { $exists: true } },
+                    { lastUpdatedBy: { $exists: true } },
+                    { lastUpdatedBy: Meteor.userId() },
+                    { verifiedBy: { $exists: false } }
+                ]
+            },
+            {
+                sort: { lastUpdatedDate: 1 }
+            }
+        );
     }
 });
 
