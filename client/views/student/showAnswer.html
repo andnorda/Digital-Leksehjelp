@@ -18,6 +18,7 @@
                     <meta itemprop="dateCreated" content="{{questionDate}}" />
                     <meta itemprop="datePublished" content="{{answerDate}}" />
 
+                    {{#if title}}<h3>{{title}}</h3>{{/if}}
                     <div class="question-item show-question">
                         <p itemprop="text">{{{transformNewline question}}}</p>
                         <p class="question-item-footer"><span itemprop="genre">{{subjectName subjectId}}</span>, {{grade}} &ndash; {{fromNow questionDate}}</p>
