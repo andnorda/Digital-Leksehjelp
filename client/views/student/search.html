@@ -97,13 +97,6 @@
     </form>
 </template>
 
-<template name="questionItem">
-    <a href="/sporsmal/{{slugOrId this}}" class="list-group-item search-list-group-item">
-        <p>{{{trim question 200}}}</p>
-        <p><small>{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</small></p>
-    </a>
-</template>
-
 <template name="searchQuestionItem">
     <div class="question-item related-question-item">
         <p><a href="/sporsmal/{{slugOrId this}}">{{trim question 200}}</a></p>
