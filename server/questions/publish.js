@@ -27,42 +27,58 @@ Meteor.publish('verifiedQuestions', function(page) {
     this.ready();
 });
 
-const colors = [
-    'Gul',
-    'Blå',
-    'Grønn',
+const adjectives = [
+    'Subtil',
+    'Glad',
+    'Sjenert',
     'Rosa',
-    'Brun',
     'Lilla',
-    'Rød',
-    'Turkis',
-    'Oransje',
-    'Grå',
-    'Svart',
-    'Purpur',
-    'Beige',
-    'Indigo',
-    'Burgunder',
-    'Limegrønn'
+    'Nysgjerrig',
+    'Løye',
+    'Flink',
+    'Rask',
+    'Praktisk',
+    'Koselig',
+    'Ivrig',
+    'Listig',
+    'Snill',
+    'Genial',
+    'Imponerende',
+    'Rakrygget',
+    'Vennlig',
+    'Berømt',
+    'Positiv',
+    'Arbeidsom',
+    'Lun',
+    'Oppmerksom',
+    'Bestemt'
 ];
 
 const animals = [
-    'Panda',
-    'Sjiraff',
-    'Frosk',
-    'Elefant',
-    'Elg',
-    'Ugle',
-    'Tiger',
-    'Bjørn',
-    'Løve',
-    'Ørn',
-    'Krokodille',
-    'Delfin',
-    'Edderkopp',
-    'Zebra',
-    'Hare',
-    'Rev'
+    'panda',
+    'sjiraff',
+    'frosk',
+    'elefant',
+    'elg',
+    'ugle',
+    'tiger',
+    'bjørn',
+    'løve',
+    'ørn',
+    'krokodille',
+    'delfin',
+    'zebra',
+    'hare',
+    'rev',
+    'kamel',
+    'hai',
+    'gorilla',
+    'papegøye',
+    'flamingo',
+    'grevling',
+    'piggsvin',
+    'pingvin',
+    'kenguru'
 ];
 
 Meteor.publish('questions', function(subscriptionLevel) {
@@ -88,9 +104,9 @@ Meteor.publish('questions', function(subscriptionLevel) {
                         .reduce(function(sum, char) {
                             return char.charCodeAt(0) + sum;
                         }, 0) %
-                    (animals.length * colors.length);
+                    (animals.length * adjectives.length);
                 doc.nickname =
-                    colors[Math.floor(n / animals.length)] +
+                    adjectives[Math.floor(n / animals.length)] +
                     ' ' +
                     animals[n % animals.length];
                 delete doc.studentEmail;
