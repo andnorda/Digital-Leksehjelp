@@ -38,6 +38,7 @@
         <th>Fag</th>
         <th>Trinn</th>
         <th>Dato stilt</th>
+        <th>Elev</th>
         <th>Status</th>
     </tr>
 </template>
@@ -47,10 +48,11 @@
         <td>{{subjectName subjectId}}</td>
         <td>{{grade}}</td>
         <td>{{prettifyDate questionDate}}</td>
+        <td>{{nickname}}</td>
         {{{status}}}
     </tr>
     <tr class="table-row-content">
-        <td colspan="4">
+        <td colspan="5">
             <a href="/frivillig/sporsmal/svar/{{_id}}" target="_blank">{{trim question 80}}</a>
         </td>
     </tr>

@@ -27,6 +27,44 @@ Meteor.publish('verifiedQuestions', function(page) {
     this.ready();
 });
 
+const colors = [
+    'Gul',
+    'Blå',
+    'Grønn',
+    'Rosa',
+    'Brun',
+    'Lilla',
+    'Rød',
+    'Turkis',
+    'Oransje',
+    'Grå',
+    'Svart',
+    'Purpur',
+    'Beige',
+    'Indigo',
+    'Burgunder',
+    'Limegrønn'
+];
+
+const animals = [
+    'Panda',
+    'Sjiraff',
+    'Frosk',
+    'Elefant',
+    'Elg',
+    'Ugle',
+    'Tiger',
+    'Bjørn',
+    'Løve',
+    'Ørn',
+    'Krokodille',
+    'Delfin',
+    'Edderkopp',
+    'Zebra',
+    'Hare',
+    'Rev'
+];
+
 Meteor.publish('questions', function(subscriptionLevel) {
     if (this.userId) {
         var user = Meteor.users.findOne(this.userId);
@@ -42,22 +80,56 @@ Meteor.publish('questions', function(subscriptionLevel) {
                 }
             );
         } else if (subscriptionLevel === QUESTION_SUBSCRIPTION_LEVEL.REGULAR) {
-            return Questions.find(
-                {
-                    $or: [
-                        { answer: { $exists: false } },
-                        {
-                            $and: [
-                                { answer: { $exists: true } },
-                                { verifiedBy: { $exists: false } }
-                            ]
-                        }
-                    ]
+            var transform = function(doc) {
+                const n =
+                    CryptoJS.MD5(doc.studentEmail.toLowerCase())
+                        .toString()
+                        .split('')
+                        .reduce(function(sum, char) {
+                            return char.charCodeAt(0) + sum;
+                        }, 0) %
+                    (animals.length * colors.length);
+                doc.nickname =
+                    colors[Math.floor(n / animals.length)] +
+                    ' ' +
+                    animals[n % animals.length];
+                delete doc.studentEmail;
+                return doc;
+            };
+
+            var self = this;
+
+            var observer = Questions.find({
+                $or: [
+                    { answer: { $exists: false } },
+                    {
+                        $and: [
+                            { answer: { $exists: true } },
+                            { verifiedBy: { $exists: false } }
+                        ]
+                    }
+                ]
+            }).observe({
+                added: function(document) {
+                    self.added('questions', document._id, transform(document));
                 },
-                {
-                    fields: questionPrivateFields
+                changed: function(newDocument, oldDocument) {
+                    self.changed(
+                        'questions',
+                        newDocument._id,
+                        transform(newDocument)
+                    );
+                },
+                removed: function(oldDocument) {
+                    self.removed('collection_name', oldDocument._id);
                 }
-            );
+            });
+
+            self.onStop(function() {
+                observer.stop();
+            });
+
+            self.ready();
         }
     }
 
