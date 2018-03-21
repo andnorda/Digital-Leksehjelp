@@ -76,7 +76,7 @@ const animals = [
     'papegøye',
     'flamingo',
     'grevling',
-    'piggsvin',
+    'sel',
     'pingvin',
     'kenguru'
 ];
