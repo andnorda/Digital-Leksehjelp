@@ -16,15 +16,16 @@
 
 <template name="subjectsTable">
     <h3>Alle fag</h3>
-    <table border="0">
-        <tr>
-            <th>Fag</th>
-        </tr>
+    <ul>
         {{#each subjects }}
-            <tr>
-                <td>{{this.name}}</td>
-                <td><button type="button" class="btn btn-xs btn-danger deleteSubject">Slett</button></td>
-            </tr>
+            <li>
+                <button
+                    type="button"
+                    class="btn btn-xs btn-danger deleteSubject">
+                    Slett
+                </button>
+                <span>{{this.name}}</span>
+            </li>
         {{/each}}
-    </table>
+    </ul>
 </template>
