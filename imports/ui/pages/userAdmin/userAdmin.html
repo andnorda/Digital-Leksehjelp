@@ -1,0 +1,120 @@
+<template name="userAdmin">
+    <div class="container">
+        <h3>Administrér brukere</h3>
+        {{> addUser}}
+        {{> usersTable}}
+        {{> openingHours}}
+        {{> serviceClosedAdmin}}
+    </div>
+</template>
+
+<template name="addUser">
+    Ny bruker:
+    <form role="form">
+        <div class="form-group">
+            <input id="firstName" placeholder="Fornavn" type="text" size="20" />
+        </div>
+        <div class="form-group">
+            <input id="email" placeholder="E-post" type="text" size="20" />
+        </div>
+        Rolle:
+        <div class="form-group">
+            {{> roleSelector}}
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" id="allowVideohelp" checked="true"> Videohjelp
+            </label>
+      </div>
+        <button class="addUser">Legg til bruker</button>
+    </form>
+    <p>{{ userAdded }}</p>
+</template>
+
+<template name="roleSelector">
+    <select id="role">
+        {{#each roles }}
+            <option>{{this}}</option>
+        {{/each}}
+    </select>
+</template>
+
+<template name="usersTable">
+    <h3>Alle brukere</h3>
+    <table border="0">
+        <tr>
+            <th>Brukernavn</th>
+            <th>E-post</th>
+            <th>Verifisert?</th>
+            <th>Fornavn</th>
+            <th>Valgte fag</th>
+            <th>Rolle</th>
+            <th>Videohjelp</th>
+        </tr>
+        {{#each users }}
+            {{> userRow }}
+        {{/each}}
+    </table>
+</template>
+
+<template name="userRow">
+    <tr>
+        <td>{{this.username}}</td>
+        {{#each emails}}
+            <td>{{this.address}}</td>
+            <td>
+                {{#if this.verified}}
+                    Ja
+                {{else}}
+                    Nei
+                {{/if}}
+            </td>
+        {{/each}}
+        <td>{{ profile.firstName }}</td>
+        <td>
+            {{#each profile.subjects}}
+                {{this.subjectName}}
+            {{/each}}
+        </td>
+        <td>
+            <select class="newRole">
+                {{{optionsSelected globalRoles profile.role }}}
+            </select>
+        </td>
+        <td>
+            <input type="checkbox" class="allowVideohelp" checked="{{profile.allowVideohelp}}">
+        </td>
+        <td><button type="button" class="btn btn-xs btn-danger deleteUser">Slett</button></td>
+        {{#if remoteUserLoggedIn}}
+            <td><button type="button" class="btn btn-xs btn-danger logoutUser">Logg ut</button></td>
+        {{/if}}
+    </tr>
+</template>
+
+<template name="openingHours">
+    <h3>Endre åpningstider</h3>
+    <p>
+        Her kan du endre åpningstidene som blir vist på fremsiden for Digital leksehjelp.
+    </p>
+    <textarea style="width: 75%; height: 60px" id="openingHours">{{ openingHours }}</textarea>
+    <button id="updateOpeningHours" type="button" class="btn btn-small btn-primary">Endre åpningstid</button>
+</template>
+
+
+<template name="serviceClosedAdmin">
+    <h3>Overstyr stenging av Digital Leksehjelp</h3>
+    <p>
+        Hvis alle brukere er utlogget, vil tjenesten vises som stengt uansett. Hvis det er
+        nødvendig at tjenesten stenger uten at alle er utlogget, kan det gjøres her.
+    </p>
+    <p>
+        Selv om tjenesten stenges her før alle er utlogget, vil den  kunne åpnes igjen av
+        alle frivillige som er pålogget, på siden "Hjelp elever".
+    </p>
+    {{> serviceStatus}}
+    <button
+        id="updateClosedStatus"
+        type="button"
+        class="btn btn-small btn-danger"
+        disabled={{not serviceIsOpen}}>Steng tjenesten</button>
+</template>
