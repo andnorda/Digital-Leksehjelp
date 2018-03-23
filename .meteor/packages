@@ -5,9 +5,9 @@
 
 standard-app-packages
 backbone
-jquery
-accounts-password
-accounts-ui
+jquery@1.11.10
+accounts-password@1.5.0
+accounts-ui@1.3.0
 iron:router
 mrt:flash-messages
 natestrauser:select2
@@ -15,14 +15,18 @@ mizzao:user-status
 sacha:spin
 aldeed:collection2
 rzymek:moment-locale-nb
-email
+email@1.2.3
 meteorhacks:ssr
 reywood:iron-router-ga
 lepozepo:s3
-less
+less@2.7.11
 summernote:summernote
 twbs:bootstrap
 spiderable
 
-reactive-dict
+reactive-dict@1.2.0
 jparker:crypto-md5
+standard-minifier-css
+standard-minifier-js
+shell-server
+dynamic-import
