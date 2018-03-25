@@ -55,7 +55,7 @@
 
 <template name="studentSessionRow">
     <tr>
-        <td>{{#unless tutor}}{{ timeSince createdAt time }}{{/unless}}</td>
+        <td>{{#unless tutor}}{{ timeInQueue }}{{/unless}}</td>
         <td>{{ subject }}</td>
         <td>{{ grade }}</td>
         <td>

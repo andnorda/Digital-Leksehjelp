@@ -1,4 +1,5 @@
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
+import { timeSince } from '/imports/utils.js';
 
 import { STUDENT_SESSION_STATE } from '/imports/constants';
 
@@ -67,8 +68,8 @@ Template.queueModalBody.onCreated(function queueModalBodyOnCreated() {
 });
 
 Template.queueModalBody.helpers({
-    time: function() {
-        return Session.get('time') || new Date();
+    timeInQueue: function() {
+        return timeSince(this.createdAt, Session.get('time') || new Date());
     },
     studentSession: function() {
         return findStudentSession();
