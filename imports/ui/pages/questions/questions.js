@@ -1,6 +1,14 @@
 import { Questions } from '/imports/api/questions/questions.js';
+import { QUESTION_SUBSCRIPTION_LEVEL } from '/imports/constants';
 
 import './questions.html';
+
+Template.questions.onCreated(function questionsOnCreated() {
+    this.autorun(() => {
+        this.subscribe('users');
+        this.subscribe('questions', QUESTION_SUBSCRIPTION_LEVEL.REGULAR);
+    });
+});
 
 var subjectIds = function(user) {
     if (!user) {
@@ -44,14 +52,6 @@ Template.unansweredQuestions.helpers({
         );
     }
 });
-
-Template.unansweredQuestionRow.onCreated(
-    function unansweredQuestionRowOnCreated() {
-        this.autorun(() => {
-            this.subscribe('users');
-        });
-    }
-);
 
 Template.unansweredQuestionRow.helpers({
     status: function() {
@@ -116,12 +116,6 @@ Template.unverifiedQuestions.helpers({
             }
         );
     }
-});
-
-Template.answeredQuestionRow.onCreated(function answeredQuestionRowOnCreated() {
-    this.autorun(() => {
-        this.subscribe('users');
-    });
 });
 
 Template.answeredQuestionRow.events({

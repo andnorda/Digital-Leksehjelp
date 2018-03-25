@@ -162,7 +162,7 @@ Meteor.publish('questions', function(subscriptionLevel) {
     this.ready();
 });
 
-Meteor.publish('question', function(questionId) {
+Meteor.publish('questions.byId', function(questionId) {
     check(questionId, String);
 
     if (this.userId) {

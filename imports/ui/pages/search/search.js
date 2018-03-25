@@ -8,6 +8,17 @@ import './search.html';
 Template.search.onCreated(function searchOnCreated() {
     this.autorun(() => {
         this.subscribe('subjects');
+
+        // https://github.com/EventedMind/iron-router/issues/1088
+        const query = Router.current().params.query;
+        Object.keys(query).forEach(function(key) {
+            query[key] = query[key].replace(/\+/g, ' ');
+        });
+
+        Meteor.call('questions.searchCount', query, function(error, result) {
+            Session.set('questionSearchCount', result);
+        });
+        this.subscribe('questions.search', query);
     });
 });
 
@@ -41,10 +52,13 @@ Template.search.helpers({
     }
 });
 
-Template.pagination.helpers({
+Template.searchForm.helpers({
     subjects: function() {
         return Subjects.find({}, { sort: { name: 1 } });
-    },
+    }
+});
+
+Template.pagination.helpers({
     pages: function() {
         var numberOfResults = Session.get('questionSearchCount') || 0;
         var numberOfPages =

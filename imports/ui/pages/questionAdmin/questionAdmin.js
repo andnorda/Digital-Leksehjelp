@@ -6,6 +6,7 @@ Template.verifiedQuestionsList.onCreated(
     function verifiedQuestionsListOnCreated() {
         this.autorun(() => {
             this.subscribe('users');
+            this.subscribe('questions.verified', 0);
         });
 
         const state = new ReactiveDict();

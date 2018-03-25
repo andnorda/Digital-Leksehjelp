@@ -1,5 +1,5 @@
 <template name="showAnswer">
-    {{#with questionContext}}
+    {{#if question}}
         <div class="category-title white-bg-adjustment"><div class="empty-category-title"></div></div>
 
         <div class="container">
@@ -51,7 +51,7 @@
         </div>
     {{else}}
         {{> notFound}}
-    {{/with}}
+    {{/if}}
 </template>
 
 <template name="volunteerMiniForm">

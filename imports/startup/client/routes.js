@@ -31,14 +31,6 @@ var checkIfSignedIn = function(pause) {
     }
 };
 
-var setDocumentTitle = function(title) {
-    if (title) {
-        document.title = 'Røde Kors - Digital Leksehjelp - ' + title;
-    } else {
-        document.title = 'Røde Kors - Digital Leksehjelp';
-    }
-};
-
 BaseController = RouteController.extend({
     layoutTemplate: 'layout'
 });
@@ -73,8 +65,6 @@ Router.onBeforeAction(checkIfSignedIn, {
     except: ['home', 'askQuestion', 'notFound', 'search', 'showAnswer']
 });
 
-Router.onAfterAction(setDocumentTitle);
-
 Router.configure({
     trackPageView: true,
     loadingTemplate: 'loading'
@@ -87,18 +77,6 @@ Router.map(function() {
             FlashMessages.clear();
             validationError = [];
             this.next();
-        },
-        waitOn: function() {
-            Meteor.call('questions.searchCount', {}, function(error, result) {
-                Session.set('numberOfQuestions', result);
-            });
-            return Meteor.subscribe('questions.search', {
-                sort: 'date',
-                limit: 6
-            });
-        },
-        data: function() {
-            return Questions.find({});
         }
     });
 
@@ -127,26 +105,17 @@ Router.map(function() {
 
     this.route('questions', {
         controller: LoginController,
-        path: '/frivillig/sporsmal',
-        waitOn: function() {
-            return Meteor.subscribe(
-                'questions',
-                QUESTION_SUBSCRIPTION_LEVEL.REGULAR
-            );
-        },
-        data: function() {
-            return { searchResults: Questions.find({}) };
-        }
+        path: '/frivillig/sporsmal'
     });
 
     this.route('answerQuestion', {
         controller: AnswerQuestionController,
         path: '/frivillig/sporsmal/svar/:questionId',
         waitOn: function() {
-            return Meteor.subscribe('question', this.params.questionId);
+            return Meteor.subscribe('questions.byId', this.params.questionId);
         },
         data: function() {
-            return Questions.findOne({ _id: this.params.questionId });
+            return Questions.findOne(this.params.questionId);
         }
     });
 
@@ -165,10 +134,7 @@ Router.map(function() {
     this.route('questionAdmin', {
         controller: LoginController,
         path: '/frivillig/admin/sporsmal',
-        template: 'questionAdmin',
-        waitOn: function() {
-            return Meteor.subscribe('questions.verified', 0);
-        }
+        template: 'questionAdmin'
     });
 
     this.route('myProfile', {
@@ -191,43 +157,16 @@ Router.map(function() {
         controller: DefaultController,
         path: '/sporsmal/:questionId',
         waitOn: function() {
-            return Meteor.subscribe('question', this.params.questionId);
+            return Meteor.subscribe('questions.byId', this.params.questionId);
         },
-        onAfterAction: function() {
-            var question = Questions.findOne({});
-
-            if (question) {
-                setDocumentTitle(question.title);
-            }
+        data: function() {
+            return Questions.findOne(this.params.questionId);
         }
     });
 
     this.route('search', {
         controller: DefaultController,
-        path: '/sok',
-        onBeforeAction: function() {
-            FlashMessages.clear();
-            validationError = [];
-            this.next();
-        },
-        waitOn: function() {
-            // https://github.com/EventedMind/iron-router/issues/1088
-            var self = this;
-            Object.keys(self.params.query).forEach(function(key) {
-                self.params.query[key] = self.params.query[key].replace(
-                    /\+/g,
-                    ' '
-                );
-            });
-
-            Meteor.call('questions.searchCount', this.params.query, function(
-                error,
-                result
-            ) {
-                Session.set('questionSearchCount', result);
-            });
-            return Meteor.subscribe('questions.search', this.params.query);
-        }
+        path: '/sok'
     });
 
     this.route('notFound', {

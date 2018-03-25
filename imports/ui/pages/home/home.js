@@ -123,6 +123,19 @@ Template.getHelpBox.events({
     }
 });
 
+Template.previousQuestions.onCreated(function previousQuestionsOnCreated() {
+    this.autorun(() => {
+        this.subscribe('questions.search', {
+            sort: 'date',
+            limit: 6
+        });
+    });
+
+    Meteor.call('questions.searchCount', {}, function(error, result) {
+        Session.set('numberOfQuestions', result);
+    });
+});
+
 Template.previousQuestions.helpers({
     previousQuestions: function(skip, limit) {
         return Questions.find(
