@@ -72,10 +72,6 @@ Template.registerHelper('grades', function() {
     return GRADES;
 });
 
-Template.registerHelper('subjects', function() {
-    return Subjects.find({}, { sort: { name: 1 } });
-});
-
 Template.registerHelper('subjectName', function(subjectId) {
     var subject = Subjects.findOne({ _id: subjectId });
     return subject ? subject.name : 'Ukjent fag';

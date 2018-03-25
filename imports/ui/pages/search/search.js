@@ -1,8 +1,15 @@
+import { Subjects } from '/imports/api/subjects/subjects.js';
 import { Questions } from '/imports/api/questions/questions.js';
 
 import { CONSTANTS } from '/imports/constants.js';
 
 import './search.html';
+
+Template.search.onCreated(function searchOnCreated() {
+    this.autorun(() => {
+        this.subscribe('subjects');
+    });
+});
 
 var updateQueryStringParameter = function(uri, key, value) {
     var re = new RegExp('([?&])' + key + '=.*?(&|$)', 'i');
@@ -35,6 +42,9 @@ Template.search.helpers({
 });
 
 Template.pagination.helpers({
+    subjects: function() {
+        return Subjects.find({}, { sort: { name: 1 } });
+    },
     pages: function() {
         var numberOfResults = Session.get('questionSearchCount') || 0;
         var numberOfPages =

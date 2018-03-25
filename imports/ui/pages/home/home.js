@@ -1,3 +1,4 @@
+import { Subjects } from '/imports/api/subjects/subjects.js';
 import { Config } from '/imports/api/config/config.js';
 import { Questions } from '/imports/api/questions/questions.js';
 import { StudentQueue } from '/imports/api/studentQueue/studentQueue.js';
@@ -6,6 +7,7 @@ import './home.html';
 
 Template.getHelpBox.onCreated(function getHelpBoxOnCreated() {
     this.autorun(() => {
+        this.subscribe('subjects');
         this.subscribe('config.openingHours');
 
         Session.set('serviceStatusLoaded', false);
@@ -30,6 +32,9 @@ Template.getHelp.events({
 });
 
 Template.getHelpBox.helpers({
+    subjects: function() {
+        return Subjects.find({}, { sort: { name: 1 } });
+    },
     serviceIsOpen: function() {
         const serviceStatus = Config.findOne({ name: 'serviceStatus' });
         return serviceStatus ? serviceStatus.open : false;

@@ -1,3 +1,5 @@
+import { Subjects } from '/imports/api/subjects/subjects.js';
+
 import './subjectAdmin.html';
 
 Template.addSubject.events({
@@ -17,6 +19,18 @@ Template.addSubject.events({
                 }
             }
         );
+    }
+});
+
+Template.subjectsTable.onCreated(function subjectsTableOnCreated() {
+    this.autorun(() => {
+        this.subscribe('subjects');
+    });
+});
+
+Template.subjectsTable.helpers({
+    subjects: function() {
+        return Subjects.find({}, { sort: { name: 1 } });
     }
 });
 

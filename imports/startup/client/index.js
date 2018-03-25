@@ -2,7 +2,6 @@ import './routes.js';
 import './templateHelpers.js';
 import './flashTitle.js';
 
-Meteor.subscribe('subjects');
 Meteor.subscribe('users.loggedIn');
 Meteor.subscribe('studentSessions.queue');
 
