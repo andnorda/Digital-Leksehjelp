@@ -7,6 +7,11 @@ import './home.html';
 Template.getHelpBox.onCreated(function getHelpBoxOnCreated() {
     this.autorun(() => {
         this.subscribe('config.openingHours');
+
+        Session.set('serviceStatusLoaded', false);
+        this.subscribe('config.serviceStatus', function onComplete() {
+            Session.set('serviceStatusLoaded', true);
+        });
     });
 });
 
@@ -25,19 +30,16 @@ Template.getHelp.events({
 });
 
 Template.getHelpBox.helpers({
+    serviceIsOpen: function() {
+        const serviceStatus = Config.findOne({ name: 'serviceStatus' });
+        return serviceStatus ? serviceStatus.open : false;
+    },
     openingHours: function() {
         const openingHours = Config.findOne({ name: 'openingHours' });
         return openingHours ? openingHours.text : '';
     },
     serviceStatusLoaded: function() {
         return Session.get('serviceStatusLoaded');
-    },
-    videoHelpDisabled: function() {
-        var serviceStatus = Config.findOne({ name: 'serviceStatus' });
-        if (serviceStatus && serviceStatus.open) {
-            return '';
-        }
-        return 'disabled';
     },
     subjectDisabled: function(subjectId) {
         var numberOfLoggedInUsersForSubject = Meteor.users

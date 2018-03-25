@@ -8,11 +8,6 @@ import './routes.js';
 import './templateHelpers.js';
 import './flashTitle.js';
 
-Session.set('serviceStatusLoaded', false);
-
-Meteor.subscribe('config.serviceStatus', function onComplete() {
-    Session.set('serviceStatusLoaded', true);
-});
 Meteor.subscribe('subjects');
 Meteor.subscribe('users.loggedIn');
 Meteor.subscribe('studentSessions.queue');

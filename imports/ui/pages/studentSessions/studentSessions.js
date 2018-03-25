@@ -1,3 +1,4 @@
+import { Config } from '/imports/api/config/config.js';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
 
 import { STUDENT_SESSION_STATE } from '/imports/constants';
@@ -75,7 +76,19 @@ Template.studentSessionRow.events({
     }
 });
 
-// === OPENSERVICE ===
+Template.openService.onCreated(function openServiceOnCreated() {
+    this.autorun(() => {
+        this.subscribe('config.serviceStatus');
+    });
+});
+
+Template.openService.helpers({
+    serviceIsOpen: function() {
+        const serviceStatus = Config.findOne({ name: 'serviceStatus' });
+        return serviceStatus ? serviceStatus.open : false;
+    }
+});
+
 Template.openService.events({
     'click button#openService': function() {
         Meteor.call(

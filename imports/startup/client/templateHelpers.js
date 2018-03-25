@@ -48,14 +48,6 @@ Template.registerHelper('transformNewline', function(text) {
     }
 });
 
-Template.registerHelper('serviceIsOpen', function() {
-    var serviceStatusArray = Config.find({ name: 'serviceStatus' }).fetch();
-    if (serviceStatusArray.length > 0) {
-        return serviceStatusArray[0].open;
-    }
-    return false;
-});
-
 Template.registerHelper('trim', function(str, stopIndex) {
     if (str.length < stopIndex) {
         return str;

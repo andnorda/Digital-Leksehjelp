@@ -4,6 +4,8 @@ import { ROLES } from '/imports/constants';
 
 import './userAdmin.html';
 
+import '../../components/serviceStatus/serviceStatus.js';
+
 var userAddedDep = new Deps.Dependency();
 var userAdded;
 
@@ -188,7 +190,19 @@ Template.openingHours.events({
     }
 });
 
-// === SERVICESTATUS ===
+Template.serviceClosedAdmin.onCreated(function serviceClosedAdminOnCreated() {
+    this.autorun(() => {
+        this.subscribe('config.serviceStatus');
+    });
+});
+
+Template.serviceClosedAdmin.helpers({
+    serviceIsOpen: function() {
+        const serviceStatus = Config.findOne({ name: 'serviceStatus' });
+        return serviceStatus ? serviceStatus.open : false;
+    }
+});
+
 Template.serviceClosedAdmin.events({
     'click button#updateClosedStatus': function() {
         Meteor.call(
