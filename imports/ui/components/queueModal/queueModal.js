@@ -9,6 +9,10 @@ import {
 
 import './queueModal.html';
 
+Meteor.setInterval(function() {
+    Session.set('time', new Date());
+}, 1000);
+
 Template.queueModal.onCreated(function queueModalOnCreated() {
     this.autorun(() => {
         this.subscribe('studentSessions.byId', Session.get('studentSessionId'));
@@ -64,6 +68,9 @@ Template.queueModalBody.onCreated(function queueModalBodyOnCreated() {
 });
 
 Template.queueModalBody.helpers({
+    time: function() {
+        return Session.get('time') || new Date();
+    },
     studentSession: function() {
         return findStudentSession();
     },
@@ -73,11 +80,6 @@ Template.queueModalBody.helpers({
             studentSession &&
             studentSession.state == STUDENT_SESSION_STATE.WAITING
         );
-    },
-    studentsInFront: function() {
-        var studentSession = findStudentSession();
-        // TODO: fix
-        return 1;
     },
     stateReady: function() {
         var studentSession = findStudentSession();
