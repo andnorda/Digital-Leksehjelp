@@ -1,22 +1,25 @@
-import { Config } from './config.js';
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
 
+import { Config } from './config.js';
 import { ROLES } from '/imports/constants';
 
 Meteor.methods({
-    upsertOpeningHours: function(options) {
-        check(options.newOpeningHours, String);
+    'config.setOpeningHours'(openingHours) {
+        check(openingHours, String);
 
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
-
-        if (user.profile.role === ROLES.ADMIN) {
-            Config.upsert(
-                { name: 'openingHours' },
-                { $set: { text: options.newOpeningHours } }
-            );
+        if (user.profile.role !== ROLES.ADMIN) {
+            throw new Meteor.Error(401, 'Unauthorized');
         }
+
+        Config.upsert(
+            { name: 'openingHours' },
+            { $set: { text: openingHours } }
+        );
     },
 
     upsertServiceStatus: function(options) {

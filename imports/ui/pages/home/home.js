@@ -4,6 +4,12 @@ import { StudentQueue } from '/imports/api/studentQueue/studentQueue.js';
 
 import './home.html';
 
+Template.getHelpBox.onCreated(function getHelpBoxOnCreated() {
+    this.autorun(() => {
+        this.subscribe('config.openingHours');
+    });
+});
+
 var getHighestQueueNr = function() {
     if (StudentQueue.find({}).count() === 0) {
         return 0;
@@ -20,12 +26,8 @@ Template.getHelp.events({
 
 Template.getHelpBox.helpers({
     openingHours: function() {
-        var openingHoursArray = Config.find({ name: 'openingHours' }).fetch();
-
-        if (openingHoursArray.length > 0) {
-            return Config.find({ name: 'openingHours' }).fetch()[0].text;
-        }
-        return '';
+        const openingHours = Config.findOne({ name: 'openingHours' });
+        return openingHours ? openingHours.text : '';
     },
     serviceStatusLoaded: function() {
         return Session.get('serviceStatusLoaded');

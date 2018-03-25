@@ -9,13 +9,9 @@ import './templateHelpers.js';
 import './flashTitle.js';
 
 Session.set('serviceStatusLoaded', false);
-Session.set('openingHoursLoaded', false);
 
 Meteor.subscribe('config.serviceStatus', function onComplete() {
     Session.set('serviceStatusLoaded', true);
-});
-Meteor.subscribe('config.openingHours', function onComplete() {
-    Session.set('openingHoursLoaded', true);
 });
 Meteor.subscribe('subjects');
 Meteor.subscribe('users.loggedIn');

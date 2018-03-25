@@ -154,33 +154,37 @@ Template.userRow.events({
     }
 });
 
-// === OPENINGHOURS ===
+Template.openingHours.onCreated(function openingHoursOnCreated() {
+    this.autorun(() => {
+        this.subscribe('config.openingHours');
+    });
+});
+
 Template.openingHours.helpers({
     openingHours: function() {
-        var openingHoursArray = Config.find({ name: 'openingHours' }).fetch();
-
-        if (openingHoursArray.length > 0) {
-            return openingHoursArray[0].text;
-        }
-        return '';
+        const openingHours = Config.findOne({ name: 'openingHours' });
+        return openingHours ? openingHours.text : '';
     }
 });
 
 Template.openingHours.events({
     'click button#updateOpeningHours': function() {
-        Meteor.call(
-            'upsertOpeningHours',
-            {
-                newOpeningHours: $('#openingHours')
-                    .val()
-                    .trim()
-            },
-            function(error, data) {
-                if (error) {
-                    FlashMessages.sendError(error.message);
-                }
+        const openingHours = $('#openingHours')
+            .val()
+            .trim();
+        Meteor.call('config.setOpeningHours', openingHours, function(
+            error,
+            data
+        ) {
+            if (error) {
+                FlashMessages.sendError(error.message);
+            } else {
+                FlashMessages.sendSuccess('Åpningstider endret', {
+                    autoHide: true,
+                    hideDelay: 6000
+                });
             }
-        );
+        });
     }
 });
 
