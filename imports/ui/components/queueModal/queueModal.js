@@ -10,6 +10,12 @@ import {
 
 import './queueModal.html';
 
+Template.queueModal.onCreated(function queueModalOnCreated() {
+    this.autorun(() => {
+        this.subscribe('studentSessions.byId', Session.get('studentSessionId'));
+    });
+});
+
 Template.queueModal.rendered = function() {
     var elem = $('#queueModal')[0];
     var data = $.hasData(elem) && $._data(elem);
@@ -50,6 +56,12 @@ Template.queueModal.events({
 
         window.showSurvey();
     }
+});
+
+Template.queueModalBody.onCreated(function queueModalBodyOnCreated() {
+    this.autorun(() => {
+        this.subscribe('studentSessions.byId', Session.get('studentSessionId'));
+    });
 });
 
 Template.queueModalBody.helpers({

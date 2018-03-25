@@ -3,6 +3,12 @@ import { ROLES, STUDENT_SESSION_STATE } from '/imports/constants';
 
 import './loggedInHeader.html';
 
+Template.loggedInHeader.onCreated(function loggedInHeaderOnCreated() {
+    this.autorun(() => {
+        this.subscribe('studentSessions');
+    });
+});
+
 Template.loggedInHeader.helpers({
     currentUserEmail: function() {
         return Meteor.user().username;

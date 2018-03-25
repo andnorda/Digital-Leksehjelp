@@ -5,7 +5,6 @@ import './flashTitle.js';
 Meteor.subscribe('studentSessions.queue');
 
 Deps.autorun(function() {
-    Meteor.subscribe('studentSessions', Session.get('studentSessionId'));
     if (Meteor.user()) {
         if (Meteor.user().profile && Meteor.user().profile.firstName) {
             if (Meteor.user().profile.setSubjectsAvailable) {

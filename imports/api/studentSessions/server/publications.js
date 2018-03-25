@@ -26,12 +26,15 @@ Meteor.publish('studentSessions.queue', function() {
     });
 });
 
-Meteor.publish('studentSessions', function(sessionId) {
-    var user = Meteor.users.findOne(this.userId);
-    if (!user) {
-        check(sessionId, Match.OneOf(String, null));
-        return StudentSessions.find({ _id: sessionId });
+Meteor.publish('studentSessions', function() {
+    if (!this.userId) {
+        return this.ready();
     }
 
     return StudentSessions.find({});
+});
+
+Meteor.publish('studentSessions.byId', function(sessionId) {
+    check(sessionId, Match.OneOf(String, null));
+    return StudentSessions.find({ _id: sessionId });
 });

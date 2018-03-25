@@ -11,6 +11,14 @@ Meteor.setInterval(function() {
     Session.set('time', new Date());
 }, 1000);
 
+Template.studentSessionsTable.onCreated(
+    function studentSessionsTableOnCreated() {
+        this.autorun(() => {
+            this.subscribe('studentSessions');
+        });
+    }
+);
+
 Template.studentSessionsTable.helpers({
     myStudentSessions: function() {
         var query = {
