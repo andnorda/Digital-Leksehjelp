@@ -4,7 +4,6 @@ import './flashTitle.js';
 
 Meteor.subscribe('studentSessions.queue');
 
-var lastUserId;
 Deps.autorun(function() {
     Meteor.subscribe('studentSessions', Session.get('studentSessionId'));
     if (Meteor.user()) {
