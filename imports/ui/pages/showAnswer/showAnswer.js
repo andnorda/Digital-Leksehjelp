@@ -51,7 +51,7 @@ Template.volunteerMiniForm.events({
 
         if (Meteor.user()) {
             Meteor.call(
-                'updateQuestionFromVolunteerMiniForm',
+                'questions.updateFromVolunteerMiniForm',
                 {
                     questionId: questionId,
                     title: title,
@@ -76,7 +76,7 @@ Template.volunteerMiniForm.events({
 
         if (Meteor.user()) {
             Meteor.call(
-                'verifyAnswer',
+                'questions.verify',
                 {
                     questionId: this._id
                 },

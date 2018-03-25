@@ -28,7 +28,7 @@ Template.queueModal.rendered = function() {
                             'minutes'
                         )
                     });
-                    Meteor.call('removeSession', {
+                    Meteor.call('studentSessions.remove', {
                         sessionId: Session.get('studentSessionId')
                     });
                 }
@@ -44,7 +44,7 @@ var findStudentSession = function() {
 
 Template.queueModal.events({
     'click a#leave-queue': function() {
-        Meteor.call('removeSession', {
+        Meteor.call('studentSessions.remove', {
             sessionId: Session.get('studentSessionId')
         });
 
@@ -95,7 +95,7 @@ Template.queueModalBody.events({
         });
         window.open(this.videoConferenceUrl);
 
-        Meteor.call('setSessionState', {
+        Meteor.call('studentSessions.setState', {
             sessionId: Session.get('studentSessionId'),
             state: STUDENT_SESSION_STATE.GETTING_HELP
         });

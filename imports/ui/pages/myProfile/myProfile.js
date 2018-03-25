@@ -33,7 +33,7 @@ Template.profilePicture.events({
         if (files.length === 1) {
             S3.upload(files, '/profilbilder', function(error, result) {
                 if (!result.uploading) {
-                    Meteor.call('setProfilePictureUrl', result.url);
+                    Meteor.call('users.setProfilePictureUrl', result.url);
                 }
             });
         }
@@ -56,7 +56,7 @@ Template.mySubjectsSelector.events({
         }
 
         Meteor.call(
-            'updateMySubjects',
+            'subjects.update',
             {
                 subjects: subjectsArray
             },
@@ -83,7 +83,7 @@ Template.mySubjectsTable.helpers({
 Template.mySubjectsTable.events({
     'click button.removeSubjectFromMyProfile': function() {
         Meteor.call(
-            'removeSubjectFromMyProfile',
+            'subjects.removeFromMyProfile',
             {
                 subject: this
             },

@@ -23,7 +23,7 @@ Template.addUser.events({
         var allowVideohelp = $('#allowVideohelp:checked').val() ? true : false;
 
         Meteor.call(
-            'createUserOnServer',
+            'users.create',
             {
                 username: email,
                 email: email,
@@ -98,7 +98,7 @@ Template.userRow.events({
     'change .newRole': function(event) {
         newUserRole = event.target.value;
         Meteor.call(
-            'updateUserRole',
+            'users.updateRole',
             {
                 userId: this._id,
                 role: newUserRole
@@ -113,7 +113,7 @@ Template.userRow.events({
 
     'click .deleteUser': function(event) {
         Meteor.call(
-            'removeUser',
+            'users.remove',
             {
                 userId: this._id
             },
@@ -127,7 +127,7 @@ Template.userRow.events({
 
     'click .logoutUser': function(event) {
         Meteor.call(
-            'remoteLogOutUser',
+            'users.logOut',
             {
                 userId: this._id
             },
@@ -141,7 +141,7 @@ Template.userRow.events({
 
     'click .allowVideohelp': function(event) {
         Meteor.call(
-            'toggleAllowVideohelp',
+            'users.toggleAllowVideohelp',
             {
                 userId: this._id
             },
@@ -192,7 +192,7 @@ Template.openingHours.events({
 Template.serviceClosedAdmin.events({
     'click button#updateClosedStatus': function() {
         Meteor.call(
-            'upsertServiceStatus',
+            'config.setServiceStatus',
             {
                 newServiceStatus: false
             },

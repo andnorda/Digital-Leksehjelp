@@ -1,7 +1,7 @@
 import { ROLES } from '/imports/constants';
 
 Meteor.methods({
-    updateUserRole: function(options) {
+    'users.updateRole'(options) {
         check(options.userId, String);
         check(options.role, String);
 
@@ -34,7 +34,7 @@ Meteor.methods({
         }
     },
 
-    removeUser: function(options) {
+    'users.remove'(options) {
         check(options.userId, String);
 
         var user = Meteor.users.findOne(this.userId);
@@ -63,7 +63,7 @@ Meteor.methods({
         }
     },
 
-    toggleAllowVideohelp: function(options) {
+    'users.toggleAllowVideohelp'(options) {
         check(options.userId, String);
 
         var user = Meteor.users.findOne({ _id: Meteor.userId() });
@@ -116,7 +116,8 @@ Meteor.methods({
             throw new Meteor.Error(403, 'You are not allowed to access this.');
         }
     },
-    setProfilePictureUrl: function(url) {
+
+    'users.setProfilePictureUrl'(url) {
         check(url, String);
         if (!this.userId) {
             throw new Meteor.Error(401, 'You are not logged in.');
@@ -132,7 +133,7 @@ Meteor.methods({
         );
     },
 
-    createUserOnServer: function(options) {
+    'users.create'(options) {
         var user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
@@ -157,7 +158,7 @@ Meteor.methods({
         }
     },
 
-    remoteLogOutUser: function(options) {
+    'users.logOut'(options) {
         var user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');

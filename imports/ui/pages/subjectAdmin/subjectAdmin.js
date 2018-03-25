@@ -3,7 +3,7 @@ import './subjectAdmin.html';
 Template.addSubject.events({
     'click button#saveNewSubject': function() {
         Meteor.call(
-            'insertNewSubject',
+            'subjects.insert',
             {
                 subject: $('#newSubject')
                     .val()
@@ -23,7 +23,7 @@ Template.addSubject.events({
 Template.subjectsTable.events({
     'click button.deleteSubject': function() {
         Meteor.call(
-            'removeSubject',
+            'subjects.remove',
             {
                 subjectId: this._id
             },

@@ -5,23 +5,23 @@ import { Questions } from './questions.js';
 import { CONSTANTS } from '/imports/constants.js';
 
 Meteor.methods({
-    questionSearchCount: function(params) {
+    'questions.searchCount'(params) {
         return QuestionHelpers.search(params, Meteor.userId()).count();
     },
 
-    relatedQuestions: function(params) {
+    'questions.related'(params) {
         params['limit'] = CONSTANTS.RELATED_QUESTION_SEARCH_LIMIT;
         params['related'] = true;
         return QuestionHelpers.search(params, Meteor.userId()).fetch();
     },
 
-    verifiedQuestionCount: function() {
+    'questions.verifiedCount'() {
         return Questions.find({
             verifiedBy: { $exists: true }
         }).count();
     },
 
-    askQuestion: function(options) {
+    'questions.ask'(options) {
         check(options.subjectId, String);
         check(options.grade, String);
         check(options.studentEmail, String);
@@ -62,7 +62,7 @@ Meteor.methods({
         });
     },
 
-    updateQuestionFromVolunteerMiniForm: function(options) {
+    'questions.updateFromVolunteerMiniForm'(options) {
         check(options.questionId, String);
         check(options.title, String);
 
@@ -118,7 +118,7 @@ Meteor.methods({
         }
     },
 
-    answerQuestion: function(options) {
+    'questions.answer'(options) {
         check(options.questionId, String);
         check(options.title, String);
 
@@ -183,7 +183,7 @@ Meteor.methods({
         Questions.update({ _id: options.questionId }, updateDoc);
     },
 
-    verifyAnswer: function(options) {
+    'questions.verify'(options) {
         check(options.questionId, String);
 
         var user = Meteor.users.findOne(this.userId);
@@ -229,11 +229,11 @@ Meteor.methods({
         }
 
         if (question.studentEmail) {
-            Meteor.call('sendAnswerEmail', question);
+            Meteor.call('questions.sendAnswerEmail', question);
         }
     },
 
-    setEditing: function(options) {
+    'questions.setEditing'(options) {
         check(options, {
             questionId: String,
             editing: Boolean
@@ -256,7 +256,7 @@ Meteor.methods({
         }
     },
 
-    sendAnswerEmail: function(question) {
+    'questions.sendAnswerEmail'(question) {
         var user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');

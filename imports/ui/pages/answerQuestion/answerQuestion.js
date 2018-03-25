@@ -19,9 +19,12 @@ Template.answerQuestionForm.rendered = function() {
 };
 
 Template.answerQuestionForm.created = function() {
-    Meteor.call('setEditing', { questionId: this.data._id, editing: true });
+    Meteor.call('questions.setEditing', {
+        questionId: this.data._id,
+        editing: true
+    });
     window.onbeforeunload = function() {
-        Meteor.call('setEditing', {
+        Meteor.call('questions.setEditing', {
             questionId: this.data._id,
             editing: false
         });
@@ -29,7 +32,10 @@ Template.answerQuestionForm.created = function() {
 };
 
 Template.answerQuestionForm.destroyed = function() {
-    Meteor.call('setEditing', { questionId: this.data._id, editing: false });
+    Meteor.call('questions.setEditing', {
+        questionId: this.data._id,
+        editing: false
+    });
 };
 
 Template.answerQuestionForm.helpers({
@@ -55,7 +61,7 @@ Template.answerQuestionForm.helpers({
 });
 
 var answerQuestion = function(answerFields) {
-    Meteor.call('answerQuestion', answerFields, function(error) {
+    Meteor.call('questions.answer', answerFields, function(error) {
         if (error) {
             FlashMessages.sendError(error.message);
         } else {
@@ -72,7 +78,7 @@ Template.answerQuestion.events({
         event.preventDefault();
 
         Meteor.call(
-            'setEditing',
+            'questions.setEditing',
             { questionId: this._id, editing: false },
             function() {
                 window.close();

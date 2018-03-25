@@ -12,7 +12,7 @@ Template.endSessionModal.events({
             });
         }
 
-        Meteor.call('removeSession', {
+        Meteor.call('studentSessions.remove', {
             sessionId: Session.get('studentSessionId')
         });
     }

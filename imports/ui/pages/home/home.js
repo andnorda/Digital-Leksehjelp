@@ -86,7 +86,7 @@ Template.getHelpBox.events({
                 trinn: chosenGrade
             });
             Meteor.call(
-                'createSessionOnServer',
+                'studentSessions.create',
                 {
                     subject: chosenSubject,
                     grade: chosenGrade,

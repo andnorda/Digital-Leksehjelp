@@ -55,7 +55,7 @@ Template.studentSessionRow.events({
         window.open(this.videoConferenceUrl, '_blank');
         var sessionId = this._id;
         Meteor.call(
-            'setSessionState',
+            'studentSessions.setState',
             {
                 sessionId: sessionId,
                 state: STUDENT_SESSION_STATE.READY,
@@ -69,7 +69,7 @@ Template.studentSessionRow.events({
     },
 
     'click .deleteSession': function() {
-        Meteor.call('removeSession', {
+        Meteor.call('studentSessions.remove', {
             sessionId: this._id
         });
     }
@@ -79,7 +79,7 @@ Template.studentSessionRow.events({
 Template.openService.events({
     'click button#openService': function() {
         Meteor.call(
-            'upsertServiceStatus',
+            'config.setServiceStatus',
             {
                 newServiceStatus: true
             },

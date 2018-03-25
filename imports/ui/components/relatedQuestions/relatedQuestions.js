@@ -24,7 +24,7 @@ searchForRelatedQuestions = function(subject, question) {
     }
 
     if (Object.keys(query).length > 0) {
-        Meteor.call('relatedQuestions', query, function(error, result) {
+        Meteor.call('questions.related', query, function(error, result) {
             Session.set('relatedQuestions', result);
         });
     } else {

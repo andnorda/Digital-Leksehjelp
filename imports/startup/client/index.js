@@ -25,7 +25,7 @@ Deps.autorun(function() {
             Meteor.subscribe('users');
             Meteor.subscribe('config');
             if (Meteor.user().profile.setSubjectsAvailable) {
-                Meteor.call('setSubjectsAvailable', {
+                Meteor.call('subjects.setAvailable', {
                     subjects: Meteor.user().profile.subjects
                 });
             }

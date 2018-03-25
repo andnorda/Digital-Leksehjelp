@@ -7,7 +7,7 @@ Template.verifiedQuestionsList.onCreated(function bodyOnCreated() {
     this.state = state;
     state.set('page', 0);
 
-    Meteor.call('verifiedQuestionCount', function(error, result) {
+    Meteor.call('questions.verifiedCount', function(error, result) {
         state.set('verifiedQuestionCount', result);
     });
 });

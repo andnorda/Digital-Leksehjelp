@@ -17,7 +17,7 @@ var resetForm = function() {
 };
 
 var askQuestion = function(questionFields) {
-    Meteor.call('askQuestion', questionFields, function(error) {
+    Meteor.call('questions.ask', questionFields, function(error) {
         if (error) {
             FlashMessages.sendError(
                 'Noe gikk galt ved innsending av spørsmål. Vennligst prøv igjen.',

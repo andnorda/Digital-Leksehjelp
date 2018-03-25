@@ -8,13 +8,13 @@ var generateRandomAppearInLink = function() {
 };
 
 Meteor.methods({
-    removeSession: function(options) {
+    'studentSessions.remove'(options) {
         check(options.sessionId, String);
 
         StudentSessions.remove({ _id: options.sessionId });
     },
 
-    setSessionState: function(options) {
+    'studentSessions.setState'(options) {
         check(options.sessionId, String);
 
         var updateDoc;
@@ -29,7 +29,7 @@ Meteor.methods({
         StudentSessions.update({ _id: options.sessionId }, updateDoc);
     },
 
-    createSessionOnServer: function(options) {
+    'studentSessions.create'(options) {
         check(options.subject, String);
         check(options.grade, String);
         check(options.queueNr, Number);

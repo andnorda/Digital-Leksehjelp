@@ -3,7 +3,7 @@ import { Subjects } from './subjects.js';
 import { ROLES } from '/imports/constants';
 
 Meteor.methods({
-    setSubjectsAvailable: function(options, setUnavailable) {
+    'subjects.setAvailable'(options, setUnavailable) {
         //TODO(martin): subjectName is not used..
         check(options.subjects, [{ subjectId: String, subjectName: String }]);
 
@@ -53,7 +53,7 @@ Meteor.methods({
         }
     },
 
-    removeSubjectFromMyProfile: function(options) {
+    'subjects.removeFromMyProfile'(options) {
         check(options.subject, { subjectId: String, subjectName: String });
 
         var user = Meteor.users.findOne(this.userId);
@@ -67,7 +67,7 @@ Meteor.methods({
          */
         var setSubjectsUnavailable = true;
         Meteor.call(
-            'setSubjectsAvailable',
+            'subjects.setAvailable',
             {
                 subjects: Meteor.users.find(this.userId).fetch()[0].profile
                     .subjects
@@ -104,7 +104,7 @@ Meteor.methods({
         );
     },
 
-    updateMySubjects: function(options) {
+    'subjects.update'(options) {
         check(options.subjects, [{ subjectId: String, subjectName: String }]);
 
         var user = Meteor.users.findOne(this.userId);
@@ -119,7 +119,7 @@ Meteor.methods({
          */
         var setSubjectsUnavailable = true;
         Meteor.call(
-            'setSubjectsAvailable',
+            'subjects.setAvailable',
             { subjects: oldSubjects },
             setSubjectsUnavailable,
             function(error) {
@@ -161,7 +161,7 @@ Meteor.methods({
         );
     },
 
-    insertNewSubject: function(options) {
+    'subjects.insert'(options) {
         var user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
@@ -189,7 +189,7 @@ Meteor.methods({
         );
     },
 
-    removeSubject: function(options) {
+    'subjects.remove'(options) {
         check(options.subjectId, String);
 
         var user = Meteor.users.findOne(this.userId);

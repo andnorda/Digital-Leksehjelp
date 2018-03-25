@@ -89,7 +89,7 @@ Router.map(function() {
             this.next();
         },
         waitOn: function() {
-            Meteor.call('questionSearchCount', {}, function(error, result) {
+            Meteor.call('questions.searchCount', {}, function(error, result) {
                 Session.set('numberOfQuestions', result);
             });
             return Meteor.subscribe('questions.search', {
@@ -220,7 +220,7 @@ Router.map(function() {
                 );
             });
 
-            Meteor.call('questionSearchCount', this.params.query, function(
+            Meteor.call('questions.searchCount', this.params.query, function(
                 error,
                 result
             ) {

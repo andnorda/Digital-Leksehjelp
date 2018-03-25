@@ -22,7 +22,7 @@ Meteor.methods({
         );
     },
 
-    upsertServiceStatus: function(options) {
+    'config.setServiceStatus'(options) {
         check(options.newServiceStatus, Boolean);
 
         var user = Meteor.users.findOne(this.userId);
