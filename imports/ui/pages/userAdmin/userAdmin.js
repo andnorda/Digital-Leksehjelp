@@ -205,16 +205,10 @@ Template.serviceClosedAdmin.helpers({
 
 Template.serviceClosedAdmin.events({
     'click button#updateClosedStatus': function() {
-        Meteor.call(
-            'config.setServiceStatus',
-            {
-                newServiceStatus: false
-            },
-            function(error, data) {
-                if (error) {
-                    FlashMessages.sendError(error.message);
-                }
+        Meteor.call('config.closeService', function(error, data) {
+            if (error) {
+                FlashMessages.sendError(error.message);
             }
-        );
+        });
     }
 });

@@ -91,16 +91,10 @@ Template.openService.helpers({
 
 Template.openService.events({
     'click button#openService': function() {
-        Meteor.call(
-            'config.setServiceStatus',
-            {
-                newServiceStatus: true
-            },
-            function(error, data) {
-                if (error) {
-                    FlashMessages.sendError(error.message);
-                }
+        Meteor.call('config.openService', function(error, data) {
+            if (error) {
+                FlashMessages.sendError(error.message);
             }
-        );
+        });
     }
 });
