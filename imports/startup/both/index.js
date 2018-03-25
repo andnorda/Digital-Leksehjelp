@@ -3,20 +3,8 @@ import { Questions } from '/imports/api/questions/questions.js';
 // Logic common for both client and server.
 // Everything in the /lib folder is loaded before anything else
 this.DigitalLeksehjelp = {
-    getQueueTime: function(startTime, unit) {
-        var queueEndTime = new Date().getTime();
-        var totalTime = queueEndTime - startTime;
-
-        switch (unit) {
-            case 'minutes':
-                totalTime = Math.round(totalTime / 60000);
-                break;
-
-            case 'seconds':
-                totalTime = Math.round(totalTime / 1000);
-                break;
-        }
-        return totalTime;
+    getQueueTime: function(startTime) {
+        return Math.round(new Date().getTime() - startTime / 60000);
     },
 
     urlify: function(str) {

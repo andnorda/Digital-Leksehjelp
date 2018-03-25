@@ -33,8 +33,7 @@ Template.queueModal.rendered = function() {
                 ) {
                     mixpanel.track('Forlot leksehjelp-kø', {
                         'Minutter i kø': DigitalLeksehjelp.getQueueTime(
-                            Session.get('queueStartTime'),
-                            'minutes'
+                            Session.get('queueStartTime')
                         )
                     });
                     Meteor.call('studentSessions.remove', {
@@ -97,8 +96,7 @@ Template.queueModalBody.events({
     'click button#getHelp': function() {
         mixpanel.track('Fullført kø, og gått til rom', {
             'Minutter i kø': DigitalLeksehjelp.getQueueTime(
-                Session.get('queueStartTime'),
-                'minutes'
+                Session.get('queueStartTime')
             )
         });
         window.open(this.videoConferenceUrl);
