@@ -21,9 +21,6 @@ StudentSessionsSchema = new SimpleSchema({
             return STUDENT_SESSION_STATE[key];
         })
     },
-    queueNr: {
-        type: Number
-    },
     tutor: {
         type: String,
         optional: true

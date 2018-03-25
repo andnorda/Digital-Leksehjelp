@@ -32,9 +32,7 @@ Meteor.methods({
     'studentSessions.create'(options) {
         check(options.subject, String);
         check(options.grade, String);
-        check(options.queueNr, Number);
 
-        var queueNr = options.queueNr + 1;
         var videoConferenceUrl = generateRandomAppearInLink();
 
         return StudentSessions.insert({
@@ -42,7 +40,6 @@ Meteor.methods({
             grade: options.grade,
             videoConferenceUrl: videoConferenceUrl,
             state: STUDENT_SESSION_STATE.WAITING,
-            queueNr: queueNr,
             createdAt: new Date()
         });
     }

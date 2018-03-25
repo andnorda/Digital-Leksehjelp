@@ -40,7 +40,6 @@
         <table border="1">
             <tr>
                 <th>Tid i kø</th>
-                <th>Kø id</th>
                 <th>Fag</th>
                 <th>Trinn</th>
                 <th></th>
@@ -57,7 +56,6 @@
 <template name="studentSessionRow">
     <tr>
         <td>{{#unless tutor}}{{ timeSince createdAt time }}{{/unless}}</td>
-        <td>{{ queueNr }}</td>
         <td>{{ subject }}</td>
         <td>{{ grade }}</td>
         <td>

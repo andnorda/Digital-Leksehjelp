@@ -1,7 +1,6 @@
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { Config } from '/imports/api/config/config.js';
 import { Questions } from '/imports/api/questions/questions.js';
-import { StudentQueue } from '/imports/api/studentQueue/studentQueue.js';
 
 import './home.html';
 
@@ -17,14 +16,6 @@ Template.getHelpBox.onCreated(function getHelpBoxOnCreated() {
         });
     });
 });
-
-var getHighestQueueNr = function() {
-    if (StudentQueue.find({}).count() === 0) {
-        return 0;
-    }
-    return StudentQueue.find({}, { sort: { queueNr: -1 }, limit: 1 }).fetch()[0]
-        .queueNr;
-};
 
 Template.getHelp.events({
     'click a#more-info': function(event) {
@@ -97,8 +88,7 @@ Template.getHelpBox.events({
                 'studentSessions.create',
                 {
                     subject: chosenSubject,
-                    grade: chosenGrade,
-                    queueNr: getHighestQueueNr()
+                    grade: chosenGrade
                 },
                 function(error, sessionId) {
                     if (error) {

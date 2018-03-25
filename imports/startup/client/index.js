@@ -2,8 +2,6 @@ import './routes.js';
 import './templateHelpers.js';
 import './flashTitle.js';
 
-Meteor.subscribe('studentSessions.queue');
-
 Deps.autorun(function() {
     if (Meteor.user()) {
         if (Meteor.user().profile && Meteor.user().profile.firstName) {

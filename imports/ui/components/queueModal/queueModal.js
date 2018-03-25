@@ -1,5 +1,4 @@
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
-import { StudentQueue } from '/imports/api/studentQueue/studentQueue.js';
 
 import { STUDENT_SESSION_STATE } from '/imports/constants';
 
@@ -77,13 +76,8 @@ Template.queueModalBody.helpers({
     },
     studentsInFront: function() {
         var studentSession = findStudentSession();
-        var nrOfStudents = StudentQueue.find({
-            $and: [
-                { queueNr: { $lt: studentSession.queueNr } },
-                { subject: studentSession.subject }
-            ]
-        }).count();
-        return nrOfStudents + 1;
+        // TODO: fix
+        return 1;
     },
     stateReady: function() {
         var studentSession = findStudentSession();
