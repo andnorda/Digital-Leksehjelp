@@ -2,11 +2,11 @@ import { Config } from '../config.js';
 
 import { ROLES } from '/imports/constants';
 
-Meteor.publish('openingHours', function() {
+Meteor.publish('config.openingHours', function() {
     return Config.find({ name: 'openingHours' });
 });
 
-Meteor.publish('serviceStatus', function() {
+Meteor.publish('config.serviceStatus', function() {
     return Config.find({ name: 'serviceStatus' });
 });
 

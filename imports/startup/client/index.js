@@ -11,22 +11,22 @@ import './flashTitle.js';
 Session.set('serviceStatusLoaded', false);
 Session.set('openingHoursLoaded', false);
 
-Meteor.subscribe('serviceStatus', function onComplete() {
+Meteor.subscribe('config.serviceStatus', function onComplete() {
     Session.set('serviceStatusLoaded', true);
 });
-Meteor.subscribe('openingHours', function onComplete() {
+Meteor.subscribe('config.openingHours', function onComplete() {
     Session.set('openingHoursLoaded', true);
 });
 Meteor.subscribe('subjects');
-Meteor.subscribe('loggedInUsers');
-Meteor.subscribe('student-queue');
+Meteor.subscribe('users.loggedIn');
+Meteor.subscribe('studentSessions.queue');
 
 var lastUserId;
 Deps.autorun(function() {
-    Meteor.subscribe('sessions', Session.get('studentSessionId'));
+    Meteor.subscribe('studentSessions', Session.get('studentSessionId'));
     if (Meteor.user()) {
         if (Meteor.user().profile && Meteor.user().profile.firstName) {
-            Meteor.subscribe('all-users');
+            Meteor.subscribe('users');
             Meteor.subscribe('config');
             if (Meteor.user().profile.setSubjectsAvailable) {
                 Meteor.call('setSubjectsAvailable', {

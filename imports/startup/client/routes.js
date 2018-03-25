@@ -92,7 +92,7 @@ Router.map(function() {
             Meteor.call('questionSearchCount', {}, function(error, result) {
                 Session.set('numberOfQuestions', result);
             });
-            return Meteor.subscribe('questionSearch', {
+            return Meteor.subscribe('questions.search', {
                 sort: 'date',
                 limit: 6
             });
@@ -167,7 +167,7 @@ Router.map(function() {
         path: '/frivillig/admin/sporsmal',
         template: 'questionAdmin',
         waitOn: function() {
-            return Meteor.subscribe('verifiedQuestions', 0);
+            return Meteor.subscribe('questions.verified', 0);
         }
     });
 
@@ -226,7 +226,7 @@ Router.map(function() {
             ) {
                 Session.set('questionSearchCount', result);
             });
-            return Meteor.subscribe('questionSearch', this.params.query);
+            return Meteor.subscribe('questions.search', this.params.query);
         }
     });
 

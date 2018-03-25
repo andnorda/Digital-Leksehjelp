@@ -1,6 +1,6 @@
 import { ROLES } from '/imports/constants';
 
-Meteor.publish('all-users', function() {
+Meteor.publish('users', function() {
     var user = Meteor.users.findOne(this.userId);
     if (user) {
         if (user.profile.role === ROLES.ADMIN) {
@@ -29,7 +29,7 @@ Meteor.publish('all-users', function() {
     this.ready();
 });
 
-Meteor.publish('loggedInUsers', function() {
+Meteor.publish('users.loggedIn', function() {
     var user = Meteor.users.findOne(this.userId);
     var publicLoggedInCursor = Meteor.users.find(
         {
@@ -67,8 +67,4 @@ Meteor.publish('loggedInUsers', function() {
     } else {
         return publicLoggedInCursor;
     }
-});
-
-Meteor.publish('user-data', function() {
-    return Meteor.users.findOne(this.userId);
 });

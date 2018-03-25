@@ -8,12 +8,12 @@ import {
     CONSTANTS
 } from '/imports/constants';
 
-Meteor.publish('questionSearch', function(params) {
+Meteor.publish('questions.search', function(params) {
     params['limit'] = CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE;
     return QuestionHelpers.search(params, this.userId);
 });
 
-Meteor.publish('verifiedQuestions', function(page) {
+Meteor.publish('questions.verified', function(page) {
     if (this.userId) {
         const user = Meteor.users.findOne(this.userId);
 

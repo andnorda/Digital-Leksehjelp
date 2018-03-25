@@ -41,6 +41,6 @@ Template.verifiedQuestionsList.events({
         const page = state.get('page');
         state.set('page', page + 1);
 
-        return Meteor.subscribe('verifiedQuestions', page + 1);
+        return Meteor.subscribe('questions.verified', page + 1);
     }
 });

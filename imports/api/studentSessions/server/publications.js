@@ -2,20 +2,20 @@ import { StudentSessions } from '../studentSessions.js';
 
 import { STUDENT_SESSION_STATE } from '/imports/constants.js';
 
-Meteor.publish('student-queue', function() {
+Meteor.publish('studentSessions.queue', function() {
     var self = this;
     var id = Random.id();
     var handle = StudentSessions.find({
         state: STUDENT_SESSION_STATE.WAITING
     }).observeChanges({
         added: function(id, fields) {
-            self.added('student-queue', id, {
+            self.added('studentSessions.queue', id, {
                 queueNr: fields.queueNr,
                 subject: fields.subject
             });
         },
         removed: function(id) {
-            self.removed('student-queue', id);
+            self.removed('studentSessions.queue', id);
         }
     });
 
@@ -26,7 +26,7 @@ Meteor.publish('student-queue', function() {
     });
 });
 
-Meteor.publish('sessions', function(sessionId) {
+Meteor.publish('studentSessions', function(sessionId) {
     var user = Meteor.users.findOne(this.userId);
     if (!user) {
         check(sessionId, Match.OneOf(String, null));
