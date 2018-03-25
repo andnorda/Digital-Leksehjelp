@@ -9,7 +9,6 @@ Deps.autorun(function() {
     Meteor.subscribe('studentSessions', Session.get('studentSessionId'));
     if (Meteor.user()) {
         if (Meteor.user().profile && Meteor.user().profile.firstName) {
-            Meteor.subscribe('config');
             if (Meteor.user().profile.setSubjectsAvailable) {
                 Meteor.call('subjects.setAvailable', {
                     subjects: Meteor.user().profile.subjects
