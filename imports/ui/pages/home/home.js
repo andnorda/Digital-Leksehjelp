@@ -8,6 +8,7 @@ import './home.html';
 Template.getHelpBox.onCreated(function getHelpBoxOnCreated() {
     this.autorun(() => {
         this.subscribe('subjects');
+        this.subscribe('users.loggedIn');
         this.subscribe('config.openingHours');
 
         Session.set('serviceStatusLoaded', false);
@@ -151,6 +152,12 @@ Template.previousQuestions.events({
     'click button#ask-question': function() {
         Router.go('askQuestion');
     }
+});
+
+Template.todaysVolunteers.onCreated(function todaysVolunteersOnCreated() {
+    this.autorun(() => {
+        this.subscribe('users.loggedIn');
+    });
 });
 
 Template.todaysVolunteers.helpers({

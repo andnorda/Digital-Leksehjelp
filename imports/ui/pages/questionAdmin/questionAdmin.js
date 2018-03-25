@@ -2,17 +2,27 @@ import { Questions } from '/imports/api/questions/questions.js';
 
 import './questionAdmin.html';
 
-Template.verifiedQuestionsList.onCreated(function bodyOnCreated() {
-    const state = new ReactiveDict();
-    this.state = state;
-    state.set('page', 0);
+Template.verifiedQuestionsList.onCreated(
+    function verifiedQuestionsListOnCreated() {
+        this.autorun(() => {
+            this.subscribe('users');
+        });
 
-    Meteor.call('questions.verifiedCount', function(error, result) {
-        state.set('verifiedQuestionCount', result);
-    });
-});
+        const state = new ReactiveDict();
+        this.state = state;
+        state.set('page', 0);
+
+        Meteor.call('questions.verifiedCount', function(error, result) {
+            state.set('verifiedQuestionCount', result);
+        });
+    }
+);
 
 Template.verifiedQuestionsList.helpers({
+    username: function(userId) {
+        var user = Meteor.users.findOne(userId);
+        return user ? user.username : '';
+    },
     verifiedQuestions: function() {
         return Questions.find(
             {

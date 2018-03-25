@@ -45,6 +45,14 @@ Template.unansweredQuestions.helpers({
     }
 });
 
+Template.unansweredQuestionRow.onCreated(
+    function unansweredQuestionRowOnCreated() {
+        this.autorun(() => {
+            this.subscribe('users');
+        });
+    }
+);
+
 Template.unansweredQuestionRow.helpers({
     status: function() {
         try {
@@ -110,6 +118,12 @@ Template.unverifiedQuestions.helpers({
     }
 });
 
+Template.answeredQuestionRow.onCreated(function answeredQuestionRowOnCreated() {
+    this.autorun(() => {
+        this.subscribe('users');
+    });
+});
+
 Template.answeredQuestionRow.events({
     'click .verify-answer': function(event, template) {
         Meteor.call(
@@ -127,6 +141,10 @@ Template.answeredQuestionRow.events({
 });
 
 Template.answeredQuestionRow.helpers({
+    username: function(userId) {
+        var user = Meteor.users.findOne(userId);
+        return user ? user.username : '';
+    },
     status: function() {
         if (!this.editing || this.editing.length === 0) {
             return new Spacebars.SafeString('<td>Ubesvart</td>');

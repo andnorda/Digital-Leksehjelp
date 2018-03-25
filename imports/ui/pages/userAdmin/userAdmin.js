@@ -72,6 +72,12 @@ Template.roleSelector.helpers({
 });
 
 // === USERSTABLE ===
+Template.usersTable.onCreated(function usersTableOnCreated() {
+    this.autorun(() => {
+        this.subscribe('users');
+    });
+});
+
 Template.usersTable.helpers({
     users: function() {
         return Meteor.users.find({}).fetch();
@@ -79,6 +85,12 @@ Template.usersTable.helpers({
 });
 
 // === USERROW ===
+Template.userRow.onCreated(function userRowOnCreated() {
+    this.autorun(() => {
+        this.subscribe('users');
+    });
+});
+
 var newUserRole;
 
 Template.userRow.helpers({

@@ -2,7 +2,6 @@ import './routes.js';
 import './templateHelpers.js';
 import './flashTitle.js';
 
-Meteor.subscribe('users.loggedIn');
 Meteor.subscribe('studentSessions.queue');
 
 var lastUserId;
@@ -10,7 +9,6 @@ Deps.autorun(function() {
     Meteor.subscribe('studentSessions', Session.get('studentSessionId'));
     if (Meteor.user()) {
         if (Meteor.user().profile && Meteor.user().profile.firstName) {
-            Meteor.subscribe('users');
             Meteor.subscribe('config');
             if (Meteor.user().profile.setSubjectsAvailable) {
                 Meteor.call('subjects.setAvailable', {

@@ -77,13 +77,6 @@ Template.registerHelper('subjectName', function(subjectId) {
     return subject ? subject.name : 'Ukjent fag';
 });
 
-Template.registerHelper('username', function(userId) {
-    if (Meteor.userId()) {
-        var user = Meteor.users.findOne(userId);
-        return user ? user.username : '';
-    }
-});
-
 Template.registerHelper('fromNow', function(date) {
     if (date) {
         return moment(date).fromNow();
