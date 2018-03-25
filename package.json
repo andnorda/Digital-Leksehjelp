@@ -1,29 +1,31 @@
 {
-  "name": "digital-leksehjelp",
-  "version": "1.0.0",
-  "description": "digital-leksehjelp",
-  "main": "index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "tests"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.42",
-    "bcrypt": "^1.0.3"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/iterate/digital-leksehjelp.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/iterate/digital-leksehjelp/issues"
-  },
-  "homepage": "https://github.com/iterate/digital-leksehjelp#readme"
+    "name": "digital-leksehjelp",
+    "version": "1.0.0",
+    "description": "digital-leksehjelp",
+    "main": "index.js",
+    "directories": {
+        "lib": "lib",
+        "test": "tests"
+    },
+    "dependencies": {
+        "@babel/runtime": "^7.0.0-beta.42",
+        "bcrypt": "^1.0.3",
+        "meteor-node-stubs": "^0.3.3"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "start": "meteor run",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/iterate/digital-leksehjelp.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/iterate/digital-leksehjelp/issues"
+    },
+    "homepage": "https://github.com/iterate/digital-leksehjelp#readme"
 }

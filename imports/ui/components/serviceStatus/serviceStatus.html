@@ -1,0 +1,10 @@
+<template name="serviceStatus">
+    <p>
+        Status for tjenesten:
+        {{#if serviceIsOpen}}
+            <font color="#458B00">ÅPEN</font>
+        {{else}}
+            <font color="#FF0000">STENGT</font>
+        {{/if}}
+    </p>
+</template>

@@ -1,0 +1,13 @@
+<template name="gradeSelector">
+    <div class="btn-group full-width get-help-box-item">
+        <button type="button" class="btn dl-dropdown full-width {{validationError 'gradeError'}}" data-toggle="dropdown">
+            <span id="chosen-grade">Velg trinn</span>
+            <span class="glyphicon glyphicon-chevron-down dropdown-caret"></span>
+        </button>
+        <ul class="dl-dropdown-ul dropdown-menu full-width" role="menu">
+          {{#each grades}}
+              <li class="dl-dropdown-item grades" role="presentation" data-id="{{_id}}">{{this}}</li>
+          {{/each}}
+        </ul>
+    </div>
+</template>

@@ -1,0 +1,17 @@
+<template name="layout">
+    {{> queueModal}}
+
+    {{> notSupportedModal}}
+
+    {{> moreInfoModal}}
+
+    {{> endSessionModal}}
+
+    <div class="wrapper">
+        {{> yield region="header"}}
+        <div class="dl-content">
+            {{> yield}}
+        </div>
+        {{> yield region="footer"}}
+    </div>
+</template>

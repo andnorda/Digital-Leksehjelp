@@ -1,0 +1,1 @@
+import './moreInfoModal.html';
