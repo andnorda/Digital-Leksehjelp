@@ -1,4 +1,7 @@
+import { Meteor } from 'meteor/meteor';
+import { Router } from 'meteor/iron:router';
 import { Questions } from '/imports/api/questions/questions.js';
+import { ROLES } from '/imports/constants';
 
 import '../../ui/layouts/body/body.js';
 import '../../ui/pages/home/home.js';
@@ -21,9 +24,7 @@ import '../../ui/components/loggedInHeader/loggedInHeader.js';
 import '../../ui/components/loggedInFooter/loggedInFooter.js';
 import '../../ui/components/login/login.js';
 
-import { ROLES, QUESTION_SUBSCRIPTION_LEVEL } from '/imports/constants';
-
-var checkIfSignedIn = function(pause) {
+const checkIfSignedIn = function() {
     if (!Meteor.userId()) {
         this.render('login');
     } else {
@@ -73,7 +74,7 @@ Router.configure({
 Router.map(function() {
     this.route('home', {
         path: '/',
-        onBeforeAction: function() {
+        onBeforeAction() {
             FlashMessages.clear();
             validationError = [];
             this.next();
@@ -88,8 +89,8 @@ Router.map(function() {
         controller: LoginController,
         path: '/frivillig/videohjelp',
         template: 'studentSessions',
-        onAfterAction: function() {
-            var user = Meteor.user();
+        onAfterAction() {
+            const user = Meteor.user();
             if (
                 !user ||
                 !user.profile ||
@@ -111,10 +112,10 @@ Router.map(function() {
     this.route('answerQuestion', {
         controller: AnswerQuestionController,
         path: '/frivillig/sporsmal/svar/:questionId',
-        waitOn: function() {
+        waitOn() {
             return Meteor.subscribe('questions.byId', this.params.questionId);
         },
-        data: function() {
+        data() {
             return Questions.findOne(this.params.questionId);
         }
     });
@@ -146,7 +147,7 @@ Router.map(function() {
     this.route('askQuestion', {
         controller: DefaultController,
         path: '/sporsmal',
-        onBeforeAction: function() {
+        onBeforeAction() {
             FlashMessages.clear();
             validationError = [];
             this.next();
@@ -156,10 +157,10 @@ Router.map(function() {
     this.route('showAnswer', {
         controller: DefaultController,
         path: '/sporsmal/:questionId',
-        waitOn: function() {
+        waitOn() {
             return Meteor.subscribe('questions.byId', this.params.questionId);
         },
-        data: function() {
+        data() {
             return Questions.findOne(this.params.questionId);
         }
     });
@@ -171,7 +172,7 @@ Router.map(function() {
 
     this.route('notFound', {
         path: '/(.*)',
-        action: function() {
+        action() {
             this.redirect('/');
         }
     });

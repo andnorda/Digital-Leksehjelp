@@ -1,9 +1,13 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { FlashMessages } from 'meteor/mrt:flash-messages';
+import { $ } from 'meteor/jquery';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 
 import './subjectAdmin.html';
 
 Template.addSubject.events({
-    'click button#saveNewSubject': function() {
+    'click button#saveNewSubject'() {
         Meteor.call(
             'subjects.insert',
             {
@@ -11,7 +15,7 @@ Template.addSubject.events({
                     .val()
                     .trim()
             },
-            function(error, result) {
+            function(error) {
                 if (error) {
                     FlashMessages.sendError(error.message);
                 } else {
@@ -29,19 +33,19 @@ Template.subjectsTable.onCreated(function subjectsTableOnCreated() {
 });
 
 Template.subjectsTable.helpers({
-    subjects: function() {
+    subjects() {
         return Subjects.find({}, { sort: { name: 1 } });
     }
 });
 
 Template.subjectsTable.events({
-    'click button.deleteSubject': function() {
+    'click button.deleteSubject'() {
         Meteor.call(
             'subjects.remove',
             {
                 subjectId: this._id
             },
-            function(error, result) {
+            function(error) {
                 if (error) {
                     FlashMessages.sendError(error.message);
                 }

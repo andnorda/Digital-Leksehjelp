@@ -21,17 +21,17 @@ Template.verifiedQuestionsList.onCreated(function() {
 });
 
 Template.verifiedQuestionsList.helpers({
-    username: function(userId) {
-        var user = Meteor.users.findOne(userId);
+    username(userId) {
+        const user = Meteor.users.findOne(userId);
         return user ? user.username : '';
     },
-    verifiedQuestions: function() {
+    verifiedQuestions() {
         return Questions.find(
             { verifiedBy: { $exists: true } },
             { sort: { questionDate: -1 } }
         );
     },
-    hasMoreQuestions: function() {
+    hasMoreQuestions() {
         return (
             Questions.find({ verifiedBy: { $exists: true } }).count() <
             Counts.get('questions.verifiedCount')
@@ -40,10 +40,10 @@ Template.verifiedQuestionsList.helpers({
 });
 
 Template.verifiedQuestionsList.events({
-    'click .load-more': function(e) {
-        e.preventDefault();
+    'click .load-more'(event) {
+        event.preventDefault();
 
-        const state = Template.instance().state;
+        const { state } = Template.instance();
         state.set('requestedQuestions', state.get('requestedQuestions') + 20);
     }
 });

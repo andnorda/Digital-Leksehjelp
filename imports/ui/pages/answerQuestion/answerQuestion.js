@@ -1,11 +1,14 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { Subjects } from '/imports/api/subjects/subjects.js';
-
 import { CONSTANTS } from '/imports/constants.js';
 
 import './answerQuestion.html';
 
-Template.answerQuestionForm.rendered = function() {
-    var subject = Subjects.findOne({ _id: this.data.subjectId });
+Template.answerQuestionForm.onRendered(function() {
+    const subject = Subjects.findOne({ _id: this.data.subjectId });
     searchForRelatedQuestions(subject, this.data.question);
     $('#answer').summernote({
         height: 300,
@@ -16,9 +19,9 @@ Template.answerQuestionForm.rendered = function() {
             ['misc', ['fullscreen', 'undo', 'redo']]
         ]
     });
-};
+});
 
-Template.answerQuestionForm.created = function() {
+Template.answerQuestionForm.onCreated(function() {
     Meteor.call('questions.setEditing', {
         questionId: this.data._id,
         editing: true
@@ -29,38 +32,35 @@ Template.answerQuestionForm.created = function() {
             editing: false
         });
     }.bind(this);
-};
+});
 
-Template.answerQuestionForm.destroyed = function() {
+Template.answerQuestionForm.onDestroyed(function() {
     Meteor.call('questions.setEditing', {
         questionId: this.data._id,
         editing: false
     });
-};
+});
 
 Template.answerQuestionForm.helpers({
-    publishIsChecked: function(question) {
+    publishIsChecked(question) {
         if (question.answer) {
             return question.publishedBy;
         }
         return false;
     },
-    percentUploaded: function() {
-        var file = S3.collection.findOne({ uploading: true });
-        if (file) {
-            return file.percent_uploaded;
-        }
+    percentUploaded() {
+        const file = S3.collection.findOne({ uploading: true });
+        return file && file.percent_uploaded;
     },
-    answerText: function(question) {
+    answerText(question) {
         if (question.answer) {
             return question.answer;
-        } else {
-            return '<br><br>Med vennlig hilsen,<br>Digital leksehjelp';
         }
+        return '<br><br>Med vennlig hilsen,<br>Digital leksehjelp';
     }
 });
 
-var answerQuestion = function(answerFields) {
+const answerQuestion = function(answerFields) {
     Meteor.call('questions.answer', answerFields, function(error) {
         if (error) {
             FlashMessages.sendError(error.message);
@@ -74,7 +74,7 @@ var answerQuestion = function(answerFields) {
 };
 
 Template.answerQuestion.events({
-    'click .ignore-changes-and-close-window': function(event) {
+    'click .ignore-changes-and-close-window'(event) {
         event.preventDefault();
 
         Meteor.call(
@@ -88,19 +88,21 @@ Template.answerQuestion.events({
 });
 
 Template.answerQuestionForm.events({
-    'submit form': function(event, template) {
+    'submit form'(event, templateInstance) {
         event.preventDefault();
-        var answerFields = {
-            questionId: template.data._id,
-            question: template.find('textarea[name=question]').value,
-            title: template.find('input[name=title]').value.substring(0, 120),
+        const answerFields = {
+            questionId: templateInstance.data._id,
+            question: templateInstance.find('textarea[name=question]').value,
+            title: templateInstance
+                .find('input[name=title]')
+                .value.substring(0, 120),
             answer: $('#answer').summernote('code'),
-            publishAnswer: template.find('input[name=publishAnswer]:checked')
-                ? true
-                : false
+            publishAnswer: !!templateInstance.find(
+                'input[name=publishAnswer]:checked'
+            )
         };
 
-        var files = $('input[name=attachment]')[0].files;
+        const { files } = $('input[name=attachment]')[0];
 
         if (files.length === 1) {
             if (files[0].size > CONSTANTS.S3_MAX_UPLOAD_FILE_SIZE) {
@@ -111,13 +113,14 @@ Template.answerQuestionForm.events({
             S3.upload(files, '/vedlegg', function(error, result) {
                 if (error) {
                     FlashMessages.sendError(
-                        'Noe gikk galt ved opplastningen. Prøv igjen.\n' +
+                        `Noe gikk galt ved opplastningen. Prøv igjen.\n${
                             error.message
+                        }`
                     );
                     return;
                 }
                 if (!result.uploading) {
-                    answerFields['answerAttachmentUrl'] = result.url;
+                    answerFields.answerAttachmentUrl = result.url;
                     answerQuestion(answerFields);
                 }
             });
@@ -125,8 +128,8 @@ Template.answerQuestionForm.events({
             answerQuestion(answerFields);
         }
     },
-    'click #setTitleButton': function(event, template) {
-        var question = template.find('textarea[name=question]').value;
+    'click #setTitleButton'(event, templateInstance) {
+        const question = templateInstance.find('textarea[name=question]').value;
         $('input[name=title]').val(question.substring(0, 120));
     }
 });

@@ -1,10 +1,11 @@
-var x = require('casper').selectXPath;
+const casper = require('casper');
+
 casper.options.viewportSize = { width: 960, height: 1035 };
 casper.on('page.error', function(msg, trace) {
-    this.echo('Error: ' + msg, 'ERROR');
-    for (var i = 0; i < trace.length; i++) {
-        var step = trace[i];
-        this.echo('   ' + step.file + ' (line ' + step.line + ')', 'ERROR');
+    this.echo(`Error: ${msg}`, 'ERROR');
+    for (let i = 0; i < trace.length; i += 1) {
+        const step = trace[i];
+        this.echo(`   ${step.file} (line ${step.line})`, 'ERROR');
     }
 });
 casper.test.begin('Student', function(test) {

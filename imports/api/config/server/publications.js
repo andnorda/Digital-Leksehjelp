@@ -1,6 +1,6 @@
-import { Config } from '../config.js';
-
+import { Meteor } from 'meteor/meteor';
 import { ROLES } from '/imports/constants';
+import { Config } from '../config.js';
 
 Meteor.publish('config.openingHours', function() {
     return Config.find({ name: 'openingHours' });
@@ -11,11 +11,13 @@ Meteor.publish('config.serviceStatus', function() {
 });
 
 Meteor.publish('config', function() {
-    var user = Meteor.users.findOne(this.userId);
-
-    if (user && user.profile.role === ROLES.ADMIN) {
-        return Config.find({});
+    if (!this.userId) {
+        return this.ready();
+    }
+    const user = Meteor.users.findOne(this.userId);
+    if (user.profile.role !== ROLES.ADMIN) {
+        return this.ready();
     }
 
-    this.ready();
+    return Config.find({});
 });

@@ -1,3 +1,7 @@
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
+import { Accounts } from 'meteor/accounts-base';
+import { Subjects } from '/imports/api/subjects/subjects.js';
 import { ROLES } from '/imports/constants';
 
 Meteor.methods({
@@ -5,17 +9,17 @@ Meteor.methods({
         check(options.userId, String);
         check(options.role, String);
 
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
 
         if (user.profile.role === ROLES.ADMIN) {
-            var currentRole = Meteor.users
+            const currentRole = Meteor.users
                 .find({ _id: options.userId })
                 .fetch()[0].profile.role;
             if (currentRole === ROLES.ADMIN && options.role !== ROLES.ADMIN) {
-                var nrOfAdminsLeft = Meteor.users
+                const nrOfAdminsLeft = Meteor.users
                     .find({ 'profile.role': ROLES.ADMIN })
                     .fetch();
                 if (nrOfAdminsLeft.length === 1) {
@@ -25,29 +29,28 @@ Meteor.methods({
                     );
                 }
             }
-            var updateDoc = {
+            const updateDoc = {
                 $set: { 'profile.role': options.role }
             };
             return Meteor.users.update({ _id: options.userId }, updateDoc);
-        } else {
-            throw new Meteor.Error(403, 'You are not allowed to access this.');
         }
+        throw new Meteor.Error(403, 'You are not allowed to access this.');
     },
 
     'users.remove'(options) {
         check(options.userId, String);
 
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
 
         if (user.profile.role === ROLES.ADMIN) {
-            var currentRole = Meteor.users
+            const currentRole = Meteor.users
                 .find({ _id: options.userId })
                 .fetch()[0].profile.role;
             if (currentRole === ROLES.ADMIN) {
-                var nrOfAdminsLeft = Meteor.users
+                const nrOfAdminsLeft = Meteor.users
                     .find({ 'profile.role': ROLES.ADMIN })
                     .fetch();
                 if (nrOfAdminsLeft.length === 1) {
@@ -58,30 +61,29 @@ Meteor.methods({
                 }
             }
             return Meteor.users.remove({ _id: options.userId });
-        } else {
-            throw new Meteor.Error(403, 'You are not allowed to access this.');
         }
+        throw new Meteor.Error(403, 'You are not allowed to access this.');
     },
 
     'users.toggleAllowVideohelp'(options) {
         check(options.userId, String);
 
-        var user = Meteor.users.findOne({ _id: Meteor.userId() });
+        const user = Meteor.users.findOne({ _id: Meteor.userId() });
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
 
         if (user.profile.role === ROLES.ADMIN) {
-            var otherUser = Meteor.users.findOne({ _id: options.userId });
+            const otherUser = Meteor.users.findOne({ _id: options.userId });
             if (!user) {
                 throw new Meteor.Error(
                     404,
-                    'User with id ' + options.userId + ' does not exist.'
+                    `User with id ${options.userId} does not exist.`
                 );
             }
 
-            var currentAllowVideohelp = otherUser.profile.allowVideohelp;
-            var newAllowVideohelp = !currentAllowVideohelp;
+            const currentAllowVideohelp = otherUser.profile.allowVideohelp;
+            const newAllowVideohelp = !currentAllowVideohelp;
 
             Meteor.users.update(
                 { _id: otherUser._id },
@@ -93,13 +95,13 @@ Meteor.methods({
             );
 
             if (newAllowVideohelp) {
-                var subjectIds = otherUser.profile.subjects.map(function(
+                const subjectIds = otherUser.profile.subjects.map(function(
                     subject
                 ) {
                     return subject.subjectId;
                 });
 
-                for (var i = 0; i < subjectIds.length; i++) {
+                for (let i = 0; i < subjectIds.length; i += 1) {
                     Subjects.update(
                         { _id: subjectIds[i] },
                         { $addToSet: { availableVolunteers: otherUser._id } }
@@ -134,7 +136,7 @@ Meteor.methods({
     },
 
     'users.create'(options) {
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
@@ -150,16 +152,15 @@ Meteor.methods({
         options.profile.subjects = [];
 
         if (user.profile.role === ROLES.ADMIN) {
-            var userId = Accounts.createUser(options);
+            const userId = Accounts.createUser(options);
             Accounts.sendEnrollmentEmail(userId);
             return userId;
-        } else {
-            throw new Meteor.Error(403, 'You are not allowed to access this.');
         }
+        throw new Meteor.Error(403, 'You are not allowed to access this.');
     },
 
     'users.logOut'(options) {
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
@@ -167,7 +168,7 @@ Meteor.methods({
         check(options.userId, String);
 
         if (user.profile.role === ROLES.ADMIN) {
-            var remoteUser = Meteor.users.find(options.userId).fetch()[0];
+            const remoteUser = Meteor.users.find(options.userId).fetch()[0];
 
             if (remoteUser.status.online) {
                 Meteor.users.update(

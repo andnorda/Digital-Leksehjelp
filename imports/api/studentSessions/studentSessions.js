@@ -1,10 +1,10 @@
 import { Mongo } from 'meteor/mongo';
-
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { STUDENT_SESSION_STATE } from '/imports/constants';
 
 export const StudentSessions = new Mongo.Collection('sessions');
 
-StudentSessionsSchema = new SimpleSchema({
+const StudentSessionsSchema = new SimpleSchema({
     subject: {
         type: String
     },

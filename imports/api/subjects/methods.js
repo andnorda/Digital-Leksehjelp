@@ -1,13 +1,15 @@
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
+import { ROLES } from '/imports/constants.js';
+import { urlify } from '/imports/utils.js';
 import { Subjects } from './subjects.js';
-
-import { ROLES } from '/imports/constants';
 
 Meteor.methods({
     'subjects.setAvailable'(options, setUnavailable) {
-        //TODO(martin): subjectName is not used..
+        // TODO(martin): subjectName is not used..
         check(options.subjects, [{ subjectId: String, subjectName: String }]);
 
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
@@ -21,15 +23,13 @@ Meteor.methods({
             }
         );
 
-        var updateDoc = {};
+        let updateDoc = {};
         if (setUnavailable) {
             updateDoc = { $pull: { availableVolunteers: this.userId } };
+        } else if (user.allowVideohelp || user.profile.role === ROLES.ADMIN) {
+            updateDoc = { $addToSet: { availableVolunteers: this.userId } };
         } else {
-            if (user.allowVideohelp || user.profile.role === ROLES.ADMIN) {
-                updateDoc = { $addToSet: { availableVolunteers: this.userId } };
-            } else {
-                return;
-            }
+            return;
         }
 
         /*
@@ -37,11 +37,11 @@ Meteor.methods({
             Performance could be better. Bulk update if possible.
             Now subjects template is rerendering per iteration
         */
-        for (var i = 0; i < options.subjects.length; i++) {
+        for (let i = 0; i < options.subjects.length; i += 1) {
             Subjects.update(
                 { _id: options.subjects[i].subjectId },
                 updateDoc,
-                function(error, nrOfDocsAffected) {
+                (error, nrOfDocsAffected) => {
                     if (error) {
                         throw new Meteor.Error(
                             500,
@@ -56,16 +56,16 @@ Meteor.methods({
     'subjects.removeFromMyProfile'(options) {
         check(options.subject, { subjectId: String, subjectName: String });
 
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
-        var userId = this.userId;
+        const userId = this.userId;
 
         /*
          * Setting the old subjects unavailable
          */
-        var setSubjectsUnavailable = true;
+        const setSubjectsUnavailable = true;
         Meteor.call(
             'subjects.setAvailable',
             {
@@ -94,9 +94,9 @@ Meteor.methods({
                             'profile.setSubjectsAvailable': true
                         }
                     },
-                    function(error) {
-                        if (error) {
-                            throw new Meteor.Error(500, error.message);
+                    function(err) {
+                        if (err) {
+                            throw new Meteor.Error(500, err.message);
                         }
                     }
                 );
@@ -107,17 +107,17 @@ Meteor.methods({
     'subjects.update'(options) {
         check(options.subjects, [{ subjectId: String, subjectName: String }]);
 
-        var user = Meteor.users.findOne(this.userId);
-        var oldSubjects = user.profile.subjects.slice();
+        const user = Meteor.users.findOne(this.userId);
+        const oldSubjects = user.profile.subjects.slice();
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
-        var userId = this.userId;
+        const userId = this.userId;
 
         /*
          * Setting the old subjects unavailable
          */
-        var setSubjectsUnavailable = true;
+        const setSubjectsUnavailable = true;
         Meteor.call(
             'subjects.setAvailable',
             { subjects: oldSubjects },
@@ -130,11 +130,11 @@ Meteor.methods({
                     );
                 }
                 checkSubject: for (
-                    var j = 0;
+                    let j = 0;
                     j < options.subjects.length;
                     j++
                 ) {
-                    for (var i = 0; i < oldSubjects.length; i++) {
+                    for (let i = 0; i < oldSubjects.length; i++) {
                         if (
                             oldSubjects[i].subjectId ===
                             options.subjects[j].subjectId
@@ -162,7 +162,7 @@ Meteor.methods({
     },
 
     'subjects.insert'(options) {
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
@@ -170,15 +170,15 @@ Meteor.methods({
             throw new Meteor.Error(403, 'You are not allowed to access this.');
         }
 
-        var humanReadableId = DigitalLeksehjelp.urlify(options.subject);
+        const humanReadableId = urlify(options.subject);
 
         Subjects.insert(
             {
                 name: options.subject,
                 availableVolunteers: [],
-                humanReadableId: humanReadableId
+                humanReadableId
             },
-            function(error, id) {
+            function(error) {
                 if (error) {
                     throw new Meteor.Error(
                         500,
@@ -192,7 +192,7 @@ Meteor.methods({
     'subjects.remove'(options) {
         check(options.subjectId, String);
 
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
@@ -200,7 +200,7 @@ Meteor.methods({
             throw new Meteor.Error(403, 'You are not allowed to access this.');
         }
 
-        Subjects.remove({ _id: options.subjectId }, function(error, id) {
+        Subjects.remove({ _id: options.subjectId }, function(error) {
             if (error) {
                 throw new Meteor.Error(500, 'Server error, please try again.');
             }

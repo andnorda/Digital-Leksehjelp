@@ -1,3 +1,7 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { Router } from 'meteor/iron:router';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { Questions } from '/imports/api/questions/questions.js';
 
@@ -10,73 +14,88 @@ Template.search.onCreated(function searchOnCreated() {
         this.subscribe('subjects');
 
         // https://github.com/EventedMind/iron-router/issues/1088
-        const query = Router.current().params.query;
+        const { params: { query } } = Router.current();
         Object.keys(query).forEach(function(key) {
             query[key] = query[key].replace(/\+/g, ' ');
         });
 
-        Meteor.call('questions.searchCount', query, function(error, result) {
-            Session.set('questionSearchCount', result);
+        this.state = new ReactiveDict();
+        Meteor.call('questions.searchCount', query, (error, result) => {
+            this.state.set('questionSearchCount', result);
         });
         this.subscribe('questions.search', query);
     });
 });
 
-var updateQueryStringParameter = function(uri, key, value) {
-    var re = new RegExp('([?&])' + key + '=.*?(&|$)', 'i');
-    var separator = uri.indexOf('?') !== -1 ? '&' : '?';
+const updateQueryStringParameter = function(uri, key, value) {
+    const re = new RegExp(`([?&])${key}=.*?(&|$)`, 'i');
+    const separator = uri.indexOf('?') !== -1 ? '&' : '?';
     if (uri.match(re)) {
-        return uri.replace(re, '$1' + key + '=' + value + '$2');
-    } else {
-        return uri + separator + key + '=' + value;
+        return uri.replace(re, `$1${key}=${value}$2`);
     }
+    return `${uri + separator + key}=${value}`;
 };
 
 Template.search.helpers({
-    searchResults: function() {
+    searchResults() {
         return Questions.find({});
     },
-    queryParams: function() {
+    queryParams() {
         return Router.current().params.query;
     },
-    numberOfResults: function() {
-        var count = Session.get('questionSearchCount');
+    numberOfResults() {
+        const count = Template.instance().state.get('questionSearchCount');
 
         if (!count || count === 0) {
             return 'Fant ingen resultater';
         } else if (count === 1) {
             return 'Fant ett resultat';
-        } else {
-            return 'Fant ' + count + ' resultater';
         }
+        return `Fant ${count} resultater`;
     }
 });
 
 Template.searchForm.helpers({
-    subjects: function() {
+    subjects() {
         return Subjects.find({}, { sort: { name: 1 } });
     }
 });
 
+Template.pagination.onCreated(function searchOnCreated() {
+    this.autorun(() => {
+        // https://github.com/EventedMind/iron-router/issues/1088
+        const { params: { query } } = Router.current();
+        Object.keys(query).forEach(function(key) {
+            query[key] = query[key].replace(/\+/g, ' ');
+        });
+
+        this.state = new ReactiveDict();
+        Meteor.call('questions.searchCount', query, (error, result) => {
+            this.state.set('questionSearchCount', result);
+        });
+    });
+});
+
 Template.pagination.helpers({
-    pages: function() {
-        var numberOfResults = Session.get('questionSearchCount') || 0;
-        var numberOfPages =
+    pages() {
+        const numberOfResults =
+            Template.instance().state.get('questionSearchCount') || 0;
+        const numberOfPages =
             numberOfResults / CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE;
-        var currentOffset = Router.current().params.query.offset || 0;
+        const currentOffset = Router.current().params.query.offset || 0;
 
-        var pages = [];
-        for (var i = 0; i < numberOfPages; i++) {
-            var offset = i * CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE;
+        const pages = [];
+        for (let i = 0; i < numberOfPages; i += 1) {
+            const offset = i * CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE;
 
-            var pageSearchUrl = updateQueryStringParameter(
+            const pageSearchUrl = updateQueryStringParameter(
                 window.location.search,
                 'offset',
                 offset
             );
 
-            var page = {
-                url: '/sok' + pageSearchUrl,
+            const page = {
+                url: `/sok${pageSearchUrl}`,
                 index: i + 1,
                 active:
                     currentOffset /

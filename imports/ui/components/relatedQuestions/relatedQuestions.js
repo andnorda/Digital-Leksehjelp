@@ -1,8 +1,11 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
 import { CONSTANTS } from '/imports/constants.js';
 
 import './relatedQuestions.html';
 
-var lastSearchForRelatedQuestionsTimestamp = 0;
+let lastSearchForRelatedQuestionsTimestamp = 0;
 
 searchForRelatedQuestions = function(subject, question) {
     if (
@@ -13,14 +16,14 @@ searchForRelatedQuestions = function(subject, question) {
     }
     lastSearchForRelatedQuestionsTimestamp = Date.now();
 
-    var query = {};
+    const query = {};
     if (subject) {
-        query['subject'] = subject.humanReadableId;
+        query.subject = subject.humanReadableId;
     }
     if (
         question.length > CONSTANTS.RELATED_QUESTION_SEARCH_MIN_QUESTION_LENGTH
     ) {
-        query['q'] = question;
+        query.q = question;
     }
 
     if (Object.keys(query).length > 0) {
@@ -33,7 +36,7 @@ searchForRelatedQuestions = function(subject, question) {
 };
 
 Template.relatedQuestions.helpers({
-    relatedQuestions: function() {
+    relatedQuestions() {
         return Session.get('relatedQuestions') || [];
     }
 });

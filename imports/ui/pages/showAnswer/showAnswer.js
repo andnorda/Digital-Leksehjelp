@@ -1,21 +1,25 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { Questions } from '/imports/api/questions/questions.js';
 
 import './showAnswer.html';
 
-Template.showAnswer.rendered = function() {
+Template.showAnswer.onRendered(function() {
     window.scrollTo(0, 0);
-};
+});
 
 Template.showAnswer.helpers({
-    questionContext: function() {
+    questionContext() {
         return Questions.findOne({});
     },
-    showNonpublicQuestionWarning: function() {
+    showNonpublicQuestionWarning() {
         if (Meteor.user() && this.question) {
             return !this.publishedBy || !this.verifiedBy;
         }
+        return false;
     },
-    showVolunteerMiniForm: function() {
+    showVolunteerMiniForm() {
         if (Meteor.user() && this.question) {
             return !this.verifiedBy;
         }
@@ -25,13 +29,13 @@ Template.showAnswer.helpers({
 });
 
 Template.volunteerMiniForm.helpers({
-    canBeVerified: function() {
+    canBeVerified() {
         if (Meteor.user() && this.question) {
             return !this.verifiedBy;
         }
         return false;
     },
-    publishIsChecked: function() {
+    publishIsChecked() {
         if (this.answer) {
             return this.publishedBy;
         }
@@ -40,22 +44,24 @@ Template.volunteerMiniForm.helpers({
 });
 
 Template.volunteerMiniForm.events({
-    'click button#updateQuestion': function(event, template) {
+    'click button#updateQuestion'(event, templateInstance) {
         event.preventDefault();
 
-        var questionId = template.data._id;
-        var title = template.find('input[name=title]').value.substring(0, 120);
-        var publishAnswer = template.find('input[name=publishAnswer]:checked')
-            ? true
-            : false;
+        const questionId = templateInstance.data._id;
+        const title = templateInstance
+            .find('input[name=title]')
+            .value.substring(0, 120);
+        const publishAnswer = !!templateInstance.find(
+            'input[name=publishAnswer]:checked'
+        );
 
         if (Meteor.user()) {
             Meteor.call(
                 'questions.updateFromVolunteerMiniForm',
                 {
-                    questionId: questionId,
-                    title: title,
-                    publishAnswer: publishAnswer
+                    questionId,
+                    title,
+                    publishAnswer
                 },
                 function(error) {
                     if (error) {
@@ -71,7 +77,7 @@ Template.volunteerMiniForm.events({
         }
     },
 
-    'click .verify-answer': function(event, template) {
+    'click .verify-answer'(event) {
         event.preventDefault();
 
         if (Meteor.user()) {

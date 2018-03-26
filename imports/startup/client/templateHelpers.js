@@ -1,4 +1,7 @@
-import { Config } from '/imports/api/config/config.js';
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { Spacebars } from 'meteor/spacebars';
+import { Deps } from 'meteor/deps';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { GRADES, ROLES } from '/imports/constants.js';
 
@@ -20,26 +23,26 @@ Template.registerHelper('eq', function(value1, value2) {
     return value1 === value2;
 });
 
-Template.registerHelper('globalRoles', function(block) {
+Template.registerHelper('globalRoles', function() {
     return ROLES;
 });
 
 Template.registerHelper('optionsSelected', function(values, defaultValue) {
-    var buffer = '';
     if (Array.isArray(values)) {
-        // TODO(martin): If needed, treat as array.
-    } else {
-        // Treat as object
-        for (var value in values) {
-            var option = '';
-            if (values[value] === defaultValue) {
-                buffer += '<option selected>' + values[value] + '</option>';
-            } else {
-                buffer += '<option>' + values[value] + '</option>';
-            }
-        }
+        return '';
     }
-    return new Spacebars.SafeString(buffer);
+
+    return new Spacebars.SafeString(
+        Object.keys(values)
+            .map(key => values[key])
+            .map(
+                value =>
+                    value === defaultValue
+                        ? `<option selected>${value}</option>`
+                        : `<option>${value}</option>`
+            )
+            .join('')
+    );
 });
 
 Template.registerHelper('transformNewline', function(text) {
@@ -52,7 +55,7 @@ Template.registerHelper('trim', function(str, stopIndex) {
     if (str.length < stopIndex) {
         return str;
     }
-    return str.substring(0, stopIndex) + '...';
+    return `${str.substring(0, stopIndex)}...`;
 });
 
 Template.registerHelper('titleOrTrimmedQuestion', function(
@@ -65,7 +68,7 @@ Template.registerHelper('titleOrTrimmedQuestion', function(
     if (question.question.length < stopIndex) {
         return question.question;
     }
-    return question.question.substring(0, stopIndex) + '...';
+    return `${question.question.substring(0, stopIndex)}...`;
 });
 
 Template.registerHelper('grades', function() {
@@ -73,7 +76,7 @@ Template.registerHelper('grades', function() {
 });
 
 Template.registerHelper('subjectName', function(subjectId) {
-    var subject = Subjects.findOne({ _id: subjectId });
+    const subject = Subjects.findOne({ _id: subjectId });
     return subject ? subject.name : 'Ukjent fag';
 });
 
@@ -108,23 +111,21 @@ Template.registerHelper('subjectList', function(subjects) {
         return '';
     }
 
-    var subjectNames = subjects.map(function(subject) {
+    const subjectNames = subjects.map(function(subject) {
         return subject.subjectName;
     });
 
     if (subjectNames.length > 1) {
-        var subjectNamesStr = '';
-        for (var i = 0; i < subjectNames.length - 1; i++) {
-            subjectNamesStr += subjectNames[i] + ', ';
+        let subjectNamesStr = '';
+        for (let i = 0; i < subjectNames.length - 1; i += 1) {
+            subjectNamesStr += `${subjectNames[i]}, `;
         }
-        return (
-            subjectNamesStr.substring(0, subjectNamesStr.length - 2) +
-            ' og ' +
-            subjectNames[subjectNames.length - 1]
-        );
-    } else {
-        return subjectNames.join('');
+        return `${subjectNamesStr.substring(
+            0,
+            subjectNamesStr.length - 2
+        )} og ${subjectNames[subjectNames.length - 1]}`;
     }
+    return subjectNames.join('');
 });
 
 Template.registerHelper('slugOrId', function(question) {

@@ -1,3 +1,9 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
+import { FlashMessages } from 'meteor/mrt:flash-messages';
+import { $ } from 'meteor/jquery';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { Config } from '/imports/api/config/config.js';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
 import { timeSince } from '/imports/utils.js';
@@ -8,66 +14,74 @@ import './studentSessions.html';
 
 import '../../components/serviceStatus/serviceStatus.js';
 
-Meteor.setInterval(function() {
-    Session.set('time', new Date());
-}, 1000);
-
-Template.studentSessionsTable.onCreated(
-    function studentSessionsTableOnCreated() {
-        this.autorun(() => {
-            this.subscribe('studentSessions');
-        });
-    }
-);
+Template.studentSessionsTable.onCreated(function() {
+    this.autorun(() => {
+        this.subscribe('studentSessions');
+    });
+});
 
 Template.studentSessionsTable.helpers({
-    myStudentSessions: function() {
-        var query = {
+    myStudentSessions() {
+        const query = {
             $or: []
         };
-        var subjects = Meteor.user().profile.subjects;
-        for (var i = 0; i < subjects.length; i++) {
+        const { profile: { subjects } } = Meteor.user();
+        for (let i = 0; i < subjects.length; i += 1) {
             query.$or.push({ subject: subjects[i].subjectName });
         }
 
         if (query.$or.length === 0) {
             return null;
-        } else {
-            return StudentSessions.find(query);
         }
+        return StudentSessions.find(query);
     },
-    otherStudentSessions: function() {
-        var query = {
+    otherStudentSessions() {
+        const query = {
             $and: []
         };
-        var subjects = Meteor.user().profile.subjects;
-        for (var i = 0; i < subjects.length; i++) {
+        const { profile: { subjects } } = Meteor.user();
+        for (let i = 0; i < subjects.length; i += 1) {
             query.$and.push({ subject: { $ne: subjects[i].subjectName } });
         }
 
         if (query.$and.length === 0) {
             return null;
-        } else {
-            return StudentSessions.find(query);
         }
+        return StudentSessions.find(query);
     }
 });
 
+let interval;
+
+Template.studentSessionRow.onCreated(function() {
+    this.state = new ReactiveDict();
+    interval = Meteor.setInterval(() => {
+        this.state.set('time', new Date());
+    }, 1000);
+});
+
+Template.studentSessionRow.onDestroyed(function() {
+    Meteor.clearInterval(interval);
+});
+
 Template.studentSessionRow.helpers({
-    timeInQueue: function() {
-        return timeSince(this.createdAt, Session.get('time') || new Date());
+    timeInQueue() {
+        return timeSince(
+            this.createdAt,
+            Template.instance().state.get('time') || new Date()
+        );
     }
 });
 
 Template.studentSessionRow.events({
-    'click .startTutoring': function() {
+    'click .startTutoring'() {
         Session.set('startTutoringTime', new Date().getTime());
         window.open(this.videoConferenceUrl, '_blank');
-        var sessionId = this._id;
+        const sessionId = this._id;
         Meteor.call(
             'studentSessions.setState',
             {
-                sessionId: sessionId,
+                sessionId,
                 state: STUDENT_SESSION_STATE.READY,
                 tutor: Meteor.user().profile.firstName
             },
@@ -78,7 +92,7 @@ Template.studentSessionRow.events({
         );
     },
 
-    'click .deleteSession': function() {
+    'click .deleteSession'() {
         Meteor.call('studentSessions.remove', {
             sessionId: this._id
         });
@@ -92,15 +106,15 @@ Template.openService.onCreated(function openServiceOnCreated() {
 });
 
 Template.openService.helpers({
-    serviceIsOpen: function() {
+    serviceIsOpen() {
         const serviceStatus = Config.findOne({ name: 'serviceStatus' });
         return serviceStatus ? serviceStatus.open : false;
     }
 });
 
 Template.openService.events({
-    'click button#openService': function() {
-        Meteor.call('config.openService', function(error, data) {
+    'click button#openService'() {
+        Meteor.call('config.openService', function(error) {
             if (error) {
                 FlashMessages.sendError(error.message);
             }

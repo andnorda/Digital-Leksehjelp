@@ -1,34 +1,40 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+import { FlashMessages } from 'meteor/mrt:flash-messages';
+import { Subjects } from '/imports/api/subjects/subjects.js';
+
 import './myProfile.html';
 
-Template.mySubjectsSelector.rendered = function() {
+Template.mySubjectsSelector.onRendered(function() {
     $('#mySubjects').select2({
         width: '300px',
         multiple: true,
         minimumInputLength: 3,
-        query: function(query) {
-            var data = { results: [] };
+        query(query) {
+            const data = { results: [] };
             data.results = Subjects.find({ name: new RegExp(query.term, 'i') })
                 .fetch()
                 .map(function(subject) {
                     return {
-                        id: subject._id + '-' + subject.name,
+                        id: `${subject._id}-${subject.name}`,
                         text: subject.name
                     };
                 });
             return query.callback(data);
         }
     });
-};
+});
 
 Template.profilePicture.helpers({
-    user: function() {
+    user() {
         return Meteor.user();
     }
 });
 
 Template.profilePicture.events({
-    'click button': function() {
-        var files = $('input[name=profilePicture]')[0].files;
+    'click button'() {
+        const { files } = $('input[name=profilePicture]')[0];
 
         if (files.length === 1) {
             S3.upload(files, '/profilbilder', function(error, result) {
@@ -41,13 +47,13 @@ Template.profilePicture.events({
 });
 
 Template.mySubjectsSelector.events({
-    'click #saveMySubjects': function() {
-        var subjectIdAndNameArray = $('#mySubjects')
+    'click #saveMySubjects'() {
+        const subjectIdAndNameArray = $('#mySubjects')
             .val()
             .split(',');
-        var subjectsArray = [];
-        var tempArr = [];
-        for (var i = 0; i < subjectIdAndNameArray.length; i++) {
+        const subjectsArray = [];
+        let tempArr = [];
+        for (let i = 0; i < subjectIdAndNameArray.length; i += 1) {
             tempArr = subjectIdAndNameArray[i].split('-');
             subjectsArray.push({
                 subjectId: tempArr[0],
@@ -60,7 +66,7 @@ Template.mySubjectsSelector.events({
             {
                 subjects: subjectsArray
             },
-            function(error, result) {
+            function(error) {
                 if (error) {
                     FlashMessages.sendError(error.message);
                 }
@@ -72,7 +78,7 @@ Template.mySubjectsSelector.events({
 });
 
 Template.mySubjectsTable.helpers({
-    mySubjects: function() {
+    mySubjects() {
         if (Meteor.user()) {
             return Meteor.user().profile.subjects;
         }
@@ -81,13 +87,13 @@ Template.mySubjectsTable.helpers({
 });
 
 Template.mySubjectsTable.events({
-    'click button.removeSubjectFromMyProfile': function() {
+    'click button.removeSubjectFromMyProfile'() {
         Meteor.call(
             'subjects.removeFromMyProfile',
             {
                 subject: this
             },
-            function(error, result) {
+            function(error) {
                 if (error) {
                     FlashMessages.sendError(error.message);
                 }

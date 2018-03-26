@@ -1,8 +1,9 @@
 import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 export const Subjects = new Mongo.Collection('subjects');
 
-SubjectsSchema = new SimpleSchema({
+const SubjectsSchema = new SimpleSchema({
     name: {
         type: String
     },

@@ -1,3 +1,9 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
+import { $ } from 'meteor/jquery';
+import { Router } from 'meteor/iron:router';
+import mixpanel from '/imports/mixpanel';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { Config } from '/imports/api/config/config.js';
 import { Questions } from '/imports/api/questions/questions.js';
@@ -18,28 +24,28 @@ Template.getHelpBox.onCreated(function getHelpBoxOnCreated() {
 });
 
 Template.getHelp.events({
-    'click a#more-info': function(event) {
+    'click a#more-info'() {
         $('#moreInfoModal').modal();
     }
 });
 
 Template.getHelpBox.helpers({
-    subjects: function() {
+    subjects() {
         return Subjects.find({}, { sort: { name: 1 } });
     },
-    serviceIsOpen: function() {
+    serviceIsOpen() {
         const serviceStatus = Config.findOne({ name: 'serviceStatus' });
         return serviceStatus ? serviceStatus.open : false;
     },
-    openingHours: function() {
+    openingHours() {
         const openingHours = Config.findOne({ name: 'openingHours' });
         return openingHours ? openingHours.text : '';
     },
-    serviceStatusLoaded: function() {
+    serviceStatusLoaded() {
         return Session.get('serviceStatusLoaded');
     },
-    subjectDisabled: function(subjectId) {
-        var numberOfLoggedInUsersForSubject = Meteor.users
+    subjectDisabled(subjectId) {
+        const numberOfLoggedInUsersForSubject = Meteor.users
             .find({
                 $and: [
                     { 'profile.subjects.subjectId': subjectId },
@@ -50,22 +56,20 @@ Template.getHelpBox.helpers({
             })
             .count();
 
-        if (numberOfLoggedInUsersForSubject === 0) {
-            return 'disabled-li';
-        }
+        return numberOfLoggedInUsersForSubject === 0 ? 'disabled-li' : '';
     }
 });
 
 Template.getHelpBox.events({
-    'click button#start-video-session': function(event) {
+    'click button#start-video-session'() {
         if ($('button#start-video-session').hasClass('disabled')) {
             return;
         }
 
-        var chosenSubject = $('#chosen-subject')
+        const chosenSubject = $('#chosen-subject')
             .text()
             .trim();
-        var chosenGrade = $('#chosen-grade')
+        const chosenGrade = $('#chosen-grade')
             .text()
             .trim();
 
@@ -107,18 +111,18 @@ Template.getHelpBox.events({
         }
     },
 
-    'click .disabled-li': function(event) {
+    'click .disabled-li'(event) {
         event.preventDefault();
         return false;
     },
 
-    'click .subjects': function(event) {
+    'click .subjects'(event) {
         if (!$(event.target).hasClass('disabled-li')) {
             $('#chosen-subject').text(this.name);
         }
     },
 
-    'click .grades': function() {
+    'click .grades'() {
         $('#chosen-grade').text(this);
     }
 });
@@ -137,22 +141,17 @@ Template.previousQuestions.onCreated(function previousQuestionsOnCreated() {
 });
 
 Template.previousQuestions.helpers({
-    previousQuestions: function(skip, limit) {
-        return Questions.find(
-            {},
-            { sort: { questionDate: -1 }, skip: skip, limit: limit }
-        );
+    previousQuestions(skip, limit) {
+        return Questions.find({}, { sort: { questionDate: -1 }, skip, limit });
     },
-    numberOfQuestions: function() {
-        var numberOfQuestions = Session.get('numberOfQuestions');
-        if (numberOfQuestions) {
-            return ' (' + numberOfQuestions + ')';
-        }
+    numberOfQuestions() {
+        const numberOfQuestions = Session.get('numberOfQuestions');
+        return numberOfQuestions ? ` (${numberOfQuestions})` : '';
     }
 });
 
 Template.previousQuestions.events({
-    'click button#ask-question': function() {
+    'click button#ask-question'() {
         Router.go('askQuestion');
     }
 });
@@ -164,7 +163,7 @@ Template.todaysVolunteers.onCreated(function todaysVolunteersOnCreated() {
 });
 
 Template.todaysVolunteers.helpers({
-    todaysVolunteers: function() {
+    todaysVolunteers() {
         return Meteor.users
             .find({
                 $and: [
@@ -179,7 +178,7 @@ Template.todaysVolunteers.helpers({
 });
 
 Template.otherActivities.events({
-    'click a.textLink': function(event) {
+    'click a.textLink'(event) {
         mixpanel.track('Andre aktiviteter', { url: event.currentTarget.href });
     }
 });

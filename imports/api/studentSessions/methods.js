@@ -1,10 +1,11 @@
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
+import { STUDENT_SESSION_STATE } from '/imports/constants.js';
 import { StudentSessions } from './studentSessions.js';
 
-import { STUDENT_SESSION_STATE } from '/imports/constants.js';
-
-var generateRandomAppearInLink = function() {
-    var randomId = Math.floor(Math.random() * 1000000000);
-    return 'http://appear.in/' + randomId;
+const generateRandomAppearInLink = function() {
+    const randomId = Math.floor(Math.random() * 1000000000);
+    return `http://appear.in/${randomId}`;
 };
 
 Meteor.methods({
@@ -17,7 +18,7 @@ Meteor.methods({
     'studentSessions.setState'(options) {
         check(options.sessionId, String);
 
-        var updateDoc;
+        let updateDoc;
         if (!options.tutor) {
             updateDoc = { $set: { state: options.state } };
         } else {
@@ -33,12 +34,12 @@ Meteor.methods({
         check(options.subject, String);
         check(options.grade, String);
 
-        var videoConferenceUrl = generateRandomAppearInLink();
+        const videoConferenceUrl = generateRandomAppearInLink();
 
         return StudentSessions.insert({
             subject: options.subject,
             grade: options.grade,
-            videoConferenceUrl: videoConferenceUrl,
+            videoConferenceUrl,
             state: STUDENT_SESSION_STATE.WAITING,
             createdAt: new Date()
         });

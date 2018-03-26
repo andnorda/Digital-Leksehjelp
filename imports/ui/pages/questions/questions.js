@@ -1,3 +1,7 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { Spacebars } from 'meteor/spacebars';
+import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { Questions } from '/imports/api/questions/questions.js';
 import { QUESTION_SUBSCRIPTION_LEVEL } from '/imports/constants';
 
@@ -10,7 +14,7 @@ Template.questions.onCreated(function questionsOnCreated() {
     });
 });
 
-var subjectIds = function(user) {
+const subjectIds = function(user) {
     if (!user) {
         return [];
     }
@@ -21,8 +25,8 @@ var subjectIds = function(user) {
 };
 
 Template.unansweredQuestions.helpers({
-    myUnansweredQuestions: function() {
-        var mySubjectIds = subjectIds(Meteor.user());
+    myUnansweredQuestions() {
+        const mySubjectIds = subjectIds(Meteor.user());
 
         return Questions.find(
             {
@@ -36,8 +40,8 @@ Template.unansweredQuestions.helpers({
             }
         );
     },
-    otherUnansweredQuestions: function() {
-        var mySubjectIds = subjectIds(Meteor.user());
+    otherUnansweredQuestions() {
+        const mySubjectIds = subjectIds(Meteor.user());
 
         return Questions.find(
             {
@@ -54,37 +58,32 @@ Template.unansweredQuestions.helpers({
 });
 
 Template.unansweredQuestionRow.helpers({
-    status: function() {
+    status() {
         try {
             if (!this.editing || this.editing.length === 0) {
                 return new Spacebars.SafeString('<td>Ubesvart</td>');
-            } else {
-                var usersEditing = this.editing
-                    .map(function(userId) {
-                        var user = Meteor.users.findOne({ _id: userId });
-                        if (user && user.profile && user.profile.firstName) {
-                            return user.profile.firstName;
-                        } else {
-                            return 'ukjent bruker';
-                        }
-                    })
-                    .join(', ');
-
-                return new Spacebars.SafeString(
-                    "<td class='warning'>Redigeres av " + usersEditing + '</td>'
-                );
             }
+            const usersEditing = this.editing
+                .map(function(userId) {
+                    const user = Meteor.users.findOne({ _id: userId });
+                    if (user && user.profile && user.profile.firstName) {
+                        return user.profile.firstName;
+                    }
+                    return 'ukjent bruker';
+                })
+                .join(', ');
+
+            return new Spacebars.SafeString(
+                `<td class='warning'>Redigeres av ${usersEditing}</td>`
+            );
         } catch (error) {
-            console.error(error);
             return new Spacebars.SafeString('<td>Ubesvart</td>');
         }
     }
 });
 
 Template.unverifiedQuestions.helpers({
-    myApprovableQuestions: function() {
-        var mySubjectIds = subjectIds(Meteor.user());
-
+    myApprovableQuestions() {
         return Questions.find(
             {
                 $and: [
@@ -99,9 +98,7 @@ Template.unverifiedQuestions.helpers({
             }
         );
     },
-    otherApprovableQuestions: function() {
-        var mySubjectIds = subjectIds(Meteor.user());
-
+    otherApprovableQuestions() {
         return Questions.find(
             {
                 $and: [
@@ -119,7 +116,7 @@ Template.unverifiedQuestions.helpers({
 });
 
 Template.answeredQuestionRow.events({
-    'click .verify-answer': function(event, template) {
+    'click .verify-answer'() {
         Meteor.call(
             'questions.verify',
             {
@@ -135,28 +132,26 @@ Template.answeredQuestionRow.events({
 });
 
 Template.answeredQuestionRow.helpers({
-    username: function(userId) {
-        var user = Meteor.users.findOne(userId);
+    username(userId) {
+        const user = Meteor.users.findOne(userId);
         return user ? user.username : '';
     },
-    status: function() {
+    status() {
         if (!this.editing || this.editing.length === 0) {
             return new Spacebars.SafeString('<td>Ubesvart</td>');
-        } else {
-            var usersEditing = this.editing
-                .map(function(userId) {
-                    var user = Meteor.users.findOne({ _id: userId });
-                    if (user && user.profile && user.profile.firstName) {
-                        return user.profile.firstName;
-                    } else {
-                        return 'ukjent bruker';
-                    }
-                })
-                .join(', ');
-
-            return new Spacebars.SafeString(
-                "<td class='warning'>Redigeres av " + usersEditing + '</td>'
-            );
         }
+        const usersEditing = this.editing
+            .map(function(userId) {
+                const user = Meteor.users.findOne({ _id: userId });
+                if (user && user.profile && user.profile.firstName) {
+                    return user.profile.firstName;
+                }
+                return 'ukjent bruker';
+            })
+            .join(', ');
+
+        return new Spacebars.SafeString(
+            `<td class='warning'>Redigeres av ${usersEditing}</td>`
+        );
     }
 });

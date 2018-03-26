@@ -10,12 +10,36 @@
     "dependencies": {
         "@babel/runtime": "^7.0.0-beta.42",
         "bcrypt": "^1.0.3",
-        "meteor-node-stubs": "^0.3.3"
+        "meteor-node-stubs": "^0.3.3",
+        "npm": "^5.8.0"
     },
-    "devDependencies": {},
+    "devDependencies": {
+        "@meteorjs/eslint-config-meteor": "^1.0.5",
+        "babel-eslint": "^8.2.2",
+        "casper": "^0.1.1",
+        "eslint": "^4.19.1",
+        "eslint-config-airbnb": "^16.1.0",
+        "eslint-import-resolver-meteor": "^0.4.0",
+        "eslint-plugin-import": "^2.9.0",
+        "eslint-plugin-jsx-a11y": "^6.0.3",
+        "eslint-plugin-meteor": "^4.2.0",
+        "eslint-plugin-react": "^7.7.0",
+        "mongodb": "^3.0.5"
+    },
     "scripts": {
         "start": "meteor run",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "eslint ."
+    },
+    "eslintConfig": {
+        "extends": "@meteorjs/eslint-config-meteor",
+        "rules": {
+            "indent": ["error", 4],
+            "comma-dangle": ["error", "never"],
+            "function-paren-newline": "off",
+            "arrow-parens": ["error", "as-needed"],
+            "import/prefer-default-export": "off"
+        }
     },
     "repository": {
         "type": "git",

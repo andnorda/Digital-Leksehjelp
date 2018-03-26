@@ -1,8 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-
-import { Config } from './config.js';
 import { ROLES } from '/imports/constants';
+import { Config } from './config.js';
 
 Meteor.methods({
     'config.setOpeningHours'(openingHours) {
@@ -23,7 +22,7 @@ Meteor.methods({
     },
 
     'config.openService'() {
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
@@ -32,7 +31,7 @@ Meteor.methods({
     },
 
     'config.closeService'() {
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
@@ -44,9 +43,10 @@ Meteor.methods({
         Config.upsert({ name: 'serviceStatus' }, { $set: { open: false } });
     },
 
-    getEnvironment: function() {
+    getEnvironment() {
         if (process.env.ROOT_URL === 'http://digitalleksehjelp.no') {
             return 'production';
-        } else return 'development';
+        }
+        return 'development';
     }
 });

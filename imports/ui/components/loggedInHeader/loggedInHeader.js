@@ -1,3 +1,6 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { Router } from 'meteor/iron:router';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
 import { ROLES, STUDENT_SESSION_STATE } from '/imports/constants';
 
@@ -10,28 +13,24 @@ Template.loggedInHeader.onCreated(function loggedInHeaderOnCreated() {
 });
 
 Template.loggedInHeader.helpers({
-    currentUserEmail: function() {
+    currentUserEmail() {
         return Meteor.user().username;
     },
-    isActiveTab: function(route) {
-        if (Router.current().route.getName() === route) {
-            return 'active';
-        }
+    isActiveTab(route) {
+        return Router.current().route.getName() === route && 'active';
     },
-    isAdmin: function() {
+    isAdmin() {
         return Meteor.user().profile.role === ROLES.ADMIN;
     },
-    isVideohelper: function() {
-        var user = Meteor.user();
+    isVideohelper() {
+        const user = Meteor.user();
         return user.profile.role === ROLES.ADMIN || user.profile.allowVideohelp;
     },
-    numberOfStudentsWaitingInQueue: function() {
-        var number = StudentSessions.find({
+    numberOfStudentsWaitingInQueue() {
+        const number = StudentSessions.find({
             state: STUDENT_SESSION_STATE.WAITING
         }).count();
 
-        if (number > 0) {
-            return ' (' + number + ' i kø)';
-        }
+        return number > 0 && ` (${number} i kø)`;
     }
 });

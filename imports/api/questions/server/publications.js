@@ -1,20 +1,28 @@
 import { Meteor } from 'meteor/meteor';
 import { Counts } from 'meteor/tmeasday:publish-counts';
-import { Questions } from '../questions.js';
+import { Match, check } from 'meteor/check';
 import {
     ROLES,
     QUESTION_SUBSCRIPTION_LEVEL,
     CONSTANTS
 } from '/imports/constants';
+import {
+    Questions,
+    questionPrivateFields,
+    questionPublicFields
+} from '../questions.js';
+import QuestionHelpers from '../questionHelpers.js';
 
 Meteor.publish('questions.search', function(params) {
-    params['limit'] = CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE;
+    params.limit = CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE;
     return QuestionHelpers.search(params, this.userId);
 });
 
 const MAX_QUESTIONS = 10000;
 
 Meteor.publish('questions.verified', function(limit) {
+    check(limit, Match.Integer);
+
     if (!this.userId) {
         return this.ready();
     }
@@ -100,7 +108,7 @@ const animals = [
 
 Meteor.publish('questions', function(subscriptionLevel) {
     if (this.userId) {
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
 
         if (
             subscriptionLevel === QUESTION_SUBSCRIPTION_LEVEL.ALL &&
@@ -113,7 +121,7 @@ Meteor.publish('questions', function(subscriptionLevel) {
                 }
             );
         } else if (subscriptionLevel === QUESTION_SUBSCRIPTION_LEVEL.REGULAR) {
-            var transform = function(doc) {
+            const transform = function(doc) {
                 const n =
                     CryptoJS.MD5(doc.studentEmail.toLowerCase())
                         .toString()
@@ -122,17 +130,16 @@ Meteor.publish('questions', function(subscriptionLevel) {
                             return char.charCodeAt(0) + sum;
                         }, 0) %
                     (animals.length * adjectives.length);
-                doc.nickname =
-                    adjectives[Math.floor(n / animals.length)] +
-                    ' ' +
-                    animals[n % animals.length];
+                doc.nickname = `${adjectives[Math.floor(n / animals.length)]} ${
+                    animals[n % animals.length]
+                }`;
                 delete doc.studentEmail;
                 return doc;
             };
 
-            var self = this;
+            const self = this;
 
-            var observer = Questions.find({
+            const observer = Questions.find({
                 $or: [
                     { answer: { $exists: false } },
                     {
@@ -143,17 +150,17 @@ Meteor.publish('questions', function(subscriptionLevel) {
                     }
                 ]
             }).observe({
-                added: function(document) {
+                added(document) {
                     self.added('questions', document._id, transform(document));
                 },
-                changed: function(newDocument, oldDocument) {
+                changed(newDocument, oldDocument) {
                     self.changed(
                         'questions',
                         newDocument._id,
                         transform(newDocument)
                     );
                 },
-                removed: function(oldDocument) {
+                removed(oldDocument) {
                     self.removed('collection_name', oldDocument._id);
                 }
             });
@@ -181,17 +188,16 @@ Meteor.publish('questions.byId', function(questionId) {
                 fields: questionPrivateFields
             }
         );
-    } else {
-        return Questions.find(
-            {
-                $or: [{ slug: questionId }, { _id: questionId }],
-                answer: { $exists: true },
-                verifiedBy: { $exists: true },
-                publishedBy: { $exists: true }
-            },
-            {
-                fields: questionPublicFields
-            }
-        );
     }
+    return Questions.find(
+        {
+            $or: [{ slug: questionId }, { _id: questionId }],
+            answer: { $exists: true },
+            verifiedBy: { $exists: true },
+            publishedBy: { $exists: true }
+        },
+        {
+            fields: questionPublicFields
+        }
+    );
 });

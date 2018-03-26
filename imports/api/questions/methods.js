@@ -1,8 +1,12 @@
 import { Meteor } from 'meteor/meteor';
-
-import { Questions } from './questions.js';
-
+import { Email } from 'meteor/email';
+import { SSR } from 'meteor/meteorhacks:ssr';
+import { Match, check } from 'meteor/check';
+import mixpanel from '/imports/mixpanel';
 import { CONSTANTS } from '/imports/constants.js';
+import { generateUniqueSlug } from '/imports/utils.js';
+import { Questions } from './questions.js';
+import QuestionHelpers from './questionHelpers.js';
 
 Meteor.methods({
     'questions.searchCount'(params) {
@@ -10,8 +14,8 @@ Meteor.methods({
     },
 
     'questions.related'(params) {
-        params['limit'] = CONSTANTS.RELATED_QUESTION_SEARCH_LIMIT;
-        params['related'] = true;
+        params.limit = CONSTANTS.RELATED_QUESTION_SEARCH_LIMIT;
+        params.related = true;
         return QuestionHelpers.search(params, Meteor.userId()).fetch();
     },
 
@@ -33,7 +37,7 @@ Meteor.methods({
             throw new Meteor.Error(400, 'Grade can not be "default"');
         }
 
-        var question = {
+        const question = {
             subjectId: options.subjectId,
             grade: options.grade,
             question: options.question,
@@ -42,7 +46,7 @@ Meteor.methods({
         };
 
         if (options.attachmentUrl) {
-            question['attachmentUrl'] = options.attachmentUrl;
+            question.attachmentUrl = options.attachmentUrl;
         }
 
         Questions.insert(question, function(error) {
@@ -60,28 +64,28 @@ Meteor.methods({
         check(options.questionId, String);
         check(options.title, String);
 
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
 
-        var question = Questions.findOne({ _id: options.questionId });
+        const question = Questions.findOne({ _id: options.questionId });
         if (!question) {
             throw new Meteor.Error(
                 404,
-                'Question with id ' + options.questionId + ' does not exist.'
+                `Question with id ${options.questionId} does not exist.`
             );
         }
         if (!question.answeredBy) {
             throw new Meteor.Error(
                 404,
-                'Question with id ' +
-                    options.questionId +
-                    ' does not have an answer yet.'
+                `Question with id ${
+                    options.questionId
+                } does not have an answer yet.`
             );
         }
 
-        var updateDoc = {
+        const updateDoc = {
             $set: {
                 title: options.title,
                 lastUpdatedBy: this.userId,
@@ -90,16 +94,14 @@ Meteor.methods({
         };
 
         if (options.publishAnswer) {
-            updateDoc['$set']['publishedBy'] = this.userId;
+            updateDoc.$set.publishedBy = this.userId;
         } else {
-            updateDoc['$unset'] = { publishedBy: '' };
+            updateDoc.$unset = { publishedBy: '' };
         }
 
         if (Meteor.isServer) {
             if (options.title && options.title.length > 0 && !question.slug) {
-                updateDoc['$set'][
-                    'slug'
-                ] = DigitalLeksehjelp.generateUniqueSlug(options.title);
+                updateDoc.$set.slug = generateUniqueSlug(options.title);
             }
         }
 
@@ -116,20 +118,20 @@ Meteor.methods({
         check(options.questionId, String);
         check(options.title, String);
 
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
 
-        var question = Questions.findOne({ _id: options.questionId });
+        const question = Questions.findOne({ _id: options.questionId });
         if (!question) {
             throw new Meteor.Error(
                 404,
-                'Question with id ' + options.questionId + ' does not exist.'
+                `Question with id ${options.questionId} does not exist.`
             );
         }
 
-        var updateDoc = {
+        const updateDoc = {
             $set: {
                 question: options.question,
                 answer: options.answer,
@@ -145,32 +147,27 @@ Meteor.methods({
                     frivillig: user.username
                 });
             }
-            updateDoc['$set']['answeredBy'] = this.userId;
-            updateDoc['$set']['answerDate'] = new Date();
-        } else {
-            if (Meteor.isClient) {
-                mixpanel.track('Spørsmål redigert', {
-                    frivillig: user.username
-                });
-            }
+            updateDoc.$set.answeredBy = this.userId;
+            updateDoc.$set.answerDate = new Date();
+        } else if (Meteor.isClient) {
+            mixpanel.track('Spørsmål redigert', {
+                frivillig: user.username
+            });
         }
 
         if (options.publishAnswer) {
-            updateDoc['$set']['publishedBy'] = this.userId;
+            updateDoc.$set.publishedBy = this.userId;
         } else {
-            updateDoc['$unset'] = { publishedBy: '' };
+            updateDoc.$unset = { publishedBy: '' };
         }
 
         if (options.answerAttachmentUrl) {
-            updateDoc['$set']['answerAttachmentUrl'] =
-                options.answerAttachmentUrl;
+            updateDoc.$set.answerAttachmentUrl = options.answerAttachmentUrl;
         }
 
         if (Meteor.isServer) {
             if (options.title && options.title.length > 0 && !question.slug) {
-                updateDoc['$set'][
-                    'slug'
-                ] = DigitalLeksehjelp.generateUniqueSlug(options.title);
+                updateDoc.$set.slug = generateUniqueSlug(options.title);
             }
         }
 
@@ -180,24 +177,24 @@ Meteor.methods({
     'questions.verify'(options) {
         check(options.questionId, String);
 
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
 
-        var question = Questions.findOne({ _id: options.questionId });
+        const question = Questions.findOne({ _id: options.questionId });
         if (!question) {
             throw new Meteor.Error(
                 404,
-                'Question with id ' + options.questionId + ' does not exist.'
+                `Question with id ${options.questionId} does not exist.`
             );
         }
         if (!question.answeredBy) {
             throw new Meteor.Error(
                 404,
-                'Question with id ' +
-                    options.questionId +
-                    ' does not have an answer yet.'
+                `Question with id ${
+                    options.questionId
+                } does not have an answer yet.`
             );
         }
         if (question.lastUpdatedBy === this.userId) {
@@ -251,20 +248,20 @@ Meteor.methods({
     },
 
     'questions.sendAnswerEmail'(question) {
-        var user = Meteor.users.findOne(this.userId);
+        const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
 
         this.unblock();
 
-        var html = SSR.render('answerEmailTemplate', question);
+        const html = SSR.render('answerEmailTemplate', question);
 
         Email.send({
             to: question.studentEmail,
             from: 'Digital Leksehjelp <digitalleksehjelp@oslo.redcross.no>',
             subject: 'Røde Kors - Digital Leksehjelp',
-            html: html
+            html
         });
 
         Questions.update(
