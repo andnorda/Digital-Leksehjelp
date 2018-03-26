@@ -113,7 +113,10 @@ Router.map(function() {
         controller: AnswerQuestionController,
         path: '/frivillig/sporsmal/svar/:questionId',
         waitOn() {
-            return Meteor.subscribe('questions.byId', this.params.questionId);
+            return Meteor.subscribe(
+                'questions.bySlugOrId',
+                this.params.questionId
+            );
         },
         data() {
             return Questions.findOne(this.params.questionId);
@@ -158,7 +161,10 @@ Router.map(function() {
         controller: DefaultController,
         path: '/sporsmal/:questionId',
         waitOn() {
-            return Meteor.subscribe('questions.byId', this.params.questionId);
+            return Meteor.subscribe(
+                'questions.bySlugOrId',
+                this.params.questionId
+            );
         },
         data() {
             return Questions.findOne({
