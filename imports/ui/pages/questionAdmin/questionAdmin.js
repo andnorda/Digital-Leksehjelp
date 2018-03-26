@@ -1,23 +1,24 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { ReactiveDict } from 'meteor/reactive-dict';
+import { Counts } from 'meteor/tmeasday:publish-counts';
 import { Questions } from '/imports/api/questions/questions.js';
 
 import './questionAdmin.html';
 
-Template.verifiedQuestionsList.onCreated(
-    function verifiedQuestionsListOnCreated() {
-        this.autorun(() => {
-            this.subscribe('users');
-            this.subscribe('questions.verified', 0);
-        });
+Template.verifiedQuestionsList.onCreated(function() {
+    this.state = new ReactiveDict();
+    this.state.set('requestedQuestions', 20);
 
-        const state = new ReactiveDict();
-        this.state = state;
-        state.set('page', 0);
-
-        Meteor.call('questions.verifiedCount', function(error, result) {
-            state.set('verifiedQuestionCount', result);
-        });
-    }
-);
+    this.autorun(() => {
+        this.subscribe('users');
+        this.subscribe('questions.verifiedCount');
+        this.subscribe(
+            'questions.verified',
+            this.state.get('requestedQuestions')
+        );
+    });
+});
 
 Template.verifiedQuestionsList.helpers({
     username: function(userId) {
@@ -26,21 +27,14 @@ Template.verifiedQuestionsList.helpers({
     },
     verifiedQuestions: function() {
         return Questions.find(
-            {
-                verifiedBy: { $exists: true }
-            },
-            {
-                sort: { questionDate: -1 }
-            }
+            { verifiedBy: { $exists: true } },
+            { sort: { questionDate: -1 } }
         );
     },
     hasMoreQuestions: function() {
-        const state = Template.instance().state;
-        const verifiedQuestionCount = state.get('verifiedQuestionCount');
-
         return (
             Questions.find({ verifiedBy: { $exists: true } }).count() <
-            verifiedQuestionCount
+            Counts.get('questions.verifiedCount')
         );
     }
 });
@@ -48,10 +42,8 @@ Template.verifiedQuestionsList.helpers({
 Template.verifiedQuestionsList.events({
     'click .load-more': function(e) {
         e.preventDefault();
-        const state = Template.instance().state;
-        const page = state.get('page');
-        state.set('page', page + 1);
 
-        return Meteor.subscribe('questions.verified', page + 1);
+        const state = Template.instance().state;
+        state.set('requestedQuestions', state.get('requestedQuestions') + 20);
     }
 });

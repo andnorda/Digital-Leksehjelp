@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-
+import { Counts } from 'meteor/tmeasday:publish-counts';
 import { Questions } from '../questions.js';
-
 import {
     ROLES,
     QUESTION_SUBSCRIPTION_LEVEL,
@@ -13,28 +12,36 @@ Meteor.publish('questions.search', function(params) {
     return QuestionHelpers.search(params, this.userId);
 });
 
-Meteor.publish('questions.verified', function(page) {
-    if (this.userId) {
-        const user = Meteor.users.findOne(this.userId);
+const MAX_QUESTIONS = 10000;
 
-        if (user.profile.role === ROLES.ADMIN) {
-            const questionsPerPage = 20;
-
-            return Questions.find(
-                {
-                    verifiedBy: { $exists: true }
-                },
-                {
-                    fields: questionPrivateFields,
-                    limit: questionsPerPage,
-                    skip: page * questionsPerPage,
-                    sort: { questionDate: -1 }
-                }
-            );
-        }
+Meteor.publish('questions.verified', function(limit) {
+    if (!this.userId) {
+        return this.ready();
     }
 
-    this.ready();
+    const user = Meteor.users.findOne(this.userId);
+    if (user.profile.role !== ROLES.ADMIN) {
+        return this.ready();
+    }
+
+    return Questions.find(
+        {
+            verifiedBy: { $exists: true }
+        },
+        {
+            sort: { questionDate: -1 },
+            limit: Math.min(limit, MAX_QUESTIONS),
+            fields: questionPrivateFields
+        }
+    );
+});
+
+Meteor.publish('questions.verifiedCount', function() {
+    Counts.publish(
+        this,
+        'questions.verifiedCount',
+        Questions.find({ verifiedBy: { $exists: true } })
+    );
 });
 
 const adjectives = [

@@ -15,12 +15,6 @@ Meteor.methods({
         return QuestionHelpers.search(params, Meteor.userId()).fetch();
     },
 
-    'questions.verifiedCount'() {
-        return Questions.find({
-            verifiedBy: { $exists: true }
-        }).count();
-    },
-
     'questions.ask'(options) {
         check(options.subjectId, String);
         check(options.grade, String);
