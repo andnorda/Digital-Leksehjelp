@@ -4,9 +4,23 @@ import { SSR } from 'meteor/meteorhacks:ssr';
 import { Match, check } from 'meteor/check';
 import mixpanel from '/imports/mixpanel';
 import { CONSTANTS } from '/imports/constants.js';
-import { generateUniqueSlug } from '/imports/utils.js';
 import { Questions } from './questions.js';
 import QuestionHelpers from './questionHelpers.js';
+
+const generateUniqueSlug = title => {
+    const originalSlug = urlify(title);
+    let slug = originalSlug;
+    let slugSeed = 1;
+
+    let question = Questions.findOne({ slug });
+    while (question) {
+        slugSeed += 1;
+        slug = `${originalSlug}-${slugSeed}`;
+        question = Questions.findOne({ slug });
+    }
+
+    return slug;
+};
 
 Meteor.methods({
     'questions.searchCount'(params) {

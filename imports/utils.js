@@ -1,5 +1,3 @@
-import { Questions } from '/imports/api/questions/questions.js';
-
 const pad = n => (Number(n) > 9 ? n : `0${n}`);
 
 export const timeSince = (date = new Date(), time = new Date()) => {
@@ -27,18 +25,3 @@ export const urlify = str =>
         .replace(/ø/g, 'o')
         .replace(/å/g, 'a')
         .replace(/[^a-z0-9-]/g, '');
-
-export const generateUniqueSlug = title => {
-    const originalSlug = urlify(title);
-    let slug = originalSlug;
-    let slugSeed = 1;
-
-    let question = Questions.findOne({ slug });
-    while (question) {
-        slugSeed += 1;
-        slug = `${originalSlug}-${slugSeed}`;
-        question = Questions.findOne({ slug });
-    }
-
-    return slug;
-};

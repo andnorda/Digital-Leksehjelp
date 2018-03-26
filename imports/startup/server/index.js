@@ -5,7 +5,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { Questions } from '/imports/api/questions/questions.js';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { ROLES } from '/imports/constants.js';
-import { urlify, generateUniqueSlug } from '/imports/utils.js';
+import { urlify } from '/imports/utils.js';
 
 import './register-api.js';
 
@@ -53,33 +53,9 @@ const addHumanReadableIdToSubjectsCollection = () => {
     });
 };
 
-const addSlugToQuestions = () => {
-    const questions = Questions.find({
-        $and: [
-            { slug: { $exists: false } },
-            { answer: { $exists: true } },
-            { title: { $exists: true } }
-        ]
-    }).fetch();
-
-    questions.forEach(function(question) {
-        if (question.title && question.title.length > 0) {
-            Questions.update(
-                { _id: question._id },
-                {
-                    $set: {
-                        slug: generateUniqueSlug(question.title)
-                    }
-                }
-            );
-        }
-    });
-};
-
 Meteor.startup(function() {
     updateLastUpdatedBy();
     addHumanReadableIdToSubjectsCollection();
-    addSlugToQuestions();
 
     Accounts.emailTemplates.from =
         'Digital Leksehjelp <digitalleksehjelp@oslo.redcross.no>';
