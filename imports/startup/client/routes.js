@@ -161,7 +161,12 @@ Router.map(function() {
             return Meteor.subscribe('questions.byId', this.params.questionId);
         },
         data() {
-            return Questions.findOne(this.params.questionId);
+            return Questions.findOne({
+                $or: [
+                    { _id: this.params.questionId },
+                    { slug: this.params.questionId }
+                ]
+            });
         }
     });
 
