@@ -6,6 +6,7 @@ import {
     QUESTION_SUBSCRIPTION_LEVEL,
     CONSTANTS
 } from '/imports/constants';
+import { generateNickname } from '/imports/utils.js';
 import {
     Questions,
     questionPrivateFields,
@@ -52,60 +53,6 @@ Meteor.publish('questions.verifiedCount', function() {
     );
 });
 
-const adjectives = [
-    'Subtil',
-    'Glad',
-    'Sjenert',
-    'Rosa',
-    'Lilla',
-    'Nysgjerrig',
-    'Løye',
-    'Flink',
-    'Rask',
-    'Praktisk',
-    'Koselig',
-    'Ivrig',
-    'Listig',
-    'Snill',
-    'Genial',
-    'Imponerende',
-    'Rakrygget',
-    'Vennlig',
-    'Berømt',
-    'Positiv',
-    'Arbeidsom',
-    'Lun',
-    'Oppmerksom',
-    'Bestemt'
-];
-
-const animals = [
-    'panda',
-    'sjiraff',
-    'frosk',
-    'elefant',
-    'elg',
-    'ugle',
-    'tiger',
-    'bjørn',
-    'løve',
-    'ørn',
-    'krokodille',
-    'delfin',
-    'zebra',
-    'hare',
-    'rev',
-    'kamel',
-    'hai',
-    'gorilla',
-    'papegøye',
-    'flamingo',
-    'grevling',
-    'sel',
-    'pingvin',
-    'kenguru'
-];
-
 Meteor.publish('questions', function(subscriptionLevel) {
     if (this.userId) {
         const user = Meteor.users.findOne(this.userId);
@@ -122,17 +69,7 @@ Meteor.publish('questions', function(subscriptionLevel) {
             );
         } else if (subscriptionLevel === QUESTION_SUBSCRIPTION_LEVEL.REGULAR) {
             const transform = function(doc) {
-                const n =
-                    CryptoJS.MD5(doc.studentEmail.toLowerCase())
-                        .toString()
-                        .split('')
-                        .reduce(function(sum, char) {
-                            return char.charCodeAt(0) + sum;
-                        }, 0) %
-                    (animals.length * adjectives.length);
-                doc.nickname = `${adjectives[Math.floor(n / animals.length)]} ${
-                    animals[n % animals.length]
-                }`;
+                doc.nickname = generateNickname(doc.studentEmail);
                 delete doc.studentEmail;
                 return doc;
             };

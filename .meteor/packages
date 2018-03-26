@@ -24,7 +24,6 @@ twbs:bootstrap
 spiderable
 
 reactive-dict@1.2.0
-jparker:crypto-md5
 standard-minifier-css
 standard-minifier-js
 shell-server

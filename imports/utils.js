@@ -1,3 +1,5 @@
+import crypto from 'crypto';
+
 const pad = n => (Number(n) > 9 ? n : `0${n}`);
 
 export const timeSince = (date = new Date(), time = new Date()) => {
@@ -25,3 +27,75 @@ export const urlify = str =>
         .replace(/ø/g, 'o')
         .replace(/å/g, 'a')
         .replace(/[^a-z0-9-]/g, '');
+
+const adjectives = [
+    'Subtil',
+    'Glad',
+    'Sjenert',
+    'Rosa',
+    'Lilla',
+    'Nysgjerrig',
+    'Løye',
+    'Flink',
+    'Rask',
+    'Praktisk',
+    'Koselig',
+    'Ivrig',
+    'Listig',
+    'Snill',
+    'Genial',
+    'Imponerende',
+    'Rakrygget',
+    'Vennlig',
+    'Berømt',
+    'Positiv',
+    'Arbeidsom',
+    'Lun',
+    'Oppmerksom',
+    'Bestemt'
+];
+
+const animals = [
+    'panda',
+    'sjiraff',
+    'frosk',
+    'elefant',
+    'elg',
+    'ugle',
+    'tiger',
+    'bjørn',
+    'løve',
+    'ørn',
+    'krokodille',
+    'delfin',
+    'zebra',
+    'hare',
+    'rev',
+    'kamel',
+    'hai',
+    'gorilla',
+    'papegøye',
+    'flamingo',
+    'grevling',
+    'sel',
+    'pingvin',
+    'kenguru'
+];
+
+export const generateNickname = (
+    string = Math.floor(Math.random() * 1000000000).toString()
+) => {
+    const n =
+        crypto
+            .createHash('sha256')
+            .update(string)
+            .digest('hex')
+            .split('')
+            .reduce(function(sum, char) {
+                return char.charCodeAt(0) + sum;
+            }, 0) %
+        (animals.length * adjectives.length);
+    return `${adjectives[Math.floor(n / animals.length)]} ${
+        animals[n % animals.length]
+    }`;
+};
