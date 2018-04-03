@@ -6,6 +6,12 @@ import { Subjects } from '/imports/api/subjects/subjects.js';
 
 import './myProfile.html';
 
+Template.mySubjectsSelector.onCreated(function() {
+    this.autorun(() => {
+        this.subscribe('subjects');
+    });
+});
+
 Template.mySubjectsSelector.onRendered(function() {
     $('#mySubjects').select2({
         width: '300px',
