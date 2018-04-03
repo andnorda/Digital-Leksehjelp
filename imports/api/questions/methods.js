@@ -4,6 +4,7 @@ import { SSR } from 'meteor/meteorhacks:ssr';
 import { Match, check } from 'meteor/check';
 import mixpanel from '/imports/mixpanel';
 import { CONSTANTS } from '/imports/constants.js';
+import { urlify } from '/imports/utils.js';
 import { Questions } from './questions.js';
 import QuestionHelpers from './questionHelpers.js';
 
