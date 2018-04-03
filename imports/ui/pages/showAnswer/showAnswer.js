@@ -5,6 +5,12 @@ import { Questions } from '/imports/api/questions/questions.js';
 
 import './showAnswer.html';
 
+Template.showAnswer.onCreated(function() {
+    this.autorun(() => {
+        this.subscribe('subjects');
+    });
+});
+
 Template.showAnswer.onRendered(function() {
     window.scrollTo(0, 0);
 });

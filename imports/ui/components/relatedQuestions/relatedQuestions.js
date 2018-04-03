@@ -35,6 +35,12 @@ searchForRelatedQuestions = function(subject, question) {
     }
 };
 
+Template.relatedQuestions.onCreated(function() {
+    this.autorun(() => {
+        this.subscribe('subjects');
+    });
+});
+
 Template.relatedQuestions.helpers({
     relatedQuestions() {
         return Session.get('relatedQuestions') || [];

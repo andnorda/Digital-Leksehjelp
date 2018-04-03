@@ -11,6 +11,7 @@ Template.verifiedQuestionsList.onCreated(function() {
     this.state.set('requestedQuestions', 20);
 
     this.autorun(() => {
+        this.subscribe('subjects');
         this.subscribe('users');
         this.subscribe('questions.verifiedCount');
         this.subscribe(

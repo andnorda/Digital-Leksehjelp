@@ -73,6 +73,12 @@ const answerQuestion = function(answerFields) {
     });
 };
 
+Template.answerQuestion.onCreated(function() {
+    this.autorun(() => {
+        this.subscribe('subjects');
+    });
+});
+
 Template.answerQuestion.events({
     'click .ignore-changes-and-close-window'(event) {
         event.preventDefault();

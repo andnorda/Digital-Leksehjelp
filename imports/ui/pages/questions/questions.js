@@ -11,6 +11,7 @@ Template.questions.onCreated(function questionsOnCreated() {
     this.autorun(() => {
         this.subscribe('users');
         this.subscribe('questions', QUESTION_SUBSCRIPTION_LEVEL.REGULAR);
+        this.subscribe('subjects');
     });
 });
 
