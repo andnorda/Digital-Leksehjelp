@@ -163,6 +163,10 @@ Template.todaysVolunteers.onCreated(function todaysVolunteersOnCreated() {
 });
 
 Template.todaysVolunteers.helpers({
+    serviceIsOpen() {
+        const serviceStatus = Config.findOne({ name: 'serviceStatus' });
+        return serviceStatus ? serviceStatus.open : false;
+    },
     todaysVolunteers() {
         return Meteor.users
             .find({
