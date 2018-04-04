@@ -1,0 +1,9 @@
+<template name="subjectAvailability">
+    <h1>subjectAvailability</h1>
+    <input type="text" class="subject-field" />
+    <ul>
+        {{#each availabilities}}
+            <li>{{ start }} - {{ end }}</li>
+        {{/each}}
+    </ul>
+</template>

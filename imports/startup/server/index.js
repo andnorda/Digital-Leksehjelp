@@ -6,6 +6,7 @@ import { Questions } from '/imports/api/questions/questions.js';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { ROLES } from '/imports/constants.js';
 import { urlify } from '/imports/utils.js';
+import fetchShifts from '/imports/api/shifts/fetchShifts.js';
 
 import './register-api.js';
 
@@ -53,9 +54,23 @@ const addHumanReadableIdToSubjectsCollection = () => {
     });
 };
 
+const startPollingShifts = () => {
+    Meteor.setInterval(() => {
+        fetchShifts();
+    }, 5 * 60 * 1000);
+};
+
 Meteor.startup(function() {
     updateLastUpdatedBy();
     addHumanReadableIdToSubjectsCollection();
+
+    if (process.env.RODEKORS_TOKEN) {
+        startPollingShifts();
+    } else {
+        console.warn(
+            'process.env.RODEKORS_TOKEN not defined, so shifts will not be fetched.'
+        );
+    }
 
     Accounts.emailTemplates.from =
         'Digital Leksehjelp <digitalleksehjelp@oslo.redcross.no>';
