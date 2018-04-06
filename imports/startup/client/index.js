@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Deps } from 'meteor/deps';
 import { FlashMessages } from 'meteor/mrt:flash-messages';
 import mixpanel from '/imports/mixpanel';
+import '/imports/api/questions/methods.js';
 
 import './routes.js';
 import './templateHelpers.js';
