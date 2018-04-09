@@ -17,6 +17,7 @@ import '../../ui/pages/userAdmin/userAdmin.js';
 import '../../ui/pages/subjectAdmin/subjectAdmin.js';
 import '../../ui/pages/questionAdmin/questionAdmin.js';
 import '../../ui/pages/answerQuestion/answerQuestion.js';
+import '../../ui/pages/queue/queue.js';
 
 import '../../ui/components/header/header.js';
 import '../../ui/components/footer/footer.js';
@@ -102,6 +103,11 @@ Router.map(function() {
                 this.redirect('/frivillig/profil');
             }
         }
+    });
+
+    this.route('queue', {
+        controller: LoginController,
+        path: '/frivillig/queue'
     });
 
     this.route('questions', {

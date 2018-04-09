@@ -43,5 +43,12 @@ Meteor.methods({
             state: STUDENT_SESSION_STATE.WAITING,
             createdAt: new Date()
         });
+    },
+
+    'studentSessions.updateText'({ sessionId, text }) {
+        check(sessionId, String);
+        check(text, String);
+
+        StudentSessions.update({ _id: sessionId }, { $set: { text } });
     }
 });

@@ -62,6 +62,12 @@ Template.queueModal.events({
         });
 
         window.showSurvey();
+    },
+    'input textarea[name=question]'(event) {
+        Meteor.call('studentSessions.updateText', {
+            sessionId: Session.get('studentSessionId'),
+            text: event.target.value
+        });
     }
 });
 

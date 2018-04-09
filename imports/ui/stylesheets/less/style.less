@@ -746,3 +746,59 @@ hr {
 .hidden {
     display: none;
 }
+
+.queue {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 20px;
+
+    .no-students {
+        font-size: 30px;
+    }
+
+    .studentSession {
+        border: 1px solid black;
+        margin: 10px 0;
+        padding: 10px;
+
+        > .subject {
+            font-weight: bold;
+        }
+
+        > .deleteSession {
+            width: 200px;
+        }
+    }
+
+    .queuing.studentSession {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: 4px;
+
+        > .timeInQueue {
+            justify-self: end;
+        }
+
+        > .text {
+            grid-column: 1 / span 2;
+            word-break: break-word;
+        }
+
+        > .startTutoring {
+            justify-self: flex-end;
+            width: 200px;
+        }
+    }
+
+    .active.studentSession {
+        display: flex;
+        align-items: center;
+
+        > .tutor {
+            flex-grow: 1;
+            margin-left: 8px;
+        }
+    }
+}

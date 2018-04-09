@@ -58,6 +58,18 @@
                 </div>
             </div>
         </div>
+        <div class="modal-body dl-modal-body">
+            <div class="row">
+                <div class="col-md-12 full-width">
+                    {{#if stateWaiting }}
+                        <p>
+                            Skriv gjerne litt om hva du lurer på, så blir det lettere for den frivillige å hjelpe deg.
+                        </p>
+                        <textarea class="form-control dl-inputfield" name="question" placeholder="Skriv her..." rows="4"></textarea>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
     {{else}}
         <div class="modal-body">
             <h4>

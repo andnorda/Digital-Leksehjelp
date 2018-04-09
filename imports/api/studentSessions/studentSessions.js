@@ -27,6 +27,10 @@ const StudentSessionsSchema = new SimpleSchema({
     },
     createdAt: {
         type: Date
+    },
+    text: {
+        type: String,
+        optional: true
     }
 });
 

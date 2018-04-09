@@ -10,7 +10,6 @@ export const GRADES = [
 export const STUDENT_SESSION_STATE = {
     WAITING: 'Venter på en ledig frivillig',
     READY: 'Frivillig er klar',
-    REJECTED: 'Beklager, ingen frivillige hadde mulighet til å hjelpe deg nå',
     GETTING_HELP: 'Får leksehjelp'
 };
 

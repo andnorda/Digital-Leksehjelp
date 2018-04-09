@@ -1,0 +1,61 @@
+<template name="queue">
+    <div class="queue">
+        <section>
+            <h1>Elever i kø</h1>
+            {{#if hasStudentsInQueue}}
+                <h2>Mine fag</h2>
+                <div>
+                    {{#each queueInMySubjects }}
+                        {{> queuingStudentSession }}
+                    {{/each}}
+                </div>
+                <h2>Andre fag</h2>
+                <div>
+                    {{#each queueInOtherSubjects }}
+                        {{> queuingStudentSession }}
+                    {{/each}}
+                </div>
+            {{else}}
+                <div class="no-students">Ingen elever i kø. 🙆</div>
+            {{/if}}
+        </section>
+        <section>
+            <h1>Elever som blir hjulpet</h1>
+            {{#if hasActiveStudents}}
+                <h2>Mine fag</h2>
+                <div>
+                    {{#each activeInMySubjects }}
+                        {{> activeStudentSession }}
+                    {{/each}}
+                </div>
+                <h2>Andre fag</h2>
+                <div>
+                    {{#each activeInOtherSubjects }}
+                        {{> activeStudentSession }}
+                    {{/each}}
+                </div>
+            {{else}}
+                <div class="no-students">Ingen elever blir hjuplet. 🤷</div>
+            {{/if}}
+        </section>
+    </div>
+</template>
+
+<template name="queuingStudentSession">
+    <div class="queuing studentSession">
+        <div class="subject">{{ subject }}, {{ grade }}</div>
+        <div class="timeInQueue">{{ timeInQueue }}</div>
+        <div class="text">{{ text }}</div>
+        <button class="deleteSession">Slett sesjon</button>
+        <button class="startTutoring">Start leksehjelp</button>
+    </div>
+</template>
+
+<template name="activeStudentSession">
+    <div class="active studentSession">
+        <div class="subject">{{ subject }}, {{ grade }}</div>
+        <div class="tutor">Får hjelp av {{ tutor }}</div>
+        <div class="text">{{ text }}</div>
+        <button class="deleteSession">Slett sesjon</button>
+    </div>
+</template>
