@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { $ } from 'meteor/jquery';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
 import { timeSince, getQueueTime } from '/imports/utils.js';
@@ -20,8 +21,18 @@ Meteor.setInterval(function() {
 }, 1000);
 
 Template.queueModal.onCreated(function queueModalOnCreated() {
+    this.state = new ReactiveDict();
+
     this.autorun(() => {
         this.subscribe('studentSessions.byId', Session.get('studentSessionId'));
+
+        if (
+            this.state.get('prevState') === STUDENT_SESSION_STATE.READY &&
+            (findStudentSession() || {}).state === STUDENT_SESSION_STATE.READY
+        ) {
+            window.Notification && new Notification('Leksehjelpen er klar!');
+        }
+        this.state.set('prevState', (findStudentSession() || {}).state);
     });
 });
 

@@ -70,6 +70,9 @@ Template.getHelpBox.events({
             validationErrorDep.changed();
         }
         if (validationError.length === 0) {
+            if (window.Notification && Notification.permission !== 'granted') {
+                Notification.requestPermission();
+            }
             mixpanel.track('Bedt om leksehjelp', {
                 fag: chosenSubject,
                 trinn: chosenGrade
