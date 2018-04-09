@@ -13,6 +13,10 @@ const SubjectsSchema = new SimpleSchema({
     humanReadableId: {
         type: String,
         index: true
+    },
+    videoChatCount: {
+        type: Number,
+        optional: true
     }
 });
 

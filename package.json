@@ -11,6 +11,7 @@
         "@babel/runtime": "^7.0.0-beta.42",
         "bcrypt": "^1.0.3",
         "date-fns": "^1.29.0",
+        "fuse.js": "^3.2.0",
         "meteor-node-stubs": "^0.3.3",
         "npm": "^5.8.0",
         "query-string": "^6.0.0"
@@ -36,10 +37,19 @@
     "eslintConfig": {
         "extends": "@meteorjs/eslint-config-meteor",
         "rules": {
-            "indent": ["error", 4],
-            "comma-dangle": ["error", "never"],
+            "indent": [
+                "error",
+                4
+            ],
+            "comma-dangle": [
+                "error",
+                "never"
+            ],
             "function-paren-newline": "off",
-            "arrow-parens": ["error", "as-needed"],
+            "arrow-parens": [
+                "error",
+                "as-needed"
+            ],
             "import/prefer-default-export": "off"
         }
     },

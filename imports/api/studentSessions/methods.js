@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { STUDENT_SESSION_STATE } from '/imports/constants.js';
 import { StudentSessions } from './studentSessions.js';
+import { Subjects } from '../subjects/subjects.js';
 
 const generateRandomAppearInLink = function() {
     const randomId = Math.floor(Math.random() * 1000000000);
@@ -35,6 +36,11 @@ Meteor.methods({
         check(options.grade, String);
 
         const videoConferenceUrl = generateRandomAppearInLink();
+
+        Subjects.update(
+            { name: options.subject },
+            { $inc: { videoChatCount: 1 } }
+        );
 
         return StudentSessions.insert({
             subject: options.subject,

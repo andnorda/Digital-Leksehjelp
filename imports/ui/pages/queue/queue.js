@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
 import { timeSince } from '/imports/utils.js';
 import { STUDENT_SESSION_STATE } from '/imports/constants';

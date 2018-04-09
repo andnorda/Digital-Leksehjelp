@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { addWeeks } from 'date-fns';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { Shifts } from '/imports/api/shifts/shifts.js';
 
 import './subjectAvailability.html';

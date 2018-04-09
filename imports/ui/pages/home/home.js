@@ -9,6 +9,7 @@ import { Config } from '/imports/api/config/config.js';
 import { Questions } from '/imports/api/questions/questions.js';
 
 import './home.html';
+import '../../components/newSubjectSelector/subjectSelector.js';
 
 Template.getHelpBox.onCreated(function getHelpBoxOnCreated() {
     this.autorun(() => {
@@ -43,20 +44,6 @@ Template.getHelpBox.helpers({
     },
     serviceStatusLoaded() {
         return Session.get('serviceStatusLoaded');
-    },
-    subjectDisabled(subjectId) {
-        const numberOfLoggedInUsersForSubject = Meteor.users
-            .find({
-                $and: [
-                    { 'profile.subjects.subjectId': subjectId },
-                    { 'status.online': true },
-                    { 'profile.allowVideohelp': true },
-                    { 'profile.firstName': { $not: 'Orkis' } }
-                ]
-            })
-            .count();
-
-        return numberOfLoggedInUsersForSubject === 0 ? 'disabled-li' : '';
     }
 });
 
@@ -66,9 +53,8 @@ Template.getHelpBox.events({
             return;
         }
 
-        const chosenSubject = $('#chosen-subject')
-            .text()
-            .trim();
+        const chosenSubject = $('.subjectSelector input.searchField').val();
+
         const chosenGrade = $('#chosen-grade')
             .text()
             .trim();
@@ -114,12 +100,6 @@ Template.getHelpBox.events({
     'click .disabled-li'(event) {
         event.preventDefault();
         return false;
-    },
-
-    'click .subjects'(event) {
-        if (!$(event.target).hasClass('disabled-li')) {
-            $('#chosen-subject').text(this.name);
-        }
     },
 
     'click .grades'() {
