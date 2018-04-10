@@ -24,10 +24,6 @@ const generateUniqueSlug = title => {
 };
 
 Meteor.methods({
-    'questions.searchCount'(params) {
-        return QuestionHelpers.search(params, Meteor.userId()).count();
-    },
-
     'questions.related'(params) {
         params.limit = CONSTANTS.RELATED_QUESTION_SEARCH_LIMIT;
         params.related = true;

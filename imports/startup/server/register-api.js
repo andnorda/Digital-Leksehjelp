@@ -2,6 +2,7 @@ import '../../api/config/methods.js';
 import '../../api/config/server/publications.js';
 
 import '../../api/questions/methods.js';
+import '../../api/questions/server/methods.js';
 import '../../api/questions/server/publications.js';
 
 import '../../api/studentSessions/methods.js';
