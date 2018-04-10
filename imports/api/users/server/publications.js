@@ -31,13 +31,11 @@ Meteor.publish('users', function() {
 });
 
 Meteor.publish('users.loggedIn', function() {
-    const user = Meteor.users.findOne(this.userId);
-    const publicLoggedInCursor = Meteor.users.find(
+    return Meteor.users.find(
         {
             $and: [
-                { 'profile.allowVideohelp': { $exists: true } },
-                { 'services.resume.loginTokens': { $exists: true } },
-                { 'services.resume.loginTokens': { $not: { $size: 0 } } }
+                { 'profile.allowVideohelp': true },
+                { 'status.online': true }
             ]
         },
         {
@@ -51,20 +49,4 @@ Meteor.publish('users.loggedIn', function() {
             }
         }
     );
-
-    if (!user) {
-        return publicLoggedInCursor;
-    }
-
-    const userRole = user.profile.role;
-
-    if (userRole === ROLES.ADMIN) {
-        return Meteor.users.find({
-            $and: [
-                { 'services.resume.loginTokens': { $exists: true } },
-                { 'services.resume.loginTokens': { $not: { $size: 0 } } }
-            ]
-        });
-    }
-    return publicLoggedInCursor;
 });
