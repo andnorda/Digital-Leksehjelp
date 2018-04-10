@@ -170,13 +170,10 @@ Meteor.methods({
             throw new Meteor.Error(403, 'You are not allowed to access this.');
         }
 
-        const humanReadableId = urlify(options.subject);
-
         Subjects.insert(
             {
                 name: options.subject,
-                availableVolunteers: [],
-                humanReadableId
+                availableVolunteers: []
             },
             function(error) {
                 if (error) {

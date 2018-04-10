@@ -17,9 +17,7 @@ const parseSearchParams = params => {
         selector.$and.push({ $text: { $search: params.q } });
     }
     if (params.hasOwnProperty('subject') && params.subject !== '_all') {
-        const subject = Subjects.findOne({
-            humanReadableId: params.subject
-        });
+        const subject = Subjects.findOne({ name: params.subject });
         if (subject) {
             selector.$and.push({ subjectId: subject._id });
         }

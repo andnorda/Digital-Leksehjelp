@@ -10,10 +10,6 @@ const SubjectsSchema = new SimpleSchema({
     availableVolunteers: {
         type: [String]
     },
-    humanReadableId: {
-        type: String,
-        index: true
-    },
     videoChatCount: {
         type: Number,
         optional: true

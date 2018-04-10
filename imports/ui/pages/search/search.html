@@ -66,7 +66,7 @@
                 <select class="form-control" name="subject">
                     <option value="_all" selected="{{eq subject '_all'}}">Alle</option>
                     {{#each subjects}}
-                        <option value="{{humanReadableId}}" selected="{{eq humanReadableId ../subject}}">{{name}}</option>
+                        <option value="{{name}}" selected="{{eq name ../subject}}">{{name}}</option>
                     {{/each}}
                 </select>
             </div>

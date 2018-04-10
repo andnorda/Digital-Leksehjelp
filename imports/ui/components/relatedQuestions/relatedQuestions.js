@@ -18,7 +18,7 @@ searchForRelatedQuestions = function(subject, question) {
 
     const query = {};
     if (subject) {
-        query.subject = subject.humanReadableId;
+        query.subject = subject.name;
     }
     if (
         question.length > CONSTANTS.RELATED_QUESTION_SEARCH_MIN_QUESTION_LENGTH

@@ -39,21 +39,6 @@ const updateLastUpdatedBy = () => {
     });
 };
 
-const addHumanReadableIdToSubjectsCollection = () => {
-    Subjects.find({ humanReadableId: { $exists: false } }).forEach(function(
-        subject
-    ) {
-        Subjects.update(
-            { _id: subject._id },
-            {
-                $set: {
-                    humanReadableId: urlify(subject.name)
-                }
-            }
-        );
-    });
-};
-
 const startPollingShifts = () => {
     Meteor.setInterval(() => {
         fetchShifts();
@@ -62,7 +47,6 @@ const startPollingShifts = () => {
 
 Meteor.startup(function() {
     updateLastUpdatedBy();
-    addHumanReadableIdToSubjectsCollection();
 
     if (process.env.RODEKORS_TOKEN) {
         startPollingShifts();
