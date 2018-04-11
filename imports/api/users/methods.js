@@ -65,58 +65,34 @@ Meteor.methods({
         throw new Meteor.Error(403, 'You are not allowed to access this.');
     },
 
-    'users.toggleAllowVideohelp'(options) {
-        check(options.userId, String);
+    'users.toggleAllowVideohelp'({ userId }) {
+        check(userId, String);
 
-        const user = Meteor.users.findOne({ _id: Meteor.userId() });
+        const user = Meteor.users.findOne(Meteor.userId());
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
 
-        if (user.profile.role === ROLES.ADMIN) {
-            const otherUser = Meteor.users.findOne({ _id: options.userId });
-            if (!user) {
-                throw new Meteor.Error(
-                    404,
-                    `User with id ${options.userId} does not exist.`
-                );
-            }
-
-            const currentAllowVideohelp = otherUser.profile.allowVideohelp;
-            const newAllowVideohelp = !currentAllowVideohelp;
-
-            Meteor.users.update(
-                { _id: otherUser._id },
-                {
-                    $set: {
-                        'profile.allowVideohelp': newAllowVideohelp
-                    }
-                }
-            );
-
-            if (newAllowVideohelp) {
-                const subjectIds = otherUser.profile.subjects.map(function(
-                    subject
-                ) {
-                    return subject.subjectId;
-                });
-
-                for (let i = 0; i < subjectIds.length; i += 1) {
-                    Subjects.update(
-                        { _id: subjectIds[i] },
-                        { $addToSet: { availableVolunteers: otherUser._id } }
-                    );
-                }
-            } else {
-                Subjects.update(
-                    {},
-                    { $pull: { availableVolunteers: otherUser._id } },
-                    { multi: true }
-                );
-            }
-        } else {
+        if (user.profile.role !== ROLES.ADMIN) {
             throw new Meteor.Error(403, 'You are not allowed to access this.');
         }
+
+        const otherUser = Meteor.users.findOne(userId);
+        if (!otherUser) {
+            throw new Meteor.Error(
+                404,
+                `User with id ${userId} does not exist.`
+            );
+        }
+
+        Meteor.users.update(
+            { _id: userId },
+            {
+                $set: {
+                    'profile.allowVideohelp': !otherUser.profile.allowVideohelp
+                }
+            }
+        );
     },
 
     'users.setProfilePictureUrl'(url) {
@@ -147,7 +123,6 @@ Meteor.methods({
         check(options.profile.role, String);
         check(options.profile.allowVideohelp, Boolean);
 
-        options.profile.setSubjectsAvailable = true;
         options.profile.forceLogOut = false;
         options.profile.subjects = [];
 

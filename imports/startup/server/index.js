@@ -66,7 +66,6 @@ Meteor.startup(function() {
             password: 'orkisadmin',
             profile: {
                 role: ROLES.ADMIN,
-                setSubjectsAvailable: true,
                 forceLogOut: false,
                 subjects: [],
                 firstName: 'Orkis'
@@ -81,34 +80,6 @@ Meteor.startup(function() {
             Meteor.users.update(
                 { _id: user._id },
                 { $set: { 'profile.forceLogOut': false } }
-            );
-
-            const subjectsLength =
-                (user.profile &&
-                    user.profile.subjects &&
-                    user.profile.subjects.length) ||
-                0;
-            for (let i = 0; i < subjectsLength; i += 1) {
-                Subjects.update(
-                    { _id: user.profile.subjects[i].subjectId },
-                    { $pull: { availableVolunteers: user._id } },
-                    function(error) {
-                        if (error) {
-                            throw new Meteor.Error(
-                                500,
-                                'Server error, please try again.'
-                            );
-                        }
-                    }
-                );
-            }
-            Meteor.users.update(
-                { _id: user._id },
-                {
-                    $set: {
-                        'profile.setSubjectsAvailable': true
-                    }
-                }
             );
         }
     });

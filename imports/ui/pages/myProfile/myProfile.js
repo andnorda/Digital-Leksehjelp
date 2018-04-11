@@ -67,17 +67,13 @@ Template.mySubjectsSelector.events({
             });
         }
 
-        Meteor.call(
-            'subjects.update',
-            {
-                subjects: subjectsArray
-            },
-            function(error) {
-                if (error) {
-                    FlashMessages.sendError(error.message);
-                }
+        Meteor.call('subjects.update', { subjects: subjectsArray }, function(
+            error
+        ) {
+            if (error) {
+                FlashMessages.sendError(error.message);
             }
-        );
+        });
 
         $('#mySubjects').select2('val', '');
     }

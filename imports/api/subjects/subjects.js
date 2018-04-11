@@ -7,9 +7,6 @@ const SubjectsSchema = new SimpleSchema({
     name: {
         type: String
     },
-    availableVolunteers: {
-        type: [String]
-    },
     videoChatCount: {
         type: Number,
         optional: true

@@ -9,17 +9,9 @@ import './templateHelpers.js';
 import './flashTitle.js';
 
 Deps.autorun(function() {
-    if (Meteor.user()) {
-        if (Meteor.user().profile && Meteor.user().profile.firstName) {
-            if (Meteor.user().profile.setSubjectsAvailable) {
-                Meteor.call('subjects.setAvailable', {
-                    subjects: Meteor.user().profile.subjects
-                });
-            }
-            if (Meteor.user().profile.forceLogOut) {
-                Meteor.logout();
-            }
-        }
+    const user = Meteor.user();
+    if (user && user.profile && user.profile.forceLogOut) {
+        Meteor.logout();
     }
 });
 
