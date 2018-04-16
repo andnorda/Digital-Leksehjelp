@@ -98,7 +98,7 @@ Meteor.publish('questions', function(subscriptionLevel) {
                     );
                 },
                 removed(oldDocument) {
-                    self.removed('collection_name', oldDocument._id);
+                    self.removed('questions', oldDocument._id);
                 }
             });
 
