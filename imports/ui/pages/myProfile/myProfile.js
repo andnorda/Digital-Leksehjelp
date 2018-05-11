@@ -13,7 +13,7 @@ Template.mySubjectsSelector.onCreated(function() {
 });
 
 Template.mySubjectsSelector.onRendered(function() {
-    $('#mySubjects').select2({
+    /*$('#mySubjects').select2({
         width: '300px',
         multiple: true,
         minimumInputLength: 3,
@@ -29,7 +29,7 @@ Template.mySubjectsSelector.onRendered(function() {
                 });
             return query.callback(data);
         }
-    });
+    });*/
 });
 
 Template.profilePicture.helpers({
@@ -75,7 +75,7 @@ Template.mySubjectsSelector.events({
             }
         });
 
-        $('#mySubjects').select2('val', '');
+        //$('#mySubjects').select2('val', '');
     }
 });
 

@@ -17,7 +17,7 @@
         "meteor-node-stubs": "^0.3.3",
         "npm": "^5.8.0",
         "query-string": "^6.0.0",
-        "url-regex": "^4.1.1"
+        "tlds": "^1.203.1"
     },
     "devDependencies": {
         "@meteorjs/eslint-config-meteor": "^1.0.5",
@@ -40,19 +40,10 @@
     "eslintConfig": {
         "extends": "@meteorjs/eslint-config-meteor",
         "rules": {
-            "indent": [
-                "error",
-                4
-            ],
-            "comma-dangle": [
-                "error",
-                "never"
-            ],
+            "indent": ["error", 4],
+            "comma-dangle": ["error", "never"],
             "function-paren-newline": "off",
-            "arrow-parens": [
-                "error",
-                "as-needed"
-            ],
+            "arrow-parens": ["error", "as-needed"],
             "import/prefer-default-export": "off"
         }
     },

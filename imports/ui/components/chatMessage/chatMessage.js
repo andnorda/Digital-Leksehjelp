@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating';
 import { Spacebars } from 'meteor/spacebars';
 import { format } from 'date-fns';
 import filesize from 'filesize';
-import urlRegex from 'url-regex';
+import urlRegex from '/imports/lib/url-regex';
 
 import './chatMessage.html';
 

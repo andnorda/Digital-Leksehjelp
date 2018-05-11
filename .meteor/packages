@@ -9,7 +9,6 @@ accounts-password@1.5.0
 accounts-ui@1.3.0
 iron:router
 mrt:flash-messages
-natestrauser:select2
 mizzao:user-status
 sacha:spin
 aldeed:collection2
