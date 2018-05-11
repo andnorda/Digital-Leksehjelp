@@ -2,6 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import { ROLES } from '/imports/constants';
 import { Config } from '../config.js';
 
+Meteor.publish('config.infoMessage', function() {
+    return Config.find({ name: 'infoMessage' });
+});
+
 Meteor.publish('config.openingHours', function() {
     return Config.find({ name: 'openingHours' });
 });

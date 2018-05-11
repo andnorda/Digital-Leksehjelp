@@ -1,0 +1,13 @@
+@import '/imports/ui/stylesheets/less/colors.import.less';
+
+.button-component {
+    background-color: @action-color;
+    border: none;
+    color: white;
+    padding: 14px 0 11px;
+    width: 130px;
+
+    &:disabled {
+        background-color: @disabled-color;
+    }
+}

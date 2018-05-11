@@ -1,3 +1,26 @@
 <template name="infoAdmin">
-    <div>infoAdmin</div>
+    <div class="infoAdmin">
+        <section>
+            <form class="info-message-form">
+                <h1>Info</h1>
+                <p>Her kan du skrive en beskjed som blir vist på forsiden.</p>
+                <textarea
+                    class="info-message"
+                    rows="3"
+                    placeholder="F.eks.: Stengt i påsken. Åpner igjen tirsdag 3. april.">{{infoMessage}}</textarea>
+                {{> button type='submit' text='Oppdater' disabled=noInfoMessageChanges}}
+            </form>
+        </section>
+        <section>
+            <form class="opening-hours-form">
+                <h1>Åpningstider</h1>
+                <p>Her kan du endre åpningstidene som blir vist på forsiden.</p>
+                <textarea
+                    class="opening-hours"
+                    rows="3"
+                    placeholder="F.eks.: Mandag - torsdag kl. 17:00-21:00">{{openingHours}}</textarea>
+                {{> button type='submit' text='Oppdater' disabled=noOpeningHoursChanges}}
+            </form>
+        </section>
+    </div>
 </template>
