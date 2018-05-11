@@ -131,3 +131,8 @@ Template.registerHelper('subjectList', function(subjects) {
 Template.registerHelper('slugOrId', function(question) {
     return question.slug || question._id;
 });
+
+Template.registerHelper(
+    'capitalize',
+    string => string.charAt(0).toUpperCase() + string.slice(1)
+);

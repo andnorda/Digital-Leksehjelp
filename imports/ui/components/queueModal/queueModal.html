@@ -34,9 +34,15 @@
                     {{/if}}
                     {{#if stateReady }}
                         <div class="text-center">
-                            <button type="button" class="btn btn-success btn-lg dl-button-accept-help " id="getHelp">
-                                Klikk for å starte videochatten
-                            </button>
+                            {{#if isVideo}}
+                                <button type="button" class="btn btn-success btn-lg dl-button-accept-help " id="getHelp">
+                                    Klikk for å starte videochatten
+                                </button>
+                            {{else}}
+                                <button type="button" class="btn btn-success btn-lg dl-button-accept-help " id="getHelp">
+                                    Klikk for å starte chatten
+                                </button>
+                            {{/if}}
                         </div>
                     {{/if}}
                 </div>

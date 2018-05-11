@@ -43,7 +43,7 @@ Template.profilePicture.events({
         const { files } = $('input[name=profilePicture]')[0];
 
         if (files.length === 1) {
-            S3.upload(files, '/profilbilder', function(error, result) {
+            S3.upload({ files, path: 'profilbilder' }, function(error, result) {
                 if (!result.uploading) {
                     Meteor.call('users.setProfilePictureUrl', result.url);
                 }

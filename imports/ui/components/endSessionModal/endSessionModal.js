@@ -13,12 +13,11 @@ Template.endSessionModal.events({
         );
         if (helpDurationMinutes > 4) {
             mixpanel.track('Hjulpet elev', {
-                'Minutter i samtale': helpDurationMinutes
+                'Minutter i samtale': helpDurationMinutes,
+                type: 'video'
             });
         }
 
-        Meteor.call('studentSessions.remove', {
-            sessionId: Session.get('studentSessionId')
-        });
+        Meteor.call('studentSessions.delete', Session.get('studentSessionId'));
     }
 });

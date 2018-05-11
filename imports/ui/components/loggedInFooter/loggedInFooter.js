@@ -1,1 +1,0 @@
-import './loggedInFooter.html';

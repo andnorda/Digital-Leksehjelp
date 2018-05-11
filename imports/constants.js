@@ -10,7 +10,8 @@ export const GRADES = [
 export const STUDENT_SESSION_STATE = {
     WAITING: 'Venter på en ledig frivillig',
     READY: 'Frivillig er klar',
-    GETTING_HELP: 'Får leksehjelp'
+    GETTING_HELP: 'Får leksehjelp',
+    ENDED: 'Ferdig'
 };
 
 export const ROLES = {

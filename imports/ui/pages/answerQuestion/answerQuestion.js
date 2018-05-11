@@ -116,7 +116,7 @@ Template.answerQuestionForm.events({
                 return;
             }
 
-            S3.upload(files, '/vedlegg', function(error, result) {
+            S3.upload({ files, path: 'vedlegg' }, function(error, result) {
                 if (error) {
                     FlashMessages.sendError(
                         `Noe gikk galt ved opplastningen. Prøv igjen.\n${

@@ -6,6 +6,7 @@ import { Subjects } from '/imports/api/subjects/subjects.js';
 import Fuse from 'fuse.js';
 
 import './subjectSelector.html';
+import './subjectSelector.less';
 
 const isAvailable = ({ _id }) =>
     Meteor.users

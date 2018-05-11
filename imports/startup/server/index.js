@@ -15,7 +15,8 @@ import './register-api.js';
 S3.config = {
     key: process.env.S3_KEY,
     secret: process.env.S3_SECRET,
-    bucket: 'digitalleksehjelp'
+    bucket: 'digitalleksehjelp',
+    region: 'eu-west-1'
 };
 
 const updateLastUpdatedBy = () => {

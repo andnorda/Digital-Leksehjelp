@@ -11,10 +11,13 @@
         "@babel/runtime": "^7.0.0-beta.42",
         "bcrypt": "^1.0.3",
         "date-fns": "^1.29.0",
+        "escape-string-regexp": "^1.0.5",
+        "filesize": "^3.6.1",
         "fuse.js": "^3.2.0",
         "meteor-node-stubs": "^0.3.3",
         "npm": "^5.8.0",
-        "query-string": "^6.0.0"
+        "query-string": "^6.0.0",
+        "url-regex": "^4.1.1"
     },
     "devDependencies": {
         "@meteorjs/eslint-config-meteor": "^1.0.5",

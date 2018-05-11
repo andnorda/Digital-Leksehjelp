@@ -1,0 +1,20 @@
+<template name="addVolunteer">
+    <div class="addVolunteer">
+        <div class="addVolunteerHeader">
+            <div>Legg til frivillig</div>
+            <button class="cancel">Lukk</button>
+        </div>
+        <div class="addVolunteerContent">
+            <input type="text" class="filter-field" placeholder="Søk etter frivillig"/>
+            <ul class="volunteerList">
+                {{#each volunteers}}
+                    {{> addVolunteerListItem}}
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</template>
+
+<template name="addVolunteerListItem">
+    <li class="volunteer">{{profile.firstName}}</li>
+</template>

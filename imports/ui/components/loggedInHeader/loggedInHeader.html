@@ -14,9 +14,8 @@
 
             <ul class="nav nav-tabs">
                 <li role="presentation" class="{{isActiveTab 'myProfile'}}"><a href="/frivillig/profil">Min profil</a></li>
-                {{#if isVideohelper}}
-                    <li role="presentation" class="{{isActiveTab 'volunteer'}}"><a href="/frivillig/videohjelp">Videohjelp {{numberOfStudentsWaitingInQueue}}</a></li>
-                {{/if}}
+                <li role="presentation" class="{{isActiveTab 'queue'}}"><a href="/frivillig/queue">Kø {{numberOfStudentsWaitingInQueue}}</a></li>
+                <li role="presentation" class="{{isActiveTab 'volunteerChat'}}"><a href="/frivillig/chat">Chat ({{notificationCount}})</a></li>
                 <li role="presentation" class="{{isActiveTab 'questions'}}"><a href="/frivillig/sporsmal">Spørsmål</a></li>
 
                 {{#if isAdmin }}
@@ -24,7 +23,6 @@
                     <li role="presentation" class="{{isActiveTab 'subjectAdmin'}}"><a href="/frivillig/admin/fag">Administrer fag</a></li>
                     <li role="presentation" class="{{isActiveTab 'questionAdmin'}}"><a href="/frivillig/admin/sporsmal">Administrer spørsmål</a></li>
                 {{/if}}
-                <li role="presentation" class="{{isActiveTab 'queue'}}"><a href="/frivillig/queue">Videohjelp - ny {{numberOfStudentsWaitingInQueue}}</a></li>
             </ul>
         {{/if}}
     </div>

@@ -1,0 +1,18 @@
+<template name="chat">
+    <div class="chatPage">
+        {{#if isPending}}
+            <div>laster...</div>
+        {{else}}
+            {{#if isValidId}}
+                {{#if isActive}}
+                    {{> chatHeader}}
+                    {{> chatComponent}}
+                {{else}}
+                    {{> inQueue}}
+                {{/if}}
+            {{else}}
+                <div>Chatten du prøver å åpne finnes ikke.</div>
+            {{/if}}
+        {{/if}}
+    </div>
+</template>

@@ -1,0 +1,91 @@
+.inQueue {
+    > .left {
+        background-color: #8b51c6;
+        position: relative;
+
+        > .timeInQueue {
+            position: absolute;
+            bottom: 20px;
+            left: 30px;
+            height: 80px;
+            width: 80px;
+            background-color: white;
+            color: #8b51c6;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+    }
+
+    > .right {
+        padding: 12px;
+        font-size: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        > .extra-info-form {
+            > textarea {
+                resize: none;
+                margin: 20px 0;
+            }
+
+            > .buttons {
+                display: flex;
+                justify-content: space-between;
+
+                > button {
+                    padding: 7px 20px;
+
+                    &.cancel {
+                        background-color: transparent;
+                        border: 1px solid #fd9b88;
+                        color: #fd9b88;
+                    }
+
+                    &.save {
+                        background-color: #82c289;
+                        color: white;
+                        border: none;
+
+                        &:disabled {
+                            background-color: #d1d1d1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 400px) {
+    .inQueue > .right {
+        padding: 30px;
+    }
+}
+
+@media (min-width: 768px) {
+    .inQueue {
+        height: 100vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        > .left {
+            > .timeInQueue {
+                bottom: 30px;
+            }
+        }
+
+        > .right {
+            padding: 16px;
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+    .inQueue > .right {
+        padding: 30px;
+    }
+}

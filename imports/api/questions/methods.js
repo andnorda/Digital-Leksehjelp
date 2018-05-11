@@ -3,7 +3,6 @@ import { Email } from 'meteor/email';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Match, check } from 'meteor/check';
 import mixpanel from '/imports/mixpanel';
-import { CONSTANTS } from '/imports/constants.js';
 import { urlify } from '/imports/utils.js';
 import { Questions } from './questions.js';
 import QuestionHelpers from './questionHelpers.js';
@@ -24,12 +23,6 @@ const generateUniqueSlug = title => {
 };
 
 Meteor.methods({
-    'questions.related'(params) {
-        params.limit = CONSTANTS.RELATED_QUESTION_SEARCH_LIMIT;
-        params.related = true;
-        return QuestionHelpers.search(params, Meteor.userId()).fetch();
-    },
-
     'questions.ask'(options) {
         check(options.subjectId, String);
         check(options.grade, String);

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="6942.835 3060.987 672.394 607.055">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        font-size: 291px;
+        font-family: Helvetica-Bold, Helvetica;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+  <g id="Group_477" data-name="Group 477" transform="translate(6947 2859)">
+    <g id="Group_313" data-name="Group 313" transform="matrix(-0.469, 0.883, -0.883, -0.469, 343.574, 492.333)">
+      <path id="Path_869" data-name="Path 869" class="cls-1" d="M75.765,168.02a14.9,14.9,0,0,0,7.25-28.714L115.709,11.088,72.211,0,0,283.586l43.5,11.088Z" transform="translate(0 0)"/>
+      <path id="Path_870" data-name="Path 870" class="cls-1" d="M118.125,147.408c-11.372,44.919-59.134,71.5-106.9,59.7L0,251.034A129.528,129.528,0,1,0,63.967,0L52.737,43.924C100.357,56.291,129.5,102.489,118.125,147.408Z" transform="translate(47.62 27.577)"/>
+    </g>
+    <path id="Path_873" data-name="Path 873" d="M407.54,0,0,210.664l26.013,50.463L433.553,50.463Zm-6.254,46.056a7.375,7.375,0,1,1,9.95,3.127A7.187,7.187,0,0,1,401.285,46.056Z" transform="translate(155.62 472.977) rotate(-21)"/>
+    <path id="Path_876" data-name="Path 876" d="M164.179,234.687l15.068-125.8,52.026-58.565,5.544,4.975L251.6,38.664,208.1,0,193.32,16.631l5.97,5.259-51.458,58L23.594,109.739c-24.165,5.828-31.841,36.39-13.22,53.021L61.69,208.39l51.316,45.63C131.769,270.651,161.194,259.421,164.179,234.687Z" transform="matrix(0.891, 0.454, -0.454, 0.891, 277.777, 201.987)"/>
+    <text id="B" class="cls-2" transform="translate(405.636 688.787) rotate(15.284)"><tspan x="0" y="0">B</tspan></text>
+  </g>
+</svg>

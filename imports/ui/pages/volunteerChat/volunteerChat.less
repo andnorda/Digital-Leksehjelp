@@ -1,0 +1,93 @@
+.volunteerChat {
+    flex-grow: 1;
+    max-width: 1180px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-self: center;
+
+    > .chatList {
+        flex-grow: 1;
+        flex-basis: 1px;
+    }
+
+    > .chat {
+        flex-grow: 2;
+        flex-basis: 1px;
+        display: flex;
+        flex-direction: column;
+
+        > .noChatSelected {
+            font-weight: bold;
+            padding: 32.5px;
+        }
+
+        > .chatHeader {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid #d1d1d1;
+            padding: 32.5px;
+            position: relative;
+
+            > .metadata {
+                font-weight: bold;
+                margin-left: 10px;
+            }
+
+            > .menu-wrapper {
+                position: absolute;
+                right: 32.5px;
+                top: 50%;
+                transform: translateY(-50%);
+
+                > .menu {
+                    position: relative;
+
+                    > .menu-button {
+                        cursor: pointer;
+                        padding: 5px;
+                    }
+
+                    > .dropdown {
+                        display: none;
+                        position: absolute;
+                        right: 0;
+                        border: 1px solid #080808;
+
+                        &.active {
+                            display: block;
+                        }
+
+                        > .menu-item {
+                            padding: 10px;
+                            background-color: white;
+                            cursor: pointer;
+                            white-space: nowrap;
+
+                            &:not(:last-child) {
+                                border-bottom: 1px solid #080808;
+                            }
+
+                            &:hover {
+                                background-color: #82c289;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        > .chatComponent {
+            flex-grow: 1;
+        }
+    }
+
+    > .noChats {
+        align-self: center;
+        width: 100%;
+        text-align: center;
+        font-size: 36px;
+    }
+}

@@ -1,0 +1,32 @@
+<template name="chatComponent">
+    <div class="chatComponent">
+        <ul class="messages">
+            {{#if initialMessage}}
+                <li class="initialMessage message {{#if isStudent}}self{{/if}}">
+                    <div class="text">{{initialMessage}}</div>
+                    <div class="metadata">{{subject}}, {{grade}}</div>
+                </li>
+            {{/if}}
+            {{#each messages}}
+                {{> chatMessage}}
+            {{/each}}
+        </ul>
+        {{#if hasEnded}}
+            <div class="sessionEnded">
+                <p>Leksehjelpen er avsluttet.</p>
+                <p>Takk for at du brukte digital leksehjelp</p>
+            </div>
+        {{else}}
+            {{> messageForm}}
+        {{/if}}
+    </div>
+</template>
+
+<template name="messageForm">
+    <form class="messageForm">
+        <input type="file" name="attachment" accept="image/*|.pdf|.doc|.docx" class="file" style="display: none;">
+        <button type="button" class="upload"><span class="plus">+</span></button>
+        <input type="text" class="chatField" placeholder="Skriv her..." value="{{value}}" autofocus/>
+        <button type="submit" class="submit">Send</button>
+    </form>
+</template>

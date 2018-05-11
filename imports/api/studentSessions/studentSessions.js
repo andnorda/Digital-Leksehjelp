@@ -11,6 +11,9 @@ const StudentSessionsSchema = new SimpleSchema({
     grade: {
         type: String
     },
+    type: {
+        type: String
+    },
     videoConferenceUrl: {
         type: String,
         regEx: SimpleSchema.RegEx.Url
@@ -21,16 +24,27 @@ const StudentSessionsSchema = new SimpleSchema({
             return STUDENT_SESSION_STATE[key];
         })
     },
-    tutor: {
+    'volunteers.$.id': {
         type: String,
+        optional: true
+    },
+    'volunteers.$.unread': {
+        type: Number,
         optional: true
     },
     createdAt: {
         type: Date
     },
+    'temp.text': {
+        type: String,
+        optional: true
+    },
     text: {
         type: String,
         optional: true
+    },
+    nickname: {
+        type: String
     }
 });
 

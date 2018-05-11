@@ -108,7 +108,7 @@ Template.questionForm.events({
                 return;
             }
 
-            S3.upload(files, '/vedlegg', function(error, result) {
+            S3.upload({ files, path: 'vedlegg' }, function(error, result) {
                 if (error) {
                     $('#attachment-error').removeClass('hidden');
                     $('#attachment-error').text(

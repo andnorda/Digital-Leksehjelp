@@ -1,11 +1,18 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { Router } from 'meteor/iron:router';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
 import { timeSince } from '/imports/utils.js';
+import mixpanel from '/imports/mixpanel.js';
+import { getQueueTime } from '/imports/utils.js';
 import { STUDENT_SESSION_STATE } from '/imports/constants';
 
+import '../../components/openService/openService.js';
+
 import './queue.html';
+import './queue.less';
 
 Template.queue.onCreated(function() {
     this.autorun(() => {
@@ -14,46 +21,34 @@ Template.queue.onCreated(function() {
 });
 
 Template.queue.helpers({
-    queueInMySubjects() {
+    mySubjectsQueue() {
         const { profile: { subjects = [] } } = Meteor.user();
-        return StudentSessions.find({
-            $or: subjects.map(subject => ({ subject: subject.subjectName })),
-            state: STUDENT_SESSION_STATE.WAITING
-        });
+        return (
+            subjects.length &&
+            StudentSessions.find({
+                $or: subjects.map(subject => ({
+                    subject: subject.subjectName
+                })),
+                state: STUDENT_SESSION_STATE.WAITING
+            })
+        );
     },
-    queueInOtherSubjects() {
+    otherSubjectsQueue() {
         const { profile: { subjects = [] } } = Meteor.user();
-        return StudentSessions.find({
-            $and: subjects.map(subject => ({
-                subject: { $ne: subject.subjectName }
-            })),
-            state: STUDENT_SESSION_STATE.WAITING
-        });
+        return StudentSessions.find(
+            subjects.length
+                ? {
+                      $and: subjects.map(subject => ({
+                          subject: { $ne: subject.subjectName }
+                      })),
+                      state: STUDENT_SESSION_STATE.WAITING
+                  }
+                : { state: STUDENT_SESSION_STATE.WAITING }
+        );
     },
-    activeInMySubjects() {
+    activeSessions() {
         const { profile: { subjects = [] } } = Meteor.user();
         return StudentSessions.find({
-            $and: [
-                {
-                    $or: subjects.map(subject => ({
-                        subject: subject.subjectName
-                    }))
-                },
-                {
-                    $or: [
-                        { state: STUDENT_SESSION_STATE.READY },
-                        { state: STUDENT_SESSION_STATE.GETTING_HELP }
-                    ]
-                }
-            ]
-        });
-    },
-    activeInOtherSubjects() {
-        const { profile: { subjects = [] } } = Meteor.user();
-        return StudentSessions.find({
-            $and: subjects.map(subject => ({
-                subject: { $ne: subject.subjectName }
-            })),
             $or: [
                 { state: STUDENT_SESSION_STATE.READY },
                 { state: STUDENT_SESSION_STATE.GETTING_HELP }
@@ -79,48 +74,92 @@ Template.queue.helpers({
     }
 });
 
-Template.queuingStudentSession.onCreated(function() {
+Template.studentSession.onCreated(function() {
     this.state = new ReactiveDict();
     interval = Meteor.setInterval(() => {
         this.state.set('time', new Date());
     }, 1000);
 });
 
-Template.queuingStudentSession.helpers({
+Template.studentSession.helpers({
     timeInQueue() {
         return timeSince(
             this.createdAt,
             Template.instance().state.get('time') || new Date()
         );
+    },
+    isVideo() {
+        return this.type === 'video';
+    },
+    text() {
+        return this.temp
+            ? this.temp.text && this.temp.text.length > 256
+              ? `${this.temp.text.substring(0, 256)}...`
+              : this.temp.text
+            : '';
     }
 });
 
-Template.queuingStudentSession.events({
+Template.studentSession.events({
     'click button.startTutoring'() {
         Session.set('startTutoringTime', new Date().getTime());
-        window.open(this.videoConferenceUrl, '_blank');
         const sessionId = this._id;
-        Meteor.call(
-            'studentSessions.setState',
-            {
-                sessionId,
-                state: STUDENT_SESSION_STATE.READY,
-                tutor: Meteor.user().profile.firstName
-            },
-            function() {
-                Session.set('studentSessionId', sessionId);
-                $('#endSessionModal').modal();
-            }
-        );
+        Meteor.call('studentSessions.startTutoring', sessionId);
+
+        if (this.type === 'video') {
+            window.open(this.videoConferenceUrl);
+            Session.set('studentSessionId', sessionId);
+            $('#endSessionModal').modal();
+        } else {
+            Router.go(`/frivillig/chat/${this._id}`);
+        }
     },
 
     'click button.deleteSession'() {
-        Meteor.call('studentSessions.remove', { sessionId: this._id });
+        Meteor.call('studentSessions.delete', this._id);
+    }
+});
+
+Template.activeStudentSession.onCreated(function() {
+    this.autorun(() => {
+        this.subscribe('users');
+    });
+});
+
+Template.activeStudentSession.helpers({
+    isVideo() {
+        return this.type === 'video';
+    },
+    volunteers() {
+        return this.volunteers
+            .map(({ id }) => Meteor.users.findOne(id))
+            .filter(user => user)
+            .map(user => user.profile.firstName)
+            .join(', ');
     }
 });
 
 Template.activeStudentSession.events({
+    'click button.startTutoring'() {
+        Meteor.call('studentSessions.addVolunteer', this._id, Meteor.userId());
+        if (this.type === 'video') {
+            window.open(this.videoConferenceUrl);
+        } else {
+            Router.go(`/frivillig/chat/${this._id}`);
+        }
+    },
+
     'click button.deleteSession'() {
-        Meteor.call('studentSessions.remove', { sessionId: this._id });
+        const helpDurationMinutes = getQueueTime(
+            Session.get('startTutoringTime')
+        );
+        if (helpDurationMinutes > 4) {
+            mixpanel.track('Hjulpet elev', {
+                'Minutter i samtale': helpDurationMinutes,
+                type: this.type
+            });
+        }
+
+        Meteor.call('studentSessions.endTutoring', this._id);
     }
 });

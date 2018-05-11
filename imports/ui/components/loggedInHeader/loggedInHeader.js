@@ -6,7 +6,7 @@ import { ROLES, STUDENT_SESSION_STATE } from '/imports/constants';
 
 import './loggedInHeader.html';
 
-Template.loggedInHeader.onCreated(function loggedInHeaderOnCreated() {
+Template.loggedInHeader.onCreated(function() {
     this.autorun(() => {
         this.subscribe('studentSessions');
     });
@@ -22,15 +22,21 @@ Template.loggedInHeader.helpers({
     isAdmin() {
         return Meteor.user().profile.role === ROLES.ADMIN;
     },
-    isVideohelper() {
-        const user = Meteor.user();
-        return user.profile.role === ROLES.ADMIN || user.profile.allowVideohelp;
-    },
     numberOfStudentsWaitingInQueue() {
         const number = StudentSessions.find({
             state: STUDENT_SESSION_STATE.WAITING
         }).count();
 
         return number > 0 && ` (${number} i kø)`;
+    },
+    notificationCount() {
+        return StudentSessions.find({ 'volunteers.id': Meteor.userId() })
+            .map(
+                session =>
+                    session.volunteers.find(
+                        volunteer => volunteer.id === Meteor.userId()
+                    ).unread
+            )
+            .reduce((sum, count) => sum + count, 0);
     }
 });

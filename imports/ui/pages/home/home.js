@@ -9,6 +9,8 @@ import { Config } from '/imports/api/config/config.js';
 import { Questions } from '/imports/api/questions/questions.js';
 
 import './home.html';
+import './home.less';
+
 import '../../components/newSubjectSelector/subjectSelector.js';
 
 Template.getHelpBox.onCreated(function getHelpBoxOnCreated() {
@@ -75,13 +77,15 @@ Template.getHelpBox.events({
             }
             mixpanel.track('Bedt om leksehjelp', {
                 fag: chosenSubject,
-                trinn: chosenGrade
+                trinn: chosenGrade,
+                type: 'video'
             });
             Meteor.call(
                 'studentSessions.create',
                 {
                     subject: chosenSubject,
-                    grade: chosenGrade
+                    grade: chosenGrade,
+                    type: 'video'
                 },
                 function(error, sessionId) {
                     if (error) {
@@ -94,6 +98,57 @@ Template.getHelpBox.events({
                             backdrop: 'static',
                             keyboard: false
                         });
+                    }
+                }
+            );
+        }
+    },
+
+    'click button#start-chat-session'() {
+        if ($('button#start-chat-session').hasClass('disabled')) {
+            return;
+        }
+
+        const chosenSubject = $('.subjectSelector input.searchField').val();
+
+        const chosenGrade = $('#chosen-grade')
+            .text()
+            .trim();
+
+        validationError = [];
+        validationErrorDep.changed();
+        if (chosenSubject === 'Velg fag') {
+            validationError.push('subjectError');
+            validationErrorDep.changed();
+        }
+        if (chosenGrade === 'Velg trinn') {
+            validationError.push('gradeError');
+            validationErrorDep.changed();
+        }
+        if (validationError.length === 0) {
+            if (window.Notification && Notification.permission !== 'granted') {
+                Notification.requestPermission();
+            }
+            mixpanel.track('Bedt om leksehjelp', {
+                fag: chosenSubject,
+                trinn: chosenGrade,
+                type: 'chat'
+            });
+            Meteor.call(
+                'studentSessions.create',
+                {
+                    subject: chosenSubject,
+                    grade: chosenGrade,
+                    type: 'chat'
+                },
+                function(error, sessionId) {
+                    if (error) {
+                        validationError.push('sessionError');
+                        validationErrorDep.changed();
+                    } else {
+                        Session.set('studentSessionId', sessionId);
+                        Session.set('queueStartTime', new Date().getTime());
+                        Router.go(`/chat/${sessionId}`);
                     }
                 }
             );

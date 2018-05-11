@@ -1,0 +1,44 @@
+<template name="volunteerChat">
+    <div class="volunteerChat">
+        {{#if hasChats}}
+            {{> chatList}}
+            <div class="chat">
+                {{#if isPending}}
+                    <div>laster...</div>
+                {{else}}
+                    {{#if chatSelected}}
+                        {{#if isValidId}}
+                            <div class="chatHeader">
+                                <div class="nickname">{{nickname}}</div>
+                                <div class="metadata">{{subject}}{{#if grade}}, {{grade}}{{/if}}</div>
+                                <div class="menu-wrapper">
+                                    {{> volunteerChatHeaderMenu}}
+                                </div>
+                            </div>
+                            {{> chatComponent}}
+                        {{else}}
+                            <div>Chatten du prøver å åpne finnes ikke.</div>
+                        {{/if}}
+                    {{else}}
+                        <div class="noChatSelected">⬅️⬅️⬅️ Velg en chat ⬅️⬅️⬅️</div>
+                    {{/if}}
+                {{/if}}
+            </div>
+        {{else}}
+            <div class="noChats">Du har ingen aktive chatter. 🤷</div>
+        {{/if}}
+    </div>
+</template>
+
+<template name="volunteerChatHeaderMenu">
+    <div class="menu">
+        <div class="menu-button" tabindex="0">
+            <img src="/three_dots.svg">
+        </div>
+        <div class="dropdown {{#if isActive}}active{{/if}}">
+            <div class="menu-item addVolunteer">Legg til frivillig</div>
+            <div class="menu-item endSession">Avslutt leksehjelp</div>
+            {{#if hasMoreVolunteers}}<div class="menu-item leaveChat">Forlat chatten</div>{{/if}}
+        </div>
+    </div>
+</template>

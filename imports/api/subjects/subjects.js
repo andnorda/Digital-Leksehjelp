@@ -7,7 +7,7 @@ const SubjectsSchema = new SimpleSchema({
     name: {
         type: String
     },
-    videoChatCount: {
+    chatCount: {
         type: Number,
         optional: true
     }

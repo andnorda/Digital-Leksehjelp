@@ -1,18 +1,19 @@
 <template name="queue">
     <div class="queue">
+        {{> openService}}
         <section>
             <h1>Elever i kø</h1>
             {{#if hasStudentsInQueue}}
                 <h2>Mine fag</h2>
                 <div>
-                    {{#each queueInMySubjects }}
-                        {{> queuingStudentSession }}
+                    {{#each mySubjectsQueue}}
+                        {{> studentSession}}
                     {{/each}}
                 </div>
                 <h2>Andre fag</h2>
                 <div>
-                    {{#each queueInOtherSubjects }}
-                        {{> queuingStudentSession }}
+                    {{#each otherSubjectsQueue}}
+                        {{> studentSession}}
                     {{/each}}
                 </div>
             {{else}}
@@ -20,18 +21,11 @@
             {{/if}}
         </section>
         <section>
-            <h1>Elever som blir hjulpet</h1>
+            <h1>Elever som får hjelp</h1>
             {{#if hasActiveStudents}}
-                <h2>Mine fag</h2>
                 <div>
-                    {{#each activeInMySubjects }}
-                        {{> activeStudentSession }}
-                    {{/each}}
-                </div>
-                <h2>Andre fag</h2>
-                <div>
-                    {{#each activeInOtherSubjects }}
-                        {{> activeStudentSession }}
+                    {{#each activeSessions}}
+                        {{> activeStudentSession}}
                     {{/each}}
                 </div>
             {{else}}
@@ -41,20 +35,37 @@
     </div>
 </template>
 
-<template name="queuingStudentSession">
-    <div class="queuing studentSession">
-        <div class="subject">{{ subject }}, {{ grade }}</div>
-        <div class="timeInQueue">{{ timeInQueue }}</div>
-        <div class="text">{{ text }}</div>
-        <button class="deleteSession">Slett sesjon</button>
-        <button class="startTutoring">Start leksehjelp</button>
+<template name="studentSession">
+    <div class="studentSession">
+        <div class="studentSessionHeader">
+            <div class="nickname">{{ nickname }}</div>
+            <div class="metadata">
+                <div class="subject"><span class="category">Fag:</span> {{ subject }}</div>
+                <div class="grade"><span class="category">Klasse:</span> {{ grade }}</div>
+            </div>
+            <div class="timeInQueue">{{ timeInQueue }}</div>
+        </div>
+        <div class="content">
+            <div class="text">{{ text }}</div>
+            <button class="startTutoring">Start {{#if isVideo}}videochat{{else}}chat{{/if}}</button>
+            <button class="deleteSession">Fjern fra køen</button>
+        </div>
     </div>
 </template>
 
 <template name="activeStudentSession">
-    <div class="active studentSession">
-        <div class="subject">{{ subject }}, {{ grade }}</div>
-        <div class="tutor">Får hjelp av {{ tutor }}</div>
-        <button class="deleteSession">Slett sesjon</button>
+    <div class="studentSession active">
+        <div class="studentSessionHeader">
+            <div class="nickname">{{ nickname }}</div>
+            <div class="metadata">
+                <div class="subject"><span class="category">Fag:</span> {{ subject }}</div>
+                <div class="grade"><span class="category">Klasse:</span> {{ grade }}</div>
+            </div>
+            <div class="volunteers"><span class="category">Får hjelp av:</span> {{volunteers}}</div>
+        </div>
+        <div class="content">
+            <button class="startTutoring">Åpne {{#if isVideo}}videochat{{else}}chat{{/if}}</button>
+            <button class="deleteSession">Avslutt leksehjelp</button>
+        </div>
     </div>
 </template>
