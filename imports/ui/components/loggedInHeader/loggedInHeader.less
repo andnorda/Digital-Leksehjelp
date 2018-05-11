@@ -1,0 +1,32 @@
+.loggedInHeader {
+    flex-shrink: 0;
+    display: flex;
+    font-size: 20px;
+    margin: 0 50px;
+    border-bottom: 1px solid black;
+
+    > a {
+        color: black;
+        padding: 20px 15px;
+
+        &:first-child {
+            padding-left: 0;
+        }
+
+        &:last-child {
+            padding-right: 0;
+        }
+
+        &:nth-child(4) {
+            margin-right: auto;
+        }
+
+        &.logo {
+            font-weight: bold;
+        }
+
+        &.active {
+            text-decoration: underline;
+        }
+    }
+}

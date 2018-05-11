@@ -5,6 +5,7 @@ import { ROLES } from '/imports/constants';
 
 import '../../ui/layouts/body/body.js';
 import '../../ui/layouts/volunteerLayout/volunteerLayout.js';
+import '../../ui/layouts/adminLayout/adminLayout.js';
 import '../../ui/layouts/clean/clean.js';
 
 import '../../ui/pages/home/home.js';
@@ -15,6 +16,7 @@ import '../../ui/pages/notFound/notFound.js';
 import '../../ui/pages/askQuestion/askQuestion.js';
 import '../../ui/pages/myProfile/myProfile.js';
 import '../../ui/pages/questions/questions.js';
+import '../../ui/pages/infoAdmin/infoAdmin.js';
 import '../../ui/pages/userAdmin/userAdmin.js';
 import '../../ui/pages/subjectAdmin/subjectAdmin.js';
 import '../../ui/pages/questionAdmin/questionAdmin.js';
@@ -58,6 +60,10 @@ ChatController = RouteController.extend({
 
 LoginController = RouteController.extend({
     layoutTemplate: 'volunteerLayout'
+});
+
+AdminController = LoginController.extend({
+    layoutTemplate: 'adminLayout'
 });
 
 AnswerQuestionController = BaseController;
@@ -109,28 +115,29 @@ Router.map(function() {
         }
     });
 
+    this.route('infoAdmin', {
+        controller: AdminController,
+        path: '/frivillig/admin/info'
+    });
+
     this.route('userAdmin', {
-        controller: LoginController,
-        path: '/frivillig/admin/brukere',
-        template: 'userAdmin'
+        controller: AdminController,
+        path: '/frivillig/admin/users'
     });
 
     this.route('subjectAdmin', {
-        controller: LoginController,
-        path: '/frivillig/admin/fag',
-        template: 'subjectAdmin'
+        controller: AdminController,
+        path: '/frivillig/admin/subjects'
     });
 
     this.route('questionAdmin', {
-        controller: LoginController,
-        path: '/frivillig/admin/sporsmal',
-        template: 'questionAdmin'
+        controller: AdminController,
+        path: '/frivillig/admin/questions'
     });
 
     this.route('myProfile', {
         controller: LoginController,
-        path: '/frivillig/profil',
-        template: 'myProfile'
+        path: '/frivillig/profil'
     });
 
     this.route('volunteerChat', {

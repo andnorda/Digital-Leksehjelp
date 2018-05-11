@@ -1,0 +1,17 @@
+<template name="adminLayout">
+    {{> endSessionModal}}
+    <div class="adminLayout">
+        {{> loggedInHeader}}
+        {{> adminMenu}}
+        {{> yield}}
+    </div>
+</template>
+
+<template name="adminMenu">
+    <nav class="adminMenu">
+        <a class="{{#if isActive 'infoAdmin'}}active{{/if}}" href="/frivillig/admin/info">Informasjon</a>
+        <a class="{{#if isActive 'userAdmin'}}active{{/if}}" href="/frivillig/admin/users">Administrer brukere</a>
+        <a class="{{#if isActive 'subjectAdmin'}}active{{/if}}" href="/frivillig/admin/subjects">Administrer fag</a>
+        <a class="{{#if isActive 'questionAdmin'}}active{{/if}}" href="/frivillig/admin/questions">Administrer spørsmål</a>
+    </nav>
+</template>

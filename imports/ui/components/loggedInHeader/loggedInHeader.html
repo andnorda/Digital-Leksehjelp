@@ -1,29 +1,16 @@
 <template name="loggedInHeader">
-    <div class="container">
-        {{> flashMessages}}
-
-        {{#if currentUser }}
-            {{#if isAdmin }}
-                <h3>Digital Leksehjelp - Administrator</h3>
-            {{else}}
-                <h3>Digital Leksehjelp - Frivillig</h3>
-            {{/if}}
-            <p>
-                {{> loginButtons}}
-            </p>
-
-            <ul class="nav nav-tabs">
-                <li role="presentation" class="{{isActiveTab 'myProfile'}}"><a href="/frivillig/profil">Min profil</a></li>
-                <li role="presentation" class="{{isActiveTab 'queue'}}"><a href="/frivillig/queue">Kø {{numberOfStudentsWaitingInQueue}}</a></li>
-                <li role="presentation" class="{{isActiveTab 'volunteerChat'}}"><a href="/frivillig/chat">Chat ({{notificationCount}})</a></li>
-                <li role="presentation" class="{{isActiveTab 'questions'}}"><a href="/frivillig/sporsmal">Spørsmål</a></li>
-
-                {{#if isAdmin }}
-                    <li role="presentation" class="{{isActiveTab 'userAdmin'}}"><a href="/frivillig/admin/brukere">Administrer brukere</a></li>
-                    <li role="presentation" class="{{isActiveTab 'subjectAdmin'}}"><a href="/frivillig/admin/fag">Administrer fag</a></li>
-                    <li role="presentation" class="{{isActiveTab 'questionAdmin'}}"><a href="/frivillig/admin/sporsmal">Administrer spørsmål</a></li>
-                {{/if}}
-            </ul>
+    <header class="loggedInHeader">
+        <a class="logo" href="/frivillig/queue">Digital leksehjelp</a>
+        <a class="{{#if isActiveTab 'queue'}}active{{/if}}" href="/frivillig/queue">Elever i kø{{> notificationsBadge count=numberOfStudentsWaitingInQueue}}</a>
+        <a class="{{#if isActiveTab 'volunteerChat'}}active{{/if}}" href="/frivillig/chat">Chat{{> notificationsBadge count=notificationCount}}</a>
+        <a class="{{#if isActiveTab 'questions'}}active{{/if}}" href="/frivillig/sporsmal">Spørsmål</a>
+        <a class="{{#if isActiveTab 'myProfile'}}active{{/if}}" href="/frivillig/profil">Min profil</a>
+        <a class="{{#if isActiveTab 'admin'}}active{{/if}}" href="/frivillig/admin/info">Admin</a>
+        <a class="log-out" href="#">Logg ut</a>
+        {{#if serviceIsOpen}}
+            <a class="close-service" href="#">Steng leksehjelpen</a>
+        {{else}}
+            <a class="open-service" href="#">Åpne leksehjelpen</a>
         {{/if}}
-    </div>
+    </header>
 </template>

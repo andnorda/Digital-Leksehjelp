@@ -2,32 +2,38 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Router } from 'meteor/iron:router';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
+import { Config } from '/imports/api/config/config.js';
 import { ROLES, STUDENT_SESSION_STATE } from '/imports/constants';
+import '../notificationsBadge/notificationsBadge.js';
 
 import './loggedInHeader.html';
+import './loggedInHeader.less';
 
 Template.loggedInHeader.onCreated(function() {
     this.autorun(() => {
         this.subscribe('studentSessions');
+        this.subscribe('config.serviceStatus');
     });
 });
 
 Template.loggedInHeader.helpers({
-    currentUserEmail() {
-        return Meteor.user().username;
+    serviceIsOpen() {
+        const serviceStatus = Config.findOne({ name: 'serviceStatus' });
+        return serviceStatus ? serviceStatus.open : false;
     },
     isActiveTab(route) {
-        return Router.current().route.getName() === route && 'active';
-    },
-    isAdmin() {
-        return Meteor.user().profile.role === ROLES.ADMIN;
+        return (
+            Router.current().route.getName() === route ||
+            Router.current()
+                .route.getName()
+                .toLowerCase()
+                .endsWith(route)
+        );
     },
     numberOfStudentsWaitingInQueue() {
-        const number = StudentSessions.find({
+        return StudentSessions.find({
             state: STUDENT_SESSION_STATE.WAITING
         }).count();
-
-        return number > 0 && ` (${number} i kø)`;
     },
     notificationCount() {
         return StudentSessions.find({ 'volunteers.id': Meteor.userId() })
@@ -38,5 +44,32 @@ Template.loggedInHeader.helpers({
                     ).unread
             )
             .reduce((sum, count) => sum + count, 0);
+    }
+});
+
+Template.loggedInHeader.events({
+    'click .log-out'(event) {
+        event.preventDefault();
+
+        Meteor.logout();
+        Router.go('/');
+    },
+    'click .open-service'(event) {
+        event.preventDefault();
+
+        Meteor.call('config.openService', function(error) {
+            if (error) {
+                FlashMessages.sendError(error.message);
+            }
+        });
+    },
+    'click .close-service'(event) {
+        event.preventDefault();
+
+        Meteor.call('config.closeService', function(error) {
+            if (error) {
+                FlashMessages.sendError(error.message);
+            }
+        });
     }
 });
