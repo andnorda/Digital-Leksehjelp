@@ -14,7 +14,7 @@ Meteor.methods({
             throw new Meteor.Error(401, 'You are not logged in.');
         }
 
-        if (user.profile.role) {
+        if (user.profile.role === ADMIN) {
             const currentRole = Meteor.users
                 .find({ _id: options.userId })
                 .fetch()[0].profile.role;
