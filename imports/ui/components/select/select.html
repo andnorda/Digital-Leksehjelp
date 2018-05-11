@@ -1,0 +1,14 @@
+<template name="select">
+    <div class="select-component {{#if isOpen}}open{{/if}}">
+        <button class="value" type="button">{{value}}<img src="/down-arrow.svg" alt="" /></button>
+        <ul class="option-list">
+            {{#each options}}
+                {{> selectOption optionArgs}}
+            {{/each}}
+        </ul>
+    </div>
+</template>
+
+<template name="selectOption">
+    <li class="option {{#if isActive}}active{{/if}}">{{value}}</li>
+</template>

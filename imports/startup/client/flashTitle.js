@@ -1,7 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Deps } from 'meteor/deps';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
-import { ROLES, STUDENT_SESSION_STATE } from '/imports/constants';
+import { STUDENT_SESSION_STATE } from '/imports/constants.js';
+import { ADMIN } from '/imports/userRoles.js';
 
 const original = document.title;
 let timeout;
@@ -33,10 +34,7 @@ export const flashTitle = function(newMsg, howManyTimes) {
 
 Deps.autorun(function() {
     const user = Meteor.user();
-    if (
-        user &&
-        (user.profile.allowVideohelp || user.profile.role === ROLES.ADMIN)
-    ) {
+    if (user && (user.profile.allowVideohelp || user.profile.role === ADMIN)) {
         const number = StudentSessions.find({
             state: STUDENT_SESSION_STATE.WAITING
         }).count();

@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { ROLES } from '/imports/constants';
+import { ADMIN } from '/imports/userRoles.js';
 import { Config } from '../config.js';
 
 Meteor.publish('config.infoMessage', function() {
@@ -19,7 +19,7 @@ Meteor.publish('config', function() {
         return this.ready();
     }
     const user = Meteor.users.findOne(this.userId);
-    if (user.profile.role !== ROLES.ADMIN) {
+    if (user.profile.role !== ADMIN) {
         return this.ready();
     }
 

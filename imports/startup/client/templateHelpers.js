@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating';
 import { Spacebars } from 'meteor/spacebars';
 import { Deps } from 'meteor/deps';
 import { Subjects } from '/imports/api/subjects/subjects.js';
-import { GRADES, ROLES } from '/imports/constants.js';
+import { GRADES } from '/imports/constants.js';
 
 validationErrorDep = new Deps.Dependency();
 validationError = [];
@@ -21,10 +21,6 @@ Template.registerHelper('not', function(value) {
 
 Template.registerHelper('eq', function(value1, value2) {
     return value1 === value2;
-});
-
-Template.registerHelper('globalRoles', function() {
-    return ROLES;
 });
 
 Template.registerHelper('optionsSelected', function(values, defaultValue) {

@@ -1,11 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Counts } from 'meteor/tmeasday:publish-counts';
 import { Match, check } from 'meteor/check';
-import {
-    ROLES,
-    QUESTION_SUBSCRIPTION_LEVEL,
-    CONSTANTS
-} from '/imports/constants';
+import { QUESTION_SUBSCRIPTION_LEVEL, CONSTANTS } from '/imports/constants.js';
+import { ADMIN } from '/imports/userRoles.js';
 import { generateNickname } from '/imports/utils.js';
 import {
     Questions,
@@ -29,7 +26,7 @@ Meteor.publish('questions.verified', function(limit) {
     }
 
     const user = Meteor.users.findOne(this.userId);
-    if (user.profile.role !== ROLES.ADMIN) {
+    if (user.profile.role !== ADMIN) {
         return this.ready();
     }
 
@@ -59,7 +56,7 @@ Meteor.publish('questions', function(subscriptionLevel) {
 
         if (
             subscriptionLevel === QUESTION_SUBSCRIPTION_LEVEL.ALL &&
-            user.profile.role === ROLES.ADMIN
+            user.profile.role === ADMIN
         ) {
             return Questions.find(
                 {},

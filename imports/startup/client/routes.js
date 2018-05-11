@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
 import { Questions } from '/imports/api/questions/questions.js';
-import { ROLES } from '/imports/constants';
 
 import '../../ui/layouts/body/body.js';
 import '../../ui/layouts/volunteerLayout/volunteerLayout.js';

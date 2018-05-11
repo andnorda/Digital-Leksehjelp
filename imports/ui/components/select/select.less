@@ -1,0 +1,58 @@
+@import '/imports/ui/stylesheets/less/colors.import.less';
+
+.select-component {
+    position: relative;
+
+    > .value {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border: 1px solid @select-color;
+        width: 100%;
+        text-align: left;
+
+        > img {
+            width: 20.57px;
+        }
+    }
+
+    > .option-list {
+        z-index: 1;
+        display: none;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        position: absolute;
+        background-color: white;
+        border: 1px solid @select-color;
+        border-top: none;
+
+        > .option {
+            padding: 10px;
+
+            &:not(:first-child) {
+                border-top: 1px solid @select-color;
+            }
+
+            &.active {
+                color: white;
+                border-color: @active-color;
+                background-color: @active-color;
+            }
+        }
+    }
+
+    &.open {
+        > .value {
+            > img {
+                transform: rotate(180deg);
+            }
+        }
+
+        > .option-list {
+            display: block;
+        }
+    }
+}

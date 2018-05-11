@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating';
 import { Router } from 'meteor/iron:router';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
 import { Config } from '/imports/api/config/config.js';
-import { ROLES, STUDENT_SESSION_STATE } from '/imports/constants';
+import { STUDENT_SESSION_STATE } from '/imports/constants';
 import '../notificationsBadge/notificationsBadge.js';
 
 import './loggedInHeader.html';

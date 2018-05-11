@@ -1,3 +1,6 @@
 <template name="button">
-    <button class="button-component" type="{{type}}" disabled="{{disabled}}">{{text}}</button>
+    <button
+        class="button-component {{class}} {{#if danger}}danger{{/if}} {{#if subtle}}subtle{{/if}}"
+        type="{{type}}"
+        disabled="{{disabled}}">{{text}}</button>
 </template>

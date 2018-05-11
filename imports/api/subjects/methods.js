@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { ROLES } from '/imports/constants.js';
+import { ADMIN } from '/imports/userRoles.js';
 import { urlify } from '/imports/utils.js';
 import { Subjects } from './subjects.js';
 
@@ -57,7 +57,7 @@ Meteor.methods({
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
-        if (user.profile.role !== ROLES.ADMIN) {
+        if (user.profile.role !== ADMIN) {
             throw new Meteor.Error(403, 'You are not allowed to access this.');
         }
 
@@ -75,7 +75,7 @@ Meteor.methods({
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
-        if (user.profile.role !== ROLES.ADMIN) {
+        if (user.profile.role !== ADMIN) {
             throw new Meteor.Error(403, 'You are not allowed to access this.');
         }
 

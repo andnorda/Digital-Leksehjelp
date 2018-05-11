@@ -14,11 +14,6 @@ export const STUDENT_SESSION_STATE = {
     ENDED: 'Ferdig'
 };
 
-export const ROLES = {
-    ADMIN: 'Administrator',
-    TUTOR: 'Frivillig'
-};
-
 export const QUESTION_SUBSCRIPTION_LEVEL = {
     REGULAR: 'REGULAR',
     ALL: 'ALL'

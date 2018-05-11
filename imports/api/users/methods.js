@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Accounts } from 'meteor/accounts-base';
 import { Subjects } from '/imports/api/subjects/subjects.js';
-import { ROLES } from '/imports/constants';
+import { ADMIN } from '/imports/userRoles.js';
 
 Meteor.methods({
     'users.updateRole'(options) {
@@ -14,13 +14,13 @@ Meteor.methods({
             throw new Meteor.Error(401, 'You are not logged in.');
         }
 
-        if (user.profile.role === ROLES.ADMIN) {
+        if (user.profile.role) {
             const currentRole = Meteor.users
                 .find({ _id: options.userId })
                 .fetch()[0].profile.role;
-            if (currentRole === ROLES.ADMIN && options.role !== ROLES.ADMIN) {
+            if (currentRole === ADMIN && options.role !== ADMIN) {
                 const nrOfAdminsLeft = Meteor.users
-                    .find({ 'profile.role': ROLES.ADMIN })
+                    .find({ 'profile.role': ADMIN })
                     .fetch();
                 if (nrOfAdminsLeft.length === 1) {
                     throw new Meteor.Error(
@@ -37,21 +37,20 @@ Meteor.methods({
         throw new Meteor.Error(403, 'You are not allowed to access this.');
     },
 
-    'users.remove'(options) {
-        check(options.userId, String);
+    'users.remove'(userId) {
+        check(userId, String);
 
         const user = Meteor.users.findOne(this.userId);
         if (!user) {
             throw new Meteor.Error(401, 'You are not logged in.');
         }
 
-        if (user.profile.role === ROLES.ADMIN) {
-            const currentRole = Meteor.users
-                .find({ _id: options.userId })
-                .fetch()[0].profile.role;
-            if (currentRole === ROLES.ADMIN) {
+        if (user.profile.role === ADMIN) {
+            const currentRole = Meteor.users.find({ _id: userId }).fetch()[0]
+                .profile.role;
+            if (currentRole === ADMIN) {
                 const nrOfAdminsLeft = Meteor.users
-                    .find({ 'profile.role': ROLES.ADMIN })
+                    .find({ 'profile.role': ADMIN })
                     .fetch();
                 if (nrOfAdminsLeft.length === 1) {
                     throw new Meteor.Error(
@@ -60,7 +59,7 @@ Meteor.methods({
                     );
                 }
             }
-            return Meteor.users.remove({ _id: options.userId });
+            return Meteor.users.remove({ _id: userId });
         }
         throw new Meteor.Error(403, 'You are not allowed to access this.');
     },
@@ -73,7 +72,7 @@ Meteor.methods({
             throw new Meteor.Error(401, 'You are not logged in.');
         }
 
-        if (user.profile.role !== ROLES.ADMIN) {
+        if (user.profile.role !== ADMIN) {
             throw new Meteor.Error(403, 'You are not allowed to access this.');
         }
 
@@ -126,7 +125,7 @@ Meteor.methods({
         options.profile.forceLogOut = false;
         options.profile.subjects = [];
 
-        if (user.profile.role === ROLES.ADMIN) {
+        if (user.profile.role === ADMIN) {
             const userId = Accounts.createUser(options);
             Accounts.sendEnrollmentEmail(userId);
             return userId;
@@ -142,7 +141,7 @@ Meteor.methods({
 
         check(options.userId, String);
 
-        if (user.profile.role === ROLES.ADMIN) {
+        if (user.profile.role === ADMIN) {
             const remoteUser = Meteor.users.find(options.userId).fetch()[0];
 
             if (remoteUser.status.online) {

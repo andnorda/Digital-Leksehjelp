@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { ROLES } from '/imports/constants';
+import { ADMIN } from '/imports/userRoles.js';
 
 Meteor.publish('users', function() {
     if (!this.userId) {
@@ -7,7 +7,7 @@ Meteor.publish('users', function() {
     }
 
     const user = Meteor.users.findOne(this.userId);
-    if (user.profile.role === ROLES.ADMIN) {
+    if (user.profile.role === ADMIN) {
         return Meteor.users.find(
             {},
             { fields: { username: 1, emails: 1, profile: 1 } }

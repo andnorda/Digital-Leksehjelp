@@ -6,8 +6,22 @@
     color: white;
     padding: 14px 0 11px;
     width: 130px;
+    font-size: 20px;
 
     &:disabled {
         background-color: @disabled-color;
+    }
+
+    &.danger {
+        color: @danger-color;
+        background-color: white;
+        border: 1px solid @danger-color;
+    }
+
+    &.subtle {
+        border: none;
+        text-decoration: underline;
+        padding: 0;
+        width: unset;
     }
 }

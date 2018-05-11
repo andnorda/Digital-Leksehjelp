@@ -1,120 +1,50 @@
 <template name="userAdmin">
-    <div class="container">
-        <h3>Administrér brukere</h3>
+    <div class="userAdmin">
         {{> addUser}}
-        {{> usersTable}}
-        {{> openingHours}}
-        {{> serviceClosedAdmin}}
+        {{> allUsers}}
     </div>
 </template>
 
 <template name="addUser">
-    Ny bruker:
-    <form role="form">
-        <div class="form-group">
-            <input id="firstName" placeholder="Fornavn" type="text" size="20" />
-        </div>
-        <div class="form-group">
-            <input id="email" placeholder="E-post" type="text" size="20" />
-        </div>
-        Rolle:
-        <div class="form-group">
-            {{> roleSelector}}
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" id="allowVideohelp" checked="true"> Videohjelp
-            </label>
-      </div>
-        <button class="addUser">Legg til bruker</button>
-    </form>
-    <p>{{ userAdded }}</p>
+    <section>
+        <form class="add-user-form">
+            <h1>Legg til ny bruker</h1>
+            {{> input type='text' name='name' placeholder='Navn' value=name}}
+            {{> input type='email' name='email' placeholder='E-post' value=email}}
+            {{> select placeholder='Velg rolle' options=userRoles onChange=onRoleChange value=role}}
+            {{> button type='submit' text='Legg til' disabled=newUserDisabled}}
+        </form>
+    </section>
 </template>
 
-<template name="roleSelector">
-    <select id="role">
-        {{#each roles }}
-            <option>{{this}}</option>
-        {{/each}}
-    </select>
+<template name="allUsers">
+    <section>
+        <h1>Alle brukere</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Navn</th>
+                    <th>E-post</th>
+                    <th>Fag</th>
+                    <th>Rolle</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each users}}
+                    {{> user}}
+                {{/each}}
+            </tbody>
+        </table>
+    </section>
 </template>
 
-<template name="usersTable">
-    <h3>Alle brukere</h3>
-    <table border="0">
-        <tr>
-            <th>Brukernavn</th>
-            <th>E-post</th>
-            <th>Verifisert?</th>
-            <th>Fornavn</th>
-            <th>Valgte fag</th>
-            <th>Rolle</th>
-            <th>Videohjelp</th>
-        </tr>
-        {{#each users }}
-            {{> userRow }}
-        {{/each}}
-    </table>
-</template>
-
-<template name="userRow">
+<template name="user">
     <tr>
-        <td>{{this.username}}</td>
-        {{#each emails}}
-            <td>{{this.address}}</td>
-            <td>
-                {{#if this.verified}}
-                    Ja
-                {{else}}
-                    Nei
-                {{/if}}
-            </td>
-        {{/each}}
-        <td>{{ profile.firstName }}</td>
-        <td>
-            {{#each profile.subjects}}
-                {{this.subjectName}}
-            {{/each}}
-        </td>
-        <td>
-            <select class="newRole">
-                {{{optionsSelected globalRoles profile.role }}}
-            </select>
-        </td>
-        <td>
-            <input type="checkbox" class="allowVideohelp" checked="{{profile.allowVideohelp}}">
-        </td>
-        <td><button type="button" class="btn btn-xs btn-danger deleteUser">Slett</button></td>
-        {{#if remoteUserLoggedIn}}
-            <td><button type="button" class="btn btn-xs btn-danger logoutUser">Logg ut</button></td>
-        {{/if}}
+        <td>{{name}}</td>
+        <td>{{email}}</td>
+        <td>{{subjects}}</td>
+        <td>{{> select value=role options=userRoles onChange=updateRole}}</td>
+        <td>{{> button text="Slett" type="button" danger=true subtle=true onClick=deleteUser}}</td>
     </tr>
-</template>
-
-<template name="openingHours">
-    <h3>Endre åpningstider</h3>
-    <p>
-        Her kan du endre åpningstidene som blir vist på fremsiden for Digital leksehjelp.
-    </p>
-    <textarea style="width: 75%; height: 60px" id="openingHours">{{ openingHours }}</textarea>
-    <button id="updateOpeningHours" type="button" class="btn btn-small btn-primary">Endre åpningstid</button>
-</template>
-
-
-<template name="serviceClosedAdmin">
-    <h3>Overstyr stenging av Digital Leksehjelp</h3>
-    <p>
-        Hvis alle brukere er utlogget, vil tjenesten vises som stengt uansett. Hvis det er
-        nødvendig at tjenesten stenger uten at alle er utlogget, kan det gjøres her.
-    </p>
-    <p>
-        Selv om tjenesten stenges her før alle er utlogget, vil den  kunne åpnes igjen av
-        alle frivillige som er pålogget, på siden "Hjelp elever".
-    </p>
-    {{> serviceStatus}}
-    <button
-        id="updateClosedStatus"
-        type="button"
-        class="btn btn-small btn-danger"
-        disabled={{not serviceIsOpen}}>Steng tjenesten</button>
 </template>

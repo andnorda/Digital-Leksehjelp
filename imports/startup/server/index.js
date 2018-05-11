@@ -4,7 +4,7 @@ import { SSR } from 'meteor/meteorhacks:ssr';
 import { Accounts } from 'meteor/accounts-base';
 import { Questions } from '/imports/api/questions/questions.js';
 import { Subjects } from '/imports/api/subjects/subjects.js';
-import { ROLES } from '/imports/constants.js';
+import { ADMIN } from '/imports/userRoles.js';
 import { urlify } from '/imports/utils.js';
 import fetchShifts from '/imports/api/shifts/fetchShifts.js';
 
@@ -66,7 +66,7 @@ Meteor.startup(function() {
             username: 'orkis@redcross.no',
             password: 'orkisadmin',
             profile: {
-                role: ROLES.ADMIN,
+                role: ADMIN,
                 forceLogOut: false,
                 subjects: [],
                 firstName: 'Orkis'
@@ -121,7 +121,7 @@ Accounts.validateNewUser(function(user) {
         if (
             !loggedInUser ||
             !loggedInUser.profile ||
-            loggedInUser.profile.role !== ROLES.ADMIN
+            loggedInUser.profile.role !== ADMIN
         ) {
             throw new Meteor.Error(
                 403,
