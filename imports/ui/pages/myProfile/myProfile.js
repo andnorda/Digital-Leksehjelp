@@ -41,7 +41,8 @@ Template.mySubjects.helpers({
 
 Template.mySubject.helpers({
     subjectName() {
-        return Subjects.findOne(this.subjectId).name;
+        const subject = Subjects.findOne(this.subjectId);
+        return subject && subject.name;
     },
     removeSubject() {
         const id = this.subjectId;
