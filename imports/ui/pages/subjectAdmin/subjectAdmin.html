@@ -1,31 +1,64 @@
 <template name="subjectAdmin">
-    <div class="container">
-        <h3>Administrér fag</h3>
+    <div class="subjectAdmin">
         {{> addSubject}}
-        {{> subjectsTable}}
+        {{> allSubjects}}
     </div>
 </template>
 
 <template name="addSubject">
-    <h1>Legg til fag</h1>
-    <input type="text" size="30" id="newSubject" placeholder="Skriv inn nytt fag"/>
-    <p>
-        <button type="button" class="btn btn-s btn-primary" id="saveNewSubject">Legg til</button>
-    </p>
+    <section>
+        <h1>Legg til fag</h1>
+        <form class="add-subject-form">
+            {{> input type='text' name='subjectName' placeholder='Skriv inn nytt fag' value=subjectName}}
+            {{> button type='submit' text='Legg til' disabled=addSubjectDisabled}}
+        </form>
+    </section>
 </template>
 
-<template name="subjectsTable">
-    <h3>Alle fag</h3>
-    <ul>
-        {{#each subjects }}
-            <li>
-                <button
-                    type="button"
-                    class="btn btn-xs btn-danger deleteSubject">
-                    Slett
-                </button>
-                <span>{{this.name}}</span>
-            </li>
-        {{/each}}
-    </ul>
+<template name="allSubjects">
+    <section>
+        <h1>Alle fag</h1>
+        <ul class="subject-list">
+            {{#each subjects}}
+                {{> subject}}
+            {{/each}}
+        </ul>
+    </section>
+</template>
+
+<template name="subject">
+    <li class="subject {{#if isActive}}active{{/if}}">
+        <a href="#" class="heading">
+            <div class="name">{{name}}</div>
+            {{> button text='Slett' type='button' danger=true subtle=true onClick=deleteSubject}}
+            <img src="/down-arrow.svg" alt="" />
+        </a>
+        {{> topics}}
+    </li>
+</template>
+
+<template name="topics">
+    <div class="topics">
+        <h2>Undertema</h2>
+        <ul class="topic-list">
+            {{#each topics}}
+                {{> topic}}
+            {{/each}}
+        </ul>
+        {{> addTopic}}
+    </div>
+</template>
+
+<template name="topic">
+    <li class="topic">
+        <div class="name">{{name}}</div>
+        {{> button text='Slett' type='button' danger=true subtle=true onClick=deleteTopic}}
+    </li>
+</template>
+
+<template name="addTopic">
+    <form class="add-topic-form">
+        {{> input type='text' name='topicName' placeholder='Legg til nytt undertema' value=topicName}}
+        {{> button type='submit' text='Legg til' disabled=addTopicDisabled}}
+    </form>
 </template>

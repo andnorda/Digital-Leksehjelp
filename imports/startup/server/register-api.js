@@ -18,3 +18,6 @@ import '../../api/shifts/server/publications.js';
 
 import '../../api/messages/methods.js';
 import '../../api/messages/server/publications.js';
+
+import '../../api/topics/methods.js';
+import '../../api/topics/server/publications.js';

@@ -3,6 +3,7 @@ import { check } from 'meteor/check';
 import { ADMIN } from '/imports/userRoles.js';
 import { urlify } from '/imports/utils.js';
 import { Subjects } from './subjects.js';
+import { Topics } from '../topics/topics.js';
 
 Meteor.methods({
     'subjects.removeFromMyProfile'(options) {
@@ -82,6 +83,8 @@ Meteor.methods({
         Subjects.remove({ _id: options.subjectId }, function(error) {
             if (error) {
                 throw new Meteor.Error(500, 'Server error, please try again.');
+            } else {
+                Topics.remove({ subjectId: options.subjectId });
             }
         });
     }
