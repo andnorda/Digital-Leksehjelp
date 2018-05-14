@@ -18,7 +18,7 @@ Meteor.publish('questions.search', function(params) {
 
 const MAX_QUESTIONS = 10000;
 
-Meteor.publish('questions.verified', function(limit) {
+Meteor.publish('questions.verifiedPublished', function(limit) {
     check(limit, Match.Integer);
 
     if (!this.userId) {
@@ -32,7 +32,8 @@ Meteor.publish('questions.verified', function(limit) {
 
     return Questions.find(
         {
-            verifiedBy: { $exists: true }
+            verifiedBy: { $exists: true },
+            publishedBy: { $exists: true }
         },
         {
             sort: { questionDate: -1 },
@@ -42,11 +43,50 @@ Meteor.publish('questions.verified', function(limit) {
     );
 });
 
-Meteor.publish('questions.verifiedCount', function() {
+Meteor.publish('questions.verifiedUnpublished', function(limit) {
+    check(limit, Match.Integer);
+
+    if (!this.userId) {
+        return this.ready();
+    }
+
+    const user = Meteor.users.findOne(this.userId);
+    if (user.profile.role !== ADMIN) {
+        return this.ready();
+    }
+
+    return Questions.find(
+        {
+            verifiedBy: { $exists: true },
+            publishedBy: { $exists: false }
+        },
+        {
+            sort: { questionDate: -1 },
+            limit: Math.min(limit, MAX_QUESTIONS),
+            fields: questionPrivateFields
+        }
+    );
+});
+
+Meteor.publish('questions.verifiedPublishedCount', function() {
     Counts.publish(
         this,
-        'questions.verifiedCount',
-        Questions.find({ verifiedBy: { $exists: true } })
+        'questions.verifiedPublishedCount',
+        Questions.find({
+            verifiedBy: { $exists: true },
+            publishedBy: { $exists: true }
+        })
+    );
+});
+
+Meteor.publish('questions.verifiedUnpublishedCount', function() {
+    Counts.publish(
+        this,
+        'questions.verifiedUnpublishedCount',
+        Questions.find({
+            verifiedBy: { $exists: true },
+            publishedBy: { $exists: false }
+        })
     );
 });
 

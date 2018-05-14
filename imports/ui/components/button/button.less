@@ -1,21 +1,29 @@
 @import '/imports/ui/stylesheets/less/colors.import.less';
 
 .button-component {
-    background-color: @action-color;
+    --primary-color: white;
+    --secondary-color: @action-color;
+
+    color: var(--primary-color);
+    background-color: var(--secondary-color);
     border: none;
-    color: white;
     padding: 14px 0 11px;
     width: 130px;
     font-size: 20px;
 
     &:disabled {
-        background-color: @disabled-color;
+        --secondary-color: @disabled-color;
     }
 
     &.danger {
-        color: @danger-color;
-        background-color: white;
+        --primary-color: @danger-color;
+        --secondary-color: white;
         border: 1px solid @danger-color;
+    }
+
+    &.subtle:not(.danger) {
+        color: var(--secondary-color);
+        background-color: var(--primary-color);
     }
 
     &.subtle {

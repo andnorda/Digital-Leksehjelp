@@ -1,59 +1,54 @@
 <template name="questionAdmin">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                {{> verifiedQuestionsList}}
-            </div>
-        </div>
+    <div class="questionAdmin">
+        <h1>Alle godkjente spørsmål</h1>
+        {{> publishedQuestions}}
+        {{> unpublishedQuestions}}
     </div>
 </template>
 
-<template name="verifiedQuestionsList">
-    <h3>Alle godkjente spørsmål</h3>
+<template name="publishedQuestions">
+    <section class="publishedquestions">
+        <h2>Publisert</h2>
+        <ul class="question-list">
+            {{#each questions}}
+                {{> question}}
+            {{/each}}
+        </ul>
+        {{> button type='button' text='Last flere' onClick=loadMore}}
+    </section>
+</template>
 
-    <table class="table" border="1">
-        <tr>
-            <th>Fag</th>
-            <th>Trinn</th>
-            <th>Dato stilt</th>
-            <th>Sist endret</th>
-            <th>Sist endret av</th>
-            <th>Publisert</th>
-        </tr>
+<template name="unpublishedQuestions">
+    <section class="unpublishedQuestions">
+        <h2>Ikke publisert</h2>
+        <ul class="question-list">
+            {{#each questions}}
+                {{> question}}
+            {{/each}}
+        </ul>
+        {{> button type='button' text='Last flere' onClick=loadMore}}
+    </section>
+</template>
 
-        {{#each verifiedQuestions}}
-            <tr class="table-row-header">
-                <td>{{subjectName subjectId}}</td>
-                <td>{{grade}}</td>
-                <td>{{prettifyDate questionDate}}</td>
-                <td>{{prettifyDate lastUpdatedDate}}</td>
-                <td>{{username lastUpdatedBy}}</td>
-                <td>
-                    {{#if publishedBy}}
-                        Ja
-                    {{else}}
-                        Nei
-                    {{/if}}
-                </td>
-            </tr>
-            <tr class="table-row-content">
-                <td colspan="6">{{trim question 200}}</td>
-            </tr>
-            <tr class="table-row-content">
-                <td colspan="6">
-                    <div class="answer-list-preview">
-                        {{{answer}}}
-                    </div>
-                </td>
-            </tr>
-            <tr class="table-row-content">
-                <td colspan="6">
-                    <a href="/frivillig/sporsmal/svar/{{_id}}" target="_blank">Redigér</a>&nbsp;&nbsp;
-                    <a href="/sporsmal/{{_id}}" target="_blank">Vis</a>
-                </td>
-            </tr>
-        {{/each}}
-    </table>
-
-    {{#if hasMoreQuestions}}<button class="load-more">Last flere</button>{{/if}}
+<template name="question">
+    <li class="question">
+        <div class="title">{{title}}</div>
+        <div class="subject">{{subject}}, {{grade}}</div>
+        <div class="questionDate">
+            <div class="label">Sendt inn:</div>
+            <div class="value">{{questionDate}}</div>
+        </div>
+        <div class="lastUpdatedDate">
+            <div class="label">Sist redigert:</div>
+            <div class="value">{{lastUpdatedDate}}</div>
+        </div>
+        <div class="lastUpdatedBy">
+            <div class="label">Sist redigert av:</div>
+            <div class="value">{{lastUpdatedBy}}</div>
+        </div>
+        <div class="buttons">
+            {{> button type='link' text='Vis' href=showLink target='_blank' subtle=true}}
+            {{> button type='link' text='Rediger' href=editLink target='_blank' subtle=true}}
+        </div>
+    </li>
 </template>

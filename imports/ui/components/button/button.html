@@ -1,6 +1,13 @@
 <template name="button">
-    <button
-        class="button-component {{class}} {{#if danger}}danger{{/if}} {{#if subtle}}subtle{{/if}}"
-        type="{{type}}"
-        disabled="{{disabled}}">{{text}}</button>
+    {{#if isLink}}
+        <a
+            class="button-component {{class}} {{#if danger}}danger{{/if}} {{#if subtle}}subtle{{/if}}"
+            href="{{href}}"
+            target="{{target}}">{{text}}</a>
+    {{else}}
+        <button
+            class="button-component {{class}} {{#if danger}}danger{{/if}} {{#if subtle}}subtle{{/if}}"
+            type="{{type}}"
+            disabled="{{disabled}}">{{text}}</button>
+    {{/if}}
 </template>
