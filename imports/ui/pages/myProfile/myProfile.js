@@ -5,31 +5,48 @@ import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 
 import './myProfile.html';
+import './myProfile.less';
 
-Template.mySubjectsSelector.onCreated(function() {
+Template.myProfile.onCreated(function() {
     this.autorun(() => {
         this.subscribe('subjects');
     });
 });
 
-Template.mySubjectsSelector.onRendered(function() {
-    /*$('#mySubjects').select2({
-        width: '300px',
-        multiple: true,
-        minimumInputLength: 3,
-        query(query) {
-            const data = { results: [] };
-            data.results = Subjects.find({ name: new RegExp(query.term, 'i') })
-                .fetch()
-                .map(function(subject) {
-                    return {
-                        id: `${subject._id}-${subject.name}`,
-                        text: subject.name
-                    };
-                });
-            return query.callback(data);
+Template.mySubjects.helpers({
+    subjects() {
+        return Subjects.find()
+            .fetch()
+            .filter(
+                subject =>
+                    !Meteor.user()
+                        .profile.subjects.map(s => s.subjectId)
+                        .includes(subject._id)
+            )
+            .map(subject => subject.name);
+    },
+    addSubject() {
+        return name => {
+            const subject = Subjects.findOne({ name });
+            subject && Meteor.call('subjects.addSubjectToProfile', subject._id);
+        };
+    },
+    mySubjects() {
+        if (Meteor.user()) {
+            return Meteor.user().profile.subjects;
         }
-    });*/
+        return null;
+    }
+});
+
+Template.mySubject.helpers({
+    subjectName() {
+        return Subjects.findOne(this.subjectId).name;
+    },
+    removeSubject() {
+        const id = this.subjectId;
+        return () => Meteor.call('subjects.removeSubjectFromProfile', id);
+    }
 });
 
 Template.profilePicture.helpers({
@@ -49,57 +66,5 @@ Template.profilePicture.events({
                 }
             });
         }
-    }
-});
-
-Template.mySubjectsSelector.events({
-    'click #saveMySubjects'() {
-        const subjectIdAndNameArray = $('#mySubjects')
-            .val()
-            .split(',');
-        const subjectsArray = [];
-        let tempArr = [];
-        for (let i = 0; i < subjectIdAndNameArray.length; i += 1) {
-            tempArr = subjectIdAndNameArray[i].split('-');
-            subjectsArray.push({
-                subjectId: tempArr[0],
-                subjectName: tempArr[1]
-            });
-        }
-
-        Meteor.call('subjects.update', { subjects: subjectsArray }, function(
-            error
-        ) {
-            if (error) {
-                FlashMessages.sendError(error.message);
-            }
-        });
-
-        //$('#mySubjects').select2('val', '');
-    }
-});
-
-Template.mySubjectsTable.helpers({
-    mySubjects() {
-        if (Meteor.user()) {
-            return Meteor.user().profile.subjects;
-        }
-        return null;
-    }
-});
-
-Template.mySubjectsTable.events({
-    'click button.removeSubjectFromMyProfile'() {
-        Meteor.call(
-            'subjects.removeFromMyProfile',
-            {
-                subject: this
-            },
-            function(error) {
-                if (error) {
-                    FlashMessages.sendError(error.message);
-                }
-            }
-        );
     }
 });

@@ -1,10 +1,6 @@
 <template name="myProfile">
-    <div class="container">
-        <h1>Dine valgte fag</h1>
-        {{> mySubjectsTable}}
-
-        <h1>Velg dine fag</h1>
-        {{> mySubjectsSelector}}
+    <div class="myProfile">
+        {{> mySubjects}}
 
         <h1>Last opp profilbilde</h1>
         {{> profilePicture}}
@@ -39,30 +35,19 @@
     </div>
 </template>
 
-<template name="mySubjectsTable">
-    <table>
-        <tr>
-            <th>Valgte fag</th>
-            <th></th>
-        </tr>
+<template name="mySubjects">
+    <h1>Mine fag</h1>
+    {{> select placeholder='Legg til fag' options=subjects onChange=addSubject}}
+    <ul class="subject-list">
         {{#each mySubjects}}
-            <tr>
-                <td>{{this.subjectName}}</td>
-                <td>
-                <button
-                    type="button"
-                    class="btn btn-xs btn-danger removeSubjectFromMyProfile">Slett</button>
-                </td>
-            </tr>
+            {{> mySubject}}
         {{/each}}
-    </table>
+    </ul>
 </template>
 
-<template name="mySubjectsSelector">
-    <div>
-        <input type="hidden" id="mySubjects" data-placeholder="Velg dine fag">
-    </div>
-    <p>
-        <button type="button" class="btn btn-s btn-primary" id="saveMySubjects">Lagre</button>
-    </p>
+<template name="mySubject">
+    <li class="subject">
+        {{subjectName}}
+        {{> button text='Slett' type='button' danger=true subtle=true onClick=removeSubject}}
+    </li>
 </template>

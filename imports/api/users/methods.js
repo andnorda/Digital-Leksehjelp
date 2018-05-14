@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Accounts } from 'meteor/accounts-base';
-import { Subjects } from '/imports/api/subjects/subjects.js';
 import { ADMIN } from '/imports/userRoles.js';
 
 Meteor.methods({

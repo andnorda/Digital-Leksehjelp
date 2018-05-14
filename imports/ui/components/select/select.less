@@ -18,7 +18,7 @@
     }
 
     > .option-list {
-        z-index: 1;
+        z-index: 3;
         display: none;
         width: 100%;
         margin: 0;
@@ -28,6 +28,8 @@
         background-color: white;
         border: 1px solid @select-color;
         border-top: none;
+        max-height: 350px;
+        overflow-x: auto;
 
         > .option {
             padding: 10px;

@@ -6,8 +6,8 @@ import { Subjects } from './subjects.js';
 import { Topics } from '../topics/topics.js';
 
 Meteor.methods({
-    'subjects.removeFromMyProfile'(options) {
-        check(options.subject, { subjectId: String, subjectName: String });
+    'subjects.removeSubjectFromProfile'(subjectId) {
+        check(subjectId, String);
 
         const user = Meteor.users.findOne(this.userId);
         if (!user) {
@@ -19,7 +19,31 @@ Meteor.methods({
             { _id: userId },
             {
                 $pull: {
-                    'profile.subjects': { subjectId: options.subject.subjectId }
+                    'profile.subjects': { subjectId }
+                }
+            },
+            function(err) {
+                if (err) {
+                    throw new Meteor.Error(500, err.message);
+                }
+            }
+        );
+    },
+
+    'subjects.addSubjectToProfile'(subjectId) {
+        check(subjectId, String);
+
+        const user = Meteor.users.findOne(this.userId);
+        if (!user) {
+            throw new Meteor.Error(401, 'You are not logged in.');
+        }
+        const userId = this.userId;
+
+        Meteor.users.update(
+            { _id: userId },
+            {
+                $push: {
+                    'profile.subjects': { subjectId }
                 }
             },
             function(err) {
