@@ -94,12 +94,13 @@ Template.newSubjectSelector.helpers({
 Template.newSubjectSelector.events({
     'input .searchField'(event) {
         const state = Template.instance().state;
-        state.set('query', event.target.value);
-        state.set('activeIndex', undefined);
 
-        if (!event.target.value) {
+        if (!event.target.value && state.get('query') !== undefined) {
             state.set('value', undefined);
         }
+
+        state.set('query', event.target.value);
+        state.set('activeIndex', undefined);
     },
 
     'keydown .searchField'(event) {
