@@ -17,7 +17,7 @@ Template.questions.onCreated(function questionsOnCreated() {
 });
 
 const subjectIds = function(user) {
-    if (!user) {
+    if (!user || !user.subjects) {
         return [];
     }
 

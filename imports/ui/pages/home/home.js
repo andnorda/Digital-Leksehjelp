@@ -94,10 +94,7 @@ Template.getHelpBox.events({
                     } else {
                         Session.set('studentSessionId', sessionId);
                         Session.set('queueStartTime', new Date().getTime());
-                        $('#queueModal').modal({
-                            backdrop: 'static',
-                            keyboard: false
-                        });
+                        Router.go(`/queue/${sessionId}`);
                     }
                 }
             );
