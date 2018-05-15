@@ -13,7 +13,7 @@ mizzao:user-status
 sacha:spin
 aldeed:collection2
 rzymek:moment-locale-nb
-email
+email@1.2.3
 meteorhacks:ssr
 reywood:iron-router-ga
 lepozepo:s3
@@ -23,15 +23,15 @@ twbs:bootstrap
 spiderable
 
 reactive-dict@1.2.0
-standard-minifier-css
-standard-minifier-js
-shell-server
-dynamic-import
-ecmascript
-jquery
+standard-minifier-css@1.4.0
+standard-minifier-js@2.3.1
+shell-server@0.3.1
+dynamic-import@0.3.0
+ecmascript@0.10.6
+jquery@1.11.10
 tmeasday:publish-counts
 spacebars
 aldeed:simple-schema
-accounts-base
-check
-http
+accounts-base@1.4.2
+check@1.3.0
+http@1.4.0
