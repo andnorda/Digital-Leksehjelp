@@ -35,6 +35,7 @@ Template.select.helpers({
             onMouseLeave: () => state.set('activeIndex', undefined),
             onMouseDown: () => {
                 this.onChange(this.value);
+                state.set('isOpen', false);
             }
         };
     }
