@@ -37,8 +37,7 @@ Template.mySubjects.helpers({
         return subject => subject && Meteor.call('users.addSubject', subject);
     },
     removeSubject() {
-        const subject = this.valueOf();
-        return () => Meteor.call('users.removeSubject', subject);
+        return subject => Meteor.call('users.removeSubject', subject);
     }
 });
 
