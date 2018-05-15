@@ -107,9 +107,10 @@ Template.registerHelper('subjectList', function(subjects) {
         return '';
     }
 
-    const subjectNames = subjects.map(function(subject) {
-        return subject.subjectName;
-    });
+    const subjectNames = subjects
+        .map(subject => Subjects.findOne(subject.subjectId))
+        .filter(s => s)
+        .map(s => s.name);
 
     if (subjectNames.length > 1) {
         let subjectNamesStr = '';
