@@ -89,9 +89,7 @@ Template.user.helpers({
         return this.username;
     },
     subjects() {
-        return this.profile.subjects
-            .map(subject => subject.subjectName)
-            .join(', ');
+        return this.subjects.join(', ');
     },
     role() {
         return this.profile.role;

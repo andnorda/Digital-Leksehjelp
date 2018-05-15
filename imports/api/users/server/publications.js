@@ -10,7 +10,7 @@ Meteor.publish('users', function() {
     if (user.profile.role === ADMIN) {
         return Meteor.users.find(
             {},
-            { fields: { username: 1, emails: 1, profile: 1 } }
+            { fields: { username: 1, emails: 1, profile: 1, subjects: 1 } }
         );
     }
 
@@ -21,13 +21,21 @@ Meteor.publish('users', function() {
                 username: true,
                 'profile.pictureUrl': 1,
                 'profile.firstName': 1,
-                'profile.subjects': 1,
+                subjects: 1,
                 // TODO(martin): The next field could be more restricted
                 'profile.role': 1,
                 'status.online': 1
             }
         }
     );
+});
+
+Meteor.publish('users.self', function() {
+    if (!this.userId) {
+        return this.ready();
+    }
+
+    return Meteor.users.find(this.userId);
 });
 
 Meteor.publish('users.loggedIn', function() {
@@ -42,7 +50,7 @@ Meteor.publish('users.loggedIn', function() {
             fields: {
                 'profile.pictureUrl': 1,
                 'profile.firstName': 1,
-                'profile.subjects': 1,
+                subjects: 1,
                 'profile.role': 1,
                 'status.online': 1,
                 'profile.allowVideohelp': 1

@@ -5,6 +5,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import mixpanel from '/imports/mixpanel.js';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
 import { timeSince, getQueueTime } from '/imports/utils.js';
+import '../topicsInput/topicsInput.js';
 
 import './inQueue.html';
 import './inQueue.less';
@@ -51,6 +52,34 @@ Template.inQueue.helpers({
             return false;
         }
         return session.temp.text !== session.text;
+    },
+    topics() {
+        const { params: { chatId } } = Router.current();
+        const session = StudentSessions.findOne(chatId);
+        return session && session.topics;
+    },
+    removeTopic() {
+        const { params: { chatId } } = Router.current();
+        return topic => {
+            Meteor.call('studentSessions.removeTopic', {
+                sessionId: chatId,
+                topic
+            });
+        };
+    },
+    addTopic() {
+        const { params: { chatId } } = Router.current();
+        return topic => {
+            Meteor.call('studentSessions.addTopic', {
+                sessionId: chatId,
+                topic
+            });
+        };
+    },
+    subject() {
+        const { params: { chatId } } = Router.current();
+        const session = StudentSessions.findOne(chatId);
+        return session && session.subject;
     }
 });
 

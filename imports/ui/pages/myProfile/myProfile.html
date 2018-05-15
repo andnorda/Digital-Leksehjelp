@@ -9,11 +9,7 @@
     <section class="mySubjects">
         <h1>Mine fag</h1>
         {{> select placeholder='Legg til fag' options=subjects onChange=addSubject}}
-        <ul class="subject-list">
-            {{#each mySubjects}}
-                <li>{{> tag text=name onClick=removeSubject}}</li>
-            {{/each}}
-        </ul>
+        {{> tagList tags=mySubjects onClick=removeSubject gray=true}}
     </section>
 </template>
 

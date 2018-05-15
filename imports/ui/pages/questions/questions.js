@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { Spacebars } from 'meteor/spacebars';
 import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { Questions } from '/imports/api/questions/questions.js';
+import { Subjects } from '/imports/api/subjects/subjects.js';
 import { QUESTION_SUBSCRIPTION_LEVEL } from '/imports/constants';
 
 import './questions.html';
@@ -20,9 +21,10 @@ const subjectIds = function(user) {
         return [];
     }
 
-    return user.profile.subjects.map(function(subject) {
-        return subject.subjectId;
-    });
+    return user.subjects
+        .map(subject => Subjects.findOne({ name: subject }))
+        .filter(s => s)
+        .map(subject => subject._id);
 };
 
 Template.unansweredQuestions.helpers({

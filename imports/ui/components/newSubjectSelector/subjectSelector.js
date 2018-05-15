@@ -8,11 +8,11 @@ import Fuse from 'fuse.js';
 import './subjectSelector.html';
 import './subjectSelector.less';
 
-const isAvailable = ({ _id }) =>
+const isAvailable = ({ name }) =>
     Meteor.users
         .find({
             $and: [
-                { 'profile.subjects.subjectId': _id },
+                { 'subjects': name },
                 { 'status.online': true },
                 { 'profile.allowVideohelp': true },
                 { 'profile.firstName': { $not: 'Orkis' } }

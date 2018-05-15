@@ -12,6 +12,26 @@ const generateRandomAppearInLink = function() {
 };
 
 Meteor.methods({
+    'studentSessions.addTopic'({ sessionId, topic }) {
+        check(sessionId, String);
+        check(topic, String);
+
+        StudentSessions.update(
+            { _id: sessionId },
+            { $addToSet: { topics: topic } }
+        );
+    },
+
+    'studentSessions.removeTopic'({ sessionId, topic }) {
+        check(sessionId, String);
+        check(topic, String);
+
+        StudentSessions.update(
+            { _id: sessionId },
+            { $pull: { topics: topic } }
+        );
+    },
+
     'studentSessions.endTutoring'(sessionId) {
         check(sessionId, String);
 
@@ -95,7 +115,8 @@ Meteor.methods({
             videoConferenceUrl,
             state: STUDENT_SESSION_STATE.WAITING,
             createdAt: new Date(),
-            nickname: generateNickname()
+            nickname: generateNickname(),
+            topics: []
         });
     },
 

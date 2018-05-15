@@ -47,6 +47,7 @@
         </div>
         <div class="content">
             <div class="text">{{ text }}</div>
+            {{> tagList tags=topics}}
             <button class="startTutoring">Start {{#if isVideo}}videochat{{else}}chat{{/if}}</button>
             <button class="deleteSession">Fjern fra køen</button>
         </div>

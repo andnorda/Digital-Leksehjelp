@@ -102,15 +102,10 @@ Template.registerHelper('isNotMe', function(userId) {
     return Meteor.userId() && Meteor.userId() !== userId;
 });
 
-Template.registerHelper('subjectList', function(subjects) {
-    if (!subjects) {
+Template.registerHelper('subjectList', function(subjectNames) {
+    if (!subjectNames) {
         return '';
     }
-
-    const subjectNames = subjects
-        .map(subject => Subjects.findOne(subject.subjectId))
-        .filter(s => s)
-        .map(s => s.name);
 
     if (subjectNames.length > 1) {
         let subjectNamesStr = '';

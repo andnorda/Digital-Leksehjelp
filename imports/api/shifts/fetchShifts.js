@@ -21,11 +21,7 @@ const upsertShifts = shifts => {
                             const user = Meteor.users.findOne({
                                 username: email
                             });
-                            return user
-                                ? user.profile.subjects.map(
-                                      subject => subject.subjectName
-                                  )
-                                : [];
+                            return user ? user.subjects : [];
                         })
                         .reduce(
                             (subjects, userSubjects) =>

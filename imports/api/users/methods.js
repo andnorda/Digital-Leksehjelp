@@ -4,6 +4,34 @@ import { Accounts } from 'meteor/accounts-base';
 import { ADMIN } from '/imports/userRoles.js';
 
 Meteor.methods({
+    'users.addSubject'(subject) {
+        check(subject, String);
+
+        const user = Meteor.users.findOne(this.userId);
+        if (!user) {
+            throw new Meteor.Error(401, 'You are not logged in.');
+        }
+
+        Meteor.users.update(
+            { _id: this.userId },
+            { $addToSet: { 'subjects': subject } }
+        );
+    },
+
+    'users.removeSubject'(subject) {
+        check(subject, String);
+
+        const user = Meteor.users.findOne(this.userId);
+        if (!user) {
+            throw new Meteor.Error(401, 'You are not logged in.');
+        }
+
+        Meteor.users.update(
+            { _id: this.userId },
+            { $pull: { 'subjects': subject } }
+        );
+    },
+
     'users.updateName'(name) {
         check(name, String);
 
@@ -141,7 +169,7 @@ Meteor.methods({
         check(options.profile.allowVideohelp, Boolean);
 
         options.profile.forceLogOut = false;
-        options.profile.subjects = [];
+        options.subjects = [];
 
         if (user.profile.role === ADMIN) {
             const userId = Accounts.createUser(options);

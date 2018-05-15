@@ -5,13 +5,14 @@ import { Subjects } from '/imports/api/subjects/subjects.js';
 import '../../components/input/input.js';
 import '../../components/select/select.js';
 import '../../components/button/button.js';
-import '../../components/tag/tag.js';
+import '../../components/tagList/tagList.js';
 
 import './myProfile.html';
 import './myProfile.less';
 
 Template.myProfile.onCreated(function() {
     this.autorun(() => {
+        this.subscribe('users.self');
         this.subscribe('subjects');
     });
 });
@@ -22,30 +23,22 @@ Template.mySubjects.helpers({
             .fetch()
             .filter(
                 subject =>
-                    !Meteor.user()
-                        .profile.subjects.map(s => s.subjectId)
-                        .includes(subject._id)
+                    !(Meteor.user().subjects || []).includes(subject.name)
             )
             .map(subject => subject.name);
     },
-    addSubject() {
-        return name => {
-            const subject = Subjects.findOne({ name });
-            subject && Meteor.call('subjects.addSubjectToProfile', subject._id);
-        };
-    },
     mySubjects() {
         if (Meteor.user()) {
-            const subjects = Meteor.user().profile.subjects.map(subject =>
-                Subjects.findOne(subject.subjectId)
-            );
-            return subjects;
+            return Meteor.user().subjects;
         }
         return null;
     },
+    addSubject() {
+        return subject => subject && Meteor.call('users.addSubject', subject);
+    },
     removeSubject() {
-        const id = this._id;
-        return () => Meteor.call('subjects.removeSubjectFromProfile', id);
+        const subject = this.valueOf();
+        return () => Meteor.call('users.removeSubject', subject);
     }
 });
 

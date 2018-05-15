@@ -211,7 +211,7 @@ Template.todaysVolunteers.helpers({
                 $and: [
                     { 'status.online': true },
                     { 'profile.firstName': { $not: 'Orkis' } },
-                    { 'profile.subjects.0': { $exists: true } },
+                    { 'subjects.0': { $exists: true } },
                     { 'profile.allowVideohelp': true }
                 ]
             })

@@ -8,6 +8,9 @@ const StudentSessionsSchema = new SimpleSchema({
     subject: {
         type: String
     },
+    topics: {
+        type: [String]
+    },
     grade: {
         type: String
     },

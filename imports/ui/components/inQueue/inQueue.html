@@ -7,9 +7,8 @@
         <div class="right">
             <div class="description">Du er nå satt i kø!</div>
             <form class="extra-info-form">
-                <p>
-                    Skriv gjerne litt om hva du lurer på, så blir det lettere for den frivillige å hjelpe deg.
-                </p>
+                <p>Mens du venter du venter kan du begynne å forklare hva det er du lurer på.</p>
+                {{> topicsInput value=topics addTopic=addTopic removeTopic=removeTopic subject=subject}}
                 <textarea class="form-control dl-inputfield" name="question" placeholder="Skriv her..." rows="4" autofocus>{{text}}</textarea>
                 <div class="buttons">
                     <button type="button" class="cancel">Forlat køen</button>

@@ -1,0 +1,9 @@
+<template name="topicsInput">
+    <div class="topicsInput">
+        {{> select placeholder='Legg til tema' options=topics onChange=addTopic}}
+        {{> tagList tags=value onClick=removeTopic}}
+        {{#if oneTag}}
+            <div class="oneTag">Du kan legge til flere temaer</div>
+        {{/if}}
+    </div>
+</template>
