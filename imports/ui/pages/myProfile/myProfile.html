@@ -1,46 +1,28 @@
 <template name="myProfile">
     <div class="myProfile">
         {{> mySubjects}}
-
-        <h1>Last opp profilbilde</h1>
-        {{> profilePicture}}
-    </div>
-</template>
-
-<template name="profilePicture">
-    <p>
-        Her kan du laste opp bilde av deg selv, som vil bli vist under
-        dagens frivillige når tjenesten er åpen, og du er innlogget.
-        Dette gjelder kun for videohjelpere.
-    </p>
-
-    <div class="input-group">
-        <div class="input-group-btn">
-            <button class="btn btn-primary">Last opp</button>
-        </div>
-        <input type="file" class="form-control" name="profilePicture">
-    </div>
-
-    <div>
-        <h4>Forhåndsvisning</h4>
-        {{#with user}}
-            <div class="todays-volunteer-item" style="float: left;">
-                <div class="round">
-                    <img src="{{profile.pictureUrl}}">
-                </div>
-                <h4 class="todays-volunteer-item-name">{{profile.firstName}}</h4>
-                <p class="todays-volunteer-item-subjects">{{subjectList profile.subjects}}</p>
-            </div>
-        {{/with}}
+        {{> editName}}
     </div>
 </template>
 
 <template name="mySubjects">
-    <h1>Mine fag</h1>
-    {{> select placeholder='Legg til fag' options=subjects onChange=addSubject}}
-    <ul class="subject-list">
-        {{#each mySubjects}}
-            <li>{{> tag text=name onClick=removeSubject}}</li>
-        {{/each}}
-    </ul>
+    <section class="mySubjects">
+        <h1>Mine fag</h1>
+        {{> select placeholder='Legg til fag' options=subjects onChange=addSubject}}
+        <ul class="subject-list">
+            {{#each mySubjects}}
+                <li>{{> tag text=name onClick=removeSubject}}</li>
+            {{/each}}
+        </ul>
+    </section>
+</template>
+
+<template name="editName">
+    <section class="editName">
+        <form class="edit-name-form">
+            <h1>Navn</h1>
+            {{> input type='text' name='name' placeholder='Navn' value=name}}
+            {{> button type='submit' text='Lagre' disabled=editNameDisabled}}
+        </form>
+    </section>
 </template>

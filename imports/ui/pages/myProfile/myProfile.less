@@ -7,19 +7,36 @@
         font-weight: bold;
     }
 
-    .select-component {
-        width: 350px;
+    > .mySubjects {
+        width: 620px;
+
+        > .subject-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        > .select-component {
+            margin-bottom: 10px;
+        }
     }
 
-    > .subject-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-wrap: wrap;
-    }
+    > .editName {
+        width: 620px;
 
-    > .select-component {
-        margin-bottom: 10px;
+        > .edit-name-form {
+            display: flex;
+            flex-direction: column;
+
+            > input {
+                margin-bottom: 10px;
+            }
+
+            > .button-component {
+                align-self: flex-end;
+            }
+        }
     }
 }

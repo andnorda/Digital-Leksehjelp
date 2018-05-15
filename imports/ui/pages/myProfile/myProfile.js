@@ -1,8 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
-import { FlashMessages } from 'meteor/mrt:flash-messages';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { Subjects } from '/imports/api/subjects/subjects.js';
+import '../../components/input/input.js';
+import '../../components/select/select.js';
+import '../../components/button/button.js';
 import '../../components/tag/tag.js';
 
 import './myProfile.html';
@@ -37,7 +39,6 @@ Template.mySubjects.helpers({
             const subjects = Meteor.user().profile.subjects.map(subject =>
                 Subjects.findOne(subject.subjectId)
             );
-            console.log(subjects);
             return subjects;
         }
         return null;
@@ -48,22 +49,37 @@ Template.mySubjects.helpers({
     }
 });
 
-Template.profilePicture.helpers({
-    user() {
-        return Meteor.user();
+Template.editName.onCreated(function() {
+    this.state = new ReactiveDict();
+});
+
+Template.editName.helpers({
+    name() {
+        const name = Template.instance().state.get('name');
+        return name === undefined
+            ? Meteor.user() && Meteor.user().profile.firstName
+            : name;
+    },
+    editNameDisabled() {
+        const user = Meteor.user();
+        if (!user) return true;
+
+        const name = user.profile.firstName;
+        const newName = Template.instance().state.get('name');
+
+        if (newName === '') return true;
+        if (!newName) return true;
+        if (name === newName) return true;
+        return false;
     }
 });
 
-Template.profilePicture.events({
-    'click button'() {
-        const { files } = $('input[name=profilePicture]')[0];
-
-        if (files.length === 1) {
-            S3.upload({ files, path: 'profilbilder' }, function(error, result) {
-                if (!result.uploading) {
-                    Meteor.call('users.setProfilePictureUrl', result.url);
-                }
-            });
-        }
+Template.editName.events({
+    'input input[name="name"]'(event) {
+        Template.instance().state.set('name', event.target.value);
+    },
+    'submit .edit-name-form'(event) {
+        event.preventDefault();
+        Meteor.call('users.updateName', Template.instance().state.get('name'));
     }
 });

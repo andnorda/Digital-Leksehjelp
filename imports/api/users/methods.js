@@ -4,6 +4,25 @@ import { Accounts } from 'meteor/accounts-base';
 import { ADMIN } from '/imports/userRoles.js';
 
 Meteor.methods({
+    'users.updateName'(name) {
+        check(name, String);
+
+        const user = Meteor.users.findOne(this.userId);
+        if (!user) {
+            throw new Meteor.Error(401, 'You are not logged in.');
+        }
+        if (user.profile.role !== ADMIN) {
+            throw new Meteor.Error(403, 'You are not allowed to access this.');
+        }
+
+        Meteor.users.update(
+            { _id: this.userId },
+            {
+                $set: { 'profile.firstName': name }
+            }
+        );
+    },
+
     'users.updateRole'(options) {
         check(options.userId, String);
         check(options.role, String);
