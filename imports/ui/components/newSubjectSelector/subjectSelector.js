@@ -107,6 +107,7 @@ Template.newSubjectSelector.events({
         const state = Template.instance().state;
         switch (event.key) {
             case 'ArrowUp':
+            case 'Up':
                 event.preventDefault();
 
                 if (state.get('activeIndex') === undefined) {
@@ -122,6 +123,7 @@ Template.newSubjectSelector.events({
                 }
                 break;
             case 'ArrowDown':
+            case 'Down':
                 event.preventDefault();
                 if (state.get('activeIndex') === undefined) {
                     state.set('activeIndex', 0);
