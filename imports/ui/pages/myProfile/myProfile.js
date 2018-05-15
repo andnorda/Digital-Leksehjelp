@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { Subjects } from '/imports/api/subjects/subjects.js';
+import '../../components/tag/tag.js';
 
 import './myProfile.html';
 import './myProfile.less';
@@ -33,19 +34,16 @@ Template.mySubjects.helpers({
     },
     mySubjects() {
         if (Meteor.user()) {
-            return Meteor.user().profile.subjects;
+            const subjects = Meteor.user().profile.subjects.map(subject =>
+                Subjects.findOne(subject.subjectId)
+            );
+            console.log(subjects);
+            return subjects;
         }
         return null;
-    }
-});
-
-Template.mySubject.helpers({
-    subjectName() {
-        const subject = Subjects.findOne(this.subjectId);
-        return subject && subject.name;
     },
     removeSubject() {
-        const id = this.subjectId;
+        const id = this._id;
         return () => Meteor.call('subjects.removeSubjectFromProfile', id);
     }
 });

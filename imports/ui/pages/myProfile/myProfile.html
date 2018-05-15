@@ -40,14 +40,7 @@
     {{> select placeholder='Legg til fag' options=subjects onChange=addSubject}}
     <ul class="subject-list">
         {{#each mySubjects}}
-            {{> mySubject}}
+            <li>{{> tag text=name onClick=removeSubject}}</li>
         {{/each}}
     </ul>
-</template>
-
-<template name="mySubject">
-    <li class="subject">
-        {{subjectName}}
-        {{> button text='Slett' type='button' danger=true subtle=true onClick=removeSubject}}
-    </li>
 </template>
