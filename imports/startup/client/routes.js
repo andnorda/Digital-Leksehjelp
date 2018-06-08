@@ -22,6 +22,7 @@ import '../../ui/pages/questionAdmin/questionAdmin.js';
 import '../../ui/pages/answerQuestion/answerQuestion.js';
 import '../../ui/pages/queueAdmin/queueAdmin.js';
 import '../../ui/pages/chat/chat.js';
+import '../../ui/pages/queue/queue.js';
 import '../../ui/pages/volunteerChat/volunteerChat.js';
 
 import '../../ui/components/header/header.js';
@@ -51,6 +52,10 @@ HomeController = BaseController.extend({
     yieldTemplates: {
         footer: { to: 'footer' }
     }
+});
+
+QueueController = RouteController.extend({
+    layoutTemplate: 'cleanLayout'
 });
 
 ChatController = RouteController.extend({
@@ -141,7 +146,7 @@ Router.map(function() {
 
     this.route('volunteerChat', {
         controller: LoginController,
-        path: '/frivillig/chat/:chatId?'
+        path: '/frivillig/chat/:sessionId?'
     });
 
     this.route('askQuestion', {
@@ -180,7 +185,12 @@ Router.map(function() {
 
     this.route('chat', {
         controller: ChatController,
-        path: '/chat/:chatId'
+        path: '/chat/:sessionId'
+    });
+
+    this.route('queue', {
+        controller: QueueController,
+        path: '/queue/:sessionId'
     });
 
     this.route('notFound', {

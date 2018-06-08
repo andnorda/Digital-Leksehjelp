@@ -9,9 +9,9 @@ const NonEmptyString = Match.Where(x => {
 });
 
 Meteor.methods({
-    'messages.create'({ message, chatId, type = 'text', url, size }) {
+    'messages.create'({ message, sessionId, type = 'text', url, size }) {
         check(message, NonEmptyString);
-        check(chatId, NonEmptyString);
+        check(sessionId, NonEmptyString);
         check(type, NonEmptyString);
         check(url, Match.Optional(NonEmptyString));
         check(size, Match.Optional(Number));
@@ -19,7 +19,7 @@ Meteor.methods({
         if (type !== 'info') {
             StudentSessions.update(
                 {
-                    _id: chatId,
+                    _id: sessionId,
                     'volunteers.id': this.userId
                         ? { $ne: this.userId }
                         : { $exists: true }
@@ -30,7 +30,7 @@ Meteor.methods({
 
         return Messages.insert({
             message,
-            chatId,
+            sessionId,
             type,
             url,
             size,

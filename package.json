@@ -40,10 +40,19 @@
     "eslintConfig": {
         "extends": "@meteorjs/eslint-config-meteor",
         "rules": {
-            "indent": ["error", 4],
-            "comma-dangle": ["error", "never"],
+            "indent": [
+                "error",
+                4
+            ],
+            "comma-dangle": [
+                "error",
+                "never"
+            ],
             "function-paren-newline": "off",
-            "arrow-parens": ["error", "as-needed"],
+            "arrow-parens": [
+                "error",
+                "as-needed"
+            ],
             "import/prefer-default-export": "off"
         }
     },

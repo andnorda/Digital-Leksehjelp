@@ -16,12 +16,12 @@ Template.chatComponent.onCreated(function() {
     this.state = new ReactiveDict();
 
     this.autorun(() => {
-        const { params: { chatId } } = Router.current();
-        this.subscribe('messages.byChatId', chatId);
-        this.subscribe('studentSessions.byId', chatId);
+        const { params: { sessionId } } = Router.current();
+        this.subscribe('messages.bysessionId', sessionId);
+        this.subscribe('studentSessions.byId', sessionId);
 
         const prevCount = this.state.get('messageCount');
-        const count = Messages.find({ chatId }).count();
+        const count = Messages.find({ sessionId }).count();
         if (prevCount !== count) {
             setTimeout(() => {
                 const element = $('.messages');
@@ -34,30 +34,30 @@ Template.chatComponent.onCreated(function() {
 
 Template.chatComponent.helpers({
     initialMessage() {
-        const { params: { chatId } } = Router.current();
-        const session = StudentSessions.findOne(chatId);
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
         return session && session.text;
     },
     subject() {
-        const { params: { chatId } } = Router.current();
-        const session = StudentSessions.findOne(chatId);
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
         return session && session.subject;
     },
     grade() {
-        const { params: { chatId } } = Router.current();
-        const session = StudentSessions.findOne(chatId);
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
         return session && session.grade;
     },
     isStudent() {
         return !Meteor.userId();
     },
     messages() {
-        const { params: { chatId } } = Router.current();
-        return Messages.find({ chatId }, { sort: { createdAt: 1 } });
+        const { params: { sessionId } } = Router.current();
+        return Messages.find({ sessionId }, { sort: { createdAt: 1 } });
     },
     hasEnded() {
-        const { params: { chatId } } = Router.current();
-        const session = StudentSessions.findOne(chatId);
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
         return session && session.state === STUDENT_SESSION_STATE.ENDED;
     }
 });
@@ -85,9 +85,9 @@ Template.chatComponent.events({
         const input = $('input.chatField');
         const message = input.val();
         if (message) {
-            const { params: { chatId } } = Router.current();
+            const { params: { sessionId } } = Router.current();
 
-            Meteor.call('messages.create', { chatId, message });
+            Meteor.call('messages.create', { sessionId, message });
             input.val('');
         }
     },
@@ -116,9 +116,9 @@ Template.chatComponent.events({
                             }`
                         );
                     } else {
-                        const { params: { chatId } } = Router.current();
+                        const { params: { sessionId } } = Router.current();
                         Meteor.call('messages.create', {
-                            chatId,
+                            sessionId,
                             type: 'attachment',
                             message: result.file.original_name,
                             url: result.secure_url,
@@ -133,10 +133,10 @@ Template.chatComponent.events({
 
 Template.messageForm.helpers({
     value() {
-        const { params: { chatId } } = Router.current();
-        const session = StudentSessions.findOne(chatId);
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
         const count = Messages.find({
-            chatId,
+            sessionId,
             author: null
         }).count();
         return (

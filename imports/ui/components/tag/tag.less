@@ -8,7 +8,7 @@
     color: var(--color);
     border: 1px solid var(--color);
     margin: 5px;
-    font-size: 20px;
+    font-size: 15px;
 
     &.gray {
         --color: @gray-tag-color;
@@ -26,5 +26,11 @@
             height: 11px;
             width: 11px;
         }
+    }
+}
+
+@media (min-width: 768px) {
+    .tag {
+        font-size: 20px;
     }
 }

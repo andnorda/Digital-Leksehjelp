@@ -29,9 +29,9 @@ Template.addVolunteer.events({
 
 Template.addVolunteer.helpers({
     volunteers() {
-        const { params: { chatId } } = Router.current();
+        const { params: { sessionId } } = Router.current();
 
-        const volunteerIds = StudentSessions.findOne(chatId).volunteers.map(
+        const volunteerIds = StudentSessions.findOne(sessionId).volunteers.map(
             volunteer => volunteer.id
         );
 
@@ -53,7 +53,7 @@ Template.addVolunteer.helpers({
 
 Template.addVolunteerListItem.events({
     'click .volunteer'() {
-        const { params: { chatId } } = Router.current();
-        Meteor.call('studentSessions.addVolunteer', chatId, this._id);
+        const { params: { sessionId } } = Router.current();
+        Meteor.call('studentSessions.addVolunteer', sessionId, this._id);
     }
 });

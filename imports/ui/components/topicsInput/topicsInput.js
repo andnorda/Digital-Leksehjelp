@@ -7,7 +7,9 @@ import './topicsInput.less';
 
 Template.topicsInput.onCreated(function() {
     this.autorun(() => {
-        this.subscribe('topics.bySubject', Template.currentData().subject);
+        const subject = Template.currentData().subject;
+
+        subject && this.subscribe('topics.bySubject', subject);
     });
 });
 
@@ -25,6 +27,6 @@ Template.topicsInput.helpers({
         return this.removeTopic;
     },
     oneTag() {
-        return this.value.length === 1;
+        return this.value && this.value.length === 1;
     }
 });

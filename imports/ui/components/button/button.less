@@ -9,7 +9,7 @@
     border: none;
     padding: 14px 0 11px;
     width: 130px;
-    font-size: 20px;
+    font-size: 15px;
 
     &:disabled {
         --secondary-color: @disabled-color;
@@ -31,5 +31,11 @@
         text-decoration: underline;
         padding: 0;
         width: unset;
+    }
+}
+
+@media (min-width: 768px) {
+    .button-component {
+        font-size: 20px;
     }
 }

@@ -18,17 +18,17 @@ import './volunteerChat.less';
 
 Template.volunteerChat.onCreated(function() {
     this.state = new ReactiveDict();
-    this.state.set('isPending', !!Router.current().params.chatId);
+    this.state.set('isPending', !!Router.current().params.sessionId);
 
     this.autorun(() => {
-        const { params: { chatId } } = Router.current();
+        const { params: { sessionId } } = Router.current();
         this.subscribe('studentSessions');
 
-        if (chatId) {
+        if (sessionId) {
             this.state.set('isPending', true);
             Meteor.call(
                 'studentSessions.isValidId',
-                chatId,
+                sessionId,
                 (error, isValidId) => {
                     this.state.set('isPending', false);
                     this.state.set('isValidId', isValidId);
@@ -46,22 +46,22 @@ Template.volunteerChat.helpers({
         }).count();
     },
     chatSelected() {
-        const { params: { chatId } } = Router.current();
-        return chatId;
+        const { params: { sessionId } } = Router.current();
+        return sessionId;
     },
     nickname() {
-        const { params: { chatId } } = Router.current();
-        const studentSession = StudentSessions.findOne(chatId);
+        const { params: { sessionId } } = Router.current();
+        const studentSession = StudentSessions.findOne(sessionId);
         return studentSession ? studentSession.nickname : '';
     },
     subject() {
-        const { params: { chatId } } = Router.current();
-        const studentSession = StudentSessions.findOne(chatId);
+        const { params: { sessionId } } = Router.current();
+        const studentSession = StudentSessions.findOne(sessionId);
         return studentSession ? studentSession.subject : '';
     },
     grade() {
-        const { params: { chatId } } = Router.current();
-        const studentSession = StudentSessions.findOne(chatId);
+        const { params: { sessionId } } = Router.current();
+        const studentSession = StudentSessions.findOne(sessionId);
         return studentSession ? studentSession.grade : '';
     },
     isPending() {
@@ -87,8 +87,8 @@ Template.volunteerChatHeaderMenu.helpers({
         return Template.instance().state.get('active');
     },
     hasMoreVolunteers() {
-        const { params: { chatId } } = Router.current();
-        const session = StudentSessions.findOne(chatId);
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
         return session && session.volunteers && session.volunteers.length > 1;
     }
 });
@@ -112,8 +112,8 @@ Template.volunteerChatHeaderMenu.events({
         Modal.show('addVolunteer');
     },
     'mousedown .menu-item.endSession'() {
-        const { params: { chatId } } = Router.current();
-        Meteor.call('studentSessions.endTutoring', chatId);
+        const { params: { sessionId } } = Router.current();
+        Meteor.call('studentSessions.endTutoring', sessionId);
 
         const helpDurationMinutes = getQueueTime(
             Session.get('startTutoringTime')
@@ -128,8 +128,8 @@ Template.volunteerChatHeaderMenu.events({
         Router.go('/frivillig/chat');
     },
     'mousedown .menu-item.leaveChat'() {
-        const { params: { chatId } } = Router.current();
-        Meteor.call('studentSessions.leaveChat', chatId);
+        const { params: { sessionId } } = Router.current();
+        Meteor.call('studentSessions.leaveChat', sessionId);
         Router.go('/frivillig/chat');
     }
 });

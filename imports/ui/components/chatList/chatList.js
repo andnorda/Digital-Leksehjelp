@@ -28,7 +28,7 @@ Template.chatListItem.helpers({
         ).unread;
     },
     isActive() {
-        const { params: { chatId } } = Router.current();
-        return this._id === chatId;
+        const { params: { sessionId } } = Router.current();
+        return this._id === sessionId;
     }
 });

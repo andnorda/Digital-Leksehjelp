@@ -6,6 +6,7 @@ import mixpanel from '/imports/mixpanel.js';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
 import { timeSince, getQueueTime } from '/imports/utils.js';
 import '../topicsInput/topicsInput.js';
+import '../formMessage/formMessage.js';
 
 import './inQueue.html';
 import './inQueue.less';
@@ -19,8 +20,8 @@ Template.inQueue.onCreated(function() {
     }, 1000);
 
     this.autorun(() => {
-        const { params: { chatId } } = Router.current();
-        this.subscribe('studentSessions.byId', chatId);
+        const { params: { sessionId } } = Router.current();
+        this.subscribe('studentSessions.byId', sessionId);
     });
 });
 
@@ -30,8 +31,8 @@ Template.inQueue.onDestroyed(function() {
 
 Template.inQueue.helpers({
     timeInQueue() {
-        const { params: { chatId } } = Router.current();
-        const session = StudentSessions.findOne(chatId);
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
 
         return session
             ? timeSince(
@@ -41,69 +42,78 @@ Template.inQueue.helpers({
             : '0:00';
     },
     text() {
-        const { params: { chatId } } = Router.current();
-        const session = StudentSessions.findOne(chatId);
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
         return session && session.text;
     },
-    hasChanged() {
-        const { params: { chatId } } = Router.current();
-        const session = StudentSessions.findOne(chatId);
+    updateButtonDisabled() {
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
         if (!session || !session.temp) {
-            return false;
+            return true;
         }
-        return session.temp.text !== session.text;
+        return session.temp.text === session.text;
     },
     topics() {
-        const { params: { chatId } } = Router.current();
-        const session = StudentSessions.findOne(chatId);
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
         return session && session.topics;
     },
     removeTopic() {
-        const { params: { chatId } } = Router.current();
+        const { params: { sessionId } } = Router.current();
         return topic => {
             Meteor.call('studentSessions.removeTopic', {
-                sessionId: chatId,
+                sessionId: sessionId,
                 topic
             });
         };
     },
     addTopic() {
-        const { params: { chatId } } = Router.current();
+        const { params: { sessionId } } = Router.current();
         return topic => {
             Meteor.call('studentSessions.addTopic', {
-                sessionId: chatId,
+                sessionId: sessionId,
                 topic
             });
         };
     },
     subject() {
-        const { params: { chatId } } = Router.current();
-        const session = StudentSessions.findOne(chatId);
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
         return session && session.subject;
+    },
+    leaveQueue() {
+        const { params: { sessionId } } = Router.current();
+        return () => {
+            Meteor.call('studentSessions.delete', sessionId);
+            Router.go('/');
+            mixpanel.track('Forlot leksehjelp-kø', {
+                'Minutter i kø': getQueueTime(Session.get('queueStartTime')),
+                type: 'chat'
+            });
+        };
+    },
+    infoMessage() {
+        return Template.instance().state.get('infoMessage');
     }
 });
 
 Template.inQueue.events({
-    'click button.cancel'() {
-        const { params: { chatId } } = Router.current();
-        Meteor.call('studentSessions.delete', chatId);
-        Router.go('/');
-        mixpanel.track('Forlot leksehjelp-kø', {
-            'Minutter i kø': getQueueTime(Session.get('queueStartTime')),
-            type: 'chat'
-        });
-    },
     'input textarea[name=question]'(event) {
-        const { params: { chatId } } = Router.current();
+        const { params: { sessionId } } = Router.current();
         Meteor.call('studentSessions.updateText', {
-            sessionId: chatId,
+            sessionId: sessionId,
             text: event.target.value
         });
     },
     'submit .extra-info-form'(event) {
         event.preventDefault();
 
-        const { params: { chatId } } = Router.current();
-        Meteor.call('studentSessions.save', chatId);
+        const { params: { sessionId } } = Router.current();
+        Meteor.call('studentSessions.save', sessionId);
+        Template.instance().state.set(
+            'infoMessage',
+            'Du kan forsette å redigere spørsmålet mens du venter i køen.'
+        );
     }
 });

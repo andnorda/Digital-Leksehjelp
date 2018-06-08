@@ -140,7 +140,7 @@ Meteor.methods({
                         message: `${
                             Meteor.users.findOne(this.userId).profile.firstName
                         } har forlatt chatten`,
-                        chatId: sessionId,
+                        sessionId: sessionId,
                         type: 'info'
                     });
                 }
@@ -168,7 +168,7 @@ Meteor.methods({
                     $push: {
                         volunteers: {
                             id,
-                            unread: Messages.find({ chatId: sessionId }).count()
+                            unread: Messages.find({ sessionId: sessionId }).count()
                         }
                     }
                 }
@@ -178,7 +178,7 @@ Meteor.methods({
                 message: `${
                     Meteor.users.findOne(id).profile.firstName
                 } har blitt lagt til i chatten`,
-                chatId: sessionId,
+                sessionId: sessionId,
                 type: 'info'
             });
         }

@@ -8,16 +8,16 @@ const NonEmptyString = Match.Where(x => {
     return x.length > 0;
 });
 
-Meteor.publish('messages.byChatId', function(chatId) {
-    check(chatId, NonEmptyString);
+Meteor.publish('messages.bysessionId', function(sessionId) {
+    check(sessionId, NonEmptyString);
 
     const userId = this.userId;
 
     if (userId) {
-        const observer = Messages.find({ chatId }).observe({
+        const observer = Messages.find({ sessionId }).observe({
             added() {
                 StudentSessions.update(
-                    { _id: chatId, 'volunteers.id': userId },
+                    { _id: sessionId, 'volunteers.id': userId },
                     { $set: { 'volunteers.$.unread': 0 } }
                 );
             }
@@ -25,5 +25,5 @@ Meteor.publish('messages.byChatId', function(chatId) {
         this.onStop(() => observer.stop());
     }
 
-    return Messages.find({ chatId });
+    return Messages.find({ sessionId });
 });

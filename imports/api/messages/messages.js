@@ -12,7 +12,7 @@ const MessagesSchema = new SimpleSchema({
         type: String,
         optional: true
     },
-    chatId: {
+    sessionId: {
         type: String
     },
     type: {

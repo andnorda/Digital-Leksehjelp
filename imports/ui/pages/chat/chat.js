@@ -14,23 +14,23 @@ import './chat.less';
 
 Template.chat.onCreated(function() {
     this.state = new ReactiveDict();
-    this.state.set('isPending', !!Router.current().params.chatId);
+    this.state.set('isPending', !!Router.current().params.sessionId);
 
     this.autorun(() => {
-        const { params: { chatId } } = Router.current();
+        const { params: { sessionId } } = Router.current();
 
-        if (chatId) {
-            this.subscribe('studentSessions.byId', chatId);
+        if (sessionId) {
+            this.subscribe('studentSessions.byId', sessionId);
             Meteor.call(
                 'studentSessions.isValidId',
-                chatId,
+                sessionId,
                 (error, isValidId) => {
                     this.state.set('isPending', false);
                     this.state.set('isValidId', isValidId);
                 }
             );
 
-            const state = (StudentSessions.findOne(chatId) || {}).state;
+            const state = (StudentSessions.findOne(sessionId) || {}).state;
 
             if (
                 this.state.get('prevState') === STUDENT_SESSION_STATE.WAITING &&
@@ -60,8 +60,8 @@ Template.chat.helpers({
         return Template.instance().state.get('isValidId');
     },
     isActive() {
-        const { params: { chatId } } = Router.current();
-        const session = StudentSessions.findOne(chatId);
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
         return session && session.volunteers && session.volunteers.length > 0;
     }
 });

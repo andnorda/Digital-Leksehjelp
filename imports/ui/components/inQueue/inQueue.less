@@ -1,7 +1,38 @@
+@import '/imports/ui/stylesheets/less/colors.import.less';
+
 .inQueue {
     > .left {
         background-color: #8b51c6;
         position: relative;
+
+        > .header {
+            position: absolute;
+            background: transparent;
+            height: unset;
+            top: 10px;
+            right: 20px;
+            left: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .digitalleksehjelp-logo {
+                text-decoration: none;
+                font-size: 15px;
+                font-weight: bold;
+                color: black;
+            }
+
+            .rodekors-logo {
+                height: 27px;
+            }
+        }
+
+        > img {
+            height: 254px;
+            display: block;
+            margin: 0 auto;
+        }
 
         > .timeInQueue {
             position: absolute;
@@ -20,11 +51,26 @@
     }
 
     > .right {
-        padding: 12px;
-        font-size: 20px;
+        padding: 20px;
+        font-size: 15px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
+        > .header {
+            display: none;
+        }
+
+        > .description {
+            font-size: 20px;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            text-align: center;
+
+            > .subject {
+                color: @primary-color;
+            }
+        }
 
         > .extra-info-form {
             > textarea {
@@ -35,34 +81,8 @@
             > .buttons {
                 display: flex;
                 justify-content: space-between;
-
-                > button {
-                    padding: 7px 20px;
-
-                    &.cancel {
-                        background-color: transparent;
-                        border: 1px solid #fd9b88;
-                        color: #fd9b88;
-                    }
-
-                    &.save {
-                        background-color: #82c289;
-                        color: white;
-                        border: none;
-
-                        &:disabled {
-                            background-color: #d1d1d1;
-                        }
-                    }
-                }
             }
         }
-    }
-}
-
-@media (min-width: 400px) {
-    .inQueue > .right {
-        padding: 30px;
     }
 }
 
@@ -73,19 +93,59 @@
         grid-template-columns: 1fr 1fr;
 
         > .left {
+            > .header {
+                display: none;
+            }
+
+            > img {
+                height: unset;
+            }
+
             > .timeInQueue {
-                bottom: 30px;
+                bottom: unset;
+                left: unset;
+                top: 20px;
+                right: 20px;
             }
         }
 
         > .right {
-            padding: 16px;
+            font-size: 0 20px 20px;
+
+            > .header {
+                background: transparent;
+                height: unset;
+                width: 100%;
+                margin: 0 auto;
+                padding: 10px 0;
+                max-width: 1100px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .digitalleksehjelp-logo {
+                    text-decoration: none;
+                    font-size: 20px;
+                    font-weight: bold;
+                    color: black;
+                }
+
+                .rodekors-logo {
+                    height: 30px;
+                }
+            }
+
+            > .description {
+                font-size: 45px;
+            }
         }
     }
 }
 
 @media (min-width: 1200px) {
-    .inQueue > .right {
-        padding: 30px;
+    .inQueue {
+        > .right {
+            padding: 0 70px 70px;
+        }
     }
 }
