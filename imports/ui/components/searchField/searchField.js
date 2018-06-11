@@ -12,11 +12,13 @@ Template.searchField.onCreated(function() {
 
 Template.searchField.events({
     'input .searchField'(event) {
+        console.log(event);
         Template.instance().state.set('query', event.target.value);
     },
-    'submit .searchFieldForm'(event) {
-        event.preventDefault();
-
-        Router.go(`/sok?q=${Template.instance().state.get('query')}`);
+    'keydown .searchField'(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            Router.go(`/sok?q=${Template.instance().state.get('query') || ''}`);
+        }
     }
 });
