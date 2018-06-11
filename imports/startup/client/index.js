@@ -5,14 +5,6 @@ import '/imports/api/questions/methods.js';
 
 import './routes.js';
 import './templateHelpers.js';
-import './flashTitle.js';
-
-Deps.autorun(function() {
-    const user = Meteor.user();
-    if (user && user.profile && user.profile.forceLogOut) {
-        Meteor.logout();
-    }
-});
 
 Meteor.Spinner.options = {
     top: '3'

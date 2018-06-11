@@ -13,6 +13,10 @@ Template.loggedInHeader.onCreated(function() {
     this.autorun(() => {
         this.subscribe('studentSessions');
         this.subscribe('config.serviceStatus');
+
+        document.title = `${StudentSessions.find({
+            state: STUDENT_SESSION_STATE.WAITING
+        }).count()} i kø`;
     });
 });
 

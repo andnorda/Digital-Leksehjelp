@@ -8,10 +8,6 @@ import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js
 import { timeSince, getQueueTime } from '/imports/utils.js';
 import mixpanel from '/imports/mixpanel.js';
 import { STUDENT_SESSION_STATE } from '/imports/constants';
-import {
-    flashTitle,
-    cancelFlashTitle
-} from '/imports/startup/client/flashTitle.js';
 
 import './queueModal.html';
 
@@ -82,13 +78,10 @@ Template.queueModalBody.helpers({
     },
     stateReady() {
         const studentSession = findStudentSession();
-        const stateReady =
+        return (
             studentSession &&
-            studentSession.state === STUDENT_SESSION_STATE.READY;
-        if (stateReady) {
-            flashTitle('Leksehjelpen er klar!', 20);
-        }
-        return stateReady;
+            studentSession.state === STUDENT_SESSION_STATE.READY
+        );
     },
     isVideo() {
         return findStudentSession().type === 'video';
@@ -108,7 +101,5 @@ Template.queueModalBody.events({
         }
 
         Meteor.call('studentSessions.getHelp', Session.get('studentSessionId'));
-
-        cancelFlashTitle();
     }
 });
