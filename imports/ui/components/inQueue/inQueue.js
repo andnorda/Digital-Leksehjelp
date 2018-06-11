@@ -4,6 +4,7 @@ import { Router } from 'meteor/iron:router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import mixpanel from '/imports/mixpanel.js';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
+import { STUDENT_SESSION_STATE } from '/imports/constants.js';
 import { timeSince, getQueueTime } from '/imports/utils.js';
 import '../topicsInput/topicsInput.js';
 import '../formMessage/formMessage.js';
@@ -30,6 +31,30 @@ Template.inQueue.onDestroyed(function() {
 });
 
 Template.inQueue.helpers({
+    readyToStart() {
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
+        return session && session.state === STUDENT_SESSION_STATE.READY;
+    },
+    videoLink() {
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
+        return session && session.type === 'chat'
+            ? `/chat/${sessionId}`
+            : session.videoConferenceUrl;
+    },
+    theText() {
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
+        return session && session.type === 'chat'
+            ? 'Gå til chatten'
+            : 'Gå til videochat';
+    },
+    target() {
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
+        return session && session.type === 'chat' ? undefined : '_blank';
+    },
     timeInQueue() {
         const { params: { sessionId } } = Router.current();
         const session = StudentSessions.findOne(sessionId);

@@ -1,26 +1,33 @@
 <template name="inQueue">
     <div class="inQueue">
-        <div class="left">
-            {{> inQueueHeader}}
-            <img class="illustration" src="/queue_illustration.svg">
-            <div class="timeInQueue"><div>{{timeInQueue}}</div></div>
-        </div>
-        <div class="right">
-            {{> inQueueHeader}}
-            <div class="description">Du står nå i kø for <span class="subject">{{subject}}</span></div>
-            <form class="extra-info-form">
-                <p>Mens du venter du venter kan du begynne å forklare hva det er du lurer på.</p>
-                {{> topicsInput value=topics addTopic=addTopic removeTopic=removeTopic subject=subject}}
-                <textarea class="form-control dl-inputfield" name="question" placeholder="Skriv her..." rows="4" autofocus>{{text}}</textarea>
-                <div class="buttons">
-                    {{> button type='button' text='Forlat køen' subtle=true danger=true onClick=leaveQueue}}
-                    {{> button type='submit' text='Oppdater' disabled=updateButtonDisabled}}
-                </div>
-                {{#if infoMessage}}
-                    {{> formMessage text=infoMessage}}
-                {{/if}}
-            </form>
-        </div>
+        {{#if readyToStart}}
+            <div class="ready">
+                Du er nå fremme i køen
+                {{> button type='link' text=theText href=videoLink target=target}}
+            </div>
+        {{else}}
+            <div class="left">
+                {{> inQueueHeader}}
+                <img class="illustration" src="/queue_illustration.svg">
+                <div class="timeInQueue"><div>{{timeInQueue}}</div></div>
+            </div>
+            <div class="right">
+                {{> inQueueHeader}}
+                <div class="description">Du står nå i kø for <span class="subject">{{subject}}</span></div>
+                <form class="extra-info-form">
+                    <p>Mens du venter du venter kan du begynne å forklare hva det er du lurer på.</p>
+                    {{> topicsInput value=topics addTopic=addTopic removeTopic=removeTopic subject=subject}}
+                    <textarea class="form-control dl-inputfield" name="question" placeholder="Skriv her..." rows="4" autofocus>{{text}}</textarea>
+                    <div class="buttons">
+                        {{> button type='button' text='Forlat køen' subtle=true danger=true onClick=leaveQueue}}
+                        {{> button type='submit' text='Oppdater' disabled=updateButtonDisabled}}
+                    </div>
+                    {{#if infoMessage}}
+                        {{> formMessage text=infoMessage}}
+                    {{/if}}
+                </form>
+            </div>
+        {{/if}}
     </div>
 </template>
 

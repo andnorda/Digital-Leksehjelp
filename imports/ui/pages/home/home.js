@@ -46,7 +46,7 @@ const joinQueue = (subject, type) => {
         'studentSessions.create',
         {
             subject,
-            type: 'chat'
+            type
         },
         function(error, sessionId) {
             Session.set('studentSessionId', sessionId);
