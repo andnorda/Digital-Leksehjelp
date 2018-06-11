@@ -9,6 +9,7 @@ import '../../ui/layouts/adminLayout/adminLayout.js';
 import '../../ui/layouts/clean/clean.js';
 
 import '../../ui/pages/home/home.js';
+import '../../ui/pages/volunteersPage/volunteersPage.js';
 import '../../ui/pages/search/search.js';
 import '../../ui/pages/showAnswer/showAnswer.js';
 import '../../ui/pages/loading/loading.js';
@@ -72,7 +73,15 @@ AdminController = LoginController.extend({
 AnswerQuestionController = BaseController;
 
 Router.onBeforeAction(checkIfSignedIn, {
-    except: ['home', 'askQuestion', 'notFound', 'search', 'showAnswer', 'chat']
+    except: [
+        'home',
+        'volunteers',
+        'askQuestion',
+        'notFound',
+        'search',
+        'showAnswer',
+        'chat'
+    ]
 });
 
 Router.configure({
@@ -82,7 +91,13 @@ Router.configure({
 
 Router.map(function() {
     this.route('home', {
+        controller: HomeController,
         path: '/'
+    });
+
+    this.route('volunteersPage', {
+        controller: HomeController,
+        path: '/frivillige'
     });
 
     this.route('/frivillig', function() {
