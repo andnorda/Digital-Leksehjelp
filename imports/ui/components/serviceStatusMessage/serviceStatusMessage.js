@@ -2,12 +2,11 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { getDay, isBefore, setHours, setMinutes } from 'date-fns';
 import { Config } from '/imports/api/config/config.js';
-import '../serviceStatusMessage/serviceStatusMessage.js';
 
-import './studentHeader.html';
-import './studentHeader.less';
+import './serviceStatusMessage.html';
+import './serviceStatusMessage.less';
 
-Template.studentHeader.onCreated(function() {
+Template.serviceStatusMessage.onCreated(function() {
     this.autorun(() => {
         this.subscribe('config.serviceStatus');
         this.subscribe('config.openingHours');
@@ -53,7 +52,7 @@ const nextOpenDay = openingHours => {
 const nextOpenTime = openingHours =>
     openingHours[nextOpenDay(openingHours)].from;
 
-Template.studentHeader.helpers({
+Template.serviceStatusMessage.helpers({
     isPending() {
         return !Config.findOne({ name: 'serviceStatus' });
     },

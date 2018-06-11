@@ -12,6 +12,7 @@ import './home.less';
 import '../../components/formMessage/formMessage.js';
 import '../../components/newSubjectSelector/subjectSelector.js';
 import '../../components/button/button.js';
+import '../../components/serviceStatusMessage/serviceStatusMessage.js';
 
 Template.hero.onCreated(function() {
     this.autorun(() => {
@@ -28,6 +29,10 @@ Template.hero.helpers({
 
 Template.homework.onCreated(function() {
     this.state = new ReactiveDict();
+
+    this.autorun(() => {
+        this.subscribe('config.serviceStatus');
+    });
 });
 
 const joinQueue = (subject, type) => {
@@ -55,6 +60,10 @@ Template.homework.helpers({
             Template.instance().state.get('subject') &&
             'For å være sikrere på at det ikke skal skje tekniske feil, bruk nettlesere som Google Chrome, Firefox eller Opera.'
         );
+    },
+    serviceStatus() {
+        const serviceStatus = Config.findOne({ name: 'serviceStatus' });
+        return serviceStatus && serviceStatus.open;
     },
     subject() {
         return Template.instance().state.get('subject');
