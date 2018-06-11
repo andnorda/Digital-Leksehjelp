@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Questions } from '/imports/api/questions/questions.js';
+import { Subjects } from '/imports/api/subjects/subjects.js';
 
 import './showAnswer.html';
 
@@ -15,6 +16,10 @@ Template.showAnswer.onRendered(function() {
 });
 
 Template.showAnswer.helpers({
+    subjectName(subjectId) {
+        const subject = Subjects.findOne({ _id: subjectId });
+        return subject ? subject.name : 'Ukjent fag';
+    },
     questionContext() {
         return Questions.findOne({});
     },

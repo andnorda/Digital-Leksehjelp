@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { CONSTANTS } from '/imports/constants.js';
+import { Subjects } from '/imports/api/subjects/subjects.js';
 
 import './relatedQuestions.html';
 
@@ -42,7 +43,17 @@ Template.relatedQuestions.onCreated(function() {
 });
 
 Template.relatedQuestions.helpers({
+    hasRelatedQuestions() {
+        return (Session.get('relatedQuestions') || []).length > 0;
+    },
     relatedQuestions() {
         return Session.get('relatedQuestions') || [];
+    }
+});
+
+Template.relatedQuestionItem.helpers({
+    subjectName(subjectId) {
+        const subject = Subjects.findOne({ _id: subjectId });
+        return subject ? subject.name : 'Ukjent fag';
     }
 });

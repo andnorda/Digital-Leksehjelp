@@ -41,6 +41,10 @@ Template.answerQuestionForm.onDestroyed(function() {
 });
 
 Template.answerQuestionForm.helpers({
+    subjectName(subjectId) {
+        const subject = Subjects.findOne({ _id: subjectId });
+        return subject ? subject.name : 'Ukjent fag';
+    },
     publishIsChecked(question) {
         if (question.answer) {
             return question.publishedBy;

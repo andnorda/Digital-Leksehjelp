@@ -111,3 +111,10 @@ Template.pagination.helpers({
         return pages;
     }
 });
+
+Template.searchQuestionItem.helpers({
+    subjectName(subjectId) {
+        const subject = Subjects.findOne({ _id: subjectId });
+        return subject ? subject.name : 'Ukjent fag';
+    }
+});

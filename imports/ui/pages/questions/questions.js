@@ -60,6 +60,10 @@ Template.unansweredQuestions.helpers({
 });
 
 Template.unansweredQuestionRow.helpers({
+    subjectName(subjectId) {
+        const subject = Subjects.findOne({ _id: subjectId });
+        return subject ? subject.name : 'Ukjent fag';
+    },
     status() {
         try {
             if (!this.editing || this.editing.length === 0) {
@@ -126,6 +130,10 @@ Template.answeredQuestionRow.events({
 });
 
 Template.answeredQuestionRow.helpers({
+    subjectName(subjectId) {
+        const subject = Subjects.findOne({ _id: subjectId });
+        return subject ? subject.name : 'Ukjent fag';
+    },
     username(userId) {
         const user = Meteor.users.findOne(userId);
         return user ? user.username : '';

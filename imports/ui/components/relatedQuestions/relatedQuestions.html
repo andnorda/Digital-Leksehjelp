@@ -1,5 +1,5 @@
 <template name="relatedQuestions">
-    {{#if isGreaterThanZero relatedQuestions.length}}
+    {{#if hasRelatedQuestions}}
         {{#each relatedQuestions}}
             {{> relatedQuestionItem question=this target=../target }}
         {{/each}}
