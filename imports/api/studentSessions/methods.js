@@ -99,9 +99,8 @@ Meteor.methods({
         );
     },
 
-    'studentSessions.create'({ subject, grade, type }) {
+    'studentSessions.create'({ subject, type }) {
         check(subject, String);
-        check(grade, String);
         check(type, String);
 
         const videoConferenceUrl = generateRandomAppearInLink();
@@ -110,7 +109,6 @@ Meteor.methods({
 
         return StudentSessions.insert({
             subject,
-            grade,
             type,
             videoConferenceUrl,
             state: STUDENT_SESSION_STATE.WAITING,
@@ -168,12 +166,11 @@ Meteor.methods({
                     $push: {
                         volunteers: {
                             id,
-                            unread: Messages.find({ sessionId: sessionId }).count()
+                            unread: Messages.find({ sessionId }).count()
                         }
                     }
                 }
             );
-
             Meteor.call('messages.create', {
                 message: `${
                     Meteor.users.findOne(id).profile.firstName

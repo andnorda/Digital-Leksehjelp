@@ -28,11 +28,11 @@
         </div>
         <form class="homework-form">
             <h2>Velg fag</h2>
-            {{> newSubjectSelector}}
+            {{> newSubjectSelector value=subject onChange=onSubjectChange}}
             <div class="buttons">
-                {{> button text='Chat'}}
+                {{> button type='button' text='Chat' onClick=onClickChat}}
                 <div class="or">eller</div>
-                {{> button text='Videohjelp'}}
+                {{> button type='button' text='Videohjelp' onClick=onClickVideo}}
             </div>
             {{#if infoMessage}}
                 {{> formMessage text=infoMessage}}

@@ -12,7 +12,8 @@ const StudentSessionsSchema = new SimpleSchema({
         type: [String]
     },
     grade: {
-        type: String
+        type: String,
+        optional: true
     },
     type: {
         type: String

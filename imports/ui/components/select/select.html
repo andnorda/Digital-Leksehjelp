@@ -1,6 +1,19 @@
 <template name="select">
     <div class="select-component {{#if isOpen}}open{{/if}}">
-        <button class="value" type="button">{{value}}<img src="/down-arrow.svg" alt="" /></button>
+        {{#if filter}}
+            <div class="inputWrapper">
+                <input
+                    type="text"
+                    value="{{value}}"
+                    placeholder="{{placeholder}}"
+                    class="searchField" />
+                <img src="/down-arrow.svg" alt="" />
+            </div>
+        {{else}}
+            <button
+                class="value"
+                type="button">{{value}}<img src="/down-arrow.svg" alt="" /></button>
+        {{/if}}
         <ul class="option-list">
             {{#each options}}
                 {{> selectOption optionArgs}}
@@ -10,5 +23,5 @@
 </template>
 
 <template name="selectOption">
-    <li class="option {{#if isActive}}active{{/if}}">{{value}}</li>
+    <li class="option {{#if isActive}}active{{/if}} {{#unless isAvailable}}unavailable{{/unless}}">{{value}}</li>
 </template>

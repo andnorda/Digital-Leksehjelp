@@ -1,13 +1,10 @@
 <template name="newSubjectSelector">
-    <div class="subjectSelector">
-        <div class="inputWrapper">
-            <input type="text" value="{{ value }}" placeholder="Velg fag" class="searchField {{validationError 'gradeError'}}" />
-            <span class="glyphicon glyphicon-chevron-down dropdown-caret"></span>
-        </div>
-        <ul class="dropdown {{#if showDropdown}}active{{/if}}">
-            {{#each subjects}}
-                <li class="subject {{#if isActive}}active{{/if}} {{#unless isSubjectAvailable}}unavailable{{/unless}}">{{name}}</li>
-            {{/each}}
-        </ul>
-    </div>
+    {{> select
+        placeholder='F. eks. matematikk, naturfag eller norsk'
+        options=subjects
+        onChange=onChange
+        value=value
+        filter=true
+        sort=sort
+        isAvailable=isAvailable}}
 </template>

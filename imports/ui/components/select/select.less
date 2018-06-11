@@ -4,6 +4,32 @@
     position: relative;
     font-size: 15px;
 
+    > .inputWrapper {
+        position: relative;
+
+        > .searchField {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid @input-border-color;
+            padding: 10px;
+            cursor: pointer;
+            color: @input-color;
+
+            &::placeholder {
+                color: @placeholder-color;
+            }
+        }
+
+        > img {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translate(0, -50%);
+            width: 14px;
+            cursor: pointer;
+        }
+    }
+
     > .value {
         display: flex;
         justify-content: space-between;
@@ -38,6 +64,10 @@
 
             &:not(:first-child) {
                 border-top: 1px solid @select-color;
+            }
+
+            &.unavailable {
+                color: @input-unavailable-color;
             }
 
             &.active {
