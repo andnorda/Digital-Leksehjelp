@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { Questions } from '/imports/api/questions/questions.js';
 
 import './showAnswer.html';
@@ -62,24 +61,11 @@ Template.volunteerMiniForm.events({
         );
 
         if (Meteor.user()) {
-            Meteor.call(
-                'questions.updateFromVolunteerMiniForm',
-                {
-                    questionId,
-                    title,
-                    publishAnswer
-                },
-                function(error) {
-                    if (error) {
-                        FlashMessages.sendError(error.message);
-                    } else {
-                        FlashMessages.sendSuccess('Svar lagret', {
-                            autoHide: true,
-                            hideDelay: 6000
-                        });
-                    }
-                }
-            );
+            Meteor.call('questions.updateFromVolunteerMiniForm', {
+                questionId,
+                title,
+                publishAnswer
+            });
         }
     },
 
@@ -87,17 +73,9 @@ Template.volunteerMiniForm.events({
         event.preventDefault();
 
         if (Meteor.user()) {
-            Meteor.call(
-                'questions.verify',
-                {
-                    questionId: this._id
-                },
-                function(error) {
-                    if (error) {
-                        FlashMessages.sendError(error.message);
-                    }
-                }
-            );
+            Meteor.call('questions.verify', {
+                questionId: this._id
+            });
         }
     }
 });

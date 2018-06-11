@@ -164,12 +164,7 @@ Router.map(function() {
 
     this.route('askQuestion', {
         controller: DefaultController,
-        path: '/sporsmal',
-        onBeforeAction() {
-            FlashMessages.clear();
-            validationError = [];
-            this.next();
-        }
+        path: '/sporsmal'
     });
 
     this.route('showAnswer', {

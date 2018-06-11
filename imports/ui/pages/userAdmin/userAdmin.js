@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
-import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { Config } from '/imports/api/config/config.js';
 import userRoles from '/imports/userRoles.js';
 import '../../components/input/input.js';

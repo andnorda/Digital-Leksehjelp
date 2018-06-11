@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Deps } from 'meteor/deps';
-import { FlashMessages } from 'meteor/mrt:flash-messages';
 import mixpanel from '/imports/mixpanel';
 import '/imports/api/questions/methods.js';
 
@@ -13,10 +12,6 @@ Deps.autorun(function() {
     if (user && user.profile && user.profile.forceLogOut) {
         Meteor.logout();
     }
-});
-
-FlashMessages.configure({
-    autoHide: false
 });
 
 Meteor.Spinner.options = {

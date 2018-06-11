@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Config } from '/imports/api/config/config.js';
-import { FlashMessages } from 'meteor/mrt:flash-messages';
 
 import '../serviceStatus/serviceStatus.js';
 
@@ -22,10 +21,6 @@ Template.openService.helpers({
 
 Template.openService.events({
     'click button#openService'() {
-        Meteor.call('config.openService', function(error) {
-            if (error) {
-                FlashMessages.sendError(error.message);
-            }
-        });
+        Meteor.call('config.openService');
     }
 });

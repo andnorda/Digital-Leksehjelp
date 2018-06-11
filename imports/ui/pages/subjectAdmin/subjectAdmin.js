@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { $ } from 'meteor/jquery';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { HelpTopics } from '/imports/api/helpTopics/helpTopics.js';

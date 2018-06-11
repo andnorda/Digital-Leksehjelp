@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { Session } from 'meteor/session';
-import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { CONSTANTS } from '/imports/constants.js';
@@ -24,15 +23,9 @@ const resetForm = function() {
 const askQuestion = function(questionFields) {
     Meteor.call('questions.ask', questionFields, function(error) {
         if (error) {
-            FlashMessages.sendError(
-                'Noe gikk galt ved innsending av spørsmål. Vennligst prøv igjen.',
-                { autoHide: true, hideDelay: 6000 }
-            );
+            // TODO
         } else {
             resetForm();
-            FlashMessages.sendSuccess(
-                'Spørsmål sendt inn. Du vil få beskjed på e-post når spørsmålet er besvart.'
-            );
         }
         $('button[type=submit]').removeClass('disabled');
     });

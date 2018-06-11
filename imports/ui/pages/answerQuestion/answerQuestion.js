@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
-import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { CONSTANTS } from '/imports/constants.js';
 
@@ -63,12 +62,7 @@ Template.answerQuestionForm.helpers({
 const answerQuestion = function(answerFields) {
     Meteor.call('questions.answer', answerFields, function(error) {
         if (error) {
-            FlashMessages.sendError(error.message);
-        } else {
-            FlashMessages.sendSuccess('Svar lagret', {
-                autoHide: true,
-                hideDelay: 6000
-            });
+            // TODO
         }
     });
 };
@@ -112,17 +106,13 @@ Template.answerQuestionForm.events({
 
         if (files.length === 1) {
             if (files[0].size > CONSTANTS.S3_MAX_UPLOAD_FILE_SIZE) {
-                FlashMessages.sendError('For stor fil. Maks 5 MB.');
+                // TODO
                 return;
             }
 
             S3.upload({ files, path: 'vedlegg' }, function(error, result) {
                 if (error) {
-                    FlashMessages.sendError(
-                        `Noe gikk galt ved opplastningen. Prøv igjen.\n${
-                            error.message
-                        }`
-                    );
+                    // TODO
                     return;
                 }
                 if (!result.uploading) {

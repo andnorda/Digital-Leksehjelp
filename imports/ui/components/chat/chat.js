@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { $ } from 'meteor/jquery';
-import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { Messages } from '/imports/api/messages/messages.js';
 import { CONSTANTS, STUDENT_SESSION_STATE } from '/imports/constants.js';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
@@ -105,16 +104,12 @@ Template.chatComponent.events({
 
         if (files.length === 1) {
             if (files[0].size > CONSTANTS.S3_MAX_UPLOAD_FILE_SIZE) {
-                FlashMessages.sendError('For stor fil. Maks 5 MB.');
+                // TODO
             } else {
                 S3.upload({ files, path: 'chat' }, function(error, result) {
                     event.target.value = null;
                     if (error) {
-                        FlashMessages.sendError(
-                            `Noe gikk galt ved opplastningen. Prøv igjen.\n${
-                                error.message
-                            }`
-                        );
+                        // TODO
                     } else {
                         const { params: { sessionId } } = Router.current();
                         Meteor.call('messages.create', {

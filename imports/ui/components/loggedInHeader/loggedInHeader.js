@@ -57,19 +57,11 @@ Template.loggedInHeader.events({
     'click .open-service'(event) {
         event.preventDefault();
 
-        Meteor.call('config.openService', function(error) {
-            if (error) {
-                FlashMessages.sendError(error.message);
-            }
-        });
+        Meteor.call('config.openService');
     },
     'click .close-service'(event) {
         event.preventDefault();
 
-        Meteor.call('config.closeService', function(error) {
-            if (error) {
-                FlashMessages.sendError(error.message);
-            }
-        });
+        Meteor.call('config.closeService');
     }
 });

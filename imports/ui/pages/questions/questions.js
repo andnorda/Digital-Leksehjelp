@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Spacebars } from 'meteor/spacebars';
-import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { Questions } from '/imports/api/questions/questions.js';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { QUESTION_SUBSCRIPTION_LEVEL } from '/imports/constants';
@@ -120,17 +119,9 @@ Template.unverifiedQuestions.helpers({
 
 Template.answeredQuestionRow.events({
     'click .verify-answer'() {
-        Meteor.call(
-            'questions.verify',
-            {
-                questionId: this._id
-            },
-            function(error) {
-                if (error) {
-                    FlashMessages.sendError(error.message);
-                }
-            }
-        );
+        Meteor.call('questions.verify', {
+            questionId: this._id
+        });
     }
 });
 
