@@ -9,23 +9,32 @@ body {
     padding: 0;
     height: 100%;
     font-size: 15px;
+    line-height: 1.2;
 
     @media (min-width: 768px) {
         font-size: 20px;
     }
 }
 
-table {
-    table-layout: fixed;
-    word-wrap: break-word;
+h1 {
+    font-size: 20px;
+    font-weight: normal;
+    margin: 20px 0;
+
+    @media (min-width: 768px) {
+        font-size: 40px;
+    }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
-    font-weight: 400;
+h2 {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 20px 0 5px;
+
+    @media (min-width: 768px) {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
 }
 
 em {
@@ -36,7 +45,6 @@ em {
 .wrapper {
     min-height: 100%;
     position: relative;
-    margin-top: -25px;
 }
 
 .header {
@@ -55,20 +63,6 @@ em {
     bottom: 0;
     left: 0;
     background-color: @red-cross-color;
-}
-
-.home-header {
-    background: url('/header_bg.png');
-    height: 710px;
-}
-
-.home {
-    margin-top: -25px;
-
-    .container {
-        padding-left: 35px;
-        padding-right: 35px;
-    }
 }
 
 @media (min-width: 1240px) {
@@ -91,10 +85,6 @@ em {
     #video-help-container {
         background: @todays-volunteers-bg-color !important;
         padding-bottom: 40px;
-    }
-
-    .home-header {
-        height: auto !important;
     }
 }
 
@@ -366,7 +356,6 @@ a.red-cross-link {
 
 .grid-adjustment {
     position: absolute;
-    margin-top: -180px;
     margin-left: -90px;
 
     h2 {
@@ -519,7 +508,6 @@ a.red-cross-link {
 .dl-dropdown-ul {
     border-radius: 0px;
     border: solid 3px @dropdown-item-color;
-    margin-top: -3px;
     padding: 0px;
     max-height: 595px;
     overflow-y: scroll;

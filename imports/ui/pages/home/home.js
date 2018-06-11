@@ -6,6 +6,8 @@ import './home.html';
 import './home.less';
 
 import '../../components/formMessage/formMessage.js';
+import '../../components/newSubjectSelector/subjectSelector.js';
+import '../../components/button/button.js';
 
 Template.hero.onCreated(function() {
     this.autorun(() => {
@@ -17,5 +19,11 @@ Template.hero.helpers({
     infoMessage() {
         const infoMessage = Config.findOne({ name: 'infoMessage' });
         return infoMessage && infoMessage.text;
+    }
+});
+
+Template.homework.helpers({
+    infoMessage() {
+        return 'For å være sikrere på at det ikke skal skje tekniske feil, bruk nettlesere som Google Chrome, Firefox eller Opera.';
     }
 });

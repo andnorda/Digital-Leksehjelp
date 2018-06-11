@@ -1,9 +1,11 @@
 <template name="home">
-    {{> hero}}
-    {{> homework}}
-    {{> motivation}}
-    {{> questionsAndAnswers}}
-    {{> volunteers}}
+    <div class="home">
+        {{> hero}}
+        {{> homework}}
+        {{> motivation}}
+        {{> questionsAndAnswers}}
+        {{> volunteers}}
+    </div>
 </template>
 
 <template name="hero">
@@ -19,7 +21,24 @@
 </template>
 
 <template name="homework">
-    <div class="homework">homework</div>
+    <section class="homework">
+        <div>
+            <h1>Leksehjelp <em>åpen nå</em></h1>
+            <p>Få hjelp av en frivillig til å løse oppgaver, diskutere et tema, skrive tekster eller øve til prøver. Start en chat eller videosamtale!</p>
+        </div>
+        <form class="homework-form">
+            <h2>Velg fag</h2>
+            {{> newSubjectSelector}}
+            <div class="buttons">
+                {{> button text='Chat'}}
+                <div class="or">eller</div>
+                {{> button text='Videohjelp'}}
+            </div>
+            {{#if infoMessage}}
+                {{> formMessage text=infoMessage}}
+            {{/if}}
+        </form>
+    </section>
 </template>
 
 <template name="motivation">

@@ -1,17 +1,25 @@
-.hero {
-    margin: 20px;
-    border-bottom: solid 1px black;
+.home {
+    > section {
+        margin: 20px;
 
-    @media (min-width: 768px) {
-        margin: 50px 60px;
+        @media (min-width: 768px) {
+            margin: 50px 60px;
+        }
+
+        @media (min-width: 1366px) {
+            margin-right: 120px;
+            margin-left: 120px;
+        }
     }
+}
+
+.hero {
+    border-bottom: solid 1px black;
 
     @media (min-width: 1366px) {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-right: 120px;
-        margin-left: 120px;
         border-bottom: none;
 
         img {
@@ -27,6 +35,38 @@
 
         @media (min-width: 768px) {
             font-size: 40px;
+        }
+    }
+}
+
+.homework {
+    @media (min-width: 768px) {
+        border: solid 1px black;
+        padding: 30px;
+    }
+
+    @media (min-width: 1366px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 30px;
+
+        > form {
+            margin-top: 32px;
+        }
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+
+        > .or {
+            margin: 0 10px;
+
+            @media (min-width: 768px) {
+                margin: 0 20px;
+            }
         }
     }
 }
