@@ -17,30 +17,39 @@ import './queueAdmin.less';
 Template.queueAdmin.onCreated(function() {
     this.autorun(() => {
         this.subscribe('studentSessions');
+        this.subscribe('users.self');
     });
 });
 
 Template.queueAdmin.helpers({
     mySubjectsQueue() {
-        const { profile: { subjects = [] } } = Meteor.user();
+        const { subjects = [], helpTopics = [] } = Meteor.user();
         return (
             subjects.length &&
             StudentSessions.find({
-                $or: subjects.map(subject => ({
-                    subject: subject.subjectName
-                })),
+                $or: subjects
+                    .map(subject => ({ subject }))
+                    .concat(
+                        helpTopics.map(helpTopic => ({ subject: helpTopic }))
+                    ),
                 state: STUDENT_SESSION_STATE.WAITING
             })
         );
     },
     otherSubjectsQueue() {
-        const { profile: { subjects = [] } } = Meteor.user();
+        const { subjects = [], helpTopics = [] } = Meteor.user();
         return StudentSessions.find(
             subjects.length
                 ? {
-                      $and: subjects.map(subject => ({
-                          subject: { $ne: subject.subjectName }
-                      })),
+                      $and: subjects
+                          .map(subject => ({
+                              subject: { $ne: subject }
+                          }))
+                          .concat(
+                              helpTopics.map(helpTopic => ({
+                                  subject: { $ne: helpTopic }
+                              }))
+                          ),
                       state: STUDENT_SESSION_STATE.WAITING
                   }
                 : { state: STUDENT_SESSION_STATE.WAITING }
