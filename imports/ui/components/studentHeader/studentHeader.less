@@ -1,0 +1,25 @@
+@import '/imports/ui/stylesheets/less/colors.import.less';
+
+.studentHeader {
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+
+    .logo {
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .status {
+        color: @primary-color;
+        white-space: nowrap;
+    }
+
+    .rk_logo {
+        height: 27px;
+
+        @media (min-width: 768px) {
+            height: 38px;
+        }
+    }
+}

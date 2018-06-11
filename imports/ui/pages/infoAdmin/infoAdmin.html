@@ -15,10 +15,25 @@
             <form class="opening-hours-form">
                 <h1>Åpningstider</h1>
                 <p>Her kan du endre åpningstidene som blir vist på forsiden.</p>
+                <div>
+                    {{#each days}}
+                        <div>
+                            <input
+                                type="checkbox"
+                                id="{{this}}"
+                                name="openingHours"
+                                value="{{this}}"
+                                checked="{{getDay this}}">
+                            <label for="{{this}}">{{dayLabel this}}</label>
+                            <input type="time" id="{{this}}-from" value="{{getDayFrom this}}">
+                            <input type="time" id="{{this}}-to" value="{{getDayTo this}}">
+                        </div>
+                    {{/each}}
+                </div>
                 <textarea
-                    class="opening-hours"
-                    rows="3"
-                    placeholder="F.eks.: Mandag - torsdag kl. 17:00-21:00">{{openingHours}}</textarea>
+                    class="opening-hours-text"
+                    rows="1"
+                    placeholder="F.eks.: Sommerstengt">{{openingHoursText}}</textarea>
                 {{> button type='submit' text='Oppdater' disabled=noOpeningHoursChanges}}
             </form>
         </section>

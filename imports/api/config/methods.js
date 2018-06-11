@@ -18,8 +18,17 @@ Meteor.methods({
         Config.upsert({ name: 'infoMessage' }, { $set: { text: infoMessage } });
     },
 
-    'config.setOpeningHours'(openingHours) {
-        check(openingHours, String);
+    'config.setOpeningHours'({
+        text,
+        monday,
+        tuesday,
+        wednesday,
+        thursday,
+        friday,
+        saturday,
+        sunday
+    }) {
+        check(text, String);
 
         const user = Meteor.users.findOne(this.userId);
         if (!user) {
@@ -31,7 +40,18 @@ Meteor.methods({
 
         Config.upsert(
             { name: 'openingHours' },
-            { $set: { text: openingHours } }
+            {
+                $set: {
+                    text,
+                    monday,
+                    tuesday,
+                    wednesday,
+                    thursday,
+                    friday,
+                    saturday,
+                    sunday
+                }
+            }
         );
     },
 

@@ -3,6 +3,7 @@ import { Router } from 'meteor/iron:router';
 import { Questions } from '/imports/api/questions/questions.js';
 
 import '../../ui/layouts/body/body.js';
+import '../../ui/layouts/studentLayout/studentLayout.js';
 import '../../ui/layouts/volunteerLayout/volunteerLayout.js';
 import '../../ui/layouts/adminLayout/adminLayout.js';
 import '../../ui/layouts/clean/clean.js';
@@ -49,9 +50,7 @@ DefaultController = BaseController.extend({
 });
 
 HomeController = BaseController.extend({
-    yieldTemplates: {
-        footer: { to: 'footer' }
-    }
+    layoutTemplate: 'studentLayout'
 });
 
 QueueController = RouteController.extend({
@@ -83,12 +82,7 @@ Router.configure({
 
 Router.map(function() {
     this.route('home', {
-        path: '/',
-        onBeforeAction() {
-            FlashMessages.clear();
-            validationError = [];
-            this.next();
-        }
+        path: '/'
     });
 
     this.route('/frivillig', function() {

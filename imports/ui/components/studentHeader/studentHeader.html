@@ -1,0 +1,21 @@
+<template name='studentHeader'>
+    <div class="studentHeader">
+        <div>
+            <span class="logo">Digital leksehjelp</span>
+            <span class="status">
+                {{#unless isPending}}
+                    {{#if serviceStatus}}
+                        åpent {{#if closingTime}}fram til kl. {{closingTime}}{{else}}nå!{{/if}}
+                    {{else}}
+                        {{#if openingTime}}
+                            {{openingTime}}
+                        {{else}}
+                            {{fallbackText}}
+                        {{/if}}
+                    {{/if}}
+                {{/unless}}
+            </span>
+        </div>
+        <img class="rk_logo" src="/rk_logo.png">
+    </div>
+</template>

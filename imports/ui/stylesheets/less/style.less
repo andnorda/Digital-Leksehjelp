@@ -8,8 +8,11 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-size: 16px;
-    line-height: 1.6em;
+    font-size: 15px;
+
+    @media (min-width: 768px) {
+        font-size: 20px;
+    }
 }
 
 table {
@@ -23,7 +26,6 @@ h3,
 h4,
 h5 {
     font-weight: 400;
-    line-height: 1.6em;
 }
 
 .wrapper {
@@ -203,7 +205,6 @@ p.get-help-box-item {
     font-weight: 300;
     font-size: 18px;
     margin-top: 0;
-    line-height: 38px;
 }
 
 @media screen and (min-width: 992px) {
@@ -222,7 +223,6 @@ p.get-help-box-item {
 
 .get-help-box-title {
     font-size: 28px;
-    line-height: 38px;
     font-weight: 700;
     color: black;
     margin-bottom: 0;
@@ -239,7 +239,6 @@ p.get-help-box-item {
     text-align: left !important;
     color: @dropdown-text-color;
     font-size: 18px;
-    line-height: 1.8em;
     padding-left: 25px;
 
     border: 3px solid @dropdown-border-color;
@@ -298,8 +297,6 @@ p.get-help-box-item {
 }
 
 .schedule {
-    line-height: 1.6em;
-
     a {
         color: @red-cross-color;
         border-bottom: 1px dashed @red-cross-color;
@@ -341,7 +338,6 @@ a.red-cross-link {
 
         text-align: center;
         font-size: 40px;
-        line-height: 47px;
         color: black;
 
         span {
@@ -377,12 +373,10 @@ a.red-cross-link {
 
 .question-info-box {
     font-size: 16px;
-    line-height: 26px;
 }
 
 .small-title {
     font-size: 22px;
-    line-height: 32px;
     font-weight: bold;
 }
 
@@ -394,7 +388,6 @@ a.red-cross-link {
     background-color: @question-item-bg-color;
     border-radius: 5px;
     font-size: 16px;
-    line-height: 26px;
     color: black;
 
     .question-item-footer {
@@ -422,7 +415,6 @@ a.red-cross-link {
 
 .related-question-item {
     margin-bottom: 20px;
-    line-height: 20px;
 
     &:after {
         display: none;
@@ -485,7 +477,6 @@ a.red-cross-link {
 
 .hidden-error {
     border-radius: 0px;
-    line-height: 5px;
     font-size: 12px;
     margin-bottom: 10px;
     background-color: lighten(@red-cross-color, 50);
@@ -535,7 +526,6 @@ a.red-cross-link {
     margin-right: 5px;
     border-bottom: solid 1px @dropdown-item-color;
     font-size: 18px;
-    line-height: 40px;
     cursor: pointer;
 
     &:last-child {
@@ -554,7 +544,6 @@ a.red-cross-link {
     border-radius: 0px;
     border: solid 2px;
     border-color: @dropdown-item-color;
-    line-height: 30px;
     font-size: 18px;
     padding-left: 25px;
     padding-top: 20px;
@@ -565,7 +554,6 @@ a.red-cross-link {
     border-radius: 0px;
     border: solid 2px;
     border-color: @dropdown-item-color;
-    line-height: 30px;
     font-size: 18px;
     padding-left: 25px;
 }
@@ -615,7 +603,6 @@ a.red-cross-link {
     width: 100%;
     height: 50px;
     font-size: 14px;
-    line-height: 50px;
     padding-left: 20px;
     padding-right: 20px;
     background-color: @dl-file-color;
@@ -625,7 +612,6 @@ a.red-cross-link {
         top: 18px;
         right: 15px;
         color: @red-cross-color;
-        line-height: 14px;
         border-bottom: 1px dashed @red-cross-color;
 
         &:hover {
