@@ -76,11 +76,19 @@ Template.homework.helpers({
     },
     onClickChat() {
         const state = Template.instance().state;
-        return () => joinQueue(state.get('subject'), 'chat');
+        return () => {
+            if (state.get('subject')) {
+                joinQueue(state.get('subject'), 'chat');
+            }
+        };
     },
     onClickVideo() {
         const state = Template.instance().state;
-        return () => joinQueue(state.get('subject'), 'video');
+        return () => {
+            if (state.get('subject')) {
+                joinQueue(state.get('subject'), 'video');
+            }
+        };
     }
 });
 
@@ -112,10 +120,18 @@ Template.help.helpers({
     },
     onClickChat() {
         const state = Template.instance().state;
-        return () => joinQueue(state.get('helpTopic'), 'chat');
+        return () => {
+            if (state.get('helpTopic')) {
+                joinQueue(state.get('helpTopic'), 'chat');
+            }
+        };
     },
     onClickVideo() {
         const state = Template.instance().state;
-        return () => joinQueue(state.get('helpTopic'), 'video');
+        return () => {
+            if (state.get('helpTopic')) {
+                joinQueue(state.get('helpTopic'), 'video');
+            }
+        };
     }
 });
