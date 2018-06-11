@@ -90,15 +90,8 @@ Template.infoAdmin.helpers({
     noInfoMessageChanges() {
         const infoMessage = Config.findOne({ name: 'infoMessage' });
         const temp = Template.instance().state.get('infoMessage');
-        if (!infoMessage) {
-            return true;
-        }
 
-        if (temp === undefined) {
-            return true;
-        }
-
-        return temp === infoMessage.text;
+        return temp === undefined || (infoMessage && temp === infoMessage.text);
     },
     noOpeningHoursChanges() {
         const openingHours = Config.findOne({ name: 'openingHours' });

@@ -7,7 +7,15 @@
 </template>
 
 <template name="hero">
-    <div class="hero">hero</div>
+    <section class="hero">
+        <div>
+            <div class="description"><em>Gratis,</em> <em>trygt</em> og <em>anonymt</em> for deg på ungdomskolen og videregående.</div>
+            {{#if infoMessage}}
+                {{> formMessage text=infoMessage}}
+            {{/if}}
+        </div>
+        <img src="/figures_1.svg" alt="" />
+    </section>
 </template>
 
 <template name="homework">

@@ -1,0 +1,32 @@
+.hero {
+    margin: 20px;
+    border-bottom: solid 1px black;
+
+    @media (min-width: 768px) {
+        margin: 50px 60px;
+    }
+
+    @media (min-width: 1366px) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-right: 120px;
+        margin-left: 120px;
+        border-bottom: none;
+
+        img {
+            transform: rotate(45deg) scale(1.5);
+            margin-left: 50px;
+            width: 50%;
+            max-width: 500px;
+        }
+    }
+
+    .description {
+        font-size: 20px;
+
+        @media (min-width: 768px) {
+            font-size: 40px;
+        }
+    }
+}
