@@ -75,6 +75,7 @@ AnswerQuestionController = BaseController;
 Router.onBeforeAction(checkIfSignedIn, {
     except: [
         'home',
+        'queue',
         'volunteers',
         'askQuestion',
         'notFound',

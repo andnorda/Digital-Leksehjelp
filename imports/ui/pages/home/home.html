@@ -51,20 +51,24 @@
 
 <template name="help">
     <section class="help">
-        <h1>Mestring og motivasjon {{>serviceStatusMessage}}</h1>
-        <p>Trenger du litt motivasjon? Har du fått eksamensnerver? Vil du prøve en ny lesestrategi?</p>
-        <h2>Velg tema</h2>
-        {{> helpTopicSelector value=helpTopic onChange=onHelpTopicChange}}
-        {{#if serviceStatus}}
-            <div class="buttons">
-                {{> button type='button' text='Chat' onClick=onClickChat}}
-                <div class="or">eller</div>
-                {{> button type='button' text='Videohjelp' onClick=onClickVideo}}
-            </div>
-        {{/if}}
-        {{#if infoMessage}}{{#if serviceStatus}}
-            {{> formMessage text=infoMessage}}
-        {{/if}}{{/if}}
+        <div>
+            <h1>Mestring og motivasjon {{>serviceStatusMessage}}</h1>
+            <p>Trenger du litt motivasjon? Har du fått eksamensnerver? Vil du prøve en ny lesestrategi?</p>
+        </div>
+        <form>
+            <h2>Velg tema</h2>
+            {{> helpTopicSelector value=helpTopic onChange=onHelpTopicChange}}
+            {{#if serviceStatus}}
+                <div class="buttons">
+                    {{> button type='button' text='Chat' onClick=onClickChat}}
+                    <div class="or">eller</div>
+                    {{> button type='button' text='Videohjelp' onClick=onClickVideo}}
+                </div>
+            {{/if}}
+            {{#if infoMessage}}{{#if serviceStatus}}
+                {{> formMessage text=infoMessage}}
+            {{/if}}{{/if}}
+        </form>
     </section>
 </template>
 
@@ -74,10 +78,10 @@
             <h1>Spørsmål og svar</h1>
             <p>Du kan lete etter svar blandt allerede stilte spørsmål, eller <a href="/sporsmal">stille et spørsmål</a> hvis du ikke finner det du luer på.</p>
         </div>
-        <div>
+        <form>
             <h2>Søk etter spørmål</h2>
             {{> searchField}}
-        </div>
+        </form>
     </section>
 </template>
 
