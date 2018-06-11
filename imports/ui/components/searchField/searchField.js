@@ -1,0 +1,22 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { Router } from 'meteor/iron:router';
+import { ReactiveDict } from 'meteor/reactive-dict';
+
+import './searchField.html';
+import './searchField.less';
+
+Template.searchField.onCreated(function() {
+    this.state = new ReactiveDict();
+});
+
+Template.searchField.events({
+    'input .searchField'(event) {
+        Template.instance().state.set('query', event.target.value);
+    },
+    'submit .searchFieldForm'(event) {
+        event.preventDefault();
+
+        Router.go(`/sok?q=${Template.instance().state.get('query')}`);
+    }
+});

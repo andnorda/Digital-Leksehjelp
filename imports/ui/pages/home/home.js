@@ -14,6 +14,7 @@ import '../../components/newSubjectSelector/subjectSelector.js';
 import '../../components/helpTopicSelector/helpTopicSelector.js';
 import '../../components/button/button.js';
 import '../../components/serviceStatusMessage/serviceStatusMessage.js';
+import '../../components/searchField/searchField.js';
 
 Template.hero.onCreated(function() {
     this.autorun(() => {
