@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Router } from 'meteor/iron:router';
+import { RouterAutoscroll } from 'meteor/okgrow:router-autoscroll';
 import { Questions } from '/imports/api/questions/questions.js';
 
 import '../../ui/layouts/body/body.js';
@@ -30,6 +31,8 @@ import '../../ui/pages/volunteerChat/volunteerChat.js';
 import '../../ui/components/header/header.js';
 import '../../ui/components/footer/footer.js';
 import '../../ui/components/login/login.js';
+
+RouterAutoscroll.animationDuration = 0;
 
 const checkIfSignedIn = function() {
     if (!Meteor.userId()) {
