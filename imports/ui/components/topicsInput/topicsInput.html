@@ -1,11 +1,13 @@
 <template name="topicsInput">
-    <div class="topicsInput">
-        {{> select placeholder='Legg til tema' options=topics onChange=addTopic}}
-        {{#if value}}
-            {{> tagList tags=value onClick=removeTopic}}
-        {{/if}}
-        {{#if oneTag}}
-            <div class="oneTag">Du kan legge til flere temaer</div>
-        {{/if}}
-    </div>
+    {{#if topics}}
+        <div class="topicsInput">
+            {{> select placeholder='Legg til tema' options=topics onChange=addTopic}}
+            {{#if value}}
+                {{> tagList tags=value onClick=removeTopic}}
+            {{/if}}
+            {{#if oneTag}}
+                <div class="oneTag">Du kan legge til flere temaer</div>
+            {{/if}}
+        </div>
+    {{/if}}
 </template>

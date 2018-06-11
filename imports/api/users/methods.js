@@ -14,7 +14,7 @@ Meteor.methods({
 
         Meteor.users.update(
             { _id: this.userId },
-            { $addToSet: { 'subjects': subject } }
+            { $addToSet: { subjects: subject } }
         );
     },
 
@@ -28,7 +28,35 @@ Meteor.methods({
 
         Meteor.users.update(
             { _id: this.userId },
-            { $pull: { 'subjects': subject } }
+            { $pull: { subjects: subject } }
+        );
+    },
+
+    'users.addHelpTopic'(helpTopic) {
+        check(helpTopic, String);
+
+        const user = Meteor.users.findOne(this.userId);
+        if (!user) {
+            throw new Meteor.Error(401, 'You are not logged in.');
+        }
+
+        Meteor.users.update(
+            { _id: this.userId },
+            { $addToSet: { helpTopics: helpTopic } }
+        );
+    },
+
+    'users.removeHelpTopic'(helpTopic) {
+        check(helpTopic, String);
+
+        const user = Meteor.users.findOne(this.userId);
+        if (!user) {
+            throw new Meteor.Error(401, 'You are not logged in.');
+        }
+
+        Meteor.users.update(
+            { _id: this.userId },
+            { $pull: { helpTopics: helpTopic } }
         );
     },
 

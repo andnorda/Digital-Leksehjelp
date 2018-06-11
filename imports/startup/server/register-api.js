@@ -11,6 +11,9 @@ import '../../api/studentSessions/server/publications.js';
 import '../../api/subjects/methods.js';
 import '../../api/subjects/server/publications.js';
 
+import '../../api/helpTopics/methods.js';
+import '../../api/helpTopics/server/publications.js';
+
 import '../../api/users/methods.js';
 import '../../api/users/server/publications.js';
 

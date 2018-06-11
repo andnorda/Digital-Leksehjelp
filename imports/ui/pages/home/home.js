@@ -11,6 +11,7 @@ import './home.less';
 
 import '../../components/formMessage/formMessage.js';
 import '../../components/newSubjectSelector/subjectSelector.js';
+import '../../components/helpTopicSelector/helpTopicSelector.js';
 import '../../components/button/button.js';
 import '../../components/serviceStatusMessage/serviceStatusMessage.js';
 
@@ -79,5 +80,41 @@ Template.homework.helpers({
     onClickVideo() {
         const state = Template.instance().state;
         return () => joinQueue(state.get('subject'), 'video');
+    }
+});
+
+Template.help.onCreated(function() {
+    this.state = new ReactiveDict();
+
+    this.autorun(() => {
+        this.subscribe('config.serviceStatus');
+    });
+});
+
+Template.help.helpers({
+    infoMessage() {
+        return (
+            Template.instance().state.get('helpTopic') &&
+            'For å være sikrere på at det ikke skal skje tekniske feil, bruk nettlesere som Google Chrome, Firefox eller Opera.'
+        );
+    },
+    serviceStatus() {
+        const serviceStatus = Config.findOne({ name: 'serviceStatus' });
+        return serviceStatus && serviceStatus.open;
+    },
+    helpTopic() {
+        return Template.instance().state.get('helpTopic');
+    },
+    onHelpTopicChange() {
+        const state = Template.instance().state;
+        return helpTopic => state.set('helpTopic', helpTopic);
+    },
+    onClickChat() {
+        const state = Template.instance().state;
+        return () => joinQueue(state.get('helpTopic'), 'chat');
+    },
+    onClickVideo() {
+        const state = Template.instance().state;
+        return () => joinQueue(state.get('helpTopic'), 'video');
     }
 });

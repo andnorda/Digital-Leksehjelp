@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Subjects } from '/imports/api/subjects/subjects.js';
+import { HelpTopics } from '/imports/api/helpTopics/helpTopics.js';
+
 import '../../components/input/input.js';
 import '../../components/select/select.js';
 import '../../components/button/button.js';
@@ -14,6 +16,7 @@ Template.myProfile.onCreated(function() {
     this.autorun(() => {
         this.subscribe('users.self');
         this.subscribe('subjects');
+        this.subscribe('helpTopics');
     });
 });
 
@@ -38,6 +41,31 @@ Template.mySubjects.helpers({
     },
     removeSubject() {
         return subject => Meteor.call('users.removeSubject', subject);
+    }
+});
+
+Template.myHelpTopics.helpers({
+    helpTopics() {
+        return HelpTopics.find()
+            .fetch()
+            .filter(
+                helpTopic =>
+                    !(Meteor.user().helpTopics || []).includes(helpTopic.name)
+            )
+            .map(helpTopic => helpTopic.name);
+    },
+    myHelpTopics() {
+        if (Meteor.user()) {
+            return Meteor.user().helpTopics;
+        }
+        return null;
+    },
+    addHelpTopic() {
+        return helpTopic =>
+            helpTopic && Meteor.call('users.addHelpTopic', helpTopic);
+    },
+    removeHelpTopic() {
+        return helpTopic => Meteor.call('users.removeHelpTopic', helpTopic);
     }
 });
 

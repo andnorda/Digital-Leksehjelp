@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { $ } from 'meteor/jquery';
 import { Subjects } from '/imports/api/subjects/subjects.js';
+import { HelpTopics } from '/imports/api/helpTopics/helpTopics.js';
 import { Topics } from '/imports/api/topics/topics.js';
 import '../../components/input/input.js';
 import '../../components/button/button.js';
@@ -36,6 +37,32 @@ Template.addSubject.events({
     }
 });
 
+Template.addHelpTopic.onCreated(function() {
+    this.state = new ReactiveDict();
+});
+
+Template.addHelpTopic.helpers({
+    helpTopicName() {
+        return Template.instance().state.get('helpTopicName');
+    },
+    addHelpTopicDisabled() {
+        return !Template.instance().state.get('helpTopicName');
+    }
+});
+
+Template.addHelpTopic.events({
+    'input input[name="helpTopicName"]'(event) {
+        Template.instance().state.set('helpTopicName', event.target.value);
+    },
+    'submit .add-help-topic-form'(event) {
+        event.preventDefault();
+        const state = Template.instance().state;
+        const helpTopicName = state.get('helpTopicName');
+        Meteor.call('helpTopics.insert', helpTopicName);
+        state.set('helpTopicName', undefined);
+    }
+});
+
 Template.allSubjects.onCreated(function() {
     this.autorun(() => {
         this.subscribe('subjects');
@@ -45,6 +72,18 @@ Template.allSubjects.onCreated(function() {
 Template.allSubjects.helpers({
     subjects() {
         return Subjects.find({}, { sort: { name: 1 } });
+    }
+});
+
+Template.allHelpTopics.onCreated(function() {
+    this.autorun(() => {
+        this.subscribe('helpTopics');
+    });
+});
+
+Template.allHelpTopics.helpers({
+    helpTopics() {
+        return HelpTopics.find({}, { sort: { name: 1 } });
     }
 });
 
@@ -67,6 +106,20 @@ Template.subject.events({
         event.preventDefault();
         const state = Template.instance().state;
         state.set('active', !state.get('active'));
+    }
+});
+
+Template.helpTopic.onCreated(function() {
+    this.state = new ReactiveDict();
+});
+
+Template.helpTopic.helpers({
+    isActive() {
+        return Template.instance().state.get('active');
+    },
+    deleteSubject() {
+        const id = this._id;
+        return () => Meteor.call('helpTopics.remove', id);
     }
 });
 

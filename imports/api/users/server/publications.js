@@ -40,6 +40,7 @@ Meteor.publish('users.loggedIn', function() {
         {
             fields: {
                 subjects: 1,
+                helpTopics: 1,
                 'status.online': 1
             }
         }

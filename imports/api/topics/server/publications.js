@@ -11,7 +11,12 @@ Meteor.publish('topics.bySubjectId', function(subjectId) {
 Meteor.publish('topics.bySubject', function(subject) {
     check(subject, String);
 
-    return Topics.find({
-        subjectId: Subjects.findOne({ name: subject })._id
-    });
+    const s = Subjects.findOne({ name: subject });
+    if (s) {
+        return Topics.find({
+            subjectId: s._id
+        });
+    } else {
+        return this.ready();
+    }
 });
