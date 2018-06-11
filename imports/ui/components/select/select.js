@@ -93,6 +93,7 @@ Template.select.events({
     'keydown button.value, keydown input.searchField'(event) {
         const state = Template.instance().state;
         switch (event.key) {
+            case 'Up':
             case 'ArrowUp':
                 event.preventDefault();
                 state.set('isOpen', true);
@@ -106,6 +107,7 @@ Template.select.events({
                     );
                 }
                 break;
+            case 'Down':
             case 'ArrowDown':
                 event.preventDefault();
                 state.set('isOpen', true);

@@ -12,7 +12,6 @@ Template.searchField.onCreated(function() {
 
 Template.searchField.events({
     'input .searchField'(event) {
-        console.log(event);
         Template.instance().state.set('query', event.target.value);
     },
     'keydown .searchField'(event) {
