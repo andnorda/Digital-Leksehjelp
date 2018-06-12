@@ -31,7 +31,18 @@ Meteor.methods({
         if (!this.userId) {
             StudentSessions.update(
                 { _id: sessionId },
-                { $set: { studentPresent: true } }
+                {
+                    $set: { studentPresent: true },
+                    $unset: { lastStudentActivity: '' }
+                }
+            );
+        } else {
+            StudentSessions.update(
+                {
+                    _id: sessionId,
+                    'volunteers.id': this.userId
+                },
+                { $unset: { 'volunteers.$.lastActivity': '' } }
             );
         }
 
