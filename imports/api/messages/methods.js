@@ -28,6 +28,13 @@ Meteor.methods({
             );
         }
 
+        if (!this.userId) {
+            StudentSessions.update(
+                { _id: sessionId },
+                { $set: { studentPresent: true } }
+            );
+        }
+
         return Messages.insert({
             message,
             sessionId,

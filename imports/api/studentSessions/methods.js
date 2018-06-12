@@ -198,7 +198,12 @@ Meteor.methods({
         } else {
             StudentSessions.update(
                 { _id: sessionId },
-                { $set: { lastStudentActivity: new Date() } }
+                {
+                    $set: {
+                        lastStudentActivity: new Date(),
+                        studentPresent: true
+                    }
+                }
             );
         }
     }
