@@ -112,20 +112,22 @@ Template.volunteerChatHeaderMenu.events({
         Modal.show('addVolunteer');
     },
     'click .endSession'() {
-        const { params: { sessionId } } = Router.current();
-        Meteor.call('studentSessions.endTutoring', sessionId);
+        if (confirm('Er du sikker på at du vil avslutte leksehjelpen?')) {
+            const { params: { sessionId } } = Router.current();
+            Meteor.call('studentSessions.endTutoring', sessionId);
 
-        const helpDurationMinutes = getQueueTime(
-            Session.get('startTutoringTime')
-        );
-        if (helpDurationMinutes > 4) {
-            mixpanel.track('Hjulpet elev', {
-                'Minutter i samtale': helpDurationMinutes,
-                type: 'chat'
-            });
+            const helpDurationMinutes = getQueueTime(
+                Session.get('startTutoringTime')
+            );
+            if (helpDurationMinutes > 4) {
+                mixpanel.track('Hjulpet elev', {
+                    'Minutter i samtale': helpDurationMinutes,
+                    type: 'chat'
+                });
+            }
+
+            Router.go('/frivillig/chat');
         }
-
-        Router.go('/frivillig/chat');
     },
     'click .leaveChat'() {
         const { params: { sessionId } } = Router.current();
