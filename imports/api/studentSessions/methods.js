@@ -83,6 +83,7 @@ Meteor.methods({
             { _id: sessionId },
             {
                 $set: {
+                    startedTutoringAt: new Date(),
                     state: STUDENT_SESSION_STATE.READY,
                     volunteers: [{ id: this.userId, unread: 0 }]
                 }

@@ -125,17 +125,29 @@ Template.studentSession.events({
     },
 
     'click button.deleteSession'() {
-        Meteor.call('studentSessions.delete', this._id);
+        if (confirm('Er du sikker på at du vil fjerne eleven fra køen?')) {
+            Meteor.call('studentSessions.delete', this._id);
+        }
     }
 });
 
 Template.activeStudentSession.onCreated(function() {
+    this.state = new ReactiveDict();
+    interval = Meteor.setInterval(() => {
+        this.state.set('time', new Date());
+    }, 1000);
     this.autorun(() => {
         this.subscribe('users');
     });
 });
 
 Template.activeStudentSession.helpers({
+    timeTutoring() {
+        return timeSince(
+            this.startedTutoringAt,
+            Template.instance().state.get('time') || new Date()
+        );
+    },
     isVideo() {
         return this.type === 'video';
     },
@@ -159,16 +171,18 @@ Template.activeStudentSession.events({
     },
 
     'click button.deleteSession'() {
-        const helpDurationMinutes = getQueueTime(
-            Session.get('startTutoringTime')
-        );
-        if (helpDurationMinutes > 4) {
-            mixpanel.track('Hjulpet elev', {
-                'Minutter i samtale': helpDurationMinutes,
-                type: this.type
-            });
-        }
+        if (confirm('Er du sikker på at du vil avslutte leksehjelpen?')) {
+            const helpDurationMinutes = getQueueTime(
+                Session.get('startTutoringTime')
+            );
+            if (helpDurationMinutes > 4) {
+                mixpanel.track('Hjulpet elev', {
+                    'Minutter i samtale': helpDurationMinutes,
+                    type: this.type
+                });
+            }
 
-        Meteor.call('studentSessions.endTutoring', this._id);
+            Meteor.call('studentSessions.endTutoring', this._id);
+        }
     }
 });

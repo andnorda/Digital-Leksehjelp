@@ -51,6 +51,10 @@ const StudentSessionsSchema = new SimpleSchema({
     createdAt: {
         type: Date
     },
+    startedTutoringAt: {
+        type: Date,
+        optional: true
+    },
     'temp.text': {
         type: String,
         optional: true
