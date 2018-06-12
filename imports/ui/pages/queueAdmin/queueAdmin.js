@@ -101,11 +101,9 @@ Template.studentSession.helpers({
         return this.type === 'video';
     },
     text() {
-        return this.temp
-            ? this.temp.text && this.temp.text.length > 256
-              ? `${this.temp.text.substring(0, 256)}...`
-              : this.temp.text
-            : '';
+        return this.text.length > 256
+            ? `${this.text.substring(0, 256)}...`
+            : this.text;
     }
 });
 
