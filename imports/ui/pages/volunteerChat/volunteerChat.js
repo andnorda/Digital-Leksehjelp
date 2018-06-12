@@ -108,10 +108,10 @@ Template.volunteerChatHeaderMenu.events({
             state.set('active', !state.get('active'));
         }
     },
-    'mousedown .menu-item.addVolunteer'() {
+    'click .addVolunteer'() {
         Modal.show('addVolunteer');
     },
-    'mousedown .menu-item.endSession'() {
+    'click .endSession'() {
         const { params: { sessionId } } = Router.current();
         Meteor.call('studentSessions.endTutoring', sessionId);
 
@@ -127,7 +127,7 @@ Template.volunteerChatHeaderMenu.events({
 
         Router.go('/frivillig/chat');
     },
-    'mousedown .menu-item.leaveChat'() {
+    'click .leaveChat'() {
         const { params: { sessionId } } = Router.current();
         Meteor.call('studentSessions.leaveChat', sessionId);
         Router.go('/frivillig/chat');

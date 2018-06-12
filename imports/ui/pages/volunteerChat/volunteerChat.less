@@ -1,3 +1,5 @@
+@import '/imports/ui/stylesheets/less/colors.import.less';
+
 .volunteerChat {
     flex-grow: 1;
     max-width: 1180px;
@@ -24,57 +26,46 @@
 
         > .chatHeader {
             flex-shrink: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-bottom: 1px solid #d1d1d1;
-            padding: 32.5px;
-            position: relative;
 
-            > .metadata {
-                font-weight: bold;
-                margin-left: 10px;
+            > .top {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 32.5px;
+
+                > .metadata {
+                    font-weight: bold;
+                    margin-left: 10px;
+                }
             }
 
-            > .menu-wrapper {
-                position: absolute;
-                right: 32.5px;
-                top: 50%;
-                transform: translateY(-50%);
+            > .menu {
+                display: flex;
+                border-top: solid 1px @input-border-color;
+                border-bottom: solid 1px @input-border-color;
+                margin: 0 30px 10px;
 
-                > .menu {
-                    position: relative;
+                > button {
+                    border: none;
+                    padding: 4px 8px;
+                    background-color: transparent;
+                    display: flex;
+                    align-items: center;
+                    border-left: solid 1px @input-border-color;
+                    border-right: solid 1px @input-border-color;
 
-                    > .menu-button {
-                        cursor: pointer;
-                        padding: 5px;
+                    &:hover {
+                        background-color: @input-border-color;
                     }
 
-                    > .dropdown {
-                        display: none;
-                        position: absolute;
-                        right: 0;
-                        border: 1px solid #080808;
-
-                        &.active {
-                            display: block;
-                        }
-
-                        > .menu-item {
-                            padding: 10px;
-                            background-color: white;
-                            cursor: pointer;
-                            white-space: nowrap;
-
-                            &:not(:last-child) {
-                                border-bottom: 1px solid #080808;
-                            }
-
-                            &:hover {
-                                background-color: #82c289;
-                            }
-                        }
+                    img {
+                        width: 10px;
+                        margin-right: 8px;
                     }
+                }
+
+                > :first-child {
+                    margin-right: auto;
                 }
             }
         }

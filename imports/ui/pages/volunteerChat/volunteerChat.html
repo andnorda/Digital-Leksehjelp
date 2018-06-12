@@ -9,11 +9,11 @@
                     {{#if chatSelected}}
                         {{#if isValidId}}
                             <div class="chatHeader">
-                                <div class="nickname">{{nickname}}</div>
-                                <div class="metadata">{{subject}}{{#if grade}}, {{grade}}{{/if}}</div>
-                                <div class="menu-wrapper">
-                                    {{> volunteerChatHeaderMenu}}
+                                <div class="top">
+                                    <div class="nickname">{{nickname}}</div>
+                                    <div class="metadata">{{subject}}{{#if grade}}, {{grade}}{{/if}}</div>
                                 </div>
+                                {{> volunteerChatHeaderMenu}}
                             </div>
                             {{> chatComponent}}
                         {{else}}
@@ -32,13 +32,8 @@
 
 <template name="volunteerChatHeaderMenu">
     <div class="menu">
-        <div class="menu-button" tabindex="0">
-            <img src="/three_dots.svg">
-        </div>
-        <div class="dropdown {{#if isActive}}active{{/if}}">
-            <div class="menu-item addVolunteer">Legg til frivillig</div>
-            <div class="menu-item endSession">Avslutt leksehjelp</div>
-            {{#if hasMoreVolunteers}}<div class="menu-item leaveChat">Forlat chatten</div>{{/if}}
-        </div>
+        <button class="endSession"><img src="/end.svg" alt=""/>Avslutt leksehjelp</button>
+        {{#if hasMoreVolunteers}}<button class="leaveChat"><img src="/exit.svg" alt=""/>Forlat chatten</button>{{/if}}
+        <button class="addVolunteer"><img src="/add.svg" alt=""/>Legg til frivillig</button>
     </div>
 </template>
