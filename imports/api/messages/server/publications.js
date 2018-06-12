@@ -23,6 +23,17 @@ Meteor.publish('messages.bysessionId', function(sessionId) {
             }
         });
         this.onStop(() => observer.stop());
+    } else {
+        StudentSessions.update(
+            { _id: sessionId },
+            { $set: { studentPresent: true } }
+        );
+        this.onStop(() =>
+            StudentSessions.update(
+                { _id: sessionId },
+                { $set: { studentPresent: false } }
+            )
+        );
     }
 
     return Messages.find({ sessionId });

@@ -30,5 +30,9 @@ Template.chatListItem.helpers({
     isActive() {
         const { params: { sessionId } } = Router.current();
         return this._id === sessionId;
+    },
+    studentPresent() {
+        const session = StudentSessions.findOne(this._id);
+        return session && session.studentPresent;
     }
 });

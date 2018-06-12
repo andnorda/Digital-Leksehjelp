@@ -44,6 +44,10 @@ const StudentSessionsSchema = new SimpleSchema({
         type: Date,
         optional: true
     },
+    studentPresent: {
+        type: Boolean,
+        optional: true
+    },
     createdAt: {
         type: Date
     },
