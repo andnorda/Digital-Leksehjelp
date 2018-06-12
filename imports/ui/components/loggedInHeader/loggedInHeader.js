@@ -40,7 +40,10 @@ Template.loggedInHeader.helpers({
         }).count();
     },
     notificationCount() {
-        return StudentSessions.find({ 'volunteers.id': Meteor.userId() })
+        return StudentSessions.find({
+            'volunteers.id': Meteor.userId(),
+            state: { $ne: STUDENT_SESSION_STATE.ENDED }
+        })
             .map(
                 session =>
                     session.volunteers.find(
