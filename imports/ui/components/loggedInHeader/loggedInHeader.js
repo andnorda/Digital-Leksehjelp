@@ -61,11 +61,15 @@ Template.loggedInHeader.events({
     'click .open-service'(event) {
         event.preventDefault();
 
-        Meteor.call('config.openService');
+        if (confirm('Er du sikker på at du vil åpne leksehjelpen?')) {
+            Meteor.call('config.openService');
+        }
     },
     'click .close-service'(event) {
         event.preventDefault();
 
-        Meteor.call('config.closeService');
+        if (confirm('Er du sikker på at du vil stenge leksehjelpen?')) {
+            Meteor.call('config.closeService');
+        }
     }
 });
