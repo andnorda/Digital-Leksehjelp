@@ -185,5 +185,21 @@ Meteor.methods({
         check(id, String);
 
         return !!StudentSessions.findOne(id);
+    },
+
+    'studentSessions.setLastActivity'(sessionId) {
+        check(sessionId, String);
+
+        if (this.userId) {
+            StudentSessions.update(
+                { _id: sessionId, 'volunteers.id': this.userId },
+                { $set: { 'volunteers.$.lastActivity': new Date() } }
+            );
+        } else {
+            StudentSessions.update(
+                { _id: sessionId },
+                { $set: { lastStudentActivity: new Date() } }
+            );
+        }
     }
 });

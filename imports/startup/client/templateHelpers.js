@@ -20,6 +20,14 @@ Template.registerHelper('eq', function(value1, value2) {
     return value1 === value2;
 });
 
+Template.registerHelper('and', function(value1, value2) {
+    return value1 && value2;
+});
+
+Template.registerHelper('or', function(value1, value2) {
+    return value1 || value2;
+});
+
 Template.registerHelper('transformNewline', function(text) {
     if (text) {
         return new Spacebars.SafeString(text.replace(/(\r\n|\n|\r)/g, '<br>'));

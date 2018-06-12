@@ -17,7 +17,10 @@
                 <p>Takk for at du brukte digital leksehjelp</p>
             </div>
         {{else}}
-            {{> messageForm}}
+            <div class="messageFormWrapper">
+                {{#if activity}}<div class="activity">{{activity}}</div>{{/if}}
+                {{> messageForm}}
+            </div>
         {{/if}}
     </div>
 </template>
@@ -37,11 +40,14 @@
             class="chatField"
             placeholder="Skriv her..."
             rows="1"
-            autofocus>{{value}}</textarea>
-        <button type="submit" class="submit" disabled="{{#unless value}}true{{/unless}}">
+            autofocus>{{initialValue}}</textarea>
+        <button
+            type="submit"
+            class="submit"
+            disabled="{{#unless or value initialValue}}true{{/unless}}">
             <svg width="30px" height="30px" viewBox="0 0 30 30">
                 <polygon
-                    class="arrow {{#if value}}active{{/if}}"
+                    class="arrow {{#if or value initialValue}}active{{/if}}"
                     points="30 15 0 30 5.5 15 0 0"></polygon>
             </svg>
         </button>

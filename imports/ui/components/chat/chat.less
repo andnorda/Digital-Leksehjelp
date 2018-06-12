@@ -99,45 +99,55 @@
         }
     }
 
-    > .messageForm {
-        display: flex;
+    > .messageFormWrapper {
         margin: 10px 20px;
-        align-items: flex-end;
-
-        > .upload {
-            flex-shrink: 0;
-            padding: 0;
-            border: none;
-            color: white;
-            background-color: @action-color;
-            width: 37px;
-            height: 37px;
-
-            > .plus {
-                font-size: 32px;
-            }
-        }
-
-        > .chatField {
+        > .activity {
+            margin: 4px 0;
             font-size: 15px;
-            padding: 9px 10px 8px;
-            margin: 0 10px;
-            width: 100%;
-            resize: none;
+            color: @help-text-color;
         }
 
-        > .submit {
+        > .messageForm {
             flex-shrink: 0;
-            padding: 0;
-            border: none;
-            font-size: 0;
-            height: 37px;
+            display: flex;
+            align-items: flex-end;
 
-            .arrow {
-                fill: @disabled-color;
+            > .upload {
+                flex-shrink: 0;
+                padding: 0;
+                border: none;
+                color: white;
+                background-color: @action-color;
+                width: 37px;
+                height: 37px;
 
-                &.active {
-                    fill: @action-color;
+                > .plus {
+                    font-size: 32px;
+                }
+            }
+
+            > .chatField {
+                font-size: 15px;
+                padding: 9px 10px 8px;
+                margin: 0 10px;
+                width: 100%;
+                resize: none;
+            }
+
+            > .submit {
+                flex-shrink: 0;
+                padding: 0;
+                border: none;
+                font-size: 0;
+                height: 37px;
+                background-color: transparent;
+
+                .arrow {
+                    fill: @disabled-color;
+
+                    &.active {
+                        fill: @action-color;
+                    }
                 }
             }
         }

@@ -5,14 +5,20 @@ import { $ } from 'meteor/jquery';
 import { Messages } from '/imports/api/messages/messages.js';
 import { CONSTANTS, STUDENT_SESSION_STATE } from '/imports/constants.js';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
+import { isAfter, addSeconds } from 'date-fns';
 
 import './chat.html';
 import './chat.less';
 
 import '../chatMessage/chatMessage.js';
 
+let interval;
+
 Template.chatComponent.onCreated(function() {
     this.state = new ReactiveDict();
+    interval = Meteor.setInterval(() => {
+        this.state.set('time', new Date());
+    }, 1000);
 
     this.autorun(() => {
         const { params: { sessionId } } = Router.current();
@@ -31,7 +37,33 @@ Template.chatComponent.onCreated(function() {
     });
 });
 
+Template.chatComponent.onDestroyed(function() {
+    Meteor.clearInterval(interval);
+});
+
+const recent = (date, time) => isAfter(addSeconds(date, 3), time);
+
 Template.chatComponent.helpers({
+    activity() {
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
+        const state = Template.instance().state;
+        if (!session) return false;
+
+        let activity = (Meteor.userId() &&
+        recent(session.lastStudentActivity, state.get('time'))
+            ? ['Eleven']
+            : []
+        ).concat(
+            (session.volunteers || [])
+                .filter(v => v.id !== Meteor.userId())
+                .filter(v => recent(v.lastActivity, state.get('time')))
+                .map(v => Meteor.users.findOne(v.id))
+                .filter(v => v)
+                .map(v => v.profile.firstName)
+        );
+        return activity.length && `${activity.join(', ')} skriver...`;
+    },
     initialMessage() {
         const { params: { sessionId } } = Router.current();
         const session = StudentSessions.findOne(sessionId);
@@ -116,24 +148,30 @@ Template.chatComponent.events({
 
 Template.messageForm.onCreated(function() {
     this.state = new ReactiveDict();
+});
 
-    this.autorun(() => {
+Template.messageForm.onRendered(function() {
+    resize(this.find('.chatField'));
+});
+
+Template.messageForm.helpers({
+    initialValue() {
         const { params: { sessionId } } = Router.current();
         const session = StudentSessions.findOne(sessionId);
         const count = Messages.find({
             sessionId,
             author: null
         }).count();
-        if (!Meteor.userId() && session && !session.text && session.temp) {
-            Template.instance().state.set(
-                'value',
-                count ? '' : session.temp.text
-            );
+        if (
+            !Meteor.userId() &&
+            session &&
+            !session.text &&
+            session.temp &&
+            !count
+        ) {
+            return session.temp.text;
         }
-    });
-});
-
-Template.messageForm.helpers({
+    },
     value() {
         return Template.instance().state.get('value');
     }
@@ -149,6 +187,9 @@ Template.messageForm.events({
     'input .chatField'(event) {
         Template.instance().state.set('value', event.target.value);
         resize(event.target);
+
+        const { params: { sessionId } } = Router.current();
+        Meteor.call('studentSessions.setLastActivity', sessionId);
     },
     'keydown .chatField'(event) {
         if (event.key === 'Enter') {
@@ -159,6 +200,7 @@ Template.messageForm.events({
                 const { params: { sessionId } } = Router.current();
                 Meteor.call('messages.create', { sessionId, message });
                 Template.instance().state.set('value', '');
+                event.target.value = '';
                 resize(event.target);
             }
         }
@@ -171,7 +213,9 @@ Template.messageForm.events({
             const { params: { sessionId } } = Router.current();
             Meteor.call('messages.create', { sessionId, message });
             Template.instance().state.set('value', '');
-            resize(templateInstance.find('.chatField'));
+            const element = templateInstance.find('.chatField');
+            element.value = '';
+            resize(element);
         }
     }
 });

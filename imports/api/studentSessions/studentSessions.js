@@ -36,6 +36,14 @@ const StudentSessionsSchema = new SimpleSchema({
         type: Number,
         optional: true
     },
+    'volunteers.$.lastActivity': {
+        type: Date,
+        optional: true
+    },
+    lastStudentActivity: {
+        type: Date,
+        optional: true
+    },
     createdAt: {
         type: Date
     },

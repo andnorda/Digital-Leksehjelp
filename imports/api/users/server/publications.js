@@ -20,7 +20,8 @@ Meteor.publish('users', function() {
             fields: {
                 username: true,
                 subjects: 1,
-                'status.online': 1
+                'status.online': 1,
+                profile: 1
             }
         }
     );
@@ -41,7 +42,8 @@ Meteor.publish('users.loggedIn', function() {
             fields: {
                 subjects: 1,
                 helpTopics: 1,
-                'status.online': 1
+                'status.online': 1,
+                profile: 1
             }
         }
     );
