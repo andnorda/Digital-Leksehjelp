@@ -78,18 +78,6 @@ function isIeOrEdge(userAgent = window.navigator.userAgent) {
 const open = () => $('input.file').click();
 
 Template.chatComponent.events({
-    'submit form.messageForm'(event) {
-        event.preventDefault();
-
-        const input = $('input.chatField');
-        const message = input.val();
-        if (message) {
-            const { params: { sessionId } } = Router.current();
-
-            Meteor.call('messages.create', { sessionId, message });
-            input.val('');
-        }
-    },
     'click button.upload'(event) {
         event.preventDefault();
 
@@ -126,21 +114,64 @@ Template.chatComponent.events({
     }
 });
 
-Template.messageForm.helpers({
-    value() {
+Template.messageForm.onCreated(function() {
+    this.state = new ReactiveDict();
+
+    this.autorun(() => {
         const { params: { sessionId } } = Router.current();
         const session = StudentSessions.findOne(sessionId);
         const count = Messages.find({
             sessionId,
             author: null
         }).count();
-        return (
-            !Meteor.userId() &&
-            !count &&
-            session &&
-            !session.text &&
-            session.temp &&
-            session.temp.text
-        );
+        if (!Meteor.userId() && session && !session.text && session.temp) {
+            Template.instance().state.set(
+                'value',
+                count ? '' : session.temp.text
+            );
+        }
+    });
+});
+
+Template.messageForm.helpers({
+    value() {
+        return Template.instance().state.get('value');
+    }
+});
+
+const resize = element =>
+    requestAnimationFrame(() => {
+        element.style.height = '0';
+        element.style.height = `${element.scrollHeight + 2}px`;
+    });
+
+Template.messageForm.events({
+    'input .chatField'(event) {
+        Template.instance().state.set('value', event.target.value);
+        resize(event.target);
+    },
+    'keydown .chatField'(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+
+            const message = event.target.value;
+            if (message) {
+                const { params: { sessionId } } = Router.current();
+                Meteor.call('messages.create', { sessionId, message });
+                Template.instance().state.set('value', '');
+                resize(event.target);
+            }
+        }
+    },
+    'submit form.messageForm'(event, templateInstance) {
+        event.preventDefault();
+
+        const message = Template.instance().state.get('value');
+        if (message) {
+            const { params: { sessionId } } = Router.current();
+            Meteor.call('messages.create', { sessionId, message });
+            Template.instance().state.set('value', '');
+            resize(templateInstance.find('.chatField'));
+        }
     }
 });

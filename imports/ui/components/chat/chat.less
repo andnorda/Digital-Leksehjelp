@@ -1,3 +1,5 @@
+@import '/imports/ui/stylesheets/less/colors.import.less';
+
 .chatComponent {
     display: flex;
     flex-direction: column;
@@ -98,19 +100,18 @@
     }
 
     > .messageForm {
-        display: grid;
-        grid-template-columns: 40px 1fr 87px;
-        grid-template-rows: 40px;
-        grid-gap: 10px;
+        display: flex;
         margin: 10px 20px;
+        align-items: flex-end;
 
         > .upload {
+            flex-shrink: 0;
+            padding: 0;
             border: none;
             color: white;
-            background-color: #009c33;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: @action-color;
+            width: 37px;
+            height: 37px;
 
             > .plus {
                 font-size: 32px;
@@ -118,16 +119,27 @@
         }
 
         > .chatField {
-            padding: 12px 20px;
+            font-size: 15px;
+            padding: 9px 10px 8px;
+            margin: 0 10px;
             width: 100%;
+            resize: none;
         }
 
         > .submit {
-            font-size: 20px;
-            background-color: #009c33;
-            color: #f8f8f8;
+            flex-shrink: 0;
+            padding: 0;
             border: none;
-            display: block;
+            font-size: 0;
+            height: 37px;
+
+            .arrow {
+                fill: @disabled-color;
+
+                &.active {
+                    fill: @action-color;
+                }
+            }
         }
     }
 
