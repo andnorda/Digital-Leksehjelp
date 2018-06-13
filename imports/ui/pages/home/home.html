@@ -57,7 +57,13 @@
                 <p>Trenger du litt motivasjon? Har du fått eksamensnerver? Vil du prøve en ny lesestrategi?</p>
             </div>
             <form>
-                <h2>Velg tema</h2>
+                <h2>
+                    {{#if serviceStatus}}
+                        Velg tema
+                    {{else}}
+                        Se hvilke temaer du kan få hjelp i
+                    {{/if}}
+                </h2>
                 {{> helpTopicSelector value=helpTopic onChange=onHelpTopicChange}}
                 {{#if serviceStatus}}
                     <div class="buttons">
