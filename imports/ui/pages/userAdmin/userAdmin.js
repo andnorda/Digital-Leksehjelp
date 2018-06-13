@@ -88,7 +88,7 @@ Template.user.helpers({
         return this.username;
     },
     subjects() {
-        return this.subjects.join(', ');
+        return (this.subjects || []).join(', ');
     },
     role() {
         return this.profile.role;
