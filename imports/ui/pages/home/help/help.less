@@ -1,3 +1,5 @@
+@import '/imports/ui/stylesheets/less/colors.import.less';
+
 .home > section.help {
     margin: 0;
 
@@ -14,15 +16,39 @@
     }
 
     .content {
+        position: relative;
         background-color: #f5f5f5;
         padding: 20px;
 
         h1 {
             margin-top: 0;
+            margin-right: 110px;
+
+            @media (min-width: 768px) {
+                margin-right: 0;
+            }
         }
 
         @media (min-width: 768px) {
             padding: 30px;
+        }
+
+        > .badge_new {
+            top: 12px;
+            right: 12px;
+            position: absolute;
+            padding: 8px 10px;
+            color: white;
+            background-color: @primary-color;
+            transform: rotate(15deg);
+            display: inline-block;
+
+            @media (min-width: 768px) {
+                top: -12px;
+                right: initial;
+                left: -42px;
+                transform: rotate(-15deg);
+            }
         }
     }
 
