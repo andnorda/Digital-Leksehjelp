@@ -1,11 +1,38 @@
-.volunteers {
-    img {
-        width: 80%;
-        display: block;
-        margin: 20px auto;
+@import '/imports/ui/stylesheets/less/colors.import.less';
 
-        @media (min-width: 1000px) {
-            order: -1;
+.volunteers {
+    .image {
+        margin: 20px auto;
+        width: 80%;
+        position: relative;
+
+        > .badge_new {
+            position: absolute;
+            color: white;
+            background: @action-color;
+            height: 90px;
+            width: 90px;
+            line-height: 90px;
+            text-align: center;
+            transform: rotate(15deg);
+            border-radius: 50%;
+            right: -2.67em;
+            top: 0;
+
+            @media (min-width: 768px) {
+                height: 130px;
+                width: 130px;
+                line-height: 130px;
+            }
+
+            @media (min-width: 1000px) {
+                right: initial;
+                left: -4em;
+            }
+        }
+
+        > img {
+            width: 100%;
         }
     }
 
@@ -14,13 +41,16 @@
         align-items: center;
         justify-content: space-around;
 
-        > img,
         > div {
             width: 50%;
             margin: 20px;
         }
 
-        > img {
+        > :last-child {
+            order: -1;
+        }
+
+        .image > img {
             max-width: 345px;
         }
     }
