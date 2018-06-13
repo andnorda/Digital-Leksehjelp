@@ -79,7 +79,7 @@ Router.onBeforeAction(checkIfSignedIn, {
     except: [
         'home',
         'queue',
-        'volunteers',
+        'volunteersPage',
         'askQuestion',
         'notFound',
         'search',
