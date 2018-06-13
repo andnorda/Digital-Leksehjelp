@@ -42,6 +42,16 @@ em {
     color: @primary-color;
 }
 
+a {
+    color: @link-color;
+    text-decoration: underline;
+
+    &:hover,
+    &:focus {
+        color: @link-hover-color;
+    }
+}
+
 .wrapper {
     min-height: 100%;
     position: relative;
@@ -151,10 +161,6 @@ em {
 #red-cross-logo {
     margin-top: 50px;
     width: 135px;
-}
-
-a {
-    cursor: pointer;
 }
 
 p.get-help-box-item {

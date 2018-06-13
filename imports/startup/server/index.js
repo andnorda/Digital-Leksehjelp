@@ -43,7 +43,7 @@ const updateLastUpdatedBy = () => {
 const startPollingShifts = () => {
     Meteor.setInterval(() => {
         fetchShifts();
-    }, 5 * 60 * 1000);
+    }, 5 * 60); // * 1000);
 };
 
 Meteor.startup(function() {
