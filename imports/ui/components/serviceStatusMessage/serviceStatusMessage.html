@@ -1,15 +1,5 @@
 <template name="serviceStatusMessage">
     <span class="serviceStatusMessage">
-        {{#unless isPending}}
-            {{#if serviceStatus}}
-                åpent {{#if closingTime}}fram til kl. {{closingTime}}{{else}}nå!{{/if}}
-            {{else}}
-                {{#if openingTime}}
-                    {{openingTime}}
-                {{else}}
-                    {{fallbackText}}
-                {{/if}}
-            {{/if}}
-        {{/unless}}
+        {{serviceStatusMessage}}
     </span>
 </template>

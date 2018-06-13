@@ -25,8 +25,6 @@ const dayNames = {
 
 const days = Object.keys(dayNames);
 
-const today = days[getDay(new Date())];
-
 const nextOpenDay = openingHours => {
     const day = getDay(new Date());
     for (let i = day; i <= day + 7; i += 1) {
@@ -50,32 +48,42 @@ const nextOpenDay = openingHours => {
 };
 
 const nextOpenTime = openingHours =>
-    openingHours[nextOpenDay(openingHours)].from;
+    (openingHours[nextOpenDay(openingHours)] || {}).from;
 
 Template.serviceStatusMessage.helpers({
-    isPending() {
-        return !Config.findOne({ name: 'serviceStatus' });
-    },
-    serviceStatus() {
+    serviceStatusMessage() {
+        if (!Config.findOne({ name: 'serviceStatus' })) {
+            return;
+        }
+
         const serviceStatus = Config.findOne({ name: 'serviceStatus' });
-        return serviceStatus && serviceStatus.open;
-    },
-    closingTime() {
         const openingHours = Config.findOne({ name: 'openingHours' });
-        return openingHours && openingHours[today].to;
-    },
-    openingTime() {
-        const openingHours = Config.findOne({ name: 'openingHours' });
-        if (!openingHours) return false;
-        if (!nextOpenDay(openingHours)) return false;
-        if (nextOpenDay(openingHours) === today)
-            return `åpner kl. ${nextOpenTime(openingHours)}`;
-        return `åpner ${dayNames[nextOpenDay(openingHours)]} kl. ${nextOpenTime(
-            openingHours
-        )}`;
-    },
-    fallbackText() {
-        const openingHours = Config.findOne({ name: 'openingHours' });
-        return openingHours && openingHours.text;
+        if (!serviceStatus || !openingHours) {
+            return;
+        }
+
+        const today = days[getDay(new Date())];
+        const closingTime = () => openingHours[today].to;
+        const openingTime = () => nextOpenTime(openingHours);
+        const isToday = () => nextOpenDay(openingHours) === today;
+        const openingDay = () => dayNames[nextOpenDay(openingHours)];
+
+        if (serviceStatus.open) {
+            if (closingTime()) {
+                return `åpent frem til kl. ${closingTime()}`;
+            } else {
+                return 'åpent nå!';
+            }
+        } else {
+            if (openingTime()) {
+                if (isToday()) {
+                    return `åpner kl. ${openingTime()}`;
+                } else {
+                    return `åpner ${openingDay()} kl. ${openingTime()}`;
+                }
+            } else {
+                return openingHours.text;
+            }
+        }
     }
 });
