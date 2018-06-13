@@ -1,0 +1,19 @@
+.questionsAndAnswers {
+    padding-bottom: 20px;
+    border-bottom: solid 1px black;
+
+    @media (min-width: 768px) {
+        border: solid 1px black;
+        padding: 30px;
+    }
+
+    @media (min-width: 1366px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 30px;
+
+        > form {
+            margin-top: 32px;
+        }
+    }
+}

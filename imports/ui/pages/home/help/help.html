@@ -1,0 +1,36 @@
+<template name="help">
+    <section class="help">
+        <div>
+            <div class="content">
+                <h1>Mestring og motivasjon {{> serviceStatusMessage}}</h1>
+                <p>Trenger du litt motivasjon? Har du fått eksamensnerver? Vil du prøve en ny lesestrategi?</p>
+                <form>
+                    <h2>
+                        {{#if serviceStatus}}
+                            Velg tema
+                        {{else}}
+                            Se hvilke temaer du kan få hjelp i
+                        {{/if}}
+                    </h2>
+                    {{> helpTopicSelector value=helpTopic onChange=onHelpTopicChange}}
+                    {{#if serviceStatus}}
+                        <div class="buttons">
+                            {{> button type='button' text='Chat' onClick=onClickChat}}
+                            <div class="or">eller</div>
+                            {{> button type='button' text='Videohjelp' onClick=onClickVideo}}
+                        </div>
+                    {{/if}}
+                    {{#if infoMessage}}{{#if serviceStatus}}
+                        {{> formMessage text=infoMessage}}
+                    {{/if}}{{/if}}
+                </form>
+            </div>
+            <div class="cross-my-heart">
+                Trenger du å snakke med noen? <a href="https://korspaahalsen.rodekors.no/">Kors på halsen</a>
+            </div>
+        </div>
+        <div class="image">
+            <img src="/figure_2.svg" alt="" />
+        </div>
+    </section>
+</template>

@@ -1,0 +1,28 @@
+<template name="homework">
+    <section class="homework">
+        <div>
+            <h1>Leksehjelp {{> serviceStatusMessage}}</h1>
+            <p>Få hjelp av en frivillig til å løse oppgaver, diskutere et tema, skrive tekster eller øve til prøver. Start en chat eller videosamtale!</p>
+        </div>
+        <form class="homework-form">
+            <h2>
+                {{#if serviceStatus}}
+                    Velg fag
+                {{else}}
+                    Se når ditt fag er tilgjengelig
+                {{/if}}
+            </h2>
+            {{> newSubjectSelector value=subject onChange=onSubjectChange}}
+            {{#if serviceStatus}}
+                <div class="buttons">
+                    {{> button type='button' text='Chat' onClick=onClickChat}}
+                    <div class="or">eller</div>
+                    {{> button type='button' text='Videohjelp' onClick=onClickVideo}}
+                </div>
+            {{/if}}
+            {{#if infoMessage}}{{#if serviceStatus}}
+                {{> formMessage text=infoMessage}}
+            {{/if}}{{/if}}
+        </form>
+    </section>
+</template>

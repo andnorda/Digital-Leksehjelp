@@ -1,0 +1,27 @@
+.volunteers {
+    img {
+        width: 80%;
+        display: block;
+        margin: 20px auto;
+
+        @media (min-width: 1000px) {
+            order: -1;
+        }
+    }
+
+    @media (min-width: 1000px) {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        > img,
+        > div {
+            width: 50%;
+            margin: 20px;
+        }
+
+        > img {
+            max-width: 345px;
+        }
+    }
+}
