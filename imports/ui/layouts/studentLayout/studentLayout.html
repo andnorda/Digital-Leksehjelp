@@ -1,7 +1,9 @@
 <template name="studentLayout">
     <div class="studentLayout">
-        {{> studentHeader}}
-        {{> yield}}
+        <div class="content">
+            {{> studentHeader}}
+            {{> yield}}
+        </div>
         {{> studentFooter}}
     </div>
 </template>
