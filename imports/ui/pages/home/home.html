@@ -1,9 +1,15 @@
 <template name="home">
     <div class="home">
         {{> hero}}
-        {{> homework}}
-        {{> help}}
+        {{#if serviceStatus}}
+            {{> homework}}
+            {{> help}}
+        {{/if}}
         {{> questionsAndAnswers}}
+        {{#unless serviceStatus}}
+            {{> homework}}
+            {{> help}}
+        {{/unless}}
         {{> volunteers}}
     </div>
 </template>
