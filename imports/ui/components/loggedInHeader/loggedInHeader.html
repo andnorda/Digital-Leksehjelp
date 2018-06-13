@@ -1,6 +1,6 @@
 <template name="loggedInHeader">
     <header class="loggedInHeader">
-        <a class="{{#if isActiveTab 'queue'}}active{{/if}}" href="/frivillig/queue">Elever i kø{{> notificationsBadge count=numberOfStudentsWaitingInQueue}}</a>
+        <a class="{{#if isActiveTab 'volunteerQueue'}}active{{/if}}" href="/frivillig/queue">Elever i kø{{> notificationsBadge count=numberOfStudentsWaitingInQueue}}</a>
         <a class="{{#if isActiveTab 'volunteerChat'}}active{{/if}}" href="/frivillig/chat">Chat{{> notificationsBadge count=notificationCount}}</a>
         <a class="{{#if isActiveTab 'questions'}}active{{/if}}" href="/frivillig/sporsmal">Spørsmål</a>
         <a class="{{#if isActiveTab 'myProfile'}}active{{/if}}" href="/frivillig/profil">Min profil</a>

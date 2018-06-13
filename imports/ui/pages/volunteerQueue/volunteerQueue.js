@@ -11,17 +11,17 @@ import { STUDENT_SESSION_STATE } from '/imports/constants';
 import '../../components/openService/openService.js';
 import '../../components/tagList/tagList.js';
 
-import './queueAdmin.html';
-import './queueAdmin.less';
+import './volunteerQueue.html';
+import './volunteerQueue.less';
 
-Template.queueAdmin.onCreated(function() {
+Template.volunteerQueue.onCreated(function() {
     this.autorun(() => {
         this.subscribe('studentSessions');
         this.subscribe('users.self');
     });
 });
 
-Template.queueAdmin.helpers({
+Template.volunteerQueue.helpers({
     mySubjectsQueue() {
         const { subjects = [], helpTopics = [] } = Meteor.user();
         return (

@@ -23,7 +23,7 @@ import '../../ui/pages/userAdmin/userAdmin.js';
 import '../../ui/pages/subjectAdmin/subjectAdmin.js';
 import '../../ui/pages/questionAdmin/questionAdmin.js';
 import '../../ui/pages/answerQuestion/answerQuestion.js';
-import '../../ui/pages/queueAdmin/queueAdmin.js';
+import '../../ui/pages/volunteerQueue/volunteerQueue.js';
 import '../../ui/pages/chat/chat.js';
 import '../../ui/pages/queue/queue.js';
 import '../../ui/pages/volunteerChat/volunteerChat.js';
@@ -108,7 +108,7 @@ Router.map(function() {
         this.redirect('/frivillig/profil');
     });
 
-    this.route('queueAdmin', {
+    this.route('volunteerQueue', {
         controller: LoginController,
         path: '/frivillig/queue'
     });
