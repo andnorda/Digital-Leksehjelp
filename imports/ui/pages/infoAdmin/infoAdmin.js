@@ -57,13 +57,13 @@ Template.infoAdmin.helpers({
     },
     dayLabel(day) {
         return {
-            monday: 'mandag',
-            tuesday: 'tirsdag',
-            wednesday: 'onsdag',
-            thursday: 'torsdag',
-            friday: 'fredag',
-            saturday: 'lørdag',
-            sunday: 'søndag'
+            monday: 'Mandag',
+            tuesday: 'Tirsdag',
+            wednesday: 'Onsdag',
+            thursday: 'Torsdag',
+            friday: 'Fredag',
+            saturday: 'Lørdag',
+            sunday: 'Søndag'
         }[day];
     },
     getDay(day) {

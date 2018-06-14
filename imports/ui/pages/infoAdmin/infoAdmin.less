@@ -19,7 +19,46 @@
                 font-weight: bold;
             }
 
-            > textarea {
+            .day {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 0;
+                border-top: solid 1px black;
+
+                .checkbox {
+                    display: flex;
+                    align-items: center;
+
+                    > :not(:last-child) {
+                        margin-right: 4px;
+                    }
+                }
+
+                input[type='checkbox'] {
+                    margin: 0;
+                }
+
+                label {
+                    margin: 0;
+                }
+            }
+
+            .text {
+                display: flex;
+                align-items: center;
+                border-top: solid 1px black;
+                border-bottom: solid 1px black;
+                padding: 10px 0;
+
+                label {
+                    font-weight: normal;
+                    white-space: nowrap;
+                    margin-right: 10px;
+                }
+            }
+
+            textarea {
                 resize: none;
                 width: 100%;
                 padding: 10px;

@@ -17,23 +17,31 @@
                 <p>Her kan du endre åpningstidene som blir vist på forsiden.</p>
                 <div>
                     {{#each days}}
-                        <div>
-                            <input
-                                type="checkbox"
-                                id="{{this}}"
-                                name="openingHours"
-                                value="{{this}}"
-                                checked="{{getDay this}}">
-                            <label for="{{this}}">{{dayLabel this}}</label>
-                            <input type="time" id="{{this}}-from" value="{{getDayFrom this}}">
-                            <input type="time" id="{{this}}-to" value="{{getDayTo this}}">
+                        <div class="day">
+                            <div class="checkbox">
+                                <input
+                                    type="checkbox"
+                                    id="{{this}}"
+                                    name="openingHours"
+                                    value="{{this}}"
+                                    checked="{{getDay this}}">
+                                <label for="{{this}}">{{dayLabel this}}</label>
+                            </div>
+                            <div>
+                                <input type="time" id="{{this}}-from" value="{{getDayFrom this}}">
+                                <input type="time" id="{{this}}-to" value="{{getDayTo this}}">
+                            </div>
                         </div>
                     {{/each}}
                 </div>
-                <textarea
-                    class="opening-hours-text"
-                    rows="1"
-                    placeholder="F.eks.: Sommerstengt">{{openingHoursText}}</textarea>
+                <div class="text">
+                    <label for="text">Annen melding</label>
+                    <textarea
+                        id="text"
+                        class="opening-hours-text"
+                        rows="1"
+                        placeholder="F.eks.: Sommerstengt">{{openingHoursText}}</textarea>
+                </div>
                 {{> button type='submit' text='Oppdater' disabled=noOpeningHoursChanges}}
             </form>
         </section>
