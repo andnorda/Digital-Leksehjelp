@@ -14,7 +14,11 @@
                         {{#if serviceStatus}}
                             Velg tema
                         {{else}}
-                            Se når ditt tema er tilgjengelig
+                            {{#if hasOpeningHours}}
+                                Se når ditt tema er tilgjengelig
+                            {{else}}
+                                Se hvilke temaer vi kan hjelpe deg med
+                            {{/if}}
                         {{/if}}
                     </h2>
                     {{> helpTopicSelector value=helpTopic onChange=onHelpTopicChange}}

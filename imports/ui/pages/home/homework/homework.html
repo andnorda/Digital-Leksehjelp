@@ -13,7 +13,11 @@
                 {{#if serviceStatus}}
                     Velg fag
                 {{else}}
-                    Se når ditt fag er tilgjengelig
+                    {{#if hasOpeningHours}}
+                        Se når ditt fag er tilgjengelig
+                    {{else}}
+                        Se hvilke fag du kan få hjelp med
+                    {{/if}}
                 {{/if}}
             </h2>
             {{> newSubjectSelector value=subject onChange=onSubjectChange}}

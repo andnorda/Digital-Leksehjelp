@@ -17,6 +17,7 @@ Template.homework.onCreated(function() {
     this.state = new ReactiveDict();
 
     this.autorun(() => {
+        this.subscribe('config.openingHours');
         this.subscribe('config.serviceStatus');
     });
 });
@@ -50,6 +51,21 @@ Template.homework.helpers({
     serviceStatus() {
         const serviceStatus = Config.findOne({ name: 'serviceStatus' });
         return serviceStatus && serviceStatus.open;
+    },
+    hasOpeningHours() {
+        const openingHours = Config.findOne({ name: 'openingHours' });
+        return (
+            openingHours &&
+            [
+                'monday',
+                'tuesday',
+                'wednesday',
+                'thursday',
+                'friday',
+                'saturday',
+                'sunday'
+            ].some(day => openingHours[day].open)
+        );
     },
     subject() {
         return Template.instance().state.get('subject');
