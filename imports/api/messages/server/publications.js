@@ -12,8 +12,12 @@ Meteor.publish('messages.bysessionId', function(sessionId) {
     check(sessionId, NonEmptyString);
 
     const userId = this.userId;
+    const isVolunteer = StudentSessions.findOne({
+        _id: sessionId,
+        'volunteers.id': userId
+    });
 
-    if (userId) {
+    if (userId && isVolunteer) {
         const observer = Messages.find({ sessionId }).observe({
             added() {
                 StudentSessions.update(

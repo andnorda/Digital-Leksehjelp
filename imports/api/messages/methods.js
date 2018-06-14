@@ -17,12 +17,18 @@ Meteor.methods({
         check(size, Match.Optional(Number));
 
         if (type !== 'info') {
+            const isVolunteer = StudentSessions.findOne({
+                _id: sessionId,
+                'volunteers.id': this.userId
+            });
+
             StudentSessions.update(
                 {
                     _id: sessionId,
-                    'volunteers.id': this.userId
-                        ? { $ne: this.userId }
-                        : { $exists: true }
+                    'volunteers.id':
+                        this.userId && isVolunteer
+                            ? { $ne: this.userId }
+                            : { $exists: true }
                 },
                 { $inc: { 'volunteers.$.unread': 1 } }
             );
