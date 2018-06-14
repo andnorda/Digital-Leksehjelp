@@ -116,7 +116,7 @@ Template.helpTopic.helpers({
     isActive() {
         return Template.instance().state.get('active');
     },
-    deleteSubject() {
+    deleteHelpTopic() {
         const id = this._id;
         return () => Meteor.call('helpTopics.remove', id);
     }
