@@ -174,6 +174,9 @@ Template.messageForm.helpers({
     },
     value() {
         return Template.instance().state.get('value');
+    },
+    isStudent() {
+        return !Meteor.userId();
     }
 });
 

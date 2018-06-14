@@ -111,6 +111,7 @@
             flex-shrink: 0;
             display: flex;
             align-items: flex-end;
+            position: relative;
 
             > .upload {
                 flex-shrink: 0;
@@ -123,6 +124,25 @@
 
                 > .plus {
                     font-size: 32px;
+                }
+
+                > .tooltip_new {
+                    background-color: #f2ecf8;
+                    display: none;
+                    color: @primary-color;
+                    position: absolute;
+                    top: -10px;
+                    left: 0;
+                    text-align: left;
+                    width: 90%;
+                    max-width: 320px;
+                    font-size: 15px;
+                    padding: 10px;
+                }
+
+                &:hover > .tooltip_new {
+                    display: block;
+                    transform: translate(0, -100%);
                 }
             }
 

@@ -41,6 +41,11 @@
             style="display: none;">
         <button type="button" class="upload">
             <span class="plus">+</span>
+            {{#if isStudent}}
+                <div class="tooltip_new">
+                    Hvis du sender et vedlegg, må du gjerne fjerne navnet ditt eller andre ting fra dokumentet som kan identifisere deg.
+                </div>
+            {{/if}}
         </button>
         <textarea
             class="chatField"
