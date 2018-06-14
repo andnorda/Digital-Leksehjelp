@@ -4,13 +4,17 @@
             <div class="content">
                 <div class="badge_new">Ny tjeneste!</div>
                 <h1>Mestring og motivasjon {{> serviceStatusMessage}}</h1>
-                <p>Trenger du litt motivasjon? Har du fått eksamensnerver? Vil du prøve en ny lesestrategi?</p>
+                {{#if serviceStatus}}
+                    <p>Vil du jobbe med motivasjonen? Dempe nervene før eksamen? Prøve en ny læringsmetode?</p>
+                {{else}}
+                    <p>Søk opp ditt tema for å se når det er frivillige på vakt som kan hjelpe deg. Merk at tidene kan endre seg.</p>
+                {{/if}}
                 <form>
                     <h2>
                         {{#if serviceStatus}}
                             Velg tema
                         {{else}}
-                            Se hvilke temaer du kan få hjelp i
+                            Se når ditt tema er tilgjengelig
                         {{/if}}
                     </h2>
                     {{> helpTopicSelector value=helpTopic onChange=onHelpTopicChange}}
@@ -27,7 +31,7 @@
                 </form>
             </div>
             <div class="cross-my-heart">
-                Trenger du å snakke med noen? <a href="https://korspaahalsen.rodekors.no/">Kors på halsen</a>
+                Trenger du noen å snakke med? <a href="https://korspaahalsen.rodekors.no/" target="_blank">Kors på halsen</a>
             </div>
         </div>
         <div class="image">

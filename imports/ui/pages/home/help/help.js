@@ -44,7 +44,7 @@ Template.help.helpers({
     infoMessage() {
         return (
             Template.instance().state.get('helpTopic') &&
-            'For å være sikrere på at det ikke skal skje tekniske feil, bruk nettlesere som Google Chrome, Firefox eller Opera.'
+            'For å være sikrere på at det ikke skal skje tekniske feil, bruk nettleserne Google Chrome, Firefox eller Opera.'
         );
     },
     serviceStatus() {

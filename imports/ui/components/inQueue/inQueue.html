@@ -15,11 +15,11 @@
                 {{> inQueueHeader}}
                 <div class="description">Du står nå i kø for <span class="subject">{{subject}}</span></div>
                 <form class="extra-info-form">
-                    <p>Mens du venter kan du begynne å forklare hva det er du lurer på.</p>
+                    <p>Mens du venter kan du begynne å forklare kort hva det er du ønsker hjelp til. Bruk egne ord.</p>
                     {{> topicsInput value=topics addTopic=addTopic removeTopic=removeTopic subject=subject}}
                     <textarea class="form-control dl-inputfield" name="question" placeholder="Skriv her..." rows="4" autofocus>{{text}}</textarea>
                     <div class="buttons">
-                        {{> button type='button' text='Forlat køen' subtle=true danger=true onClick=leaveQueue}}
+                        {{> button type='button' text='Forlat' subtle=true danger=true onClick=leaveQueue}}
                         {{> button type='submit' text='Oppdater' disabled=updateButtonDisabled}}
                     </div>
                     {{#if infoMessage}}

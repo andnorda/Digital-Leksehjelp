@@ -70,9 +70,9 @@ Template.serviceStatusMessage.helpers({
 
         if (serviceStatus.open) {
             if (closingTime()) {
-                return `åpent frem til kl. ${closingTime()}`;
+                return `åpen frem til kl. ${closingTime()}`;
             } else {
-                return 'åpent nå!';
+                return 'åpen nå';
             }
         } else {
             if (openingTime()) {

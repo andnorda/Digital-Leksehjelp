@@ -48,7 +48,7 @@ Template.inQueue.helpers({
         const session = StudentSessions.findOne(sessionId);
         return session && session.type === 'chat'
             ? 'Gå til chatten'
-            : 'Gå til videochat';
+            : 'Gå til videosamtale';
     },
     target() {
         const { params: { sessionId } } = Router.current();
@@ -138,7 +138,7 @@ Template.inQueue.events({
         Meteor.call('studentSessions.save', sessionId);
         Template.instance().state.set(
             'infoMessage',
-            'Du kan forsette å redigere spørsmålet mens du venter i køen.'
+            'De frivillige kan nå se at du står i kø. Du kan fortsette å redigere spørsmålet ditt mens du venter.'
         );
     }
 });

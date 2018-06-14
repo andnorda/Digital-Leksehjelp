@@ -2,7 +2,11 @@
     <section class="homework">
         <div>
             <h1>Leksehjelp {{> serviceStatusMessage}}</h1>
-            <p>Få hjelp av en frivillig til å løse oppgaver, diskutere et tema, skrive tekster eller øve til prøver. Start en chat eller videosamtale!</p>
+            {{#if serviceStatus}}
+                <p>Få hjelp av en frivillig til å løse oppgaver, diskutere et tema, skrive tekster eller øve til prøver. Start en chat eller videosamtale!</p>
+            {{else}}
+                <p>Søk opp ditt fag for å se når det er frivillige på vakt som kan hjelpe deg. Merk at tidene kan endre seg.</p>
+            {{/if}}
         </div>
         <form class="homework-form">
             <h2>

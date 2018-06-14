@@ -1,7 +1,7 @@
 <template name="topicsInput">
     {{#if topics}}
         <div class="topicsInput">
-            {{> select placeholder='Legg til tema' options=topics onChange=addTopic}}
+            {{> select placeholder='Undertemaer' options=topics onChange=addTopic}}
             {{#if value}}
                 {{> tagList tags=value onClick=removeTopic}}
             {{/if}}
