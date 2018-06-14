@@ -1,20 +1,27 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Subjects } from '/imports/api/subjects/subjects.js';
+import { Config } from '/imports/api/config/config.js';
 
 import './subjectSelector.html';
 
-const isAvailable = name =>
-    Meteor.users
-        .find({
-            subjects: name,
-            'status.online': true
-        })
-        .count() > 0;
+const isAvailable = name => {
+    const serviceStatus = Config.findOne({ name: 'serviceStatus' });
+    if (serviceStatus && !serviceStatus.open) return true;
+    return (
+        Meteor.users
+            .find({
+                subjects: name,
+                'status.online': true
+            })
+            .count() > 0
+    );
+};
 
 Template.newSubjectSelector.onCreated(function() {
     this.autorun(() => {
         this.subscribe('subjects');
+        this.subscribe('config.serviceStatus');
         this.subscribe('users.loggedIn');
     });
 });

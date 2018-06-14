@@ -1,16 +1,22 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { HelpTopics } from '/imports/api/helpTopics/helpTopics.js';
+import { Config } from '/imports/api/config/config.js';
 
 import './helpTopicSelector.html';
 
-const isAvailable = name =>
-    Meteor.users
-        .find({
-            helpTopics: name,
-            'status.online': true
-        })
-        .count() > 0;
+const isAvailable = name => {
+    const serviceStatus = Config.findOne({ name: 'serviceStatus' });
+    if (serviceStatus && !serviceStatus.open) return true;
+    return (
+        Meteor.users
+            .find({
+                helpTopics: name,
+                'status.online': true
+            })
+            .count() > 0
+    );
+};
 
 Template.helpTopicSelector.onCreated(function() {
     this.autorun(() => {
