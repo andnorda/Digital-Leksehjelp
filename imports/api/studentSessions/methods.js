@@ -57,6 +57,13 @@ Meteor.methods({
         );
     },
 
+    'studentSessions.setGrade'({ sessionId, grade }) {
+        check(sessionId, String);
+        check(grade, String);
+
+        StudentSessions.update({ _id: sessionId }, { $set: { grade } });
+    },
+
     'studentSessions.save'(sessionId) {
         check(sessionId, String);
 

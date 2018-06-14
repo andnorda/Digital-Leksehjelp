@@ -93,6 +93,10 @@
         }
 
         > .extra-info-form {
+            > .dropdowns > *:not(:last-child) {
+                margin-bottom: 10px;
+            }
+
             > textarea {
                 resize: none;
                 margin: 20px 0;
@@ -166,6 +170,19 @@
     .inQueue {
         > .right {
             padding: 0 70px 70px;
+
+            .dropdowns {
+                display: flex;
+
+                > * {
+                    width: 50%;
+                }
+
+                > :not(:last-child) {
+                    margin-bottom: 0;
+                    margin-right: 10px;
+                }
+            }
         }
     }
 }

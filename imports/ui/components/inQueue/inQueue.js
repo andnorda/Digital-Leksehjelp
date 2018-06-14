@@ -7,6 +7,7 @@ import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js
 import { STUDENT_SESSION_STATE } from '/imports/constants.js';
 import { timeSince, getQueueTime } from '/imports/utils.js';
 import '../topicsInput/topicsInput.js';
+import '../select/select.js';
 import '../formMessage/formMessage.js';
 
 import './inQueue.html';
@@ -31,6 +32,19 @@ Template.inQueue.onDestroyed(function() {
 });
 
 Template.inQueue.helpers({
+    grade() {
+        const { params: { sessionId } } = Router.current();
+        const session = StudentSessions.findOne(sessionId);
+        return session && session.grade;
+    },
+    setGrade() {
+        const { params: { sessionId } } = Router.current();
+        return grade =>
+            Meteor.call('studentSessions.setGrade', {
+                sessionId,
+                grade
+            });
+    },
     readyToStart() {
         const { params: { sessionId } } = Router.current();
         const session = StudentSessions.findOne(sessionId);

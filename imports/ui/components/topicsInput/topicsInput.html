@@ -1,5 +1,5 @@
 <template name="topicsInput">
-    {{#if topics}}
+    {{#if shouldRender}}
         <div class="topicsInput">
             {{> select placeholder='Undertemaer' options=topics onChange=addTopic}}
             {{#if value}}
