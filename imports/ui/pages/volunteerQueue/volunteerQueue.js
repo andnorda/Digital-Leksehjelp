@@ -101,7 +101,7 @@ Template.studentSession.helpers({
         return this.type === 'video';
     },
     text() {
-        return this.text.length > 256
+        return this.text && this.text.length > 256
             ? `${this.text.substring(0, 256)}...`
             : this.text;
     }
