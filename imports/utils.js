@@ -52,7 +52,13 @@ const adjectives = [
     'Arbeidsom',
     'Lun',
     'Oppmerksom',
-    'Bestemt'
+    'Bestemt',
+    'Frisk',
+    'Hjelpsom',
+    'Kjær',
+    'Kreativ',
+    'Sunn',
+    'Trygg'
 ];
 
 const animals = [
@@ -79,7 +85,13 @@ const animals = [
     'grevling',
     'sel',
     'pingvin',
-    'kenguru'
+    'kenguru',
+    'oter',
+    'impala',
+    'koala',
+    'manet',
+    'gresshoppe',
+    'kivi'
 ];
 
 export const generateNickname = (
