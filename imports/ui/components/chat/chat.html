@@ -1,6 +1,12 @@
 <template name="chatComponent">
     <div class="chatComponent">
         <ul class="messages">
+            {{#if isStudent}}
+                <li class="info-message">
+                    <p><em>Velkommen til chatten!</em></p>
+                    <p>Hvis du sender et vedlegg, må du gjerne fjerne navnet ditt eller andre ting fra dokumentet som kan identifisere deg.</p>
+                </li>
+            {{/if}}
             {{#if initialMessage}}
                 <li class="initialMessage message {{#if isStudent}}self{{/if}}">
                     <div class="text">{{initialMessage}}</div>
