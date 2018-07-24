@@ -1,0 +1,12 @@
+<template name="questionList">
+    <ul class="questionList">
+        {{#each questions}}
+            <li class="questionList">
+                <a href="/sporsmal/{{slugOrId this}}" target="{{../target}}">
+                    <div class="title">{{title}}</div>
+                    <div class="metadata">{{subject}}, {{grade}}, {{prettyDate}}</div>
+                </a>
+            </li>
+        {{/each}}
+    </ul>
+</template>

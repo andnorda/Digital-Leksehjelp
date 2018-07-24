@@ -24,3 +24,6 @@ import '../../api/messages/server/publications.js';
 
 import '../../api/topics/methods.js';
 import '../../api/topics/server/publications.js';
+
+import '../../api/feedback/methods.js';
+import '../../api/feedback/server/publications.js';

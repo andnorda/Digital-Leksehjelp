@@ -1,18 +1,18 @@
 <template name="select">
-    <div class="select-component {{#if isOpen}}open{{/if}}">
+    <div class="{{class}} select-component {{#if and isOpen options}}open{{/if}}">
         {{#if filter}}
             <div class="inputWrapper">
                 <input
                     type="text"
                     value="{{value}}"
                     placeholder="{{placeholder}}"
-                    class="searchField" />
+                    class="searchField {{#if validationError}}error{{/if}}" />
                 <img src="/down-arrow.svg" alt="" />
             </div>
         {{else}}
             <button
-                class="value"
-                type="button">{{value}}<img src="/down-arrow.svg" alt="" /></button>
+                class="value {{#unless value}}placeholder{{/unless}} {{#if validationError}}error{{/if}}"
+                type="button">{{#if value}}{{value}}{{else}}{{placeholder}}{{/if}}<img src="/down-arrow.svg" alt="" /></button>
         {{/if}}
         <ul class="option-list">
             {{#each options}}

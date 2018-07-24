@@ -12,25 +12,35 @@ const QuestionsSchema = new SimpleSchema({
     questionDate: {
         type: Date
     },
-    subjectId: {
+    subject: {
         type: String
     },
     grade: {
         type: String,
-        allowedValues: GRADES.concat(['Ukjent'])
+        allowedValues: GRADES
     },
     studentEmail: {
         type: String,
         regEx: SimpleSchema.RegEx.Email,
         optional: true
     },
-    attachmentUrl: {
-        type: String,
-        optional: true
+    'attachments.$.url': {
+        type: String
     },
-    answerAttachmentUrl: {
-        type: String,
-        optional: true
+    'attachments.$.name': {
+        type: String
+    },
+    'answerAttachments.$.url': {
+        type: String
+    },
+    'answerAttachments.$.name': {
+        type: String
+    },
+    'editedBy.$.id': {
+        type: String
+    },
+    'editedBy.$.date': {
+        type: Date
     },
     title: {
         type: String,
@@ -46,15 +56,11 @@ const QuestionsSchema = new SimpleSchema({
         type: String,
         optional: true
     },
-    answerDate: {
-        type: Date,
-        optional: true
-    },
-    answeredBy: {
+    approvedBy: {
         type: String,
         optional: true
     },
-    verifiedBy: {
+    submittedForApprovalBy: {
         type: String,
         optional: true
     },
@@ -62,16 +68,20 @@ const QuestionsSchema = new SimpleSchema({
         type: String,
         optional: true
     },
-    lastUpdatedBy: {
-        type: String,
-        optional: true
-    },
-    lastUpdatedDate: {
-        type: Date,
-        optional: true
-    },
     editing: {
         type: [String],
+        optional: true
+    },
+    topics: {
+        type: [String],
+        optional: true
+    },
+    allowPublish: {
+        type: Boolean,
+        optional: true
+    },
+    nickname: {
+        type: String,
         optional: true
     }
 });
@@ -80,14 +90,16 @@ Questions.attachSchema(QuestionsSchema);
 
 export const questionPublicFields = {
     answer: true,
-    answerDate: true,
-    answerAttachmentUrl: true,
     grade: true,
     question: true,
-    questionDate: true,
-    subjectId: true,
     title: true,
-    slug: true
+    questionDate: true,
+    subject: true,
+    slug: true,
+    attachments: true,
+    answerAttachments: true,
+    topics: true,
+    nickname: true
 };
 
 export const questionPrivateFields = {

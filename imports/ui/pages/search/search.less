@@ -1,0 +1,73 @@
+@import '/imports/ui/stylesheets/less/colors.import.less';
+
+.search {
+    .searchForm {
+        margin: 0 20px 20px;
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -10px;
+            margin-bottom: -10px;
+
+            > * {
+                margin-bottom: 10px;
+                margin-right: 10px;
+            }
+
+            .subjectSelector {
+                flex-basis: 320px;
+            }
+
+            .gradeSelector {
+                flex-basis: 155px;
+            }
+
+            .sortTypeSelector {
+                flex-basis: 155px;
+            }
+
+            button {
+                margin-left: auto;
+            }
+        }
+
+        > .or {
+            text-align: right;
+            margin: 10px 0;
+        }
+    }
+
+    > .searchResults {
+        margin: 0 20px 20px;
+    }
+
+    > .ask {
+        background-color: #efefef;
+        padding: 20px;
+    }
+
+    .pagination-component {
+        display: flex;
+
+        img {
+            height: 10px;
+        }
+
+        ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li:not(.active) > a {
+                text-decoration: none;
+            }
+        }
+
+        a {
+            margin: 8px;
+            display: block;
+        }
+    }
+}

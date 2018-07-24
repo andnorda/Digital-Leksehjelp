@@ -22,11 +22,12 @@ const topics = (subjectName, value) => {
     return Topics.find({ subjectId: subject._id })
         .fetch()
         .map(topic => topic.name)
-        .filter(topic => !value.includes(topic));
+        .filter(topic => !(value || []).includes(topic));
 };
 
 Template.topicsInput.helpers({
     shouldRender() {
+        if (this.shouldRender) return true;
         return (
             (topics(Template.currentData().subject, this.value) || []).length ||
             (this.value || []).length

@@ -124,7 +124,8 @@ Router.map(function() {
         waitOn() {
             return Meteor.subscribe(
                 'questions.bySlugOrId',
-                this.params.questionId
+                this.params.questionId,
+                { editing: true }
             );
         },
         data() {
@@ -163,12 +164,12 @@ Router.map(function() {
     });
 
     this.route('askQuestion', {
-        controller: DefaultController,
+        controller: HomeController,
         path: '/sporsmal'
     });
 
     this.route('showAnswer', {
-        controller: DefaultController,
+        controller: HomeController,
         path: '/sporsmal/:questionId',
         waitOn() {
             return Meteor.subscribe(
@@ -187,7 +188,7 @@ Router.map(function() {
     });
 
     this.route('search', {
-        controller: DefaultController,
+        controller: HomeController,
         path: '/sok'
     });
 

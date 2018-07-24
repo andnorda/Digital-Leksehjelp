@@ -1,0 +1,146 @@
+@import '/imports/ui/stylesheets/less/colors.import.less';
+
+.success {
+    flex-grow: 1;
+    text-align: center;
+    padding: 20px;
+    background-color: @form-background-color;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+}
+
+.askQuestion {
+    display: flex;
+    flex-direction: column;
+
+    .intro {
+        margin-right: 20px;
+        margin-left: 20px;
+
+        @media (min-width: 768px) {
+            margin-right: 60px;
+            margin-left: 60px;
+        }
+
+        img {
+            width: 100%;
+            margin: 10px auto 20px;
+            display: block;
+            max-width: 335px;
+        }
+    }
+
+    .content {
+        margin-bottom: 20px;
+
+        @media (min-width: 768px) {
+            margin-right: 60px;
+            margin-left: 60px;
+            margin-bottom: 60px;
+        }
+
+        @media (min-width: 1366px) {
+            display: flex;
+
+            > * {
+                width: 50%;
+
+                &:not(:last-child) {
+                    margin-right: 30px;
+                }
+            }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+
+            > .inputContainer {
+                padding: 0 20px 20px;
+
+                @media (min-width: 768px) {
+                    padding: 0 40px 30px;
+                }
+
+                background-color: @form-background-color;
+
+                .subjectSelector {
+                    margin-bottom: 10px;
+                }
+
+                textarea.question {
+                    resize: none;
+                }
+
+                button.upload {
+                    display: flex;
+                    align-items: center;
+                    border: none;
+                    padding: 0;
+                    margin: 0;
+                    background-color: transparent;
+                    position: relative;
+
+                    > .plus {
+                        font-size: 30px;
+                        color: @action-color;
+                        margin-right: 4px;
+                    }
+
+                    .subtle {
+                        color: @subtle-text-color;
+                    }
+
+                    > .tooltip_new {
+                        background-color: #f2ecf8;
+                        display: none;
+                        color: @primary-color;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        text-align: left;
+                        width: 90%;
+                        max-width: 320px;
+                        font-size: 15px;
+                        padding: 10px;
+                    }
+
+                    &:hover > .tooltip_new {
+                        display: block;
+                        transform: translate(0, -100%);
+                    }
+                }
+
+                input.email {
+                    margin-bottom: 10px;
+                }
+
+                label {
+                    display: initial;
+                    max-width: initial;
+                    margin-bottom: 0;
+                    font-weight: normal;
+                }
+
+                .attachment {
+                    > button {
+                        background-color: transparent;
+                        border: none;
+                    }
+                }
+            }
+
+            .button-component {
+                align-self: flex-end;
+                margin: 10px 20px;
+
+                @media (min-width: 768px) {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}

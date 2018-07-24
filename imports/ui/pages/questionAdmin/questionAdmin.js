@@ -29,7 +29,7 @@ Template.publishedQuestions.helpers({
     questions() {
         return Questions.find(
             {
-                verifiedBy: { $exists: true },
+                approvedBy: { $exists: true },
                 publishedBy: { $exists: true }
             },
             { sort: { questionDate: -1 } }
@@ -38,7 +38,7 @@ Template.publishedQuestions.helpers({
     hasMoreQuestions() {
         return (
             Questions.find({
-                verifiedBy: { $exists: true },
+                approvedBy: { $exists: true },
                 publishedBy: { $exists: true }
             }).count() < Counts.get('questions.verifiedPublishedCount')
         );
@@ -70,7 +70,7 @@ Template.unpublishedQuestions.helpers({
     questions() {
         return Questions.find(
             {
-                verifiedBy: { $exists: true },
+                approvedBy: { $exists: true },
                 publishedBy: { $exists: false }
             },
             { sort: { questionDate: -1 } }
@@ -79,7 +79,7 @@ Template.unpublishedQuestions.helpers({
     hasMoreQuestions() {
         return (
             Questions.find({
-                verifiedBy: { $exists: true },
+                approvedBy: { $exists: true },
                 publishedBy: { $exists: false }
             }).count() < Counts.get('questions.verifiedUnpublishedCount')
         );

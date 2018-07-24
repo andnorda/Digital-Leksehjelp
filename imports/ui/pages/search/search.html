@@ -1,111 +1,67 @@
 <template name="search">
-    <div class="category-title white-bg-adjustment"><div class="empty-category-title"></div></div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-9 col-md-offset-3">
-                <div class="category-title grid-adjustment">
-                    <h2>
-                        <span>Søk</span>
-                    </h2>
-                </div>
-            </div>
+    <div class="search">
+        <div class="searchForm">
+            <h1>Søk blandt spørsmål</h1>
+            <form>
+                <input
+                    type="text"
+                    class="query"
+                    value="{{query}}"
+                    placeholder="Hva lurer du på?" />
+                {{> newSubjectSelector
+                    placeholder='Velg fag'
+                    value=subject
+                    onChange=setSubject
+                    allAvailable=true
+                    includeAll=true
+                }}
+                {{> select
+                    placeholder='Velg trinn'
+                    value=grade
+                    options=grades
+                    onChange=setGrade
+                    class='gradeSelector'
+                }}
+                {{> select
+                    placeholder='Sorter etter'
+                    value=sortType
+                    options=sortTypes
+                    onChange=setSortType
+                    class='sortTypeSelector'
+                }}
+                {{> button type='submit' text='Søk'}}
+            </form>
+            <p class="or">Eller <a href="/sporsmal">still et spørsmål</a></p>
         </div>
-
-        <div class="row">
-            <div class="col-md-9 col-md-offset-3">
-                <div class="row">
-                    <div class="col-md-5">
-                        <a href="/sporsmal">
-                            <button class="default-button full-width">Still et nytt spørsmål</button>
-                        </a>
-                    </div>
-                </div>
-
-                <hr>
-                    {{> searchForm queryParams}}
-                <hr>
-
-                <label>{{numberOfResults}}</label>
-
-                <div class="list-group">
-                    {{#each searchResults}}
-                        {{> searchQuestionItem}}
-                    {{/each}}
-                </div>
-
-                {{> pagination}}
-            </div>
+        {{> searchResults }}
+        <div class="ask">
+            Fant du ikke de du lette etter? <a href="/sporsmal">Still et spørsmål</a>
         </div>
+    </div>
+</template>
+
+<template name="searchResults">
+    <div class="searchResults">
+        <h2>Søket ditt ga {{searchCount}} svar</h2>
+        {{> questionList questions=searchResults}}
+        {{> pagination searchCount=searchCount }}
     </div>
 </template>
 
 <template name="pagination">
-    <div class="text-center">
-        <nav>
-            <ul class="pagination">
-                {{#each pages}}
-                    <li class="{{active}}"><a href="{{url}}">{{index}}</a></li>
-                {{/each}}
-            </ul>
-        </nav>
-    </div>
-</template>
-
-<template name="searchForm">
-    <form role="form">
-        <div class="row">
-            <div class="col-md-4 col-sm-12">
-                <label>Søk</label>
-                <div class="input-group full-width">
-                    <input name="q" type="text" class="form-control" value="{{q}}">
-                </div>
-            </div>
-            <div class="form-group col-md-2 col-sm-3 col-xs-4">
-                <label>Fag</label>
-                <select class="form-control" name="subject">
-                    <option value="_all" selected="{{eq subject '_all'}}">Alle</option>
-                    {{#each subjects}}
-                        <option value="{{name}}" selected="{{eq name ../subject}}">{{name}}</option>
-                    {{/each}}
-                </select>
-            </div>
-            <div class="form-group col-md-2 col-sm-3 col-xs-4">
-                <label>Årstrinn</label>
-                <select class="form-control" name="grade">
-                    <option value="_all" selected="{{eq grade '_all'}}">Alle</option>
-                    {{#each grades}}
-                        <option value="{{this}}" selected="{{eq this ../grade}}">{{this}}</option>
-                    {{/each}}
-                </select>
-            </div>
-            <div class="form-group col-md-2 col-sm-3 col-xs-4">
-                <label>Sortér</label>
-                <select class="form-control" name="sort">
-                    <option value="relevance" selected="{{eq sort 'relevance'}}">Relevans</option>
-                    <option value="date" selected="{{eq sort 'date'}}">Dato</option>
-                </select>
-            </div>
-            <div class="col-md-2 col-sm-3 col-xs-12">
-                <input type="submit" class="default-button full-width search-button" role="button" value="Søk">
-            </div>
-        </div>
-
-        <input name="offset" value="0" class="hidden">
-    </form>
-</template>
-
-<template name="searchQuestionItem">
-    <div class="question-item related-question-item">
-        <p>
-            <a href="/sporsmal/{{slugOrId this}}">
-                {{#if title}}
-                    {{trim title 200}}
-                {{else}}
-                    {{trim question 200}}
-                {{/if}}
-            </a>
-        </p>
-        <p class="question-item-footer">{{subjectName subjectId}}, {{grade}} &ndash; {{fromNow questionDate}}</p>
+    <div class="pagination-component">
+        {{#if showBackButton}}
+            <a href="{{backUrl}}"><img src="/left.svg" alt="tilbake" /></a>
+        {{/if}}
+        <ul class="pagination_new">
+            {{#each pages}}
+                <li class="{{#if active}}active{{/if}}">
+                    <a href="{{url}}">{{page}}</a>
+                </li>
+            {{/each}}
+        </ul>
+        {{#if showForwardButton}}
+            <a href="{{forwardUrl}}"><img src="/right.svg" alt="frem" /></a>
+        {{/if}}
     </div>
 </template>

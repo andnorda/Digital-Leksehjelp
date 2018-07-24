@@ -9,45 +9,51 @@ import { CONSTANTS } from '/imports/constants.js';
 const isNumber = obj =>
     !isNaN(obj - 0) && obj !== null && obj !== '' && obj !== false;
 
-const parseSearchParams = params => {
+const parseSearchParams = ({
+    query,
+    subject,
+    grade,
+    sortType,
+    limit,
+    offset,
+    userId
+}) => {
     const selector = { $and: [] };
     const options = { fields: { score: { $meta: 'textScore' } } };
 
-    if (params.hasOwnProperty('q') && params.q !== '') {
-        selector.$and.push({ $text: { $search: params.q } });
+    if (query) {
+        selector.$and.push({ $text: { $search: query } });
     }
-    if (params.hasOwnProperty('subject') && params.subject !== '_all') {
-        const subject = Subjects.findOne({ name: params.subject });
-        if (subject) {
-            selector.$and.push({ subjectId: subject._id });
+    if (subject) {
+        const s = Subjects.findOne({ name: subject });
+        if (s) {
+            selector.$and.push({ subjectId: s._id });
         }
     }
-    if (params.hasOwnProperty('grade') && params.grade !== '_all') {
-        selector.$and.push({ grade: params.grade });
+    if (grade) {
+        selector.$and.push({ grade });
     }
 
     // default sorting
     options.sort = { score: { $meta: 'textScore' } };
 
-    if (params.hasOwnProperty('sort')) {
-        if (params.sort === 'date') {
-            options.sort = { questionDate: -1 };
-        }
+    if (sortType === 'date') {
+        options.sort = { questionDate: -1 };
     }
 
     // default limit
     options.limit = CONSTANTS.SEARCH_DEFAULT_LIMIT;
 
-    if (params.hasOwnProperty('limit') && isNumber(params.limit)) {
-        options.limit = parseInt(params.limit, 10);
+    if (isNumber(limit)) {
+        options.limit = parseInt(limit, 10);
     }
 
     if (options.limit > CONSTANTS.SEARCH_MAX_LIMIT) {
         options.limit = CONSTANTS.SEARCH_MAX_LIMIT;
     }
 
-    if (params.hasOwnProperty('offset') && isNumber(params.offset)) {
-        options.skip = parseInt(params.offset, 10);
+    if (isNumber(offset)) {
+        options.skip = parseInt(offset, 10);
     }
 
     return { selector, options };
@@ -61,7 +67,7 @@ const searchCriteraBuilder = (params, userId) => {
     if (userId) {
         if (params.hasOwnProperty('related') && params.related) {
             searchCritera.selector.$and.push(
-                { verifiedBy: { $exists: true } },
+                { approvedBy: { $exists: true } },
                 { publishedBy: { $exists: true } }
             );
         }
@@ -69,7 +75,7 @@ const searchCriteraBuilder = (params, userId) => {
         _.extend(searchCritera.options.fields, questionPrivateFields);
     } else {
         searchCritera.selector.$and.push(
-            { verifiedBy: { $exists: true } },
+            { approvedBy: { $exists: true } },
             { publishedBy: { $exists: true } }
         );
 
@@ -79,9 +85,8 @@ const searchCriteraBuilder = (params, userId) => {
     return searchCritera;
 };
 
-const search = (params, userId) => {
-    const searchCritera = searchCriteraBuilder(params, userId);
-
+const search = params => {
+    const searchCritera = searchCriteraBuilder(params);
     return Questions.find(searchCritera.selector, searchCritera.options);
 };
 

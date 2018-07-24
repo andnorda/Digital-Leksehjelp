@@ -1,7 +1,7 @@
 <template name="topicsInput">
     {{#if shouldRender}}
         <div class="topicsInput">
-            {{> select placeholder='Undertemaer' options=topics onChange=addTopic}}
+            {{> select placeholder='Velg undertema' options=topics onChange=addTopic}}
             {{#if value}}
                 {{> tagList tags=value onClick=removeTopic}}
             {{/if}}

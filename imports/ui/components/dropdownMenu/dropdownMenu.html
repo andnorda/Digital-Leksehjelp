@@ -1,0 +1,10 @@
+<template name="dropdownMenu">
+    <div class="dropdownMenu">
+        <button class="menu-button"><img src="/three_dots.svg"></button>
+        <ul class="dropdown {{#if isActive}}active{{/if}}">
+            {{#each menuItems}}
+                <li class="dropdownMenuItem">{{label}}</li>
+            {{/each}}
+        </ul>
+    </div>
+</template>

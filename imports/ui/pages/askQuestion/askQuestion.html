@@ -1,115 +1,90 @@
 <template name="askQuestion">
-    <div class="category-title white-bg-adjustment"><div class="empty-category-title"></div></div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-offset-3 col-md-9">
-                <div class="category-title grid-adjustment">
-                    <h2>
-                        <span>Still et spørsmål</span>
-                    </h2>
+    {{#if success}}
+        <div class="success">
+            Takk for ditt spørsmål, du vil få svar på epost innen 2-3 dager.
+        </div>
+    {{/if}}
+    <div class="askQuestion">
+        {{#unless success}}
+            <section>
+                <div class="intro">
+                    <h1>Still et spørsmål</h1>
+                    <p>Still et spørsmål eller send oss en tekst som du vil at vi skal ta en kikk på. Det er helt anonymt og vi får ikke vite hvem du er. <b>Det tar vanligvis mellom 2-3 dager å få svar på epost.</b></p>
+                    <img src="/figure_3.svg" alt="" />
                 </div>
-            </div>
-        </div>
+                <div class="content">
+                    <form>
+                        <div class="inputContainer">
+                            <h2>Velg tema</h2>
+                            {{> newSubjectSelector
+                                placeholder='Velg fag'
+                                value=subject
+                                onChange=onSubjectChange
+                                allAvailable=true
+                                validationError=subjectValidationError}}
+                            {{> topicsInput
+                                value=topics
+                                addTopic=addTopic
+                                removeTopic=removeTopic
+                                subject=subject
+                                shouldRender=true}}
 
-        <div class="row">
-            <div class="col-md-offset-3 col-md-9">
+                            <h2>Velg trinn</h2>
+                            {{> select
+                                placeholder='Velg trinn'
+                                value=grade
+                                options=grades
+                                onChange=setGrade
+                                validationError=gradeValidationError}}
 
-                {{> questionForm}}
-            </div>
-        </div>
+                            <h2>Skriv spørsmålet ditt</h2>
+                            <textarea
+                                name="question"
+                                class="question {{#if questionValidationError}}error{{/if}}"
+                                placeholder="Beskriv med egne ord hva du lurer på, og forklar gjenere hva det er du har kommet fram til på egenhånd."
+                                rows="8"></textarea>
+
+                            <input
+                                type="file"
+                                name="attachment"
+                                accept="image/*|.pdf|.doc|.docx"
+                                class="file"
+                                multiple
+                                style="display: none;">
+                            <button type="button" class="upload">
+                                <span class="plus">+</span><span>Legg til filer <span class="subtle">(max 5 mb)</span></span>
+                                <div class="tooltip_new">
+                                    Hvis du sender et vedlegg, må du gjerne fjerne navnet ditt eller andre ting fra dokumentet som kan identifisere deg.
+                                </div>
+                            </button>
+
+                            <div>
+                                {{#each attachments}}
+                                    <div class="attachment">
+                                        <a href={{url}} target="_blank" class="attachment">
+                                            {{name}}
+                                        </a>
+                                        <button type='button' class="removeAttachment">x</button>
+                                    </div>
+                                {{/each}}
+                            </div>
+
+
+                            <h2>Skriv e-posten din</h2>
+                            <input
+                                type="email"
+                                class="email {{#if emailValidationError}}error{{/if}}"
+                                placeholder="Skriv e-posten din" />
+
+                            <input type="checkbox" id="allowPublish" class="allowPublish"/>
+                            <label for="allowPublish">Dere kan poste spørsmålet og svaret mitt på digital leksehjelp.no</label>
+                        </div>
+
+                        {{> button type='submit' text='Send'}}
+                    </form>
+                    {{> relatedQuestions subject=subject question=question}}
+                </div>
+            </section>
+        {{/unless}}
     </div>
-    <br><br><br>
-
-    <div class="category-title white-bg-adjustment"><div class="empty-category-title"></div></div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-offset-3 col-md-9">
-                <div class="category-title grid-adjustment">
-                    <h2>
-                        <span>Relaterte spørsmål</span>
-                    </h2>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-offset-3 col-md-9">
-                {{> relatedQuestions}}
-            </div>
-        </div>
-    </div>
-</template>
-
-<template name="questionForm">
-    <form role="form" name="questionForm">
-        <div class="row">
-            <div class="col-md-5 questionform-selector-col">
-                {{> subjectSelector}}
-            </div>
-            <div class="col-md-5 questionform-selector-col">
-                {{> gradeSelector}}
-            </div>
-        </div>
-
-        <h3 class="dl-question-h3">Hva lurer du på?</h3>
-        <textarea class="form-control dl-inputfield {{validationError 'questionFieldError'}}" name="question" placeholder="Still spørsmålet ditt her..." rows="8"></textarea>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <h3>Last opp vedlegg <small>(maks 5 MB)</small></h3>
-                    {{#if attachmentLabel}}
-                        <div id="attachment-error" class="alert alert-danger hidden-error hidden" role="alert">
-                            Vedlegget du har valgt er for stort (maks 5 <a href="http://no.wikipedia.org/wiki/Megabyte">MB</a>).
-                        </div>
-                        <div class="dl-attachment-label {{validationError 'attachmentError'}}">
-                            <p>
-                                {{attachmentLabel}}
-                            </p>
-                            <span class="remove-attachment">fjern</span>
-                        </div>
-                    {{/if}}
-                    <div class="input-group {{attachmentSelected}}">
-                        <span class="input-group-btn">
-                            <span class="dl-file-chooser btn-file">
-                                <span class="glyphicon glyphicon-plus dl-plus-sign"></span>
-                                Legg til fil&hellip; <input type="file" name="attachment" accept="image/*|.pdf|.doc|.docx">
-                            </span>
-                        </span>
-                    </div>
-                </div>
-                {{#if percentUploaded}}
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="{{percentUploaded}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percentUploaded}}%;">
-                            <span class="sr-only">{{percentUploaded}} % ferdig</span>
-                        </div>
-                    </div>
-                {{/if}}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-5">
-                <div class="form-group">
-                    <div class="input-group full-width">
-                        <input type="text" class="dl-emailfield form-control {{validationError 'emailError'}}" name="email" placeholder="Din e-postadresse">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-5">
-                <div class="form-group">
-                    <div class="input-group full-width">
-                        <button type="submit" class="btn default-button full-width">Send inn spørsmål</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-7">
-                <p><small>Dette er en anonym tjeneste. Vi vil samtidig informere om at ditt spørsmål kan bli publisert på forsiden sammen med vårt svar.</small></p>
-            </div>
-        </div>
-    </form>
 </template>

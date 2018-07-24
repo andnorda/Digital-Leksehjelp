@@ -17,7 +17,9 @@ Template.searchField.events({
     'keydown .searchField'(event) {
         if (event.key === 'Enter') {
             event.preventDefault();
-            Router.go(`/sok?q=${Template.instance().state.get('query') || ''}`);
+            Router.go(
+                `/sok?query=${Template.instance().state.get('query') || ''}`
+            );
         }
     }
 });

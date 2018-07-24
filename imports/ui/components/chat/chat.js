@@ -99,25 +99,10 @@ function isIe(userAgent) {
     );
 }
 
-function isEdge(userAgent) {
-    return userAgent.indexOf('Edge/') !== -1;
-}
-
-function isIeOrEdge(userAgent = window.navigator.userAgent) {
-    return isIe(userAgent) || isEdge(userAgent);
-}
-
-const open = () => $('input.file').click();
-
 Template.chatComponent.events({
     'click button.upload'(event) {
         event.preventDefault();
-
-        if (isIeOrEdge()) {
-            setTimeout(open, 0);
-        } else {
-            open();
-        }
+        setTimeout(() => $('input.file').click(), 0);
     },
     'change .file'(event) {
         const { files } = event.target;

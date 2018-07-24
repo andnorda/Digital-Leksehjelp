@@ -28,13 +28,21 @@ Template.newSubjectSelector.onCreated(function() {
 
 Template.newSubjectSelector.helpers({
     subjects() {
+        if (this.includeAll) {
+            return ['Alle fag'].concat(Subjects.find().map(({ name }) => name));
+        }
         return Subjects.find().map(({ name }) => name);
     },
     onChange() {
         return this.onChange;
     },
+    validationError() {
+        return this.validationError;
+    },
     sort() {
         return (a, b) => {
+            if (a === 'Alle fag') return -1;
+            if (b === 'Alle fag') return 1;
             const aAvailable = isAvailable(a);
             const bAvailable = isAvailable(b);
             if (bAvailable && !aAvailable) {
@@ -52,6 +60,9 @@ Template.newSubjectSelector.helpers({
         };
     },
     isAvailable() {
+        if (this.allAvailable) {
+            return () => true;
+        }
         return isAvailable;
     }
 });

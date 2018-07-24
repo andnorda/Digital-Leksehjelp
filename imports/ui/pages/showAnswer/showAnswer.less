@@ -1,0 +1,124 @@
+@import '/imports/ui/stylesheets/less/colors.import.less';
+
+.showAnswer {
+    margin: 0 20px 30px;
+
+    @media (min-width: 768px) {
+        margin-right: 60px;
+        margin-left: 60px;
+    }
+
+    @media (min-width: 1366px) {
+        margin-right: 100px;
+        margin-left: 100px;
+    }
+
+    .info {
+        font-weight: bold;
+        margin: 20px 0 10px;
+        margin-right: 120px;
+    }
+
+    .badge_new {
+        position: absolute;
+        color: white;
+        height: 90px;
+        width: 90px;
+        line-height: 90px;
+        text-align: center;
+        border-radius: 50%;
+        right: 0;
+        top: -45px;
+
+        @media (min-width: 768px) {
+            height: 130px;
+            width: 130px;
+            line-height: 130px;
+            top: -65px;
+        }
+    }
+
+    .question {
+        border-top: solid 1px @action-color;
+        position: relative;
+        margin-bottom: 50px;
+        max-width: 720px;
+
+        @media (min-width: 768px) {
+            margin-bottom: 70px;
+        }
+
+        .badge_new {
+            background: @action-color;
+            transform: rotate(-15deg);
+        }
+    }
+
+    .answer {
+        border-top: solid 1px @primary-color;
+        position: relative;
+        margin-bottom: 30px;
+        max-width: 720px;
+
+        > .badge_new {
+            background: @primary-color;
+            transform: rotate(15deg);
+        }
+    }
+}
+
+.feedback {
+    padding: 0 20px 20px;
+    background-color: rgba(0, 0, 0, 0.05);
+
+    @media (min-width: 768px) {
+        padding: 20px 60px 20px;
+    }
+
+    @media (min-width: 1366px) {
+        padding: 0 100px 40px;
+    }
+
+    .feedbackForm {
+        display: flex;
+        flex-direction: column;
+        max-width: 720px;
+
+        textarea {
+            resize: none;
+            margin-bottom: 10px;
+        }
+
+        .button-component {
+            align-self: flex-end;
+            margin-top: 10px;
+        }
+    }
+}
+
+.serviceDescription {
+    font-size: 20px;
+    padding: 30px 20px;
+
+    @media (min-width: 768px) {
+        font-size: 40px;
+        padding: 40px 60px;
+    }
+
+    @media (min-width: 1366px) {
+        display: flex;
+        align-items: center;
+        padding: 40px 100px;
+
+        div {
+            width: 60%;
+        }
+    }
+
+    img {
+        width: 100%;
+        margin: 10px auto 20px;
+        display: block;
+        max-width: 335px;
+    }
+}

@@ -58,7 +58,7 @@ Meteor.startup(function() {
     }
 
     Accounts.emailTemplates.from =
-        'Digital Leksehjelp <digitalleksehjelp@oslo.redcross.no>';
+        'Digital leksehjelp <digitalleksehjelp@oslo.redcross.no>';
 
     if (Meteor.users.find().count() === 0) {
         console.log('WARNING: NO USERS, DEFAULT ADMIN ACCOUNT ADDED');

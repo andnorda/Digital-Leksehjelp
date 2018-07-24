@@ -25,14 +25,15 @@ const search = (options, query) => {
 Template.select.helpers({
     value() {
         const state = Template.instance().state;
-        const currentData = Template.currentData();
-        return currentData.filter
-            ? state.get('query') || currentData.value
-            : currentData.value || this.placeholder;
+        return state.get('query') || this.value;
     },
 
     isOpen() {
         return Template.instance().state.get('isOpen');
+    },
+
+    validationError() {
+        return this.validationError;
     },
 
     options() {

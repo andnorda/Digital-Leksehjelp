@@ -1,85 +1,46 @@
 <template name="showAnswer">
     {{#if question}}
-        <div class="category-title white-bg-adjustment"><div class="empty-category-title"></div></div>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-md-offset-3">
-                    <div class="category-title grid-adjustment">
-                        <h2>
-                            <span>Spørsmål</span>
-                        </h2>
-                    </div>
-                </div>
+        <div class="showAnswer">
+            <h1>{{title}}</h1>
+            <div class="metadata">{{subject}}, {{prettyDate}}</div>
+            <div class="question">
+                <div class="badge_new">Spørsmål</div>
+                <p class="info">Spørmsålet er stilt av en elev i {{grade}}.</p>
+                {{{transformNewline question}}}
             </div>
-            <div class="row">
-                <div class="col-md-9 col-md-offset-3" itemscope itemtype="http://schema.org/Question">
-                    <meta itemprop="headline" content="{{title}}" />
-                    <meta itemprop="dateCreated" content="{{questionDate}}" />
-                    <meta itemprop="datePublished" content="{{answerDate}}" />
 
-                    {{#if title}}<h3>{{title}}</h3>{{/if}}
-                    <div class="question-item show-question">
-                        <p itemprop="text">{{{transformNewline question}}}</p>
-                        <p class="question-item-footer"><span itemprop="genre">{{subjectName subjectId}}</span>, {{grade}} &ndash; {{fromNow questionDate}}</p>
-                    </div>
-
-                    <h3>Svar</h3>
-                    <div itemprop="acceptedAnswer" itemscope itemtype="http://schema.org/Answer">
-                        <p class="answer-text" itemprop="text">
-                            {{{answer}}}
-                        </p>
-
-                        {{#if answerAttachmentUrl}}
-                            <p>
-                                <a href="{{answerAttachmentUrl}}" target="_blank" class="red-cross-link">Åpne vedlegg</a>
-                            </p>
-                        {{/if}}
-                    </div>
-
-                    {{#if showNonpublicQuestionWarning}}
-                        <div class="alert alert-warning" role="alert">
-                            <strong>NB!</strong> Dette spørsmålet/svaret er kun synlig fordi du er logget inn som frivillig. Det er enten upublisert eller ikke ennå godkjent.
-                        </div>
-                    {{/if}}
-
-                    {{#if showVolunteerMiniForm}}
-                        {{> volunteerMiniForm}}
-                    {{/if}}
-                </div>
+            <div class="answer">
+                <div class="badge_new">Svar</div>
+                <p class="info">Svaret et skrevet av en frivillig hos digital leksehjelp.</p>
+                {{{answer}}}
             </div>
         </div>
+        {{> feedback}}
+        {{> serviceDescription}}
     {{else}}
         {{> notFound}}
     {{/if}}
 </template>
 
-<template name="volunteerMiniForm">
-    <div>
-
-        <h4>Skjema for frivillige</h4>
-        <form>
-            <div class="form-group">
-                <label>Tittel</label>
-                <input type="text" class="form-control" name="title" placeholder="Tittel" value="{{title}}">
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" name="publishAnswer" checked="{{publishIsChecked}}"> Publisér svaret når det blir godkjent
-                </label>
-            </div>
-
-            <button class="btn btn-primary" id="updateQuestion">Lagre</button>
-            {{#if isNotMe lastUpdatedBy}}
-                <span style="font-size: 70%; margin-left: 15px;">Ved å lagre endringer her må en annen frivillig godkjenne svaret</span>
-            {{/if}}
-        </form>
-
-        <br /><br />
-        {{#if canBeVerified}}
-            {{#if isNotMe lastUpdatedBy}}
-                <button class="btn btn-success verify-answer">Godkjenn svar</button>
-            {{/if}}
+<template name="feedback">
+    <section class="feedback">
+        {{#if success}}
+            <h1>Takk for tilbakemeldingen!</h1>
+        {{else}}
+            <form class="feedbackForm">
+                <h1>Var det noe som var ukart?</h1>
+                <textarea
+                    placeholder="Du kan stille oss ett oppfølgningspørmsål, eller be oss utdype om noe var uklart i svaret."
+                    rows="8"></textarea>
+                {{> button type='submit' text='Send' disabled=feedbackFormDisabled}}
+            </form>
         {{/if}}
-    </div>
+    </section>
+</template>
+
+<template name="serviceDescription">
+    <section class="serviceDescription">
+        <div>På Digital leksehjelp kan du <a href="/sporsmal">stille spørmsål</a> eller få <a href="/">direkte hjelp</a> fra en frivillig med leksene.</div>
+        <img src="/figure_4.svg" alt="" />
+    </section>
 </template>

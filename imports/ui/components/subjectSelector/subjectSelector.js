@@ -11,6 +11,9 @@ Template.subjectSelector.onCreated(function subjectSelectorOnCreated() {
 });
 
 Template.subjectSelector.helpers({
+    placeholder() {
+        return this.placeholder || 'F.eks. matematikk, naturfag eller norsk';
+    },
     subjects() {
         return Subjects.find({}, { sort: { name: 1 } });
     }

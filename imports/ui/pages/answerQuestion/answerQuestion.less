@@ -1,0 +1,110 @@
+@import '/imports/ui/stylesheets/less/colors.import.less';
+
+.answerQuestion {
+    margin: 50px;
+
+    .content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 30px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        .inputContainer {
+            padding: 20px;
+            background-color: @form-background-color;
+
+            button.upload {
+                display: flex;
+                align-items: center;
+                border: none;
+                padding: 0;
+                margin: 0;
+                background-color: transparent;
+                position: relative;
+
+                > .plus {
+                    font-size: 30px;
+                    color: @action-color;
+                    margin-right: 4px;
+                }
+
+                .subtle {
+                    color: @subtle-text-color;
+                }
+
+                > .tooltip_new {
+                    background-color: #f2ecf8;
+                    display: none;
+                    color: @primary-color;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    text-align: left;
+                    width: 90%;
+                    max-width: 320px;
+                    font-size: 15px;
+                    padding: 10px;
+                }
+
+                &:hover > .tooltip_new {
+                    display: block;
+                    transform: translate(0, -100%);
+                }
+            }
+        }
+
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+    }
+
+    .editList {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border: 1px solid black;
+
+        .edit {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid black;
+            }
+        }
+    }
+
+    .feedbackList {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        .feedbackListItem {
+            margin-bottom: 10px;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid black;
+            }
+
+            .text {
+                padding: 10px;
+                background-color: @form-background-color;
+            }
+
+            .metadata {
+                display: flex;
+                justify-content: space-between;
+                padding: 5px 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,45 @@
+.dropdownMenu {
+    position: relative;
+
+    > .menu-button {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: none;
+        border: none;
+        line-height: 0;
+        height: 21px;
+        width: 21px;
+        padding: 0;
+    }
+
+    > .dropdown {
+        display: none;
+        position: absolute;
+        right: 0;
+        border: 1px solid #080808;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        &.active {
+            display: block;
+        }
+
+        > .dropdownMenuItem {
+            padding: 10px;
+            background-color: white;
+            cursor: pointer;
+            white-space: nowrap;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid #080808;
+            }
+
+            &:hover {
+                background-color: #82c289;
+            }
+        }
+    }
+}

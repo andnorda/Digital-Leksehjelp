@@ -1,156 +1,169 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
-import { Session } from 'meteor/session';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { CONSTANTS } from '/imports/constants.js';
 
 import './askQuestion.html';
+import './askQuestion.less';
 
-import '../../components/subjectSelector/subjectSelector.js';
-import '../../components/gradeSelector/gradeSelector.js';
+import '../../components/newSubjectSelector/subjectSelector.js';
+import '../../components/topicsInput/topicsInput.js';
+import '../../components/select/select.js';
+import '../../components/button/button.js';
 import '../../components/relatedQuestions/relatedQuestions.js';
 
-const resetForm = function() {
-    $('form[name=questionForm]')[0].reset();
-    Session.set('attachmentLabel', undefined);
-    $('#chosen-grade').text('Velg trinn');
-    $('#chosen-subject').attr('data-id', 'default');
-    $('#chosen-subject').text('Velg fag');
-};
-
-const askQuestion = function(questionFields) {
-    Meteor.call('questions.ask', questionFields, function(error) {
-        if (error) {
-            // TODO
-        } else {
-            resetForm();
-        }
-        $('button[type=submit]').removeClass('disabled');
-    });
-};
-
-Template.questionForm.onRendered(function() {
-    Session.set('attachmentLabel', undefined);
+Template.askQuestion.onCreated(function() {
+    this.state = new ReactiveDict();
 });
 
-Template.questionForm.helpers({
-    percentUploaded() {
-        const file = S3.collection.findOne({ uploading: true });
-        return file && file.percent_uploaded;
+Template.askQuestion.helpers({
+    subject() {
+        return Template.instance().state.get('subject');
     },
-    attachmentLabel() {
-        return Session.get('attachmentLabel');
+    onSubjectChange() {
+        const state = Template.instance().state;
+        return subject => {
+            if (subject !== state.get('subject')) {
+                state.set('subject', subject);
+                state.set('topics', []);
+            }
+        };
     },
-    attachmentSelected() {
-        return Session.get('attachmentLabel') ? 'hidden' : '';
+    topics() {
+        return Template.instance().state.get('topics');
+    },
+    addTopic() {
+        const state = Template.instance().state;
+        return topic =>
+            state.set('topics', (state.get('topics') || []).concat(topic));
+    },
+    removeTopic() {
+        const state = Template.instance().state;
+        return topic =>
+            state.set(
+                'topics',
+                (state.get('topics') || []).filter(t => t !== topic)
+            );
+    },
+    grade() {
+        return Template.instance().state.get('grade');
+    },
+    setGrade() {
+        const state = Template.instance().state;
+        return grade => state.set('grade', grade);
+    },
+    attachments() {
+        return Template.instance().state.get('attachments');
+    },
+    question() {
+        return Template.instance().state.get('question');
+    },
+    subjectValidationError() {
+        return Template.instance().state.get('subjectValidationError');
+    },
+    gradeValidationError() {
+        return Template.instance().state.get('gradeValidationError');
+    },
+    questionValidationError() {
+        return Template.instance().state.get('questionValidationError');
+    },
+    emailValidationError() {
+        return Template.instance().state.get('emailValidationError');
+    },
+    success() {
+        return Template.instance().state.get('success');
     }
 });
 
-Template.questionForm.events({
-    'submit form'(event, templateInstance) {
+Template.askQuestion.events({
+    'click button.upload'(event) {
+        event.preventDefault();
+        setTimeout(() => $('input.file').click(), 0);
+    },
+    'change .file'(event) {
+        const { files } = event.target;
+        const state = Template.instance().state;
+
+        S3.upload({ files, path: 'attachments' }, function(error, result) {
+            if (error) {
+                // TODO
+            } else {
+                state.set(
+                    'attachments',
+                    (state.get('attachments') || []).concat({
+                        name: result.file.original_name,
+                        url: result.secure_url,
+                        id: result._id
+                    })
+                );
+            }
+        });
+    },
+    'click .removeAttachment'() {
+        const state = Template.instance().state;
+        state.set(
+            'attachments',
+            state
+                .get('attachments')
+                .filter(attachment => attachment.id !== this.id)
+        );
+    },
+    'input .question'(event) {
+        Template.instance().state.set('question', event.target.value);
+    },
+    'input .email'(event) {
+        Template.instance().state.set('studentEmail', event.target.value);
+    },
+    'input .allowPublish'(event) {
+        Template.instance().state.set('allowPublish', event.target.checked);
+    },
+    'submit form'(event) {
         event.preventDefault();
 
-        $('button[type=submit]').addClass('disabled');
+        const state = Template.instance().state;
+        const subject = state.get('subject');
+        const grade = state.get('grade');
+        const question = state.get('question');
+        const studentEmail = state.get('studentEmail');
 
-        let grade = $('#chosen-grade').text();
-        grade = grade === 'Velg trinn' ? 'default' : grade;
-
-        const questionFields = {
-            subjectId: $('#chosen-subject').attr('data-id'),
-            grade,
-            question: templateInstance.find('textarea[name=question]').value,
-            studentEmail: templateInstance.find('input[name=email]').value
-        };
-
-        validationError = [];
-        validationErrorDep.changed();
-        if (questionFields.subjectId === 'default') {
-            validationError.push('subjectError');
-            validationErrorDep.changed();
+        let error = false;
+        if (!subject) {
+            state.set('subjectValidationError', true);
+            error = true;
         }
-        if (questionFields.grade === 'default') {
-            validationError.push('gradeError');
-            validationErrorDep.changed();
+        if (!grade) {
+            state.set('gradeValidationError', true);
+            error = true;
         }
-        if (questionFields.question.trim() === '') {
-            validationError.push('questionFieldError');
-            validationErrorDep.changed();
+        if (!question) {
+            state.set('questionValidationError', true);
+            error = true;
         }
-        if (!SimpleSchema.RegEx.Email.test(questionFields.studentEmail)) {
-            validationError.push('emailError');
-            validationErrorDep.changed();
-        }
-        if (validationError.length > 0) {
-            $('button[type=submit]').removeClass('disabled');
-            return;
+        if (!studentEmail) {
+            state.set('emailValidationError', true);
+            error = true;
         }
 
-        const { files } = $('input[name=attachment]')[0];
-
-        if (files.length === 1) {
-            if (files[0].size > CONSTANTS.S3_MAX_UPLOAD_FILE_SIZE) {
-                validationError.push('attachmentError');
-                validationErrorDep.changed();
-                $('#attachment-error').removeClass('hidden');
-                setTimeout(function() {
-                    $('#attachment-error').addClass('hidden');
-                }, 5000);
-                $('button[type=submit]').removeClass('disabled');
-                return;
-            }
-
-            S3.upload({ files, path: 'vedlegg' }, function(error, result) {
-                if (error) {
-                    $('#attachment-error').removeClass('hidden');
-                    $('#attachment-error').text(
-                        'Det skjedde noe galt med opplastningen. Prøv igjen'
-                    );
-                    setTimeout(function() {
-                        $('#attachment-error').addClass('hidden');
-                        $('#attachment-error').html(
-                            'Vedlegget du har valgt er for stort (maks 5 <a href="http://no.wikipedia.org/wiki/Megabyte">MB</a>)'
-                        );
-                    }, 5000);
-                    validationError.push('attachmentError');
-                    validationErrorDep.changed();
-                    return;
+        if (!error) {
+            Meteor.call(
+                'questions.ask',
+                {
+                    subject,
+                    topics: state.get('topics'),
+                    grade,
+                    question,
+                    attachments: state.get('attachments'),
+                    studentEmail,
+                    allowPublish: state.get('allowPublish')
+                },
+                err => {
+                    if (!err) {
+                        state.set('success', true);
+                    }
                 }
-                if (!result.uploading) {
-                    questionFields.attachmentUrl = result.url;
-                    askQuestion(questionFields);
-                }
-            });
-        } else {
-            askQuestion(questionFields);
+            );
         }
-    },
-    'keydown, blur, focus textarea[name=question]'(event, templateInstance) {
-        const subjectId = $('#chosen-subject').attr('data-id');
-        const subject = Subjects.findOne({ _id: subjectId });
-        const question = templateInstance.find('textarea[name=question]').value;
-
-        searchForRelatedQuestions(subject, question);
-    },
-    'blur select[name=subject]'(event, templateInstance) {
-        const subjectId = templateInstance.find('select[name=subject]').value;
-        const subject = Subjects.findOne({ _id: subjectId });
-        const question = templateInstance.find('textarea[name=question]').value;
-
-        searchForRelatedQuestions(subject, question);
-    },
-    'change .dl-file-chooser :file'() {
-        const input = $('input[name=attachment]');
-        const label = input
-            .val()
-            .replace(/\\/g, '/')
-            .replace(/.*\//, '');
-        Session.set('attachmentLabel', label);
-    },
-    'click .remove-attachment'() {
-        let fileInput = $('input[name=attachment]');
-        fileInput.replaceWith((fileInput = fileInput.clone(true)));
-        Session.set('attachmentLabel', undefined);
     }
 });

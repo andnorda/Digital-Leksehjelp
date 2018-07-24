@@ -1,0 +1,69 @@
+@import '/imports/ui/stylesheets/less/colors.import.less';
+
+.questions {
+    margin: 20px 50px;
+
+    .categories,
+    .questionList_new {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .categories {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 20px;
+    }
+
+    .question {
+        display: flex;
+        flex-direction: column;
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid @border-color;
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .content {
+            padding: 10px 0;
+            border-bottom: 1px solid @border-color;
+        }
+
+        .label_new {
+            color: @label-color;
+        }
+
+        .subject {
+            font-weight: bold;
+        }
+
+        .nickname {
+            color: @primary-color;
+        }
+
+        .tagList:not(:empty) {
+            margin-top: 10px;
+        }
+
+        .button-component {
+            margin-top: 10px;
+            width: initial;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .editing {
+            font-size: 15px;
+            margin-top: 10px;
+            padding: 9px 0 8px;
+            background-color: red;
+            text-align: center;
+            color: @primary-color;
+            background-color: @info-background;
+        }
+    }
+}

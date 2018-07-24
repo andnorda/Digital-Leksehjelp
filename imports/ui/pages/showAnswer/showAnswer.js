@@ -1,86 +1,48 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { Questions } from '/imports/api/questions/questions.js';
-import { Subjects } from '/imports/api/subjects/subjects.js';
+import { ReactiveDict } from 'meteor/reactive-dict';
+import { format } from 'date-fns';
+import '../../components/button/button.js';
 
 import './showAnswer.html';
-
-Template.showAnswer.onCreated(function() {
-    this.autorun(() => {
-        this.subscribe('subjects');
-    });
-});
-
-Template.showAnswer.onRendered(function() {
-    window.scrollTo(0, 0);
-});
+import './showAnswer.less';
 
 Template.showAnswer.helpers({
-    subjectName(subjectId) {
-        const subject = Subjects.findOne({ _id: subjectId });
-        return subject ? subject.name : 'Ukjent fag';
-    },
-    questionContext() {
-        return Questions.findOne({});
-    },
-    showNonpublicQuestionWarning() {
-        if (Meteor.user() && this.question) {
-            return !this.publishedBy || !this.verifiedBy;
-        }
-        return false;
-    },
-    showVolunteerMiniForm() {
-        if (Meteor.user() && this.question) {
-            return !this.verifiedBy;
-        }
-
-        return false;
+    prettyDate() {
+        return format(this.questionDate, 'DD.MM.YYYY');
     }
 });
 
-Template.volunteerMiniForm.helpers({
-    canBeVerified() {
-        if (Meteor.user() && this.question) {
-            return !this.verifiedBy;
-        }
-        return false;
+Template.feedback.onCreated(function() {
+    this.state = new ReactiveDict();
+});
+
+Template.feedback.helpers({
+    feedbackFormDisabled() {
+        return !Template.instance().state.get('feedback');
     },
-    publishIsChecked() {
-        if (this.answer) {
-            return this.publishedBy;
-        }
-        return false;
+    success() {
+        return Template.instance().state.get('success');
     }
 });
 
-Template.volunteerMiniForm.events({
-    'click button#updateQuestion'(event, templateInstance) {
+Template.feedback.events({
+    'input textarea'(event) {
+        Template.instance().state.set('feedback', event.target.value);
+    },
+    'submit .feedbackForm'(event) {
         event.preventDefault();
 
-        const questionId = templateInstance.data._id;
-        const title = templateInstance
-            .find('input[name=title]')
-            .value.substring(0, 120);
-        const publishAnswer = !!templateInstance.find(
-            'input[name=publishAnswer]:checked'
+        const state = Template.instance().state;
+
+        Meteor.call(
+            'feedback.send',
+            { feedback: state.get('feedback'), questionId: this._id },
+            err => {
+                if (!err) {
+                    state.set('success', true);
+                }
+            }
         );
-
-        if (Meteor.user()) {
-            Meteor.call('questions.updateFromVolunteerMiniForm', {
-                questionId,
-                title,
-                publishAnswer
-            });
-        }
-    },
-
-    'click .verify-answer'(event) {
-        event.preventDefault();
-
-        if (Meteor.user()) {
-            Meteor.call('questions.verify', {
-                questionId: this._id
-            });
-        }
     }
 });

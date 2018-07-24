@@ -4,7 +4,10 @@ import { CONSTANTS } from '/imports/constants.js';
 
 Meteor.methods({
     'questions.searchCount'(params) {
-        return QuestionHelpers.search(params, Meteor.userId()).count();
+        return QuestionHelpers.search({
+            ...params,
+            userId: Meteor.userId()
+        }).count();
     },
 
     'questions.related'(params) {

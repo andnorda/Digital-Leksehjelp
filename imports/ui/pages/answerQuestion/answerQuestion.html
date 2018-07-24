@@ -1,100 +1,132 @@
 <template name="answerQuestion">
+    <div class="answerQuestion">
+        <h1>Svar på spørsmål</h1>
+        {{> questionStatus}}
+        <h2>{{subject}}</h2>
+        {{#unless approvedBy}}
+            <div class="nickname">{{nickname}}</div>
+        {{/unless}}
+        <div class="grade"><span class="label_new">Kasse:</span> {{grade}}</div>
+        <div class="allowPublish"><span class="label_new">Kan publiseres:</span> {{#if allowPublish}}Ja{{else}}Nei{{/if}}</div>
+        <div class="date"><span class="label_new">Sendt inn:</span> {{prettyDate}}</div>
 
-    <div class="container">
-        <br>
-        <button type="button" class="btn btn-danger ignore-changes-and-close-window">
-            Lukk vindu
-        </button>
-        <span style="font-size: 85%; margin-left: 15px;">(forkaster eventuelle endringer)</span>
-
-        <h3>Svar på spørsmål</h3>
-        <div class="row">
-            <div class="col-md-8">
-                {{> answerQuestionForm}}
-
-                <br>
-                <button type="button" class="btn btn-danger ignore-changes-and-close-window">
-                    Lukk vindu
-                </button>
-                <span style="font-size: 85%; margin-left: 15px;">(forkaster eventuelle endringer)</span>
-
-                {{> answerQuestionHelp}}
+        {{#if attachments}}
+            <div>
+                Vedlegg:
+                <ul class="attachmentList">
+                    {{#each attachments}}
+                        <li class="attachment">
+                            <a href={{url}} target="_blank" class="attachment">
+                                {{this.name}}
+                            </a>
+                        </li>
+                    {{/each}}
+                </ul>
             </div>
-            <div class="col-md-4">
-                {{#if attachmentUrl}}
-                    <h3>Vedlegg til spørsmålet</h3>
-                    <a href="{{attachmentUrl}}" target="_blank" class="attachment-link">{{attachmentUrl}}</a>
-                {{/if}}
-                {{#if answerAttachmentUrl}}
-                    <h3>Vedlegg til svaret</h3>
-                    <a href="{{answerAttachmentUrl}}" target="_blank" class="attachment-link">{{answerAttachmentUrl}}</a>
-                {{/if}}
+        {{/if}}
 
-                <h3>Relaterte spørsmål</h3>
-                {{> relatedQuestions target="_blank"}}
+        <div class="content">
+            <div>
+                <h2>Spørsmål og svar</h2>
+                {{> answerQuestionForm}}
+            </div>
+            <div>
+                <h2>Redigert av</h2>
+                <ul class="editList">
+                    {{#each editedBy}}
+                        <li class="edit">
+                            <div>{{name}}</div>
+                            <div>{{editDate}}</div>
+                        </li>
+                    {{/each}}
+                </ul>
+                <h2>Tilbakemeldinger</h2>
+                <ul class="feedbackList">
+                    {{#each feedbackList}}
+                        <li class="feedbackListItem">
+                            <div class="text">{{feedback}}</div>
+                            <div class="metadata">
+                                <div>{{feedbackDate}}</div>
+                                {{> button type='button' danger=true subtle=true text='Slett' onClick=deleteFeedback}}
+                            </div>
+                        </li>
+                    {{/each}}
+                </ul>
             </div>
         </div>
     </div>
 </template>
 
 <template name="answerQuestionForm">
-    <form role="form">
-        <p class="question-subtitle">{{subjectName subjectId}} &ndash; {{grade}}</p>
-        <div class="form-group">
-            <h4>Spørsmål</h4>
-            <textarea class="form-control" name="question" value="{{question}}" rows="8"></textarea>
-        </div>
-        <div class="form-group">
-            <h4>Tittel</h4>
-            <button type="button" class="btn btn-xs btn-default" id="setTitleButton">Bruk spørsmål som tittel (maks 120 tegn)</button>
-            <input type="text" class="form-control" name="title" placeholder="Tittel" value="{{title}}">
-        </div>
-        <div class="form-group">
-            <h4>Svar <small><a href="#question-help">Hjelp</a></small></h4>
+    <form class="answerQuestionForm">
+        <div class="inputContainer">
+            <label for="title">Tittel</label>
+            <input id="title" class="title" type="text" name="title" placeholder="Tittel" value="{{title}}">
+
+            {{> topicsInput
+                value=topics
+                addTopic=addTopic
+                removeTopic=removeTopic
+                subject=subject
+                shouldRender=true}}
+
+            <label for="question">Spørsmål</label>
+            <textarea id="question" class="question" name="question" value="{{question}}" rows="8"></textarea>
+
             <div id="answer">
                 {{{answerText this}}}
             </div>
-        </div>
-        <div class="form-group">
-            <h4>Vedlegg <small>(maks 5 MB)</small></h4>
-            <p>Dette vil bli gjort tilgjengelig når man leser spørsmålet.
-                {{#if answerAttachmentUrl}}
-                    Obs! Ved å laste opp nytt vedlegg, blir det gamle overskrevet.
-                {{/if}}
-            </p>
-            <div class="input-group">
-                <input type="file" class="form-control" name="attachment">
-            </div>
-        </div>
-        {{#if percentUploaded}}
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="{{percentUploaded}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percentUploaded}}%;">
-                    <span class="sr-only">{{percentUploaded}} % ferdig</span>
+
+            <input
+                type="file"
+                name="attachment"
+                accept="image/*|.pdf|.doc|.docx"
+                class="file"
+                multiple
+                style="display: none;">
+            <button type="button" class="upload">
+                <span class="plus">+</span><span>Legg til filer <span class="subtle">(max 5 mb)</span></span>
+                <div class="tooltip_new">
+                    Hvis du sender et vedlegg, må du gjerne fjerne navnet ditt eller andre ting fra dokumentet som kan identifisere deg.
                 </div>
+            </button>
+
+            <div>
+                {{#each answerAttachments}}
+                    <div class="attachment">
+                        <a href={{url}} target="_blank" class="attachment">
+                            {{name}}
+                        </a>
+                        <button type='button' class="removeAttachment">x</button>
+                    </div>
+                {{/each}}
             </div>
-        {{/if}}
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" name="publishAnswer" checked="{{publishIsChecked this}}"> Publisér svaret når det blir godkjent
-            </label>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg">Lagre svar</button>
+        {{> answerQuestionButtons }}
     </form>
 </template>
 
-<template name="answerQuestionHelp">
-    <br><br><br><br>
-    <h3 id="question-help">Hjelp</h3>
-    For å lage formler må man
-    <ol>
-        <li>Gå til <a href="http://www.sciweavers.org/free-online-latex-equation-editor" target="_blank">http://www.sciweavers.org/free-online-latex-equation-editor</a></li>
-        <li>Lage formelen i editoren</li>
-        <li>Klikk "Convert"</li>
-        <li>Enten kopiere lenken til høyre for "Twitter, Google Docs" <i>eller</i> last ned bildet ved å klikke "Download"</li>
-        <li>Klikk på "Picture"-knappen i Svar-editoren ovenfor</li>
-        <li>Enten lim inn lenken du kopierte <i>eller</i> last opp bildet du lasted ned</li>
-    </ol>
-    <p>
-        NB! Unngå å laste opp store bilder ved bruk av "Picture"-knappen &ndash; benytt heller vedlegg.
-    </p>
+<template name="answerQuestionButtons">
+    <div class="buttons">
+        {{> button type='submit' text='Lagre'}}
+
+        {{#if published}}
+            {{> button type='button' text='Sjul på nettsiden' onClick=unpublish}}
+        {{/if}}
+
+        {{#if approved}}
+            {{> button type='button' text='Publiser' onClick=publish}}
+        {{/if}}
+
+        {{#if forApproval}}
+            {{> button type='button' text='Godkjenn uten å publisere' onClick=approve}}
+            {{#if allowPublish}}
+                {{> button type='button' text='Godkjenn og publiser' onClick=approveAndPublish}}
+            {{/if}}
+        {{/if}}
+
+        {{#if edited}}
+            {{> button type='button' text='Legg til godkjenning' onClick=submitForApproval}}
+        {{/if}}
+    </div>
 </template>

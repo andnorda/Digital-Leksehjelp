@@ -6,6 +6,10 @@ import { GRADES } from '/imports/constants.js';
 validationErrorDep = new Deps.Dependency();
 validationError = [];
 
+Template.registerHelper('count', function(cursor) {
+    return cursor && cursor.count();
+});
+
 Template.registerHelper('validationError', function(errorType) {
     validationErrorDep.depend();
     if (validationError && validationError.indexOf(errorType) > -1) {

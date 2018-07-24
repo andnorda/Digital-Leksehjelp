@@ -3,7 +3,6 @@ import { Counts } from 'meteor/tmeasday:publish-counts';
 import { Match, check } from 'meteor/check';
 import { QUESTION_SUBSCRIPTION_LEVEL, CONSTANTS } from '/imports/constants.js';
 import { ADMIN } from '/imports/userRoles.js';
-import { generateNickname } from '/imports/utils.js';
 import {
     Questions,
     questionPrivateFields,
@@ -11,9 +10,22 @@ import {
 } from '../questions.js';
 import QuestionHelpers from '../questionHelpers.js';
 
-Meteor.publish('questions.search', function(params) {
-    params.limit = CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE;
-    return QuestionHelpers.search(params, this.userId);
+Meteor.publish('questions.search', function({
+    query,
+    subject,
+    grade,
+    sortType,
+    offset
+}) {
+    return QuestionHelpers.search({
+        query,
+        subject,
+        grade,
+        sortType,
+        offset,
+        limit: CONSTANTS.NUMBER_OF_SEARCH_RESULTS_PER_PAGE,
+        userId: this.userId
+    });
 });
 
 const MAX_QUESTIONS = 10000;
@@ -32,7 +44,7 @@ Meteor.publish('questions.verifiedPublished', function(limit) {
 
     return Questions.find(
         {
-            verifiedBy: { $exists: true },
+            approvedBy: { $exists: true },
             publishedBy: { $exists: true }
         },
         {
@@ -57,7 +69,7 @@ Meteor.publish('questions.verifiedUnpublished', function(limit) {
 
     return Questions.find(
         {
-            verifiedBy: { $exists: true },
+            approvedBy: { $exists: true },
             publishedBy: { $exists: false }
         },
         {
@@ -73,7 +85,7 @@ Meteor.publish('questions.verifiedPublishedCount', function() {
         this,
         'questions.verifiedPublishedCount',
         Questions.find({
-            verifiedBy: { $exists: true },
+            approvedBy: { $exists: true },
             publishedBy: { $exists: true }
         })
     );
@@ -84,7 +96,7 @@ Meteor.publish('questions.verifiedUnpublishedCount', function() {
         this,
         'questions.verifiedUnpublishedCount',
         Questions.find({
-            verifiedBy: { $exists: true },
+            approvedBy: { $exists: true },
             publishedBy: { $exists: false }
         })
     );
@@ -105,73 +117,60 @@ Meteor.publish('questions', function(subscriptionLevel) {
                 }
             );
         } else if (subscriptionLevel === QUESTION_SUBSCRIPTION_LEVEL.REGULAR) {
-            const transform = function(doc) {
-                doc.nickname = generateNickname(doc.studentEmail);
-                delete doc.studentEmail;
-                return doc;
-            };
-
-            const self = this;
-
-            const observer = Questions.find({
+            return Questions.find({
                 $or: [
                     { answer: { $exists: false } },
                     {
                         $and: [
                             { answer: { $exists: true } },
-                            { verifiedBy: { $exists: false } }
+                            { approvedBy: { $exists: false } }
                         ]
                     }
                 ]
-            }).observe({
-                added(document) {
-                    self.added('questions', document._id, transform(document));
-                },
-                changed(newDocument, oldDocument) {
-                    self.changed(
-                        'questions',
-                        newDocument._id,
-                        transform(newDocument)
-                    );
-                },
-                removed(oldDocument) {
-                    self.removed('questions', oldDocument._id);
-                }
             });
-
-            self.onStop(function() {
-                observer.stop();
-            });
-
-            self.ready();
         }
     }
 
     this.ready();
 });
 
-Meteor.publish('questions.bySlugOrId', function(questionId) {
+Meteor.publish('questions.bySlugOrId', function(
+    questionId,
+    options = { editing: false }
+) {
     check(questionId, String);
 
     if (this.userId) {
+        if (options.editing) {
+            Questions.update(
+                { _id: questionId },
+                { $addToSet: { editing: this.userId } }
+            );
+        }
+
+        this.onStop(function() {
+            if (options.editing) {
+                Questions.update(
+                    { _id: questionId },
+                    { $pull: { editing: this.userId } }
+                );
+            }
+        });
+
+        return Questions.find({
+            $or: [{ slug: questionId }, { _id: questionId }]
+        });
+    } else {
         return Questions.find(
             {
-                $or: [{ slug: questionId }, { _id: questionId }]
+                $or: [{ slug: questionId }, { _id: questionId }],
+                answer: { $exists: true },
+                approvedBy: { $exists: true },
+                publishedBy: { $exists: true }
             },
             {
-                fields: questionPrivateFields
+                fields: questionPublicFields
             }
         );
     }
-    return Questions.find(
-        {
-            $or: [{ slug: questionId }, { _id: questionId }],
-            answer: { $exists: true },
-            verifiedBy: { $exists: true },
-            publishedBy: { $exists: true }
-        },
-        {
-            fields: questionPublicFields
-        }
-    );
 });
