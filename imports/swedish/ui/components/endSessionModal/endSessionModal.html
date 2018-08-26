@@ -1,0 +1,21 @@
+<template name="endSessionModal">
+    <div class="modal fade" id="endSessionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content dl-modal-content">
+                <div class="modal-header dl-modal-header">
+                    <h4 class="modal-title">Avsluta sessionen</h4>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    {{> endSessionModalBody}}
+                </div>
+                <div class="modal-footer dl-modal-footer">
+                    <button type="button" id="deleteSessionFromModal" class="btn btn-success" data-dismiss="modal">Ja, radera sessionen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="endSessionModalBody">
+    <h3>Är du redo att hjälpa studenten?</h3>
+</template>

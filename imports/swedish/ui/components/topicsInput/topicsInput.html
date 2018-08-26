@@ -1,0 +1,13 @@
+<template name="topicsInput">
+    {{#if shouldRender}}
+        <div class="topicsInput">
+            {{> select placeholder='Underkategorier' options=topics onChange=addTopic}}
+            {{#if value}}
+                {{> tagList tags=value onClick=removeTopic}}
+            {{/if}}
+            {{#if oneTag}}
+                <div class="oneTag">Du kan lägga till flera underkategorier</div>
+            {{/if}}
+        </div>
+    {{/if}}
+</template>

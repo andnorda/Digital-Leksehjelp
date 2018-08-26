@@ -1,0 +1,49 @@
+<template name="infoAdmin">
+    <div class="infoAdmin">
+        <section>
+            <form class="info-message-form">
+                <h1>Info</h1>
+                <p>Här kan du skriva ett meddelande som visas på framsidan.</p>
+                <textarea
+                    class="info-message"
+                    rows="3"
+                    placeholder="Till exempel: Stängt under påsk. Öppnar igen tisdag 3 april.">{{infoMessage}}</textarea>
+                {{> button type='submit' text='Spara' disabled=noInfoMessageChanges}}
+            </form>
+        </section>
+        <section>
+            <form class="opening-hours-form">
+                <h1>Öppettider</h1>
+                <p>Här kan du ändra öppettiderna som visas på framsidan.</p>
+                <div>
+                    {{#each days}}
+                        <div class="day">
+                            <div class="checkbox">
+                                <input
+                                    type="checkbox"
+                                    id="{{this}}"
+                                    name="openingHours"
+                                    value="{{this}}"
+                                    checked="{{getDay this}}">
+                                <label for="{{this}}">{{dayLabel this}}</label>
+                            </div>
+                            <div>
+                                <input type="time" id="{{this}}-from" value="{{getDayFrom this}}">
+                                <input type="time" id="{{this}}-to" value="{{getDayTo this}}">
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+                <div class="text">
+                    <label for="text">Annat meddelande</label>
+                    <textarea
+                        id="text"
+                        class="opening-hours-text"
+                        rows="1"
+                        placeholder="Till exempel: Sommar-stängt">{{openingHoursText}}</textarea>
+                </div>
+                {{> button type='submit' text='Spara' disabled=noOpeningHoursChanges}}
+            </form>
+        </section>
+    </div>
+</template>

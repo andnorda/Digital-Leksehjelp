@@ -1,0 +1,57 @@
+.hero {
+    @media (min-width: 1366px) {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    img {
+        width: 100%;
+        margin: 10px auto 20px;
+        display: block;
+        max-width: 335px;
+
+        @media (min-width: 1366px) {
+            transform: rotate(30deg);
+            max-width: 500px;
+            margin: 0;
+        }
+    }
+
+    .description {
+        font-size: 20px;
+        max-width: 1100px;
+
+        @media (min-width: 768px) {
+            font-size: 40px;
+        }
+    }
+
+    .readMore {
+        margin-top: 10px;
+
+        @media (min-width: 768px) {
+            margin-top: 20px;
+        }
+
+        a .plus {
+            display: inline-block;
+            color: black;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+
+        .content {
+            display: none;
+            margin-top: 30px;
+
+            @media (min-width: 768px) {
+                margin-top: 40px;
+            }
+        }
+
+        &.open .content {
+            display: block;
+        }
+    }
+}

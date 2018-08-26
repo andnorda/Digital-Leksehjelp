@@ -1,0 +1,96 @@
+<template name="volunteerQueue">
+    <div class="volunteerQueue">
+        {{#if
+            notEmpty
+            mySubjectsQueue
+            mySubjectsActiveSessions
+            otherSubjectsQueue
+            otherSubjectsActiveSessions}}
+            {{#if notEmpty mySubjectsQueue mySubjectsActiveSessions}}
+                <section>
+                    <h1>Mina ämnen</h1>
+                    <div class="grid">
+                        <div>
+                            <h2>Elever i kö</h2>
+                            {{#each mySubjectsQueue}}
+                                {{> studentSession}}
+                            {{/each}}
+                        </div>
+                        <div>
+                            <h2>Elever som får hjälp</h2>
+                            {{#each mySubjectsActiveSessions}}
+                                {{> activeStudentSession}}
+                            {{/each}}
+                        </div>
+                    </div>
+                </section>
+            {{/if}}
+            {{#if notEmpty otherSubjectsQueue otherSubjectsActiveSessions}}
+                <section>
+                    <h1>Andra ämnen</h1>
+                    <div class="grid">
+                        <div>
+                            <h2>Elever i kö</h2>
+                            {{#each otherSubjectsQueue}}
+                                {{> studentSession}}
+                            {{/each}}
+                        </div>
+                        <div>
+                            <h2>Elever som får hjälp</h2>
+                            {{#each otherSubjectsActiveSessions}}
+                                {{> activeStudentSession}}
+                            {{/each}}
+                        </div>
+                    </div>
+                </section>
+            {{/if}}
+        {{else}}
+            <div class="empty">Inga elever i kö. 🤷</div>
+        {{/if}}
+    </div>
+</template>
+
+<template name="studentSession">
+    <div class="studentSession">
+        <div class="studentSessionHeader">
+            <div class="subject">{{subject}}</div>
+            <div class="metadata">
+                <div class="nickname">{{nickname}}</div>
+                {{#if grade}}
+                    <div class="grade"><span class="category">Årskurs:</span> {{grade}}</div>
+                {{/if}}
+                <img class="icon" src="/{{#if isVideo}}video{{else}}chat{{/if}}.svg" alt="" />
+            </div>
+        </div>
+        {{#if text}}<div class="text">{{text}}</div>{{/if}}
+        <div class="topicsAndTime">
+            {{> tagList tags=topics}}
+            <div class="time">{{ timeInQueue }}</div>
+        </div>
+        <div class="buttons">
+            {{> button text='Ta bort från kö' type='button' danger=true large=true onClick=deleteSession}}
+            {{> button text=buttonText type='button' large=true onClick=startTutoring}}
+        </div>
+    </div>
+</template>
+
+<template name="activeStudentSession">
+    <div class="studentSession active">
+        <div class="studentSessionHeader">
+            <div class="subject">{{subject}}</div>
+            <div class="metadata">
+                <div class="nickname">{{nickname}}</div>
+                {{#if grade}}
+                    <div class="grade"><span class="category">Årskurs:</span> {{grade}}</div>
+                {{/if}}
+                <img class="icon" src="/{{#if isVideo}}video{{else}}chat{{/if}}.svg" alt="" />
+            </div>
+        </div>
+        <div class="activeVolunteers"><span class="category">Får hjälp från:</span> {{volunteers}}</div>
+        <div class="time">{{timeTutoring}}</div>
+        <div class="buttons">
+            {{> button text='Avsluta läxhjälp' type='button' danger=true large=true onClick=deleteSession}}
+            {{> button text=buttonText type='button' large=true onClick=startTutoring}}
+        </div>
+    </div>
+</template>

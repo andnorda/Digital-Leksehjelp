@@ -1,0 +1,33 @@
+<template name="homework">
+    {{#if serviceStatus}}
+        <section class="homework">
+            <div>
+                <h1>Läxhjälp {{> serviceStatusMessage}}</h1>
+                <p>Få hjälp av en frivillig läxhjälpare att lösa uppgifter, diskutera ett tema eller träna till ett prov.</p>
+            </div>
+            <form class="homework-form">
+                <h2>Velg fag</h2>
+                {{> subjectSelector
+                    value=subject
+                    onChange=onSubjectChange
+                    placeholder='F. eks. mattematikk, naturfag eller norsk'}}
+                {{#if xor subject subjectIsAvailable}}
+                    <p class="unavailable">Det er devserre ingen frivillige som kan {{toLowerCase subject}} på vakt i dag. Kom tilbake en annen dag.</p>
+                {{else}}
+                <div class="buttons">
+                    {{> button type='button' text='Chat' onClick=onClickChat}}
+                    <div class="or">eller</div>
+                    {{> button type='button' text='Videohjelp' onClick=onClickVideo}}
+                </div>
+                {{/if}}
+                {{#if and subject subjectIsAvailable}}
+                    {{> formMessage text='För att vara säker på att chatten ska fungera är det bäst att du använder webbläsare som Google Chrome, Firefox eller Opera'}}
+                {{/if}}
+            </form>
+        </section>
+    {{else}}
+        <section class="closed">
+            Läxhjälp {{> serviceStatusMessage}}
+        </section>
+    {{/if}}
+</template>

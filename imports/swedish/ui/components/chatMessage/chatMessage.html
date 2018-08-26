@@ -1,0 +1,25 @@
+
+<template name="chatMessage">
+    {{#if isAttachment}}
+        <li class="message {{#if isSelf}}self{{/if}}">
+            <a href={{url}} target="_blank" class="attachment">
+                <div class="name">{{name}}</div>
+                <div class="suffix">{{suffix}}</div>
+                <div class="size">{{humanReadableSize}}</div>
+                <img src="/download.svg">
+            </a>
+            <div class="metadata">{{#if authorName}}{{authorName}}, {{/if}}{{prettyDate}}</div>
+        </li>
+    {{else}}
+            {{#if isInfo}}
+                <li class="info-message">
+                    <div class="text">{{message}}</div>
+                </li>
+            {{else}}
+                <li class="message {{#if isSelf}}self{{/if}}">
+                    <div class="text">{{message}}</div>
+                    <div class="metadata">{{#if authorName}}{{authorName}}, {{/if}}{{prettyDate}}</div>
+                </li>
+            {{/if}}
+    {{/if}}
+</template>

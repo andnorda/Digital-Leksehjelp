@@ -1,0 +1,50 @@
+<template name="userAdmin">
+    <div class="userAdmin">
+        {{> addUser}}
+        {{> allUsers}}
+    </div>
+</template>
+
+<template name="addUser">
+    <section>
+        <form class="add-user-form">
+            <h1>Lägg till ny användare</h1>
+            {{> input type='text' name='name' placeholder='Namn' value=name}}
+            {{> input type='email' name='email' placeholder='E-post' value=email}}
+            {{> select placeholder='Välj roll' options=userRoles onChange=onRoleChange value=role}}
+            {{> button type='submit' text='Lägg till' disabled=newUserDisabled}}
+        </form>
+    </section>
+</template>
+
+<template name="allUsers">
+    <section>
+        <h1>Alla användare</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Namn</th>
+                    <th>E-post</th>
+                    <th>Ämne</th>
+                    <th>Roll</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each users}}
+                    {{> user}}
+                {{/each}}
+            </tbody>
+        </table>
+    </section>
+</template>
+
+<template name="user">
+    <tr>
+        <td>{{name}}</td>
+        <td>{{email}}</td>
+        <td>{{subjects}}</td>
+        <td>{{> select value=role options=userRoles onChange=updateRole}}</td>
+        <td>{{> button text='Radera' type='button' danger=true subtle=true onClick=deleteUser}}</td>
+    </tr>
+</template>

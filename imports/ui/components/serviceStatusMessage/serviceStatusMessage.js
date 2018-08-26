@@ -20,7 +20,7 @@ const dayNames = {
     wednesday: 'onsdag',
     thursday: 'torsdag',
     friday: 'fredag',
-    saturday: 'søndag'
+    saturday: 'lørdag'
 };
 
 const days = Object.keys(dayNames);

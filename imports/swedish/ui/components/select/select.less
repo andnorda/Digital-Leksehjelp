@@ -1,0 +1,109 @@
+@import '/imports/ui/stylesheets/less/colors.import.less';
+
+.select-component {
+    position: relative;
+    font-size: 15px;
+
+    > .inputWrapper {
+        position: relative;
+
+        > .searchField {
+            width: 100%;
+            padding: 6px;
+            padding: 10px;
+            cursor: pointer;
+            color: @input-color;
+
+            &::placeholder {
+                color: @placeholder-color;
+            }
+        }
+
+        > img {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translate(0, -50%);
+            width: 20px;
+            cursor: pointer;
+        }
+    }
+
+    > .value {
+        position: relative;
+        padding: 10px;
+        border: 1px solid @select-color;
+        width: 100%;
+        text-align: left;
+        background-color: white;
+
+        &.placeholder {
+            color: @placeholder-color;
+        }
+
+        &.error {
+            border-color: @error-color;
+        }
+
+        > img {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translate(0, -50%);
+            width: 20px;
+            cursor: pointer;
+        }
+    }
+
+    > .option-list {
+        z-index: 3;
+        display: none;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        position: absolute;
+        background-color: white;
+        border: 1px solid @select-color;
+        border-top: none;
+        max-height: 350px;
+        overflow-x: auto;
+
+        > .option {
+            padding: 10px;
+
+            &:not(:first-child) {
+                border-top: 1px solid @select-color;
+            }
+
+            &.unavailable {
+                color: @input-unavailable-color;
+            }
+
+            &.active {
+                color: white;
+                border-color: @active-color;
+                background-color: @active-color;
+            }
+        }
+    }
+
+    &.open {
+        > .value,
+        > .inputWrapper {
+            > img {
+                transform: translate(0, -50%) rotate(180deg);
+            }
+        }
+
+        > .option-list {
+            display: block;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .select-component {
+        font-size: 20px;
+    }
+}

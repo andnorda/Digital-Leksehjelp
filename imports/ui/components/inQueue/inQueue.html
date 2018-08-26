@@ -20,7 +20,7 @@
                         {{> topicsInput value=topics addTopic=addTopic removeTopic=removeTopic subject=subject}}
                         {{> select placeholder='Velg trinn' value=grade options=grades onChange=setGrade}}
                     </div>
-                    <textarea class="form-control dl-inputfield" name="question" placeholder="Skriv her..." rows="4" autofocus>{{text}}</textarea>
+                    <textarea name="question" placeholder="Skriv her..." rows="4" autofocus>{{text}}</textarea>
                     <div class="buttons">
                         {{> button type='button' text='Forlat' subtle=true danger=true onClick=leaveQueue}}
                         {{> button type='submit' text='Oppdater' disabled=updateButtonDisabled}}

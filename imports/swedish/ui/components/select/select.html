@@ -1,0 +1,27 @@
+<template name="select">
+    <div class="{{class}} select-component {{#if and isOpen options}}open{{/if}}">
+        {{#if filter}}
+            <div class="inputWrapper">
+                <input
+                    type="text"
+                    value="{{value}}"
+                    placeholder="{{placeholder}}"
+                    class="searchField {{#if validationError}}error{{/if}}" />
+                <img src="/down-arrow.svg" alt="" />
+            </div>
+        {{else}}
+            <button
+                class="value {{#unless value}}placeholder{{/unless}} {{#if validationError}}error{{/if}}"
+                type="button">{{#if value}}{{value}}{{else}}{{placeholder}}{{/if}}<img src="/down-arrow.svg" alt="" /></button>
+        {{/if}}
+        <ul class="option-list">
+            {{#each options}}
+                {{> selectOption optionArgs}}
+            {{/each}}
+        </ul>
+    </div>
+</template>
+
+<template name="selectOption">
+    <li class="option {{#if isActive}}active{{/if}} {{#unless isAvailable}}unavailable{{/unless}}">{{value}}</li>
+</template>

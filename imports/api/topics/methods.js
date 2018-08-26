@@ -20,11 +20,16 @@ Meteor.methods({
             throw new Meteor.Error(404, 'Subject not found.');
         }
 
-        Topics.insert({ subjectId, name }, function(error) {
-            if (error) {
-                throw new Meteor.Error(500, 'Server error, please try again.');
-            }
-        });
+        if (!Topics.findOne({ subjectId, name })) {
+            Topics.insert({ subjectId, name }, function(error) {
+                if (error) {
+                    throw new Meteor.Error(
+                        500,
+                        'Server error, please try again.'
+                    );
+                }
+            });
+        }
     },
 
     'topics.remove'(id) {
@@ -39,6 +44,25 @@ Meteor.methods({
         }
 
         Topics.remove({ _id: id }, function(error) {
+            if (error) {
+                throw new Meteor.Error(500, 'Server error, please try again.');
+            }
+        });
+    },
+
+    'topics.removeByNameAndSubjectId'(name, subjectId) {
+        check(name, String);
+        check(subjectId, String);
+
+        const user = Meteor.users.findOne(this.userId);
+        if (!user) {
+            throw new Meteor.Error(401, 'You are not logged in.');
+        }
+        if (user.profile.role !== ADMIN) {
+            throw new Meteor.Error(403, 'You are not allowed to access this.');
+        }
+
+        Topics.remove({ name, subjectId }, function(error) {
             if (error) {
                 throw new Meteor.Error(500, 'Server error, please try again.');
             }

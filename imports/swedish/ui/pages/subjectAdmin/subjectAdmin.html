@@ -1,0 +1,53 @@
+<template name="subjectAdmin">
+    <div class="subjectAdmin">
+        {{> allSubjects}}
+    </div>
+</template>
+
+<template name="allSubjects">
+    <section>
+        <h1>Administrera ämnen</h1>
+        {{> addSubject}}
+        <ul class="subject-list">
+            {{#each subjects}}
+                {{> subject}}
+            {{/each}}
+        </ul>
+    </section>
+</template>
+
+<template name="addSubject">
+    <div>
+        <h2>Lägg till ämne</h2>
+        <form class="add-subject-form">
+            {{> input type='text' name='subjectName' placeholder='Ange nytt ämne' value=subjectName}}
+            {{> button type='submit' text='Lägg till' disabled=addSubjectDisabled}}
+        </form>
+    </div>
+</template>
+
+
+<template name="subject">
+    <li class="subject {{#if isActive}}active{{/if}}">
+        <a href="#" class="heading">
+            <div class="name">{{name}}</div>
+            {{> button text='Radera' type='button' danger=true subtle=true onClick=deleteSubject}}
+            <img src="/down-arrow.svg" alt="" />
+        </a>
+        {{> topics}}
+    </li>
+</template>
+
+<template name="topics">
+    <div class="topics">
+        {{> tagList tags=topics onClick=deleteTopic}}
+        {{> addTopic}}
+    </div>
+</template>
+
+<template name="addTopic">
+    <form class="add-topic-form">
+        {{> input type='text' name='topicName' placeholder='Lägg till nytt undertema' value=topicName}}
+        {{> button type='submit' text='Lägg till' disabled=addTopicDisabled}}
+    </form>
+</template>

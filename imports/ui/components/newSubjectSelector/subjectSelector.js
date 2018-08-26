@@ -3,6 +3,8 @@ import { Template } from 'meteor/templating';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { Config } from '/imports/api/config/config.js';
 
+import '../select/select.js';
+
 import './subjectSelector.html';
 
 const isAvailable = name => {

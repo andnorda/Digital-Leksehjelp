@@ -99,7 +99,7 @@ Template.infoAdmin.helpers({
         const temp = state.get('openingHoursText');
 
         if (!openingHours) {
-            return true;
+            return false;
         }
 
         return (

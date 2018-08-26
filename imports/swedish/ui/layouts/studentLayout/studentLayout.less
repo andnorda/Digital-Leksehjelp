@@ -1,0 +1,78 @@
+@import '/imports/ui/stylesheets/less/colors.import.less';
+
+.studentLayout {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    > * {
+        flex-shrink: 0;
+    }
+
+    > .content {
+        max-width: 1366px;
+        margin: 0 auto;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .studentHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px;
+
+        @media (min-width: 768px) {
+            margin-right: 60px;
+            margin-left: 60px;
+        }
+
+        @media (min-width: 1366px) {
+            margin-right: 120px;
+            margin-left: 120px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .logo {
+            font-weight: bold;
+            white-space: nowrap;
+            color: black;
+        }
+
+        .rk_logo {
+            height: 31px;
+
+            @media (min-width: 768px) {
+                height: 48px;
+            }
+        }
+    }
+
+    .studentFooter {
+        background-color: @primary-color;
+
+        > .footerContent {
+            color: white;
+            max-width: 1366px;
+            margin: 0 auto;
+            padding: 10px 20px;
+
+            @media (min-width: 768px) {
+                padding: 12px 60px;
+            }
+
+            @media (min-width: 1366px) {
+                padding: 20px 120px;
+            }
+
+            > a {
+                color: white;
+                text-decoration: underline;
+            }
+        }
+    }
+}
