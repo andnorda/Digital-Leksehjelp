@@ -68,3 +68,7 @@ Template.registerHelper('isNotMe', function(userId) {
 Template.registerHelper('slugOrId', function(question) {
     return question.slug || question._id;
 });
+
+Template.registerHelper('toLowerCase', function(string) {
+    return string && string.toLowerCase();
+});

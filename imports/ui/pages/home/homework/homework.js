@@ -6,7 +6,7 @@ import { Session } from 'meteor/session';
 import { Router } from 'meteor/iron:router';
 import mixpanel from '/imports/mixpanel';
 import '../../../components/serviceStatusMessage/serviceStatusMessage.js';
-import '../../../components/newSubjectSelector/subjectSelector.js';
+import '../../../components/subjectSelector/subjectSelector.js';
 import '../../../components/button/button.js';
 import '../../../components/formMessage/formMessage.js';
 
@@ -41,6 +41,22 @@ const joinQueue = (subject, type) => {
     );
 };
 
+const hasOpeningHours = () => {
+    const openingHours = Config.findOne({ name: 'openingHours' });
+    return (
+        openingHours &&
+        [
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday'
+        ].some(day => openingHours[day].open)
+    );
+};
+
 Template.homework.helpers({
     infoMessage() {
         return (
@@ -53,26 +69,17 @@ Template.homework.helpers({
         return serviceStatus && serviceStatus.open;
     },
     hasOpeningHours() {
-        const openingHours = Config.findOne({ name: 'openingHours' });
-        return (
-            openingHours &&
-            [
-                'monday',
-                'tuesday',
-                'wednesday',
-                'thursday',
-                'friday',
-                'saturday',
-                'sunday'
-            ].some(day => openingHours[day].open)
-        );
+        return hasOpeningHours();
     },
     subject() {
         return Template.instance().state.get('subject');
     },
     onSubjectChange() {
         const state = Template.instance().state;
-        return subject => state.set('subject', subject);
+        return (subject, isAvailable) => {
+            state.set('subject', subject);
+            state.set('subjectIsAvailable', isAvailable);
+        };
     },
     onClickChat() {
         const state = Template.instance().state;
@@ -89,5 +96,13 @@ Template.homework.helpers({
                 joinQueue(state.get('subject'), 'video');
             }
         };
+    },
+    subjectUnavailableMessage() {
+        const state = Template.instance().state;
+        return (
+            state.get('subject') &&
+            hasOpeningHours() &&
+            !state.get('subjectIsAvailable')
+        );
     }
 });

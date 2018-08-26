@@ -8,7 +8,7 @@ import { CONSTANTS } from '/imports/constants.js';
 import './askQuestion.html';
 import './askQuestion.less';
 
-import '../../components/newSubjectSelector/subjectSelector.js';
+import '../../components/subjectSelector/subjectSelector.js';
 import '../../components/topicsInput/topicsInput.js';
 import '../../components/select/select.js';
 import '../../components/button/button.js';

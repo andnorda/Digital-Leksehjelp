@@ -64,7 +64,7 @@ Template.select.helpers({
                 event.preventDefault();
                 state.set('query', undefined);
                 state.set('isOpen', false);
-                this.onChange(this.isAvailable ? this.value : undefined);
+                this.onChange(this.value, this.isAvailable);
             },
             isAvailable: this.isAvailable
         };
@@ -126,10 +126,9 @@ Template.select.events({
                 if (state.get('isOpen')) {
                     const index = state.get('activeIndex');
                     this.onChange(
+                        this.options[index],
                         !this.isAvailable ||
-                        this.isAvailable(this.options[index])
-                            ? this.options[index]
-                            : undefined
+                            this.isAvailable(this.options[index])
                     );
                     state.set('query', undefined);
                     state.set('isOpen', false);

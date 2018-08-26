@@ -4,8 +4,6 @@
             <h1>Leksehjelp {{> serviceStatusMessage}}</h1>
             {{#if serviceStatus}}
                 <p>Få hjelp av en frivillig til å løse oppgaver, diskutere et tema, skrive tekster eller øve til prøver. Start en chat eller videosamtale!</p>
-            {{else}}
-                <p>Søk opp ditt fag for å se når det er frivillige på vakt som kan hjelpe deg. Merk at tidene kan endre seg.</p>
             {{/if}}
         </div>
         <form class="homework-form">
@@ -13,27 +11,27 @@
                 {{#if serviceStatus}}
                     Velg fag
                 {{else}}
-                    {{#if hasOpeningHours}}
-                        Se når ditt fag er tilgjengelig
-                    {{else}}
-                        Se hvilke fag du kan få hjelp med
-                    {{/if}}
+                    Se hvilke fag du kan få hjelp med
                 {{/if}}
             </h2>
-            {{> newSubjectSelector
+            {{> subjectSelector
                 placeholder='F. eks. matematikk, naturfag eller norsk'
                 value=subject
                 onChange=onSubjectChange }}
-            {{#if serviceStatus}}
-                <div class="buttons">
-                    {{> button type='button' text='Chat' onClick=onClickChat}}
-                    <div class="or">eller</div>
-                    {{> button type='button' text='Videohjelp' onClick=onClickVideo}}
-                </div>
+            {{#if subjectUnavailableMessage}}
+                <p class="unavailable">Det er devserre ingen frivillige som kan {{toLowerCase subject}} på vakt i dag. Kom tilbake en annen dag.</p>
+            {{else}}
+                {{#if serviceStatus}}
+                    <div class="buttons">
+                        {{> button type='button' text='Chat' onClick=onClickChat}}
+                        <div class="or">eller</div>
+                        {{> button type='button' text='Videohjelp' onClick=onClickVideo}}
+                    </div>
+                {{/if}}
+                {{#if infoMessage}}{{#if serviceStatus}}
+                    {{> formMessage text=infoMessage}}
+                {{/if}}{{/if}}
             {{/if}}
-            {{#if infoMessage}}{{#if serviceStatus}}
-                {{> formMessage text=infoMessage}}
-            {{/if}}{{/if}}
         </form>
     </section>
 </template>

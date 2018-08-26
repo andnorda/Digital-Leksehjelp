@@ -6,19 +6,13 @@
                 <h1>Mestring og motivasjon {{> serviceStatusMessage}}</h1>
                 {{#if serviceStatus}}
                     <p>Vil du jobbe med motivasjonen? Dempe nervene før eksamen? Prøve en ny læringsmetode?</p>
-                {{else}}
-                    <p>Søk opp ditt tema for å se når det er frivillige på vakt som kan hjelpe deg. Merk at tidene kan endre seg.</p>
                 {{/if}}
                 <form>
                     <h2>
                         {{#if serviceStatus}}
                             Velg tema
                         {{else}}
-                            {{#if hasOpeningHours}}
-                                Se når ditt tema er tilgjengelig
-                            {{else}}
-                                Se hvilke temaer vi kan hjelpe deg med
-                            {{/if}}
+                            Se hvilke temaer vi kan hjelpe deg med
                         {{/if}}
                     </h2>
                     {{> helpTopicSelector value=helpTopic onChange=onHelpTopicChange}}
