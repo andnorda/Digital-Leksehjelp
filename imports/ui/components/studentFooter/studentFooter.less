@@ -1,20 +1,25 @@
 @import '/imports/ui/stylesheets/less/colors.import.less';
 
 .studentFooter {
-    padding: 10px 20px;
     background-color: @primary-color;
-    color: white;
 
-    @media (min-width: 768px) {
-        padding: 12px 60px;
-    }
-
-    @media (min-width: 1366px) {
-        padding: 20px 120px;
-    }
-
-    > a {
+    .footerContent {
         color: white;
-        text-decoration: underline;
+        max-width: 1366px;
+        margin: 0 auto;
+        padding: 10px 20px;
+
+        @media (min-width: 768px) {
+            padding: 12px 60px;
+        }
+
+        @media (min-width: 1366px) {
+            padding: 20px 120px;
+        }
+
+        > a {
+            color: white;
+            text-decoration: underline;
+        }
     }
 }
