@@ -20,7 +20,10 @@
                     {{/if}}
                 {{/if}}
             </h2>
-            {{> newSubjectSelector value=subject onChange=onSubjectChange}}
+            {{> newSubjectSelector
+                placeholder='F. eks. matematikk, naturfag eller norsk'
+                value=subject
+                onChange=onSubjectChange }}
             {{#if serviceStatus}}
                 <div class="buttons">
                     {{> button type='button' text='Chat' onClick=onClickChat}}
