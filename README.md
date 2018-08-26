@@ -106,7 +106,7 @@ git push staging test:master
 Initial deployment to Heroku
 ----------------------------
 
-To deploy a new instance of Digital leksehjelp on Heroku.
+To deploy a new instance of Digital Leksehjelp on Heroku.
 
 1. You need to install the [Heroku Toolbelt](https://toolbelt.herokuapp.com/), and log in with your Heroku user. *Note: To use add-ons on Heroku (even the free ones), you need to register a valid credit card on your account.*
 

@@ -118,8 +118,8 @@ Meteor.methods({
 
             Email.send({
                 to: question.studentEmail,
-                from: 'Digital leksehjelp <digitalleksehjelp@oslo.redcross.no>',
-                subject: 'Røde Kors - Digital leksehjelp',
+                from: 'Digital Leksehjelp <digitalleksehjelp@oslo.redcross.no>',
+                subject: 'Røde Kors - Digital Leksehjelp',
                 html
             });
         }

@@ -86,7 +86,7 @@ Template.answerQuestionForm.helpers({
     },
     answerText() {
         return (
-            this.answer || '<br><br>Med vennlig hilsen,<br>Digital leksehjelp'
+            this.answer || '<br><br>Med vennlig hilsen,<br>Digital Leksehjelp'
         );
     },
     topics() {
