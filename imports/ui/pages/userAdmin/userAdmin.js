@@ -102,6 +102,11 @@ Template.user.helpers({
     },
     deleteUser() {
         const id = this._id;
-        return () => Meteor.call('users.remove', id);
+        const name = this.profile.firstName;
+        return () => {
+            if (confirm(`Er du sikker på at du vil slette ${name}?`)) {
+                Meteor.call('users.remove', id);
+            }
+        };
     }
 });

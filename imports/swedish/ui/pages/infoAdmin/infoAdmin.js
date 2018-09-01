@@ -12,7 +12,6 @@ Template.infoAdmin.onCreated(function() {
     this.state = new ReactiveDict();
 
     this.autorun(() => {
-        this.subscribe('config.infoMessage');
         this.subscribe('config.openingHours');
     });
 });
@@ -44,10 +43,6 @@ const days = [
 ];
 
 Template.infoAdmin.helpers({
-    infoMessage() {
-        const infoMessage = Config.findOne({ name: 'infoMessage' });
-        return infoMessage ? infoMessage.text : '';
-    },
     openingHoursText() {
         const openingHours = Config.findOne({ name: 'openingHours' });
         return openingHours ? openingHours.text : '';
@@ -87,12 +82,6 @@ Template.infoAdmin.helpers({
             day
         );
     },
-    noInfoMessageChanges() {
-        const infoMessage = Config.findOne({ name: 'infoMessage' });
-        const temp = Template.instance().state.get('infoMessage');
-
-        return temp === undefined || (infoMessage && temp === infoMessage.text);
-    },
     noOpeningHoursChanges() {
         const openingHours = Config.findOne({ name: 'openingHours' });
         const state = Template.instance().state;
@@ -116,19 +105,6 @@ const dayChanged = (openingHours, state, day) =>
     getDayTo(openingHours, state, day) !== (openingHours[day] || {}).to;
 
 Template.infoAdmin.events({
-    'input textarea.info-message'(event) {
-        Template.instance().state.set('infoMessage', event.target.value);
-    },
-
-    'submit .info-message-form'(event, templateInstance) {
-        event.preventDefault();
-
-        Meteor.call(
-            'config.setInfoMessage',
-            Template.instance().state.get('infoMessage')
-        );
-    },
-
     'input textarea.opening-hours'(event) {
         Template.instance().state.set('openingHours', event.target.value);
     },

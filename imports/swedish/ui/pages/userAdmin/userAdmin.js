@@ -101,6 +101,11 @@ Template.user.helpers({
     },
     deleteUser() {
         const id = this._id;
-        return () => Meteor.call('users.remove', id);
+        const name = this.profile.firstName;
+        return () => {
+            if (confirm(`Är du säker på att du vill radera ${name}?`)) {
+                Meteor.call('users.remove', id);
+            }
+        };
     }
 });
