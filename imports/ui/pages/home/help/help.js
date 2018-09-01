@@ -41,6 +41,22 @@ const joinQueue = (subject, type) => {
     );
 };
 
+const hasOpeningHours = () => {
+    const openingHours = Config.findOne({ name: 'openingHours' });
+    return (
+        openingHours &&
+        [
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday'
+        ].some(day => openingHours[day].open)
+    );
+};
+
 Template.help.helpers({
     infoMessage() {
         return (
@@ -53,26 +69,17 @@ Template.help.helpers({
         return serviceStatus && serviceStatus.open;
     },
     hasOpeningHours() {
-        const openingHours = Config.findOne({ name: 'openingHours' });
-        return (
-            openingHours &&
-            [
-                'monday',
-                'tuesday',
-                'wednesday',
-                'thursday',
-                'friday',
-                'saturday',
-                'sunday'
-            ].some(day => openingHours[day].open)
-        );
+        return hasOpeningHours();
     },
     helpTopic() {
         return Template.instance().state.get('helpTopic');
     },
     onHelpTopicChange() {
         const state = Template.instance().state;
-        return helpTopic => state.set('helpTopic', helpTopic);
+        return (helpTopic, isAvailable) => {
+            state.set('helpTopic', helpTopic);
+            state.set('topicIsAvailable', isAvailable);
+        };
     },
     onClickChat() {
         const state = Template.instance().state;
@@ -89,5 +96,13 @@ Template.help.helpers({
                 joinQueue(state.get('helpTopic'), 'video');
             }
         };
+    },
+    topicUnavailableMessage() {
+        const state = Template.instance().state;
+        return (
+            state.get('helpTopic') &&
+            hasOpeningHours() &&
+            !state.get('topicIsAvailable')
+        );
     }
 });

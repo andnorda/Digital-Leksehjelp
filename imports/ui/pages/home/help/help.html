@@ -16,16 +16,20 @@
                         {{/if}}
                     </h2>
                     {{> helpTopicSelector value=helpTopic onChange=onHelpTopicChange}}
-                    {{#if serviceStatus}}
-                        <div class="buttons">
-                            {{> button type='button' text='Chat' onClick=onClickChat}}
-                            <div class="or">eller</div>
-                            {{> button type='button' text='Videohjelp' onClick=onClickVideo}}
-                        </div>
+                    {{#if topicUnavailableMessage}}
+                        <p class="unavailable">Det er devserre ingen frivillige på vakt i dag som kan hjelpe deg med "{{helpTopic}}". Kom tilbake en annen dag.</p>
+                    {{else}}
+                        {{#if serviceStatus}}
+                            <div class="buttons">
+                                {{> button type='button' text='Chat' onClick=onClickChat}}
+                                <div class="or">eller</div>
+                                {{> button type='button' text='Videohjelp' onClick=onClickVideo}}
+                            </div>
+                        {{/if}}
+                        {{#if infoMessage}}{{#if serviceStatus}}
+                            {{> formMessage text=infoMessage}}
+                        {{/if}}{{/if}}
                     {{/if}}
-                    {{#if infoMessage}}{{#if serviceStatus}}
-                        {{> formMessage text=infoMessage}}
-                    {{/if}}{{/if}}
                 </form>
             </div>
             <div class="cross-my-heart">
