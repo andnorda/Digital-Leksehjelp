@@ -116,7 +116,7 @@ Template.studentSession.helpers({
             : this.text;
     },
     buttonText() {
-        return this.type === 'video' ? 'Starta videosamtal' : 'Starta chatt';
+        return this.type === 'video' ? 'Starta videochatt' : 'Starta chatt';
     },
     startTutoring() {
         const sessionId = this._id;
@@ -137,7 +137,9 @@ Template.studentSession.helpers({
     deleteSession() {
         const sessionId = this._id;
         return () => {
-            if (confirm('Er du sikker på at du vil fjerne eleven fra køen?')) {
+            if (
+                confirm('Är du säker på att du vill ta bort eleven från kön?')
+            ) {
                 Meteor.call('studentSessions.delete', sessionId);
             }
         };
@@ -172,7 +174,7 @@ Template.activeStudentSession.helpers({
             .join(', ');
     },
     buttonText() {
-        return this.type === 'video' ? 'Öppna videosamtal' : 'Öppna chatt';
+        return this.type === 'video' ? 'Öppna videochatt' : 'Öppna chatt';
     },
     startTutoring() {
         const sessionId = this._id;
@@ -194,7 +196,7 @@ Template.activeStudentSession.helpers({
     deleteSession() {
         const sessionId = this._id;
         return () => {
-            if (confirm('Er du sikker på at du vil avslutte leksehjelpen?')) {
+            if (confirm('Är du säker på att du vill sluta läxhjälpen?')) {
                 Meteor.call('studentSessions.endTutoring', sessionId);
             }
         };

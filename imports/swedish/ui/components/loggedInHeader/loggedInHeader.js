@@ -64,14 +64,14 @@ Template.loggedInHeader.events({
     'click .open-service'(event) {
         event.preventDefault();
 
-        if (confirm('Er du sikker på at du vil åpne leksehjelpen?')) {
+        if (confirm('Är du säker på att du vill öppna läxhjälpen?')) {
             Meteor.call('config.openService');
         }
     },
     'click .close-service'(event) {
         event.preventDefault();
 
-        if (confirm('Er du sikker på at du vil stenge leksehjelpen?')) {
+        if (confirm('Är du säker på att du vill stänga läxhjälpen?')) {
             Meteor.call('config.closeService');
         }
     }

@@ -112,7 +112,7 @@ Template.volunteerChatHeaderMenu.events({
         Modal.show('addVolunteer');
     },
     'click .endSession'() {
-        if (confirm('Er du sikker på at du vil avslutte leksehjelpen?')) {
+        if (confirm('Är du säker på att du vill sluta läxhjälpen?')) {
             const { params: { sessionId } } = Router.current();
             Meteor.call('studentSessions.endTutoring', sessionId);
 

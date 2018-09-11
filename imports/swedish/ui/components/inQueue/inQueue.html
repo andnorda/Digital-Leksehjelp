@@ -20,7 +20,7 @@
                         {{> topicsInput value=topics addTopic=addTopic removeTopic=removeTopic subject=subject}}
                         {{> select placeholder='Välj årskurs' value=grade options=grades onChange=setGrade}}
                     </div>
-                    <textarea name="question" placeholder="Skriv her..." rows="4" autofocus>{{text}}</textarea>
+                    <textarea name="question" placeholder="Skriv här..." rows="4" autofocus>{{text}}</textarea>
                     <div class="buttons">
                         {{> button type='button' text='Avsluta kö' subtle=true danger=true onClick=leaveQueue}}
                         {{> button type='submit' text='Spara' disabled=updateButtonDisabled}}

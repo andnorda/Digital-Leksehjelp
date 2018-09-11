@@ -77,8 +77,8 @@ Template.inQueue.helpers({
         const { params: { sessionId } } = Router.current();
         const session = StudentSessions.findOne(sessionId);
         return session && session.type === 'chat'
-            ? 'Gå till chatten'
-            : 'Gå till videosamtal';
+            ? 'Gå till chatt'
+            : 'Gå till videochatt';
     },
     target() {
         const { params: { sessionId } } = Router.current();
