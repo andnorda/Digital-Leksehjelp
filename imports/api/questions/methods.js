@@ -127,10 +127,10 @@ Meteor.methods({
         Questions.update(
             { _id: questionId },
             {
-                $set: {
-                    approvedBy: this.userId,
-                    publishedBy: options.publish && this.userId
-                },
+                $set: Object.assign(
+                    { approvedBy: this.userId },
+                    options.publish ? { publishedBy: this.userId } : {}
+                ),
                 $unset: { studentEmail: '' }
             }
         );
