@@ -3,7 +3,7 @@
         <div>
             <h1>Leksehjelp {{> serviceStatusMessage}}</h1>
             {{#if serviceStatus}}
-                <p>Få hjelp av en frivillig til å løse oppgaver, diskutere et tema, skrive tekster eller øve til prøver. Start en chat eller videosamtale!</p>
+                <p>Få hjelp av en frivillig til å løse oppgaver, diskutere et tema, skrive tekster eller øve til prøver. Start en chat!</p>
             {{/if}}
         </div>
         <form class="homework-form">
@@ -24,8 +24,6 @@
                 {{#if serviceStatus}}
                     <div class="buttons">
                         {{> button type='button' text='Chat' onClick=onClickChat}}
-                        <div class="or">eller</div>
-                        {{> button type='button' text='Videohjelp' onClick=onClickVideo}}
                     </div>
                 {{/if}}
                 {{#if infoMessage}}{{#if serviceStatus}}
