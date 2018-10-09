@@ -8,7 +8,7 @@ import { Messages } from '../messages/messages.js';
 
 const generateRandomAppearInLink = function() {
     const randomId = Math.floor(Math.random() * 1000000000);
-    return `http://appear.in/${randomId}`;
+    return `http://talky.io/${randomId}`;
 };
 
 Meteor.methods({
