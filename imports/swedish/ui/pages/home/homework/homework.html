@@ -12,7 +12,7 @@
                     onChange=onSubjectChange
                     placeholder='T.ex. matematik eller svenska'}}
                 {{#if xor subject subjectIsAvailable}}
-                    <p class="unavailable">Det er devserre ingen frivillige som kan {{toLowerCase subject}} på vakt i dag. Kom tilbake en annen dag.</p>
+                    <p class="unavailable">Tyvärr finns det inga frivilliga som kan hjälpa dig med {{toLowerCase subject}} i tjänst idag.</p>
                 {{else}}
                 <div class="buttons">
                     {{> button type='button' text='Chat' onClick=onClickChat}}
