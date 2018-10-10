@@ -1,10 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Config } from '/imports/api/config/config.js';
+import { Shifts } from '/imports/api/shifts/shifts.js';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Session } from 'meteor/session';
 import { Router } from 'meteor/iron:router';
 import mixpanel from '/imports/mixpanel';
+import { addWeeks, startOfDay, min, max, isAfter } from 'date-fns';
 import '../../../components/serviceStatusMessage/serviceStatusMessage.js';
 import '../../../components/subjectSelector/subjectSelector.js';
 import '../../../components/button/button.js';
@@ -14,95 +16,124 @@ import './homework.html';
 import './homework.less';
 
 Template.homework.onCreated(function() {
-    this.state = new ReactiveDict();
+  this.state = new ReactiveDict();
 
-    this.autorun(() => {
-        this.subscribe('config.openingHours');
-        this.subscribe('config.serviceStatus');
-    });
+  this.autorun(() => {
+    this.subscribe('config.openingHours');
+    this.subscribe('config.serviceStatus');
+
+    const subject = Template.instance().state.get('subject');
+    subject && this.subscribe('shifts.bySubjectName', subject);
+  });
 });
 
 const joinQueue = (subject, type) => {
-    if (window.Notification && Notification.permission !== 'granted') {
-        Notification.requestPermission();
+  if (window.Notification && Notification.permission !== 'granted') {
+    Notification.requestPermission();
+  }
+  mixpanel.track('Bedt om leksehjelp', { fag: subject, type: 'chat' });
+  Meteor.call(
+    'studentSessions.create',
+    {
+      subject,
+      type
+    },
+    function(error, sessionId) {
+      Session.set('studentSessionId', sessionId);
+      Session.set('queueStartTime', new Date().getTime());
+      Router.go(`/queue/${sessionId}`);
     }
-    mixpanel.track('Bedt om leksehjelp', { fag: subject, type: 'chat' });
-    Meteor.call(
-        'studentSessions.create',
-        {
-            subject,
-            type
-        },
-        function(error, sessionId) {
-            Session.set('studentSessionId', sessionId);
-            Session.set('queueStartTime', new Date().getTime());
-            Router.go(`/queue/${sessionId}`);
-        }
-    );
+  );
 };
 
 const hasOpeningHours = () => {
-    const openingHours = Config.findOne({ name: 'openingHours' });
-    return (
-        openingHours &&
-        [
-            'monday',
-            'tuesday',
-            'wednesday',
-            'thursday',
-            'friday',
-            'saturday',
-            'sunday'
-        ].some(day => openingHours[day].open)
-    );
+  const openingHours = Config.findOne({ name: 'openingHours' });
+  return (
+    openingHours &&
+    [
+      'monday',
+      'tuesday',
+      'wednesday',
+      'thursday',
+      'friday',
+      'saturday',
+      'sunday'
+    ].some(day => (openingHours[day] || {}).open)
+  );
 };
 
 Template.homework.helpers({
-    infoMessage() {
-        return (
-            Template.instance().state.get('subject') &&
-            'For å være sikrere på at det ikke skal skje tekniske feil, bruk nettleserne Google Chrome, Firefox eller Opera.'
-        );
-    },
-    serviceStatus() {
-        const serviceStatus = Config.findOne({ name: 'serviceStatus' });
-        return serviceStatus && serviceStatus.open;
-    },
-    hasOpeningHours() {
-        return hasOpeningHours();
-    },
-    subject() {
-        return Template.instance().state.get('subject');
-    },
-    onSubjectChange() {
-        const state = Template.instance().state;
-        return (subject, isAvailable) => {
-            state.set('subject', subject);
-            state.set('subjectIsAvailable', isAvailable);
-        };
-    },
-    onClickChat() {
-        const state = Template.instance().state;
-        return () => {
-            if (state.get('subject')) {
-                joinQueue(state.get('subject'), 'chat');
-            }
-        };
-    },
-    onClickVideo() {
-        const state = Template.instance().state;
-        return () => {
-            if (state.get('subject')) {
-                joinQueue(state.get('subject'), 'video');
-            }
-        };
-    },
-    subjectUnavailableMessage() {
-        const state = Template.instance().state;
-        return (
-            state.get('subject') &&
-            hasOpeningHours() &&
-            !state.get('subjectIsAvailable')
-        );
+  infoMessage() {
+    return (
+      Template.instance().state.get('subject') &&
+      'For å være sikrere på at det ikke skal skje tekniske feil, bruk nettleserne Google Chrome, Firefox eller Opera.'
+    );
+  },
+  serviceStatus() {
+    const serviceStatus = Config.findOne({ name: 'serviceStatus' });
+    return serviceStatus && serviceStatus.open;
+  },
+  hasOpeningHours() {
+    return hasOpeningHours();
+  },
+  subject() {
+    return Template.instance().state.get('subject');
+  },
+  shifts() {
+    const shifts = Shifts.find(
+      { start: { $gt: new Date() }, end: { $lt: addWeeks(new Date(), 2) } },
+      { sort: { start: 1 } }
+    ).fetch();
+    if (shifts.length) {
+      return Object.entries(
+        shifts.reduce((dates, shift) => {
+          const day = startOfDay(shift.start);
+          if (dates[day]) {
+            return {
+              ...dates,
+              [day]: [...dates[day], shift]
+            };
+          } else {
+            return { ...dates, [day]: [shift] };
+          }
+        }, {})
+      )
+        .map(([date, shifts]) => ({
+          start: min(...shifts.map(shift => shift.start)),
+          end: max(...shifts.map(shift => shift.end))
+        }))
+        .sort((a, b) => isAfter(a.start, b.start));
     }
+  },
+  onSubjectChange() {
+    const state = Template.instance().state;
+    return (subject, isAvailable) => {
+      state.set('subject', subject);
+      state.set('subjectIsAvailable', isAvailable);
+    };
+  },
+  onClickChat() {
+    const state = Template.instance().state;
+    return () => {
+      if (state.get('subject')) {
+        joinQueue(state.get('subject'), 'chat');
+      }
+    };
+  },
+  onClickVideo() {
+    const state = Template.instance().state;
+    return () => {
+      if (state.get('subject')) {
+        joinQueue(state.get('subject'), 'video');
+      }
+    };
+  },
+  subjectUnavailableMessage() {
+    const state = Template.instance().state;
+    return (
+      state.get('subject') &&
+      hasOpeningHours() &&
+      !state.get('subjectIsAvailable')
+    );
+  }
 });

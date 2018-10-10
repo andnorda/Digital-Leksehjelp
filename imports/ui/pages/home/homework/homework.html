@@ -11,7 +11,7 @@
                 {{#if serviceStatus}}
                     Velg fag
                 {{else}}
-                    Se hvilke fag du kan få hjelp med
+                    Se når ditt fag er tilgjengelig
                 {{/if}}
             </h2>
             {{> subjectSelector
@@ -19,7 +19,18 @@
                 value=subject
                 onChange=onSubjectChange }}
             {{#if subjectUnavailableMessage}}
-                <p class="unavailable">Det er desserre ingen frivillige på vakt i dag som kan hjelpe deg med "{{subject}}". Kom tilbake en annen dag.</p>
+                <p class="unavailable">Det er desserre ingen frivillige på vakt nå som kan hjelpe deg med {{subject}}.</p>
+                {{#if shifts}}
+                    <p>{{subject}} er tilgjengelig på disse tidspunktene</p>
+                    <ul class="shift-list">
+                        {{#each shifts}}
+                            <li class="shift">
+                                <div>{{prettyDate start}}</div>
+                                <div>{{prettyTime start}}-{{prettyTime end}}</div>
+                            </li>
+                        {{/each}}
+                    </ul>
+                {{/if}}
             {{else}}
                 {{#if serviceStatus}}
                     <div class="buttons">
@@ -27,6 +38,22 @@
                         <div class="or">eller</div>
                         {{> button type='button' text='Videohjelp' onClick=onClickVideo}}
                     </div>
+                {{else}}
+                    {{#if subject}}
+                        {{#if shifts}}
+                            <p>{{subject}} er tilgjengelig på disse tidspunktene</p>
+                            <ul class="shift-list">
+                                {{#each shifts}}
+                                    <li class="shift">
+                                        <div>{{prettyDate start}}</div>
+                                        <div>{{prettyTime start}}-{{prettyTime end}}</div>
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        {{else}}
+                            <p>{{subject}} er dessverre ikke tilgjengelig med det første</p>
+                        {{/if}}
+                    {{/if}}
                 {{/if}}
                 {{#if infoMessage}}{{#if serviceStatus}}
                     {{> formMessage text=infoMessage}}

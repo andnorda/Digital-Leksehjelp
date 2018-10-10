@@ -63,7 +63,7 @@ Template.serviceStatusMessage.helpers({
         }
 
         const today = days[getDay(new Date())];
-        const closingTime = () => openingHours[today].to;
+        const closingTime = () => (openingHours[today] || {}).to;
         const openingTime = () => nextOpenTime(openingHours);
         const isToday = () => nextOpenDay(openingHours) === today;
         const openingDay = () => dayNames[nextOpenDay(openingHours)];
