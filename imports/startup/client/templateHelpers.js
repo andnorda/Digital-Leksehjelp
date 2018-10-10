@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Spacebars } from 'meteor/spacebars';
 import { GRADES } from '/imports/constants.js';
-import { getMonth, getDate, getISODay, format } from 'date-fns';
+import { getMonth, getDate, getISODay, format, addMinutes } from 'date-fns';
 
 validationErrorDep = new Deps.Dependency();
 validationError = [];
@@ -105,5 +105,5 @@ Template.registerHelper('prettyDate', function(date) {
 });
 
 Template.registerHelper('prettyTime', function(date) {
-  return format(date, 'HH:mm');
+  return format(addMinutes(date, date.getTimezoneOffset()), 'HH:mm');
 });
