@@ -21,6 +21,7 @@ Template.answerQuestion.onCreated(function() {
             'feedback.byQuestionId',
             Router.current().params.questionId
         );
+        this.subscribe('users');
     });
 });
 
