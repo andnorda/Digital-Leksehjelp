@@ -70,10 +70,6 @@ Template.answerQuestionForm.onCreated(function() {
 });
 
 Template.answerQuestionForm.helpers({
-    subjectName(subjectId) {
-        const subject = Subjects.findOne({ _id: subjectId });
-        return subject ? subject.name : 'Ukjent fag';
-    },
     publishIsChecked(question) {
         if (question.answer) {
             return question.publishedBy;
@@ -88,6 +84,18 @@ Template.answerQuestionForm.helpers({
         return (
             this.answer || '<br><br>Med vennlig hilsen,<br>Digital Leksehjelp'
         );
+    },
+    subject() {
+        return Template.instance().state.get('subject') || this.subject;
+    },
+    onSubjectChange() {
+        const state = Template.instance().state;
+        return subject => {
+            if (subject !== state.get('subject')) {
+                state.set('subject', subject);
+                state.set('topics', []);
+            }
+        };
     },
     topics() {
         return Template.instance().state.get('topics');
@@ -163,6 +171,7 @@ Template.answerQuestionForm.events({
                 state.get('title') !== undefined
                     ? state.get('title')
                     : this.title || '',
+            subject: state.get('subject') || this.subject,
             topics: state.get('topics'),
             question: state.get('question') || this.question,
             answer: $('#answer').summernote('code'),

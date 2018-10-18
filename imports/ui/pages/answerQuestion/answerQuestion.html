@@ -63,6 +63,12 @@
             <label for="title">Tittel</label>
             <input id="title" class="title" type="text" name="title" placeholder="Tittel" value="{{title}}">
 
+            <h2>Velg tema</h2>
+            {{> subjectSelector
+                placeholder='Velg fag'
+                value=subject
+                onChange=onSubjectChange
+                allAvailable=true}}
             {{> topicsInput
                 value=topics
                 addTopic=addTopic

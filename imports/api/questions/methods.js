@@ -59,18 +59,29 @@ Meteor.methods({
     'questions.update'({
         id,
         title,
+        subject,
         topics,
         question,
         answer,
         answerAttachments
     }) {
+        check(subject, NonEmptyString);
         check(title, String);
         check(question, String);
         check(answer, String);
 
         Questions.update(
             { _id: id },
-            { $set: { title, topics, question, answer, answerAttachments } }
+            {
+                $set: {
+                    title,
+                    subject,
+                    topics,
+                    question,
+                    answer,
+                    answerAttachments
+                }
+            }
         );
 
         const hasEditedBefore = !!Questions.findOne({
