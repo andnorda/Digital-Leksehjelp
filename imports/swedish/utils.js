@@ -89,7 +89,7 @@ const animals = [
     'utter',
     'impala',
     'koala',
-    'manett',
+    'manet',
     'gräshoppa',
     'kivi'
 ];

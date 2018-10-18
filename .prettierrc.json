@@ -5,5 +5,6 @@
     "trailingComma": "none",
     "bracketSpacing": true,
     "arrowParens": "avoid",
-    "proseWrap": "preserve"
+    "proseWrap": "preserve",
+    "tabWidth": 4
 }
