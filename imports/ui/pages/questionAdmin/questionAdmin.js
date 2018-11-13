@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Counts } from 'meteor/tmeasday:publish-counts';
-import { format } from 'date-fns';
+import { format, isBefore } from 'date-fns';
 import { Questions } from '/imports/api/questions/questions.js';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import '../../components/button/button.js';
@@ -101,23 +101,22 @@ Template.question.onCreated(function() {
     });
 });
 
+const lastUpdate = editedBy =>
+    editedBy.sort((a, b) => (isBefore(a.date, b.date) ? 1 : -1))[0] || {};
+
 Template.question.helpers({
     title() {
         return this.title || '(ingen tittel)';
     },
-    subject() {
-        const subject = Subjects.findOne(this.subjectId);
-        return subject && subject.name;
-    },
     lastUpdatedBy() {
-        user = Meteor.users.findOne(this.lastUpdatedBy);
+        const user = Meteor.users.findOne(lastUpdate(this.editedBy).id);
         return user && user.profile.firstName;
     },
     questionDate() {
         return format(this.questionDate, 'DD.MM.YY kl. HH:mm');
     },
     lastUpdatedDate() {
-        return format(this.lastUpdatedDate, 'DD.MM.YY kl. HH:mm');
+        return format(lastUpdate(this.editedBy).date, 'DD.MM.YY kl. HH:mm');
     },
     showLink() {
         return `/sporsmal/${this._id}`;
