@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { format } from 'date-fns';
+import mixpanel from '/imports/mixpanel';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { Feedback } from '/imports/api/feedback/feedback.js';
 import { CONSTANTS } from '/imports/constants.js';
@@ -224,26 +225,40 @@ Template.answerQuestionButtons.helpers({
         };
     },
     approve() {
-        const id = this._id;
+        const {
+            _id, subject, grade, topics
+        } = this;
         return () => {
             if (
                 confirm(
                     'Er du sikker på at du vil godkjenne svaret? En epost med svaret vil da bli sendt til eleven.'
                 )
             ) {
-                Meteor.call('questions.approve', id);
+                mixpanel.track('Spørsmål besvart', {
+                    fag: subject,
+                    trinn: grade,
+                    tema: topics
+                });
+                Meteor.call('questions.approve', _id);
             }
         };
     },
     approveAndPublish() {
-        const id = this._id;
+        const {
+            _id, subject, grade, topics
+        } = this;
         return () => {
             if (
                 confirm(
                     'Er du sikker på at du vil godkjenne og publisere svaret? En epost med svaret vil da bli sendt til eleven, og svaret vil bli offentlig tilgjengelig for alle.'
                 )
             ) {
-                Meteor.call('questions.approve', id, { publish: true });
+                mixpanel.track('Spørsmål besvart', {
+                    fag: subject,
+                    trinn: grade,
+                    tema: topics
+                });
+                Meteor.call('questions.approve', _id, { publish: true });
             }
         };
     },

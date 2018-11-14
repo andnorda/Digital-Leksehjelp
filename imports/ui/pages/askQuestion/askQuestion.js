@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import mixpanel from '/imports/mixpanel';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { CONSTANTS } from '/imports/constants.js';
 
@@ -147,6 +148,12 @@ Template.askQuestion.events({
         }
 
         if (!error) {
+            mixpanel.track('Nytt spørsmål stilt', {
+                fag: subject,
+                trinn: grade,
+                tema: state.get('topics'),
+                publiseringTillatt: state.get('allowPublish')
+            });
             Meteor.call(
                 'questions.ask',
                 {
