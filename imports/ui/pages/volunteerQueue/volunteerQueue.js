@@ -125,6 +125,9 @@ Template.studentSession.events({
     'click button.deleteSession'() {
         if (confirm('Er du sikker på at du vil fjerne eleven fra køen?')) {
             Meteor.call('studentSessions.delete', this._id);
+            mixpanel.track('Fjernet fra køen av frivillig', {
+                type: this.type
+            });
         }
     }
 });
