@@ -26,7 +26,7 @@ const joinQueue = (subject, type) => {
     if (window.Notification && Notification.permission !== 'granted') {
         Notification.requestPermission();
     }
-    mixpanel.track('Bedt om leksehjelp', { fag: subject, type: 'chat' });
+    mixpanel.track('Bedt om leksehjelp', { fag: subject, type });
     Meteor.call(
         'studentSessions.create',
         {
