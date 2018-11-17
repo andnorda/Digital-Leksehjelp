@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Router } from 'meteor/iron:router';
+import { differenceInMilliseconds } from 'date-fns';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
 import { timeSince } from '/imports/utils.js';
 import mixpanel from '/imports/mixpanel.js';
@@ -41,22 +42,24 @@ Template.volunteerQueue.helpers({
         return StudentSessions.find(
             subjects.length
                 ? {
-                      $and: subjects
-                          .map(subject => ({
-                              subject: { $ne: subject }
-                          }))
-                          .concat(
-                              helpTopics.map(helpTopic => ({
-                                  subject: { $ne: helpTopic }
-                              }))
-                          ),
-                      state: STUDENT_SESSION_STATE.WAITING
-                  }
+                    $and: subjects
+                        .map(subject => ({
+                            subject: { $ne: subject }
+                        }))
+                        .concat(
+                            helpTopics.map(helpTopic => ({
+                                subject: { $ne: helpTopic }
+                            }))
+                        ),
+                    state: STUDENT_SESSION_STATE.WAITING
+                }
                 : { state: STUDENT_SESSION_STATE.WAITING }
         );
     },
     activeSessions() {
-        const { profile: { subjects = [] } } = Meteor.user();
+        const {
+            profile: { subjects = [] }
+        } = Meteor.user();
         return StudentSessions.find({
             $or: [
                 { state: STUDENT_SESSION_STATE.READY },
@@ -112,6 +115,15 @@ Template.studentSession.events({
         Session.set('startTutoringTime', new Date().getTime());
         const sessionId = this._id;
         Meteor.call('studentSessions.startTutoring', sessionId);
+        mixpanel.track('Start leksehjelp', {
+            sekunderIKø: Math.floor(
+                ((new Date() - this.createdAt) / 1000) % 60
+            ),
+            type: this.type,
+            fag: this.subject,
+            trinn: this.grade,
+            tema: this.topics
+        });
 
         if (this.type === 'video') {
             window.open(this.videoConferenceUrl);
