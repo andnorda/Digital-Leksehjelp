@@ -31,9 +31,7 @@ Template.subjectSelector.onCreated(function() {
 Template.subjectSelector.helpers({
     subjects() {
         if (this.includeAll) {
-            return ['Alla ämnen'].concat(
-                Subjects.find().map(({ name }) => name)
-            );
+            return ['Alle fag'].concat(Subjects.find().map(({ name }) => name));
         }
         return Subjects.find().map(({ name }) => name);
     },
@@ -45,8 +43,8 @@ Template.subjectSelector.helpers({
     },
     sort() {
         return (a, b) => {
-            if (a === 'Alla ämnen') return -1;
-            if (b === 'Alla ämnen') return 1;
+            if (a === 'Alle fag') return -1;
+            if (b === 'Alle fag') return 1;
             const aAvailable = isAvailable(a);
             const bAvailable = isAvailable(b);
             if (bAvailable && !aAvailable) {
