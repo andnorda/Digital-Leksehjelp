@@ -84,7 +84,8 @@ Template.answerQuestionForm.helpers({
     },
     answerText() {
         return (
-            this.answer || '<br><br>Med vennlig hilsen,<br>Digital Leksehjelp'
+            this.answer ||
+            '<p>Hei,</p><p>Takk for at du bruker Røde Kors sin Digitale Leksehjelp.</p>Med vennlig hilsen,<br>Digital Leksehjelp'
         );
     },
     subject() {
