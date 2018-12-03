@@ -121,18 +121,18 @@
         {{/if}}
 
         {{#if and approved allowPublish}}
-            {{> button type='button' text='Publiser' onClick=publish}}
+            {{> button type='submit' text='Publiser' onClick=publish}}
         {{/if}}
 
         {{#if forApproval}}
-            {{> button type='button' text='Godkjenn uten å publisere' onClick=approve}}
+            {{> button type='submit' text='Godkjenn uten å publisere' onClick=approve}}
             {{#if allowPublish}}
-                {{> button type='button' text='Godkjenn og publiser' onClick=approveAndPublish}}
+                {{> button type='submit' text='Godkjenn og publiser' onClick=approveAndPublish}}
             {{/if}}
         {{/if}}
 
         {{#if edited}}
-            {{> button type='button' text='Legg til godkjenning' onClick=submitForApproval}}
+            {{> button type='submit' text='Legg til godkjenning' onClick=submitForApproval}}
         {{/if}}
     </div>
 </template>
