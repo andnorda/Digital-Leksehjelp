@@ -5,6 +5,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Session } from 'meteor/session';
 import { Router } from 'meteor/iron:router';
 import mixpanel from '/imports/mixpanel';
+import { nickname } from '/imports/utils.js';
 import '../../../components/serviceStatusMessage/serviceStatusMessage.js';
 import '../../../components/helpTopicSelector/helpTopicSelector.js';
 import '../../../components/button/button.js';
@@ -31,7 +32,8 @@ const joinQueue = (subject, type) => {
         'studentSessions.create',
         {
             subject,
-            type
+            type,
+            nickname
         },
         function(error, sessionId) {
             Session.set('studentSessionId', sessionId);

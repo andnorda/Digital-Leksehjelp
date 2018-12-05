@@ -111,3 +111,5 @@ export const generateNickname = (
         animals[n % animals.length]
     }`;
 };
+
+export const nickname = generateNickname();
