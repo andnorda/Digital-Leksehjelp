@@ -21,8 +21,10 @@ Template.chatComponent.onCreated(function() {
     }, 1000);
 
     this.autorun(() => {
-        const { params: { sessionId } } = Router.current();
-        this.subscribe('messages.bysessionId', sessionId);
+        const {
+            params: { sessionId }
+        } = Router.current();
+        this.subscribe('messages.bysessionIdWithReset', sessionId);
         this.subscribe('studentSessions.byId', sessionId);
 
         const prevCount = this.state.get('messageCount');
