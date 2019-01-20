@@ -53,14 +53,7 @@ Meteor.publish('messages.bysessionId', function(sessionId) {
     });
 
     if (userId && isVolunteer) {
-        const observer = Messages.find({ sessionId }).observe({
-            added() {
-                StudentSessions.update({
-                    _id: sessionId,
-                    'volunteers.id': userId
-                });
-            }
-        });
+        const observer = Messages.find({ sessionId }).observe({});
         this.onStop(() => observer.stop());
     } else {
         StudentSessions.update(
