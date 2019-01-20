@@ -7,7 +7,7 @@ Meteor.publish('studentSessions', function() {
         return this.ready();
     }
 
-    return StudentSessions.find({});
+    return StudentSessions.find({ state: { $ne: 'Ferdig' } });
 });
 
 Meteor.publish('studentSessions.byId', function(sessionId) {

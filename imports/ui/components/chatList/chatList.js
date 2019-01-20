@@ -8,6 +8,17 @@ import './chatList.less';
 Template.chatList.onCreated(function() {
     this.autorun(() => {
         this.subscribe('studentSessions');
+
+        const sessions = StudentSessions.find({
+            volunteers: { $elemMatch: { id: Meteor.userId() } },
+            type: 'chat',
+            state: STUDENT_SESSION_STATE.READY
+        })
+            .fetch()
+            .map(({ _id }) => _id);
+        sessions.forEach(sessionId =>
+            this.subscribe('messages.bysessionId', sessionId)
+        );
     });
 });
 
