@@ -197,7 +197,7 @@ Template.activeStudentSession.helpers({
         const sessionId = this._id;
         return () => {
             if (confirm('Är du säker på att du vill sluta läxhjälpen?')) {
-                Meteor.call('studentSessions.endTutoring', sessionId);
+                Meteor.call('studentSessions.delete', sessionId);
             }
         };
     }

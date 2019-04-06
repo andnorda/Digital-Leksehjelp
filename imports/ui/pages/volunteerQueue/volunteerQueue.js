@@ -195,7 +195,7 @@ Template.activeStudentSession.events({
                 });
             }
 
-            Meteor.call('studentSessions.endTutoring', this._id);
+            Meteor.call('studentSessions.delete', this._id);
         }
     }
 });

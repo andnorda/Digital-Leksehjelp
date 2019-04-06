@@ -114,7 +114,7 @@ Template.volunteerChatHeaderMenu.events({
     'click .endSession'() {
         if (confirm('Är du säker på att du vill sluta läxhjälpen?')) {
             const { params: { sessionId } } = Router.current();
-            Meteor.call('studentSessions.endTutoring', sessionId);
+            Meteor.call('studentSessions.delete', sessionId);
 
             const helpDurationMinutes = getQueueTime(
                 Session.get('startTutoringTime')

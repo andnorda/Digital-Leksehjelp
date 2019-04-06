@@ -114,7 +114,7 @@ Template.volunteerChatHeaderMenu.events({
     'click .endSession'() {
         if (confirm('Er du sikker på at du vil avslutte leksehjelpen?')) {
             const { params: { sessionId } } = Router.current();
-            Meteor.call('studentSessions.endTutoring', sessionId);
+            Meteor.call('studentSessions.delete', sessionId);
 
             const helpDurationMinutes = getQueueTime(
                 Session.get('startTutoringTime')
