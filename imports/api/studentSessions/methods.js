@@ -32,6 +32,15 @@ Meteor.methods({
         );
     },
 
+    'studentSessions.endTutoring'(sessionId) {
+        check(sessionId, String);
+
+        StudentSessions.update(
+            { _id: sessionId },
+            { $set: { state: STUDENT_SESSION_STATE.ENDED } }
+        );
+    },
+
     'studentSessions.delete'(sessionId) {
         check(sessionId, String);
 

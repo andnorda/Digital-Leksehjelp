@@ -1,0 +1,47 @@
+<template name="helpEndedForm">
+    <div class="modal fade" id="helpEndedForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content dl-modal-content">
+                {{#if no}}
+                    {{> whyNoHelp}}
+                {{else}}
+                    {{> didHelpHappen}}
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="didHelpHappen">
+    <div class="modal-body">
+        <h3>Fikk eleven hjelp?</h3>
+        <button type="button" class="btn btn-success yes" data-dismiss="modal">Ja</button>
+        <button type="button" class="btn btn-danger no">Nei</button>
+    </div>
+</template>
+
+<template name="whyNoHelp">
+    <div class="modal-body">
+        <h3>Hva gikk galt?</h3>
+				<div class="radio-buttons">
+				    <label>
+							<input type="radio" name="cause" value="Tekniske problemer">
+							Tekniske problemer
+						</label>
+
+            <label>
+					  	<input type="radio" name="cause" value="Eleven dukket ikke opp">
+					  	Eleven dukket ikke opp
+						</label>
+
+						<label>
+							<input type="radio" name="cause" value="Annet">
+							Annet
+						</label>
+				</div>
+
+        <textarea name="description" placeholder="Beskriv..." rows="2">{{description}}</textarea>
+
+        <button type="button" class="btn btn-success done" data-dismiss="modal">Ferdig</button>
+    </div>
+</template>

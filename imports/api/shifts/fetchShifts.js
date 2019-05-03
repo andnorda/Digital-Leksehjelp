@@ -1,7 +1,7 @@
 import { HTTP } from 'meteor/http';
 import { Shifts } from '/imports/api/shifts/shifts.js';
 import { addWeeks, format } from 'date-fns';
-import { stringify } from 'query-string';
+import { stringify } from '/imports/lib/query-string';
 
 const token = process.env.RODEKORS_TOKEN;
 const shiftsURL =

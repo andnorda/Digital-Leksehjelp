@@ -114,7 +114,8 @@ Template.volunteerChatHeaderMenu.events({
     'click .endSession'() {
         if (confirm('Er du sikker på at du vil avslutte leksehjelpen?')) {
             const { params: { sessionId } } = Router.current();
-            Meteor.call('studentSessions.delete', sessionId);
+            Session.set('studentSessionId', sessionId);
+            Meteor.call('studentSessions.endTutoring', sessionId);
 
             const helpDurationMinutes = getQueueTime(
                 Session.get('startTutoringTime')
@@ -126,6 +127,7 @@ Template.volunteerChatHeaderMenu.events({
                 });
             }
 
+            $('#helpEndedForm').modal();
             Router.go('/frivillig/chat');
         }
     },

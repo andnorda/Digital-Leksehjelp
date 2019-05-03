@@ -5,7 +5,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { Questions } from '/imports/api/questions/questions.js';
 import { CONSTANTS, GRADES } from '/imports/constants.js';
-import { stringify } from 'query-string';
+import { stringify } from '/imports/lib/query-string';
 import '../../components/questionList/questionList.js';
 
 import './search.html';
