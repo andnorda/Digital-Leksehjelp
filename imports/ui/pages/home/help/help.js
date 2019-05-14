@@ -78,9 +78,8 @@ Template.help.helpers({
     },
     onHelpTopicChange() {
         const state = Template.instance().state;
-        return (helpTopic, isAvailable) => {
+        return helpTopic => {
             state.set('helpTopic', helpTopic);
-            state.set('topicIsAvailable', isAvailable);
         };
     },
     onClickChat() {
@@ -98,13 +97,5 @@ Template.help.helpers({
                 joinQueue(state.get('helpTopic'), 'video');
             }
         };
-    },
-    topicUnavailableMessage() {
-        const state = Template.instance().state;
-        return (
-            state.get('helpTopic') &&
-            hasOpeningHours() &&
-            !state.get('topicIsAvailable')
-        );
     }
 });
