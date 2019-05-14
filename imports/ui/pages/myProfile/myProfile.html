@@ -1,7 +1,6 @@
 <template name="myProfile">
     <div class="myProfile">
         {{> mySubjects}}
-        {{> myHelpTopics}}
         {{> editName}}
     </div>
 </template>
@@ -11,14 +10,6 @@
         <h1>Mine fag</h1>
         {{> select placeholder='Legg til fag' options=subjects onChange=addSubject}}
         {{> tagList tags=mySubjects onClick=removeSubject gray=true}}
-    </section>
-</template>
-
-<template name="myHelpTopics">
-    <section class="myHelpTopics">
-        <h1>Mine tema</h1>
-        {{> select placeholder='Legg til tema' options=helpTopics onChange=addHelpTopic}}
-        {{> tagList tags=myHelpTopics onClick=removeHelpTopic gray=true}}
     </section>
 </template>
 
