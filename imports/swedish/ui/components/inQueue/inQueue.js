@@ -28,6 +28,7 @@ Template.inQueue.onCreated(function() {
         const temp = StudentSessions.findOne(sessionId);
         if (session && !temp) {
             Router.go('/');
+            window.showSurvey();
         }
         session = temp;
     });
