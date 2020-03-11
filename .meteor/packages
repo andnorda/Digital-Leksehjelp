@@ -36,3 +36,4 @@ check@1.3.0
 http@1.4.0
 percolate:migrations
 okgrow:router-autoscroll
+force-ssl
