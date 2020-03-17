@@ -9,7 +9,6 @@ import { timeSince } from '/imports/utils.js';
 import mixpanel from '/imports/mixpanel.js';
 import { getQueueTime } from '/imports/utils.js';
 import { STUDENT_SESSION_STATE } from '/imports/constants';
-import '../../components/openService/openService.js';
 import '../../components/tagList/tagList.js';
 
 import './volunteerQueue.html';
