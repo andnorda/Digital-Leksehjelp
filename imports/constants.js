@@ -1,4 +1,5 @@
 export const GRADES = [
+    '5.-7. klasse',
     '8. klasse',
     '9. klasse',
     '10. klasse',
