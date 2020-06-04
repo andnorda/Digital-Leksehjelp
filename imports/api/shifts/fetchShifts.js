@@ -38,18 +38,16 @@ const upsertShifts = shifts => {
     );
 };
 
-const fetch = ({ page = 1 }) =>
+const fetch = () =>
     new Promise((resolve, reject) =>
         HTTP.get(
             `${shiftsURL}?${stringify({
                 start: format(new Date(), 'YYYY-MM-DD'),
-                end: format(addWeeks(new Date(), 4), 'YYYY-MM-DD'),
-                page
+                end: format(addWeeks(new Date(), 4), 'YYYY-MM-DD')
             })}`,
             {
                 headers: {
-                    Authorization: `Bearer ${token}`,
-                    Accept: 'application/vnd.frivillig.rodekors.v1+json'
+                    Authorization: `Bearer ${token}`
                 }
             },
             (error, result) => {
@@ -62,15 +60,10 @@ const fetch = ({ page = 1 }) =>
         )
     );
 
-const onFetchSuccess = ({ data, meta }) => {
-    upsertShifts(data);
-    if (meta.current_page < meta.last_page) {
-        fetchShifts(meta.current_page + 1);
-    }
-};
+const onFetchSuccess = ({ data }) => upsertShifts(data);
 
-const fetchShifts = (page = 1) => {
-    fetch({ page })
+const fetchShifts = () => {
+    fetch()
         .then(onFetchSuccess)
         .catch(e => {
             console.warn('Error when fetching shifts.', e);
