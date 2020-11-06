@@ -1,3 +1,4 @@
+import { Inject } from 'meteor/meteorhacks:inject-initial';
 import { Meteor } from 'meteor/meteor';
 import { Spacebars } from 'meteor/spacebars';
 import { SSR } from 'meteor/meteorhacks:ssr';
@@ -46,7 +47,24 @@ const startPollingShifts = () => {
   }, 5 * 60 * 1000);
 };
 
+
+function initGetSiteControl() {
+  Inject.rawHead('Inject the getsitecontrol script at the beginning of the head', `<script>
+(function (w,i,d,g,e,t,s) {w[d] = w[d]||[];t= i.createElement(g);
+t.async=1;t.src=e;s=i.getElementsByTagName(g)[0];s.parentNode.insertBefore(t, s);
+})(window, document, '_gscq','script','//widgets.getsitecontrol.com/${
+      Meteor.isProduction ? '43318' : '130166'
+  }/script.js');
+</script>
+<script>  
+window.gsc=window.gsc||function(){
+  (gsc.q=gsc.q||[]).push(arguments)
+};
+</script>`);
+}
+
 Meteor.startup(function() {
+  initGetSiteControl();
   updateLastUpdatedBy();
 
   if (process.env.RODEKORS_TOKEN) {

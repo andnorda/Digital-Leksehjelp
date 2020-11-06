@@ -37,3 +37,4 @@ http@1.4.0
 percolate:migrations
 okgrow:router-autoscroll
 force-ssl
+meteorhacks:inject-initial
