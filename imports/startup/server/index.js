@@ -55,11 +55,6 @@ t.async=1;t.src=e;s=i.getElementsByTagName(g)[0];s.parentNode.insertBefore(t, s)
 })(window, document, '_gscq','script','//widgets.getsitecontrol.com/${
       Meteor.isProduction ? '43318' : '130166'
   }/script.js');
-</script>
-<script>  
-window.gsc=window.gsc||function(){
-  (gsc.q=gsc.q||[]).push(arguments)
-};
 </script>`);
 }
 

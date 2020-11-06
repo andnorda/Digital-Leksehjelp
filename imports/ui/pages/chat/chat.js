@@ -45,7 +45,7 @@ Template.chat.onCreated(function() {
                         STUDENT_SESSION_STATE.GETTING_HELP) &&
                 state === STUDENT_SESSION_STATE.ENDED
             ) {
-                gsc('show', 76435)
+                _gscq.push(["show", 76435])
             }
             this.state.set('prevState', state);
         }
