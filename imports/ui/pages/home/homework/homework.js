@@ -119,16 +119,18 @@ Template.homework.helpers({
     onClickChat() {
         const state = Template.instance().state;
         return () => {
-            if (state.get('subject')) {
+            if (state.get('subject') && !state.get('pending')) {
                 joinQueue(state.get('subject'), 'chat');
+                state.set('pending', true);
             }
         };
     },
     onClickVideo() {
         const state = Template.instance().state;
         return () => {
-            if (state.get('subject')) {
+            if (state.get('subject') && !state.get('pending')) {
                 joinQueue(state.get('subject'), 'video');
+                state.set('pending', true);
             }
         };
     },
