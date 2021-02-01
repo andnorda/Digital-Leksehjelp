@@ -40,7 +40,7 @@ Meteor.publish('messages.bysessionIdWithReset', function(sessionId) {
         );
     }
 
-    return Messages.find({ sessionId });
+    return Messages.find({ sessionId }, { pollingIntervalMs: 500 });
 });
 
 Meteor.publish('messages.bysessionId', function(sessionId) {
@@ -68,5 +68,5 @@ Meteor.publish('messages.bysessionId', function(sessionId) {
         );
     }
 
-    return Messages.find({ sessionId });
+    return Messages.find({ sessionId }, { pollingIntervalMs: 500 });
 });
