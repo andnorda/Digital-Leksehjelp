@@ -34,7 +34,7 @@
             {{else}}
                 {{#if serviceStatus}}
                     <div class="buttons">
-                        {{> button type='button' text='Gå til kø' onClick=onClickChat}}
+                        {{> button type='button' text='Gå til chat' onClick=onClickChat disabled=noSubjectSelected}}
                     </div>
                 {{else}}
                     {{#if subject}}

@@ -18,7 +18,7 @@
                     {{> helpTopicSelector value=helpTopic onChange=onHelpTopicChange}}
                       {{#if serviceStatus}}
                           <div class="buttons">
-                              {{> button type='button' text='Gå til kø' onClick=onClickChat}}
+                              {{> button type='button' text='Gå til chat' onClick=onClickChat disabled=noHelpTopicSelected}}
                           </div>
                       {{/if}}
                       {{#if infoMessage}}{{#if serviceStatus}}

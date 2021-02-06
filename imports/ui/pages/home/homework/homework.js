@@ -81,6 +81,9 @@ Template.homework.helpers({
     subject() {
         return Template.instance().state.get('subject');
     },
+    noSubjectSelected() {
+        return !Template.instance().state.get('subject');
+    },
     shifts() {
         const shifts = Shifts.find(
             {

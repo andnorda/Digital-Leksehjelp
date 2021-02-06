@@ -76,6 +76,9 @@ Template.help.helpers({
     helpTopic() {
         return Template.instance().state.get('helpTopic');
     },
+    noHelpTopicSelected() {
+        return !Template.instance().state.get('helpTopic');
+    },
     onHelpTopicChange() {
         const state = Template.instance().state;
         return helpTopic => {
