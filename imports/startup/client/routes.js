@@ -25,7 +25,7 @@ import '../../ui/pages/questionAdmin/questionAdmin.js';
 import '../../ui/pages/answerQuestion/answerQuestion.js';
 import '../../ui/pages/volunteerQueue/volunteerQueue.js';
 import '../../ui/pages/chat/chat.js';
-import '../../ui/pages/description/description.js';
+import '../../ui/pages/moreInfo/moreInfo.js';
 import '../../ui/pages/queue/queue.js';
 import '../../ui/pages/volunteerChat/volunteerChat.js';
 
@@ -62,7 +62,7 @@ QueueController = RouteController.extend({
     layoutTemplate: 'cleanLayout'
 });
 
-DescriptionController = RouteController.extend({
+MoreInfoController = RouteController.extend({
     layoutTemplate: 'cleanLayout'
 });
 
@@ -207,9 +207,9 @@ Router.map(function() {
         path: '/queue/:sessionId'
     });
 
-    this.route('description', {
-        controller: DescriptionController,
-        path: '/description/:sessionId'
+    this.route('moreInfo', {
+        controller: MoreInfoController,
+        path: '/moreInfo/:subject'
     });
 
     this.route('notFound', {

@@ -1,0 +1,14 @@
+<template name="moreInfo">
+    <div class="moreInfoPage">
+        <form class="extra-info-form">
+            <p>Før du kan få hjelp trenger vi å vite litt mer om hva du lurer på.</p>
+            <h2>Velg trinn</h2>
+            <div class="dropdowns">
+                {{> select placeholder='Velg trinn' value=grade options=grades onChange=setGrade}}
+            </div>
+            <h2>Forklar kort hva du lurer på. Bruk egne ord.</h2>
+            <textarea name="question" placeholder="Skriv her..." rows="4" autofocus>{{text}}</textarea>
+            {{> button type='submit' text='Gå til kø' disabled=submitButtonDisabled}}
+        </form>
+    </div>
+</template>

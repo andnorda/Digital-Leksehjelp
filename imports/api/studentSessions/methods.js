@@ -107,9 +107,17 @@ Meteor.methods({
         );
     },
 
-    'studentSessions.create'({ subject, type, nickname = generateNickname() }) {
+    'studentSessions.create'({
+        subject,
+        type,
+        nickname = generateNickname(),
+        grade = '',
+        text = ''
+    }) {
         check(subject, String);
         check(type, String);
+        check(grade, String);
+        check(text, String);
 
         const videoConferenceUrl = generateRandomAppearInLink();
 
@@ -122,7 +130,9 @@ Meteor.methods({
             state: STUDENT_SESSION_STATE.WAITING,
             createdAt: new Date(),
             nickname,
-            topics: []
+            topics: [],
+            grade,
+            text
         });
     },
 
