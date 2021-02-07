@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
+import mixpanel from '/imports/startup/server/mixpanelServer';
 import { STUDENT_SESSION_STATE } from '/imports/constants.js';
 import { generateNickname } from '/imports/utils.js';
 import { StudentSessions } from './studentSessions.js';
@@ -118,6 +119,15 @@ Meteor.methods({
         check(type, String);
         check(grade, String);
         check(text, String);
+
+        if (Meteor.isServer) {
+            mixpanel.track('Bedt om leksehjelp (server)', {
+                subject,
+                type,
+                grade,
+                text
+            });
+        }
 
         const videoConferenceUrl = generateRandomAppearInLink();
 
