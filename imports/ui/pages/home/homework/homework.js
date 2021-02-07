@@ -120,13 +120,8 @@ Template.homework.helpers({
         };
     },
     onClickChat() {
-        const state = Template.instance().state;
-        return () => {
-            if (state.get('subject') && !state.get('pending')) {
-                joinQueue(state.get('subject'), 'chat');
-                state.set('pending', true);
-            }
-        };
+        const { state } = Template.instance();
+        return () => Router.go(`/moreInfo/${state.get('subject')}`);
     },
     onClickVideo() {
         const state = Template.instance().state;
