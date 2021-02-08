@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
+import mixpanel from '/imports/startup/server/mixpanelServer';
 import { Messages } from './messages.js';
 import { StudentSessions } from '../studentSessions/studentSessions.js';
 
@@ -50,6 +51,12 @@ Meteor.methods({
                 },
                 { $unset: { 'volunteers.$.lastActivity': '' } }
             );
+        }
+
+        if (Meteor.isServer) {
+            mixpanel.track('Melding sendt (server)', {
+                avsender: this.userId ? 'Frivillig' : 'Elev'
+            });
         }
 
         return Messages.insert({
