@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Deps } from 'meteor/deps';
 import mixpanel from '/imports/mixpanel';
-import '/imports/api/questions/methods.js';
 
 import './routes.js';
 import './templateHelpers.js';
