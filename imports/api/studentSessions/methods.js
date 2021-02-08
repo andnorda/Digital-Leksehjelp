@@ -87,6 +87,15 @@ Meteor.methods({
             throw new Meteor.Error(401, 'You are not logged in.');
         }
 
+        if (Meteor.isServer) {
+            const session = StudentSessions.findOne(sessionId);
+
+            mixpanel.track('Start leksehjelp (server)', {
+                fag: session.subject,
+                type: session.type
+            });
+        }
+
         StudentSessions.update(
             { _id: sessionId },
             {
