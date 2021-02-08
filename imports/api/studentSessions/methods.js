@@ -45,6 +45,20 @@ Meteor.methods({
     'studentSessions.delete'(sessionId) {
         check(sessionId, String);
 
+        if (Meteor.isServer) {
+            const session = StudentSessions.findOne(sessionId);
+
+            mixpanel.track(
+                this.userId
+                    ? 'Fjernet fra køen av frivillig (server)'
+                    : 'Forlot leksehjelp-kø (server)',
+                {
+                    fag: session.subject,
+                    type: session.type
+                }
+            );
+        }
+
         StudentSessions.remove({ _id: sessionId });
     },
 
