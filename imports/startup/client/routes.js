@@ -89,7 +89,8 @@ Router.onBeforeAction(checkIfSignedIn, {
         'notFound',
         'search',
         'showAnswer',
-        'chat'
+        'chat',
+        'moreInfo'
     ]
 });
 
