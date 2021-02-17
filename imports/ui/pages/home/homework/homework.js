@@ -121,7 +121,13 @@ Template.homework.helpers({
     },
     onClickChat() {
         const { state } = Template.instance();
-        return () => Router.go(`/moreInfo/${state.get('subject')}`);
+        return () => {
+            mixpanel.track('Valgt leksehjelp på forsiden', {
+                fag: state.get('subject'),
+                type: 'chat'
+            });
+            Router.go(`/moreInfo/${state.get('subject')}`);
+        };
     },
     onClickVideo() {
         const state = Template.instance().state;
