@@ -64,7 +64,7 @@ Template.moreInfo.events({
     'input textarea[name=question]'(event) {
         Template.instance().state.set('text', event.target.value);
     },
-    'submit .extra-info-form'(event) {
+    'submit .moreInfoForm'(event) {
         event.preventDefault();
 
         const { state } = Template.instance();
