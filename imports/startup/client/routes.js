@@ -64,7 +64,7 @@ QueueController = RouteController.extend({
 });
 
 MoreInfoController = RouteController.extend({
-    layoutTemplate: 'cleanLayout'
+    layoutTemplate: 'studentLayout'
 });
 
 ChatController = RouteController.extend({
