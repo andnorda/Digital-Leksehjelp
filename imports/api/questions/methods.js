@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Email } from 'meteor/email';
 import { SSR } from 'meteor/meteorhacks:ssr';
 import { Match, check } from 'meteor/check';
-import mixpanel from '/imports/mixpanel';
+import mixpanel from '/imports/startup/server/mixpanelServer';
 import { urlify } from '/imports/utils.js';
 import { generateNickname } from '/imports/utils.js';
 import { Questions } from './questions.js';
@@ -42,6 +42,15 @@ Meteor.methods({
         check(grade, NonEmptyString);
         check(question, NonEmptyString);
         check(studentEmail, NonEmptyString);
+
+        if (Meteor.isServer) {
+            mixpanel.track('Nytt spørsmål stilt (server)', {
+                fag: subject,
+                trinn: grade,
+                tema: topics,
+                publiseringTillatt: allowPublish
+            });
+        }
 
         return Questions.insert({
             subject,
@@ -121,6 +130,14 @@ Meteor.methods({
         }
 
         const question = Questions.findOne({ _id: questionId });
+
+        if (Meteor.isServer) {
+            mixpanel.track('Spørsmål besvart (server)', {
+                fag: question.subject,
+                trinn: question.grade,
+                tema: question.topics
+            });
+        }
 
         if (question.studentEmail) {
             this.unblock();

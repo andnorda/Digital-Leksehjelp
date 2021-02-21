@@ -45,6 +45,20 @@ Meteor.methods({
     'studentSessions.delete'(sessionId) {
         check(sessionId, String);
 
+        if (Meteor.isServer) {
+            const session = StudentSessions.findOne(sessionId);
+
+            mixpanel.track(
+                this.userId
+                    ? 'Fjernet fra køen av frivillig (server)'
+                    : 'Forlot leksehjelp-kø (server)',
+                {
+                    fag: session.subject,
+                    type: session.type
+                }
+            );
+        }
+
         StudentSessions.remove({ _id: sessionId });
     },
 
@@ -87,6 +101,15 @@ Meteor.methods({
             throw new Meteor.Error(401, 'You are not logged in.');
         }
 
+        if (Meteor.isServer) {
+            const session = StudentSessions.findOne(sessionId);
+
+            mixpanel.track('Start leksehjelp (server)', {
+                fag: session.subject,
+                type: session.type
+            });
+        }
+
         StudentSessions.update(
             { _id: sessionId },
             {
@@ -126,6 +149,13 @@ Meteor.methods({
                 type,
                 grade,
                 text
+            });
+        }
+
+        if (Meteor.isServer) {
+            mixpanel.track('Bedt om leksehjelp (server)', {
+                fag: subject,
+                type
             });
         }
 
