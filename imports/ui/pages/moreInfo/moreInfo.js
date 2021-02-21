@@ -5,15 +5,23 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Session } from 'meteor/session';
 import mixpanel from '/imports/mixpanel';
 import { nickname } from '/imports/utils.js';
+import { Subjects } from '/imports/api/subjects/subjects.js';
+import { Config } from '/imports/api/config/config.js';
 
 import './moreInfo.html';
 import './moreInfo.less';
 
 Template.moreInfo.onCreated(function() {
     this.state = new ReactiveDict();
+    this.subscribe('config.serviceStatus');
+    this.subscribe('subjects');
 });
 
 Template.moreInfo.helpers({
+    serviceStatus() {
+        const serviceStatus = Config.findOne({ name: 'serviceStatus' });
+        return serviceStatus && serviceStatus.open;
+    },
     grade() {
         return Template.instance().state.get('grade');
     },
