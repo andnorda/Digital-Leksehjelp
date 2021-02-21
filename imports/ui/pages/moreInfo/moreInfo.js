@@ -12,8 +12,10 @@ import './moreInfo.less';
 
 Template.moreInfo.onCreated(function() {
     this.state = new ReactiveDict();
-    this.subscribe('config.serviceStatus');
-    this.subscribe('users.loggedIn');
+    this.autorun(() => {
+        this.subscribe('config.serviceStatus');
+        this.subscribe('users.loggedIn');
+    });
 });
 
 Template.moreInfo.helpers({
