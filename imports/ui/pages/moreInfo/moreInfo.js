@@ -5,7 +5,6 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Session } from 'meteor/session';
 import mixpanel from '/imports/mixpanel';
 import { nickname } from '/imports/utils.js';
-import { Subjects } from '/imports/api/subjects/subjects.js';
 import { Config } from '/imports/api/config/config.js';
 
 import './moreInfo.html';
@@ -14,7 +13,7 @@ import './moreInfo.less';
 Template.moreInfo.onCreated(function() {
     this.state = new ReactiveDict();
     this.subscribe('config.serviceStatus');
-    this.subscribe('subjects');
+    this.subscribe('users.loggedIn');
 });
 
 Template.moreInfo.helpers({
@@ -35,6 +34,19 @@ Template.moreInfo.helpers({
     submitButtonDisabled() {
         const { state } = Template.instance();
         return !state.get('text') || !state.get('grade');
+    },
+    isAvailable() {
+        const { params: { subject } } = Router.current();
+        return Meteor.users
+            .find({
+                subjects: subject,
+                'status.online': true
+            })
+            .count() > 0;
+    },
+    subject() {
+        const { params: { subject } } = Router.current();
+        return subject;
     }
 });
 
