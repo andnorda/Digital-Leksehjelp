@@ -7,7 +7,7 @@ import { StudentSessions } from './studentSessions.js';
 import { Subjects } from '../subjects/subjects.js';
 import { Messages } from '../messages/messages.js';
 
-const generateRandomAppearInLink = function() {
+const generateRandomAppearInLink = function () {
     const randomId = Math.floor(Math.random() * 1000000000);
     return `http://talky.io/${randomId}`;
 };
@@ -145,17 +145,10 @@ Meteor.methods({
 
         if (Meteor.isServer) {
             mixpanel.track('Bedt om leksehjelp (server)', {
-                subject,
+                fag: subject,
                 type,
                 grade,
                 text
-            });
-        }
-
-        if (Meteor.isServer) {
-            mixpanel.track('Bedt om leksehjelp (server)', {
-                fag: subject,
-                type
             });
         }
 
