@@ -1,0 +1,27 @@
+<template name="moreInfoHelp">
+    <div class="moreInfoHelpPage">
+        {{#if Template.subscriptionsReady}}
+            {{#if isAvailable}}
+                {{#if serviceStatus}}
+                    <form class="moreInfoHelpForm">
+                        <p>Før du kan få hjelp trenger vi å vite litt mer om hva du lurer på.</p>
+                        <h2>Hvilket klassetrinn går du i?</h2>
+                        <div class="dropdowns">
+                            {{> select placeholder='Velg trinn' value=grade options=grades onChange=setGrade}}
+                        </div>
+                        <h2>Forklar kort hva du lurer på. Bruk egne ord.</h2>
+                        <textarea name="question" placeholder="Skriv her..." rows="4" autofocus>{{text}}</textarea>
+                        <div class="buttons">
+                            {{> button type='submit' text='Gå til kø' disabled=submitButtonDisabled}}
+                        </div>
+                    </form>
+                {{else}}    
+                    <p>Leksehjelpen er dessverre stengt nå, prøv igjen mandag–torsdag 17–21.</p>
+                {{/if}}
+            {{else}}
+                <p>Det er ingen frivillige tilgjengelige i <b>{{subject}}</b>.</p>
+            {{/if}}
+            <img src="/figure_4.svg" alt="" />
+        {{/if}}
+    </div>
+</template>

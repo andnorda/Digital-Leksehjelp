@@ -86,11 +86,13 @@ Template.help.helpers({
         };
     },
     onClickChat() {
-        const state = Template.instance().state;
+        const { state } = Template.instance();
         return () => {
-            if (state.get('helpTopic')) {
-                joinQueue(state.get('helpTopic'), 'chat');
-            }
+            mixpanel.track('Valgt leksehjelp på forsiden', {
+                fag: state.get('helpTopic'),
+                type: 'chat'
+            });
+            Router.go(`/moreInfoHelp/${state.get('helpTopic')}`);
         };
     },
     onClickVideo() {

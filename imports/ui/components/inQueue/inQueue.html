@@ -13,21 +13,11 @@
             </div>
             <div class="right">
                 {{> inQueueHeader}}
-                <div class="description">Du står nå i kø for <span class="subject">{{subject}}</span></div>
-                <form class="extra-info-form">
-                    <p>Mens du venter kan du begynne å forklare kort hva det er du ønsker hjelp til. Bruk egne ord.</p>
-                    <div class="dropdowns">
-                        {{> topicsInput value=topics addTopic=addTopic removeTopic=removeTopic subject=subject}}
-                        {{> select placeholder='Velg trinn' value=grade options=grades onChange=setGrade}}
-                    </div>
-                    <textarea name="question" placeholder="Skriv her..." rows="4" autofocus>{{text}}</textarea> <div class="buttons">
-                        {{> button type='button' text='Forlat køen' subtle=true danger=true onClick=leaveQueue}}
-                        {{> button type='submit' text='Oppdater' disabled=updateButtonDisabled}}
-                    </div>
-                    {{#if infoMessage}}
-                        {{> formMessage text=infoMessage}}
-                    {{/if}}
-                </form>
+                <div class="description">
+                    <p>Du står nå i kø for <span class="subject">{{subject}}</span></p>
+                    <p class="help">Vi hjelper deg så fort vi har tid :)</p>
+                </div>
+                {{> button type='button' text='Forlat køen' subtle=true danger=true onClick=leaveQueue}}
             </div>
         {{/if}}
     </div>

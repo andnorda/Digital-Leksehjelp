@@ -7,7 +7,7 @@ import { StudentSessions } from './studentSessions.js';
 import { Subjects } from '../subjects/subjects.js';
 import { Messages } from '../messages/messages.js';
 
-const generateRandomAppearInLink = function() {
+const generateRandomAppearInLink = function () {
     const randomId = Math.floor(Math.random() * 1000000000);
     return `http://talky.io/${randomId}`;
 };
@@ -131,14 +131,24 @@ Meteor.methods({
         );
     },
 
-    'studentSessions.create'({ subject, type, nickname = generateNickname() }) {
+    'studentSessions.create'({
+        subject,
+        type,
+        nickname = generateNickname(),
+        grade = '',
+        text = ''
+    }) {
         check(subject, String);
         check(type, String);
+        check(grade, String);
+        check(text, String);
 
         if (Meteor.isServer) {
             mixpanel.track('Bedt om leksehjelp (server)', {
                 fag: subject,
-                type
+                type,
+                grade,
+                text
             });
         }
 
@@ -153,7 +163,9 @@ Meteor.methods({
             state: STUDENT_SESSION_STATE.WAITING,
             createdAt: new Date(),
             nickname,
-            topics: []
+            topics: [],
+            grade,
+            text
         });
     },
 

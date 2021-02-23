@@ -120,12 +120,13 @@ Template.homework.helpers({
         };
     },
     onClickChat() {
-        const state = Template.instance().state;
+        const { state } = Template.instance();
         return () => {
-            if (state.get('subject') && !state.get('pending')) {
-                joinQueue(state.get('subject'), 'chat');
-                state.set('pending', true);
-            }
+            mixpanel.track('Valgt leksehjelp på forsiden', {
+                fag: state.get('subject'),
+                type: 'chat'
+            });
+            Router.go(`/moreInfo/${state.get('subject')}`);
         };
     },
     onClickVideo() {
