@@ -60,9 +60,9 @@ t.async=1;t.src=e;s=i.getElementsByTagName(g)[0];s.parentNode.insertBefore(t, s)
 }
 
 Meteor.startup(function() {
-  mixpanel.init(/* Meteor.isProduction
+  mixpanel.init(Meteor.isProduction
     ? 'f84c7b2904d686b254dc2d1d032d6e56'
-    : */'2ba4e2b936870c8ee8537a3d9d76dea7');
+    : '2ba4e2b936870c8ee8537a3d9d76dea7');
   initGetSiteControl();
   updateLastUpdatedBy();
 
