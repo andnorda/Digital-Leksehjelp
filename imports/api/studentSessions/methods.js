@@ -54,7 +54,8 @@ Meteor.methods({
                     : 'Forlot leksehjelp-kø (server)',
                 {
                     fag: session.subject,
-                    type: session.type
+                    type: session.type,
+                    grade: session.grade
                 }
             );
         }
@@ -106,7 +107,8 @@ Meteor.methods({
 
             mixpanel.track('Start leksehjelp (server)', {
                 fag: session.subject,
-                type: session.type
+                type: session.type,
+                grade: session.grade
             });
         }
 
@@ -147,8 +149,7 @@ Meteor.methods({
             mixpanel.track('Bedt om leksehjelp (server)', {
                 fag: subject,
                 type,
-                grade,
-                text
+                grade
             });
         }
 

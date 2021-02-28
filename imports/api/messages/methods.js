@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Match, check } from 'meteor/check';
+import mixpanel from '/imports/startup/server/mixpanelServer';
 import { Messages } from './messages.js';
 import { StudentSessions } from '../studentSessions/studentSessions.js';
 
@@ -50,6 +51,24 @@ Meteor.methods({
                 },
                 { $unset: { 'volunteers.$.lastActivity': '' } }
             );
+        }
+
+        if (
+            Meteor.isServer &&
+            Messages.findOne({
+                sessionId
+            }) &&
+            !Messages.findOne({
+                sessionId,
+                author: this.userId ? { $ne: null } : null
+            })
+        ) {
+            const session = StudentSessions.findOne(sessionId);
+
+            mixpanel.track('Melding fra elev og frivillig (server)', {
+                fag: session.subject,
+                grade: session.grade
+            });
         }
 
         return Messages.insert({
