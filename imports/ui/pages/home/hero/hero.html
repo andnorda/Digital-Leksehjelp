@@ -2,12 +2,12 @@
     <section class="hero">
         <div>
             <div class="description">
-                <em>Gratis,</em> <em>trygt</em> og <em>anonymt</em> for deg på ungdomskolen og videregående.
+                <em>Gratis,</em> <em>trygt</em> og <em>anonymt</em> for deg på
+                ungdomskolen og videregående.
             </div>
-            {{#if infoMessage}}
-                {{> formMessage text=infoMessage}}
-            {{/if}}
+            {{#if infoMessage}} {{> formMessage text=infoMessage}} {{/if}}
+            {{> soMeLinks }}
         </div>
-        <img src="/figure_1.svg" alt="" />
+        <img class="illustration" src="/figure_1.svg" alt="" />
     </section>
 </template>

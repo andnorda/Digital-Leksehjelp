@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Config } from '/imports/api/config/config.js';
 import '../../../components/formMessage/formMessage.js';
+import '../../../components/soMeLinks/soMeLinks.js';
 
 import './hero.html';
 import './hero.less';
