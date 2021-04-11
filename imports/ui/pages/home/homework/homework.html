@@ -38,18 +38,22 @@
                     </div>
                 {{else}}
                     {{#if subject}}
-                        {{#if shifts}}
-                            <p>{{subject}} er tilgjengelig på disse tidspunktene</p>
-                            <ul class="shift-list">
-                                {{#each shifts}}
-                                    <li class="shift">
-                                        <div>{{prettyDate start}}</div>
-                                        <div>{{prettyTime start}}-{{prettyTime end}}</div>
-                                    </li>
-                                {{/each}}
-                            </ul>
+                        {{#if Template.subscriptionsReady}}
+                            {{#if shifts}}
+                                <p>{{subject}} er tilgjengelig på disse tidspunktene</p>
+                                <ul class="shift-list">
+                                    {{#each shifts}}
+                                        <li class="shift">
+                                            <div>{{prettyDate start}}</div>
+                                            <div>{{prettyTime start}}-{{prettyTime end}}</div>
+                                        </li>
+                                    {{/each}}
+                                </ul>
+                            {{else}}
+                                <p>{{subject}} er dessverre ikke tilgjengelig med det første</p>
+                            {{/if}}
                         {{else}}
-                            <p>{{subject}} er dessverre ikke tilgjengelig med det første</p>
+                            <p>Laster...</p>
                         {{/if}}
                     {{/if}}
                 {{/if}}
