@@ -1,9 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { Blaze } from 'meteor/blaze';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import escape from 'escape-string-regexp';
-import { Questions } from '/imports/api/questions/questions.js';
 import { StudentSessions } from '/imports/api/studentSessions/studentSessions.js';
 
 import './addVolunteer.html';
@@ -13,7 +11,7 @@ Template.addVolunteer.onCreated(function() {
     this.state.set('filter', '');
 
     this.autorun(() => {
-        this.subscribe('users.loggedIn');
+        this.subscribe('users');
         this.subscribe('studentSessions');
     });
 });
@@ -41,10 +39,10 @@ Template.addVolunteer.helpers({
                     'profile.firstName': {
                         $regex: `.*${escape(
                             Template.instance().state.get('filter')
-                        )}.*`
+                        )}.*`,
+                        $options: 'i'
                     }
                 },
-                { 'status.online': true },
                 ...volunteerIds.map(id => ({ _id: { $ne: id } }))
             ]
         });

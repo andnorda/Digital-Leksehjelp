@@ -36,20 +36,6 @@ Meteor.publish('users.self', function() {
     return Meteor.users.find(this.userId);
 });
 
-Meteor.publish('users.loggedIn', function() {
-    return Meteor.users.find(
-        { 'status.online': true },
-        {
-            fields: {
-                subjects: 1,
-                helpTopics: 1,
-                'status.online': 1,
-                profile: 1
-            }
-        }
-    );
-});
-
 Meteor.publish('users.byId', function (userId) {
     check(userId, String);
 

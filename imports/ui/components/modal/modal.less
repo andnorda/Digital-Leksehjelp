@@ -15,11 +15,10 @@
         > .addVolunteer {
             width: 400px;
             height: 500px;
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-rows: auto 1fr;
 
             > .addVolunteerHeader {
-                flex-shrink: 0;
                 display: flex;
                 align-items: center;
                 width: 100%;
@@ -34,10 +33,11 @@
             }
 
             > .addVolunteerContent {
-                flex-grow: 1;
                 display: flex;
                 flex-direction: column;
                 padding: 10px;
+                min-width: 0;
+                min-height: 0;
 
                 > .filter-field {
                     flex-shrink: 0;
