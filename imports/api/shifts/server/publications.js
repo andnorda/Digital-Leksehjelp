@@ -20,3 +20,10 @@ Meteor.publish('shifts.bySubjectName', function(subjectName) {
         }
     });
 });
+
+Meteor.publish('shifts.current', function () {
+    return Shifts.find({
+        start: { $lt: new Date() },
+        end: { $gt: new Date() }
+    });
+});

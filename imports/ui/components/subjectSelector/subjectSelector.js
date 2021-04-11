@@ -1,7 +1,7 @@
-import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { Config } from '/imports/api/config/config.js';
+import { Shifts } from '/imports/api/shifts/shifts.js';
 
 import '../select/select.js';
 
@@ -11,12 +11,15 @@ const isAvailable = name => {
     const serviceStatus = Config.findOne({ name: 'serviceStatus' });
     if (serviceStatus && !serviceStatus.open) return true;
     return (
-        Meteor.users
-            .find({
-                subjects: name,
-                'status.online': true
-            })
-            .count() > 0
+        Shifts.find({
+            start: { $lt: new Date() },
+            end: { $gt: new Date() },
+            subjects: {
+                $elemMatch: {
+                    $eq: name
+                }
+            }
+        }).count() > 0
     );
 };
 
@@ -24,7 +27,7 @@ Template.subjectSelector.onCreated(function() {
     this.autorun(() => {
         this.subscribe('subjects');
         this.subscribe('config.serviceStatus');
-        this.subscribe('users.loggedIn');
+        this.subscribe('shifts.current');
     });
 });
 

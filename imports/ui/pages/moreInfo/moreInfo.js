@@ -6,15 +6,16 @@ import { Session } from 'meteor/session';
 import mixpanel from '/imports/mixpanel';
 import { nickname } from '/imports/utils.js';
 import { Config } from '/imports/api/config/config.js';
+import { Shifts } from '/imports/api/shifts/shifts.js';
 
 import './moreInfo.html';
 import './moreInfo.less';
 
-Template.moreInfo.onCreated(function() {
+Template.moreInfo.onCreated(function () {
     this.state = new ReactiveDict();
     this.autorun(() => {
         this.subscribe('config.serviceStatus');
-        this.subscribe('users.loggedIn');
+        this.subscribe('shifts.current');
     });
 });
 
@@ -38,20 +39,26 @@ Template.moreInfo.helpers({
         return !state.get('text') || !state.get('grade');
     },
     isAvailable() {
-        const { params: { subject } } = Router.current();
-        return Meteor.users
-            .find({
-                subjects: subject,
-                'status.online': true
-            })
-            .count() > 0;
+        const {
+            params: { subject }
+        } = Router.current();
+        return (
+            Shifts.find({
+                start: { $lt: new Date() },
+                end: { $gt: new Date() },
+                subjects: {
+                    $elemMatch: {
+                        $eq: subject
+                    }
+                }
+            }).count() > 0
+        );
     },
     subject() {
         const { params: { subject } } = Router.current();
         return subject;
     }
 });
-
 
 const joinQueue = (subject, grade, text) => {
     if (window.Notification && Notification.permission !== 'granted') {
