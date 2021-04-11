@@ -8,34 +8,45 @@ const shiftsURL =
     'https://frivillig.rodekors.no/api/digitalleksehjelp/oslorodekors/shifts';
 
 const upsertShifts = shifts => {
-    shifts.forEach(shift =>
-        Shifts.upsert(
-            {
-                start: new Date(shift.start),
-                end: new Date(shift.end)
-            },
-            {
-                $set: {
-                    subjects: shift.volunteers
-                        .map(email => {
-                            const user = Meteor.users.findOne({
-                                username: email
-                            });
-                            return user ? user.subjects : [];
-                        })
-                        .reduce(
-                            (subjects, userSubjects) =>
-                                subjects.concat(userSubjects),
-                            []
-                        )
-                        .filter(
-                            (value, index, array) =>
-                                array.indexOf(value) === index
-                        )
-                }
+    shifts
+        .reduce((prev, shift) => {
+            const match = prev.find(
+                ({ start, end }) => shift.start === start && shift.end === end
+            );
+            if (match) {
+                match.volunteers = [...match.volunteers, ...shift.volunteers];
+                return prev;
             }
-        )
-    );
+            return [...prev, shift];
+        }, [])
+        .forEach(shift =>
+            Shifts.upsert(
+                {
+                    start: new Date(shift.start),
+                    end: new Date(shift.end)
+                },
+                {
+                    $set: {
+                        subjects: shift.volunteers
+                            .map(email => {
+                                const user = Meteor.users.findOne({
+                                    username: email
+                                });
+                                return user ? user.subjects : [];
+                            })
+                            .reduce(
+                                (subjects, userSubjects) =>
+                                    subjects.concat(userSubjects),
+                                []
+                            )
+                            .filter(
+                                (value, index, array) =>
+                                    array.indexOf(value) === index
+                            )
+                    }
+                }
+            )
+        );
 };
 
 const fetch = () =>
