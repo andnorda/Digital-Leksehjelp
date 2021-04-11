@@ -7,9 +7,9 @@ import urlRegex from '/imports/lib/url-regex';
 
 import './chatMessage.html';
 
-Template.chatComponent.onCreated(function() {
+Template.chatMessage.onCreated(function () {
     this.autorun(() => {
-        this.subscribe('users.loggedIn');
+        this.subscribe('users.byId', this.data.author);
     });
 });
 

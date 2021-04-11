@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
 import { ADMIN } from '/imports/userRoles.js';
 
 Meteor.publish('users', function() {
@@ -47,4 +48,14 @@ Meteor.publish('users.loggedIn', function() {
             }
         }
     );
+});
+
+Meteor.publish('users.byId', function (userId) {
+    check(userId, String);
+
+    return Meteor.users.find(userId, {
+        fields: {
+            'profile.firstName': 1
+        }
+    });
 });
