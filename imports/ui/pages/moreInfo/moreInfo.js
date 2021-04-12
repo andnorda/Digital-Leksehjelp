@@ -45,6 +45,10 @@ Template.moreInfo.helpers({
         return (
             Shifts.find({
                 start: { $lt: new Date() },
+                end: { $gt: new Date() }
+            }).count() === 0 ||
+            Shifts.find({
+                start: { $lt: new Date() },
                 end: { $gt: new Date() },
                 subjects: {
                     $elemMatch: {
