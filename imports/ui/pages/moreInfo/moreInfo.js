@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { format } from 'date-fns';
 import { Template } from 'meteor/templating';
 import { Router } from 'meteor/iron:router';
 import { ReactiveDict } from 'meteor/reactive-dict';
@@ -11,11 +12,17 @@ import { Shifts } from '/imports/api/shifts/shifts.js';
 import './moreInfo.html';
 import './moreInfo.less';
 
+const hackedDate = () =>
+    new Date(format(new Date(), 'YYYY-MM-DD HH:mm:ss+0000'));
+
 Template.moreInfo.onCreated(function () {
     this.state = new ReactiveDict();
     this.autorun(() => {
         this.subscribe('config.serviceStatus');
-        this.subscribe('shifts.current');
+        this.subscribe(
+            'shifts.current',
+            format(new Date(), 'YYYY-MM-DD HH:mm:ss+0000')
+        );
     });
 });
 
@@ -44,12 +51,12 @@ Template.moreInfo.helpers({
         } = Router.current();
         return (
             Shifts.find({
-                start: { $lt: new Date() },
-                end: { $gt: new Date() }
+                start: { $lt: hackedDate() },
+                end: { $gt: hackedDate() }
             }).count() === 0 ||
             Shifts.find({
-                start: { $lt: new Date() },
-                end: { $gt: new Date() },
+                start: { $lt: hackedDate() },
+                end: { $gt: hackedDate() },
                 subjects: {
                     $elemMatch: {
                         $eq: subject

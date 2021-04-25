@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { format } from 'date-fns';
 import { Subjects } from '/imports/api/subjects/subjects.js';
 import { Config } from '/imports/api/config/config.js';
 import { Shifts } from '/imports/api/shifts/shifts.js';
@@ -7,17 +8,20 @@ import '../select/select.js';
 
 import './subjectSelector.html';
 
+const hackedDate = () =>
+    new Date(format(new Date(), 'YYYY-MM-DD HH:mm:ss+0000'));
+
 const isAvailable = name => {
     const serviceStatus = Config.findOne({ name: 'serviceStatus' });
     if (serviceStatus && !serviceStatus.open) return true;
     return (
         Shifts.find({
-            start: { $lt: new Date() },
-            end: { $gt: new Date() }
+            start: { $lt: hackedDate() },
+            end: { $gt: hackedDate() }
         }).count() === 0 ||
         Shifts.find({
-            start: { $lt: new Date() },
-            end: { $gt: new Date() },
+            start: { $lt: hackedDate() },
+            end: { $gt: hackedDate() },
             subjects: {
                 $elemMatch: {
                     $eq: name
@@ -27,11 +31,14 @@ const isAvailable = name => {
     );
 };
 
-Template.subjectSelector.onCreated(function() {
+Template.subjectSelector.onCreated(function () {
     this.autorun(() => {
         this.subscribe('subjects');
         this.subscribe('config.serviceStatus');
-        this.subscribe('shifts.current');
+        this.subscribe(
+            'shifts.current',
+            format(new Date(), 'YYYY-MM-DD HH:mm:ss+0000')
+        );
     });
 });
 

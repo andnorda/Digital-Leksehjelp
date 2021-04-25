@@ -21,9 +21,11 @@ Meteor.publish('shifts.bySubjectName', function(subjectName) {
     });
 });
 
-Meteor.publish('shifts.current', function () {
+Meteor.publish('shifts.current', function (date) {
+    check(date, String);
+
     return Shifts.find({
-        start: { $lt: new Date() },
-        end: { $gt: new Date() }
+        start: { $lt: new Date(date) },
+        end: { $gt: new Date(date) }
     });
 });
