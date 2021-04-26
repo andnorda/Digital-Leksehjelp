@@ -24,7 +24,13 @@ Template.homework.onCreated(function () {
         this.subscribe('config.serviceStatus');
 
         const subject = Template.instance().state.get('subject');
-        subject && this.subscribe('shifts.bySubjectName', subject);
+        if (subject) {
+            this.subscribe(
+                'shifts.bySubjectName',
+                subject,
+                format(new Date(), 'YYYY-MM-DD HH:mm:ss+0000')
+            );
+        }
     });
 });
 

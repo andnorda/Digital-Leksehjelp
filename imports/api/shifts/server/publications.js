@@ -3,15 +3,16 @@ import { check } from 'meteor/check';
 import { addWeeks } from 'date-fns';
 import { Shifts } from '../shifts.js';
 
-Meteor.publish('shifts.bySubjectName', function(subjectName) {
+Meteor.publish('shifts.bySubjectName', function (subjectName, date) {
+    check(date, String);
     check(subjectName, String);
 
     return Shifts.find({
         start: {
-            $gt: new Date()
+            $gt: new Date(date)
         },
         end: {
-            $lt: addWeeks(new Date(), 2)
+            $lt: addWeeks(new Date(date), 2)
         },
         subjects: {
             $elemMatch: {
