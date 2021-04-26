@@ -6,7 +6,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Session } from 'meteor/session';
 import { Router } from 'meteor/iron:router';
 import mixpanel from '/imports/mixpanel';
-import { addWeeks, startOfDay, min, max, isAfter } from 'date-fns';
+import { addWeeks, startOfDay, min, max, isAfter, format } from 'date-fns';
 import { nickname } from '/imports/utils.js';
 import '../../../components/serviceStatusMessage/serviceStatusMessage.js';
 import '../../../components/subjectSelector/subjectSelector.js';
@@ -16,7 +16,7 @@ import '../../../components/formMessage/formMessage.js';
 import './homework.html';
 import './homework.less';
 
-Template.homework.onCreated(function() {
+Template.homework.onCreated(function () {
     this.state = new ReactiveDict();
 
     this.autorun(() => {
@@ -40,7 +40,7 @@ const joinQueue = (subject, type) => {
             type,
             nickname
         },
-        function(error, sessionId) {
+        function (error, sessionId) {
             Session.set('studentSessionId', sessionId);
             Session.set('queueStartTime', new Date().getTime());
             Router.go(`/queue/${sessionId}`);
@@ -85,10 +85,20 @@ Template.homework.helpers({
         return !Template.instance().state.get('subject');
     },
     shifts() {
+        const hackedDate = () =>
+            new Date(format(new Date(), 'YYYY-MM-DD HH:mm:ss+0000'));
+
+        const subjectName = Template.instance().state.get('subject');
+
         const shifts = Shifts.find(
             {
-                start: { $gt: new Date() },
-                end: { $lt: addWeeks(new Date(), 2) }
+                start: { $gt: hackedDate() },
+                end: { $lt: addWeeks(hackedDate(), 2) },
+                subjects: {
+                    $elemMatch: {
+                        $eq: subjectName
+                    }
+                }
             },
             { sort: { start: 1 } }
         ).fetch();
