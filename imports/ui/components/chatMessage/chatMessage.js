@@ -9,7 +9,7 @@ import './chatMessage.html';
 
 Template.chatMessage.onCreated(function () {
     this.autorun(() => {
-        this.subscribe('users.byId', this.data.author);
+        this.data.author && this.subscribe('users.byId', this.data.author);
     });
 });
 
@@ -46,10 +46,7 @@ Template.chatMessage.helpers({
     },
     name() {
         return this.message.includes('.')
-            ? this.message
-                  .split('.')
-                  .slice(0, -1)
-                  .join('.')
+            ? this.message.split('.').slice(0, -1).join('.')
             : this.message;
     },
     suffix() {
