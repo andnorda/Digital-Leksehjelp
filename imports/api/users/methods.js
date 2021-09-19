@@ -201,6 +201,16 @@ Meteor.methods({
 
         if (user.profile.role === ADMIN) {
             const userId = Accounts.createUser(options);
+            Accounts.emailTemplates.enrollAccount.subject = user => {
+                return 'Digital leksehjelp - bruker opprettet';
+            };
+            Accounts.emailTemplates.enrollAccount.text = (user, url) => {
+                return (
+                    'Hei!\n\n' +
+                    'Det har blitt opprettet en bruker til deg som frivillig på digital leksehjelp! Følg lenken under for å komme i gang.\n\n' +
+                    url
+                );
+            };
             Accounts.sendEnrollmentEmail(userId);
             return userId;
         }
